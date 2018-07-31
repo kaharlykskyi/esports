@@ -1,0 +1,52 @@
+.main-menu-wrap {
+    z-index: 999;
+    opacity: 0.97;
+}
+.form-horizontal .control-label {
+    text-align: left;
+}
+button[name='login-button'] {
+    float: right;
+}
+#login-form .item span i {
+    font-style: normal;
+    color: #d32f2f;
+}
+#login-form {
+    margin-bottom: 15px;
+}
+.login-error .login-error_message {
+    color: #d32f2f;
+    font-size: 14px;
+}
+.password-error_message {
+    color: #d32f2f;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+input[type=email], input[type=password] {
+    padding: 15px 10px;
+    border: 1px solid transparent;
+    width: 100%;
+    background: #fff;
+    font-size: 14px;
+    color: #666;
+    line-height: normal;
+    outline: 0;
+}
+.forgot-email {
+    font-size: 12px;
+}
+.help-text {
+    font-size: 13px;
+    padding-bottom: 15px;
+}
+.alert-success {
+    font-size: 12px;
+}
+.to-home {
+    margin-top: 12px;
+}
+.errors-list > p {
+    font-size: 14px;
+}
