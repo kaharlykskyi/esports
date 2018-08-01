@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@example.com',
+    'adminEmail' => 'gemer.bumeen.group@gmail.com',
+    'emailPass' => 'mike12111995',
 ];

@@ -15,6 +15,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'wYkq3YwVx2nPc2fVPFRhacC9YcTbJcNe',
+            'baseUrl' => '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -35,8 +36,8 @@ $config = [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
-                'username' => 'dev.bumeen.group@gmail.com',
-                'password' => 'mike12111995',
+                'username' => 'gemer.bumeen.group@gmail.com',
+                'password' => $params['emailPass'],
                 'port' => '587',
                 'encryption' => 'tls',
             ],
@@ -52,15 +53,18 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
+            
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'login' => '/site/login',
-                'register'=> '/site/register',
-                'logout'=> '/site/logout',
-                'recovery'=> '/site/recovery',
-                'recovery-check'=> '/site/recovery-check',
-                'change-password'=> '/site/change-password',
+                '<controller:(cabinet)>' => '<controller>/index',
+                '<action:\w+>' => 'site/<action>'
+                // 'login' => '/site/login',
+                // 'register'=> '/site/register',
+                // 'logout'=> '/site/logout',
+                // 'recovery'=> '/site/recovery',
+                // 'recovery-check'=> '/site/recovery-check',
+                // 'change-password'=> '/site/change-password',
             ],
         ],
     ],

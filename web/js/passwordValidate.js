@@ -18,8 +18,6 @@ $(document).ready(function () {
 
     function validatePasswords(password, password_repeat) {
         button.hide();
-        // console.log('password: ',password);
-        // console.log('password_repeat: ',password_repeat);
         let res = {};
         if (password.length < 8) {
             errorBlock.text("Password must contain at least 8 characters.");
@@ -39,4 +37,17 @@ $(document).ready(function () {
         button.show();
         return true;
     }
+
+    if(!$('#check').prop('checked')) {
+        button.hide();
+    }
+    
+    $("#check").change(function() {
+        if(this.checked) {
+            $(".submit-btn").show();
+        } else {
+            $(".submit-btn").hide();
+        }
+        
+    });
 });

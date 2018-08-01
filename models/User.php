@@ -106,7 +106,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
         $link = Url::base(true) . "/recovery-check?token={$user->restore_token}";
         $mail = \Yii::$app->mailer->compose()
-            ->setFrom(["dev.bumeen.group@gmail.com" => "Bumeen Group Dev"])
+            ->setFrom([\Yii::$app->params['adminEmail'] => "Bumeen Group Dev"])
             ->setTo($email)
             ->setSubject('Email recovery')
             ->setTextBody("You can change your password by clicking on the button below. \n $link")

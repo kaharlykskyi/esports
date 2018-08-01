@@ -12,6 +12,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\helpers\Url;
+use yii\helpers\Html;
 
 class SiteController extends Controller
 {
@@ -76,12 +78,12 @@ class SiteController extends Controller
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
-        }
+         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
             if($model->login()) {
-                return $this->goBack();
+                return $this->goBack('cabinet');
             }
         }
 
@@ -100,7 +102,12 @@ class SiteController extends Controller
         $model = new RegisterForm();
         if($model->load(Yii::$app->request->post())) {
             if($model->register()) {
-                return $this->goBack();
+                $email = Yii::$app->user->identity->email;
+                $tokin = $this->sendEmail($email);
+                $user = $user = User::findOne(['email' => $email]);
+                $user->tokin_conf = $tokin;
+                $user->save();
+                return $this->redirect('cabinet/index');
             }
         }
         return $this->render('register',[
@@ -169,7 +176,44 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
+        return $this->redirect('/');
+    }
 
-        return $this->goHome();
+    public function actionConfirmation()
+    {
+        $token = Yii::$app->request->get('confirmation_tokin');
+        if (isset($token)) {
+            $email = Yii::$app->request->get('email');
+            if (isset($email)) {
+                $user = User::findOne(['tokin_conf' => $token,'email' => $email]);
+                if(!is_object($user)) {
+                    return $this->redirect('/');
+                }
+                $user->is_verified = 1;
+                $user->save();
+                return $this->redirect('cabinet');
+            }
+       }  
+    }
+
+    private function sendEmail($email)
+    {
+        $stringTokin = (string)bin2hex(random_bytes(24));
+        $url = Url::toRoute(
+            ['site/confirmation',
+                'confirmation_tokin'=> $stringTokin,'email' => $email,
+            ], true);
+        $a = Html::a('<b>Follow the link to confirm your email</b>',$url);
+        Yii::$app->mailer->compose()
+            ->setFrom(Yii::$app->params['adminEmail'])
+            ->setTo($email)
+            ->setSubject('Тема сообщения')
+            ->setTextBody('Текст сообщения')
+            ->setHtmlBody($a)
+            ->send();
+        return $stringTokin;
     }
 }
+
+
+

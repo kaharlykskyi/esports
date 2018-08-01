@@ -329,14 +329,27 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
             </div>
+          
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox">
+                        
+                        <input type="checkbox" class='filter-check' id='check'>
+                        <label for="check"><a href="GDPR Terms">I agree to the GDPR Terms</a></label>
+                    </div>
+                </div>
+            </div>  
+            
             <div class="row login-error">
                 <div class="col-lg-8"><p class="password-error_message"></p></div>
             </div>
+
             <div class="row">
                 <div class="col-md-3">
                     <button type="submit" class="btn btn-primary submit-btn">Sign in&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                 </div>
             </div>
+
         </form>
     </div>
 </div>

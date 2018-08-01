@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'eSport';
 ?>
 <div class="main-slider-section">
     <div class="main-slider">
