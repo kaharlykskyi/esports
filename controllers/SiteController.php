@@ -83,7 +83,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
             if($model->login()) {
-                return $this->goBack('cabinet');
+                return $this->goBack('profile');
             }
         }
 
@@ -103,11 +103,13 @@ class SiteController extends Controller
         if($model->load(Yii::$app->request->post())) {
             if($model->register()) {
                 $email = Yii::$app->user->identity->email;
-                $tokin = $this->sendEmail($email);
+                $tokin = (string)bin2hex(random_bytes(24));
                 $user = $user = User::findOne(['email' => $email]);
                 $user->tokin_conf = $tokin;
-                $user->save();
-                return $this->redirect('cabinet/index');
+                if ($user->save()) {
+                    $this->sendEmail($email,$tokin);
+                    return $this->redirect('profile/index');
+                }
             }
         }
         return $this->render('register',[
@@ -179,26 +181,24 @@ class SiteController extends Controller
         return $this->redirect('/');
     }
 
-    public function actionConfirmation()
+    public function actionConfirmation($confirmation_tokin = false, $email = false)
     {
-        $token = Yii::$app->request->get('confirmation_tokin');
-        if (isset($token)) {
-            $email = Yii::$app->request->get('email');
-            if (isset($email)) {
-                $user = User::findOne(['tokin_conf' => $token,'email' => $email]);
+        if ($confirmation_tokin) {
+            if ($email) {
+                $user = User::findOne(['tokin_conf' => $confirmation_tokin,'email' => $email]);
                 if(!is_object($user)) {
                     return $this->redirect('/');
                 }
                 $user->is_verified = 1;
                 $user->save();
-                return $this->redirect('cabinet');
+                return $this->redirect('profile');
             }
-       }  
+       }
+       return $this->redirect('/');  
     }
 
-    private function sendEmail($email)
+    private function sendEmail($email,$stringTokin)
     {
-        $stringTokin = (string)bin2hex(random_bytes(24));
         $url = Url::toRoute(
             ['site/confirmation',
                 'confirmation_tokin'=> $stringTokin,'email' => $email,
@@ -211,7 +211,6 @@ class SiteController extends Controller
             ->setTextBody('Текст сообщения')
             ->setHtmlBody($a)
             ->send();
-        return $stringTokin;
     }
 }
 

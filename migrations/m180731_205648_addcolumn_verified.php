@@ -21,9 +21,8 @@ class m180731_205648_addcolumn_verified extends Migration
      */
     public function safeDown()
     {
-        echo "m180731_205648_addcolumn_verified cannot be reverted.\n";
-
-        return false;
+        $this->dropColumn('users', 'tokin_conf');
+        $this->dropColumn('users', 'is_verified');
     }
 
     /*

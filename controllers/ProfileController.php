@@ -6,7 +6,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use Yii;
 
-class CabinetController extends \yii\web\Controller
+class ProfileController extends \yii\web\Controller
 {
 	public function behaviors()
     {
@@ -37,11 +37,14 @@ class CabinetController extends \yii\web\Controller
 
     public function beforeAction($action)
 	{
- 		if (!Yii::$app->user->identity->is_verified) {
- 			$email = Yii::$app->user->identity->email;
- 			$a_email = '<a href="http://'.$email.'">'.$email.'</a>';
- 			Yii::$app->session->setFlash('error', 'Please confirm you email !   '.$a_email);
- 		}
+        if (!Yii::$app->user->isGuest) {
+            if (!Yii::$app->user->identity->is_verified) {
+                $email = Yii::$app->user->identity->email;
+                $a_email = '<a href="http://'.$email.'">'.$email.'</a>';
+                Yii::$app->session->setFlash('error', 'Please confirm you email !   '.$a_email);
+            }
+        }
+ 		
  		return parent::beforeAction($action);
 	}
 

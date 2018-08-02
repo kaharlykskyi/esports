@@ -1,0 +1,233 @@
+.img-url{
+	background-image: url(../images/profile/geme-img.jpg);
+	    min-height: 420px;
+}
+
+.angled-img, .angled-img:focus, .angled-img:hover {
+    color: inherit;
+    text-decoration: none;
+    outline: 0;
+}
+.angled-img .img {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    -webkit-transform: skew(-7deg);
+    transform: skew(-7deg);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-backface-visibility: hidden;
+}
+.youplay-user .user-data {
+    position: relative;
+    display: inline-block;
+    height: 200px;
+    padding: 1.8rem 3rem;
+    margin-left: -4px;
+}
+
+.youplay-user .user-data .youplay-user-activity {
+    margin-top: 1.3rem;
+}
+
+.youplay-user .user-data>* {
+    position: relative;
+    z-index: 2;
+}
+
+.youplay-user .user-data .activity>div .title, .youplay-user .user-data .youplay-user-activity>div .title {
+    font-size: 1rem;
+    color: #fff;
+}
+
+.angled-img .img>img, .comments-block .comment-avatar>img, .comments-block .review-avatar>img, .reviews-block .comment-avatar>img, .reviews-block .review-avatar>img {
+    height: auto;
+}
+
+.youplay-user .user-data::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(8,3,37,.4);
+    -webkit-transform: skew(-7deg);
+    transform: skew(-7deg);
+    z-index: 1;
+}
+.youplay-user .angled-img {
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+}
+
+.image-header .info {
+     padding-top: 80px;
+}
+
+.user-data-h2{
+	padding-top: 20px; 
+    padding-bottom: 5px; 
+    font-size: 32px;
+}
+
+.activity-header{
+	font-size: 19px;
+}
+
+.wrap-lists::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 40px;
+    width: 4px;
+    height: 100%;
+    background: #e6e3e39c;
+}
+/*.wrap-lists{
+	position: relative;
+}*/
+
+.lists .wrap{
+
+	margin-left: 110px;
+	padding:4px; 
+}
+
+.wrap-lists .lists{
+	margin-bottom: 4rem;
+	position: relative;
+}
+
+.youplay-timeline-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    font-size: 2rem;
+    line-height: 50px;
+    text-align: center;   
+    -webkit-transform: skew(-7deg);
+    transform: skew(-7deg);
+    -webkit-backface-visibility: hidden;
+}
+    
+ .youplay-timeline-icon img {
+    display: block;
+    width: 100%;
+    -webkit-transform: skew(7deg) scale(1.098);
+    transform: skew(7deg) scale(1.098);
+    -webkit-backface-visibility: hidden;
+    max-width: 100%;
+    height: auto;
+}
+
+.youplay-timeline-date {
+    position: relative;
+    display: inline-block;
+    float: left;
+    left: 0;
+    width: 100%;
+    padding: 1.5em 0;
+    font-size: 1rem;
+    opacity: .7;
+}
+
+.activity-header{
+	margin-top: 0;
+	padding-top: 0;
+}
+
+.fancy-select{
+	width: 300px;
+	position:relative;
+	bottom: 5px;
+}
+.no-pading{
+	padding:0;
+}
+
+.youplay-user-navigation {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.flickity-enabled.is-draggable {
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.image-header{
+	position: relative;
+}
+
+
+
+.flickity-viewport {
+    overflow: visible; 
+   /* overflow: hidden;*/
+    position: relative;
+    height: 100%;
+   /* cursor: move;
+    cursor: -webkit-grab;
+    cursor: grab;*/
+}
+
+.flickity-slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.youplay-user-navigation ul li {
+    position: relative;
+    display: block;
+    float: left;
+    z-index: 1;
+}
+
+.youplay-user-navigation ul li>a {
+    position: relative;
+    display: block;
+    padding: 1.25rem 1.8rem;
+    font-size: 1.6rem;
+    color: #fff;
+    text-decoration: none;
+    background: 0 0;
+    border: none;
+    border-radius: 0;
+    font-weight: bold;
+}
+.youplay-user-navigation ul li>a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: transparent;
+    -webkit-transition: .3s background-color;
+    transition: .3s background-color;
+    -webkit-transform: skew(-7deg);
+    transform: skew(-7deg);
+    z-index: -1;
+}
+
+.youplay-user-navigation ul li:focus>a::after, .youplay-user-navigation ul li:hover>a::after {
+    background-color: rgba(255,255,255,.4);
+}
+.youplay-user-navigation ul li.active>a::after {
+    background-color: #f7f7f7;
+    
+}
+.youplay-user-navigation ul li.active>a{
+	color: #000;
+}

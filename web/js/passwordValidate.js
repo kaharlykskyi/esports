@@ -5,18 +5,19 @@ $(document).ready(function () {
         button = $(".submit-btn"),
         errorBlock = $(".password-error_message");
 
-    passwordInput.keyup(function (e) {
-        let passwordValue = passwordInput.val(),
-            password_repeatValue = password_repeatInput.val();
-        validatePasswords(passwordValue, password_repeatValue);
+     passwordInput.keyup(validatePasswords);
+     password_repeatInput.keyup(validatePasswords);
+
+    passwordInput.bind('paste', function(){
+      validatePasswords();
     });
-    password_repeatInput.keyup(function (e) {
-        let passwordValue = passwordInput.val(),
-            password_repeatValue = password_repeatInput.val();
-        validatePasswords(passwordValue, password_repeatValue);
+    password_repeatInput.bind('paste', function(){
+      validatePasswords();
     });
 
-    function validatePasswords(password, password_repeat) {
+    function validatePasswords() {
+        let password = passwordInput.val(),
+            password_repeat = password_repeatInput.val();
         button.hide();
         let res = {};
         if (password.length < 8) {
@@ -34,8 +35,12 @@ $(document).ready(function () {
             return false;
         }
         errorBlock.text("");
-        button.show();
-        return true;
+        
+        if($('#check').prop('checked')) {
+            button.slideDown();
+            return true;
+        }
+        return false;
     }
 
     if(!$('#check').prop('checked')) {
@@ -44,9 +49,12 @@ $(document).ready(function () {
     
     $("#check").change(function() {
         if(this.checked) {
-            $(".submit-btn").show();
+           
+            if(validatePasswords()){
+                $(".submit-btn").slideDown();
+            }
         } else {
-            $(".submit-btn").hide();
+            $(".submit-btn").slideUp();
         }
         
     });
