@@ -24,9 +24,9 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
-        'js/library/jquery.js',
+        //'js/library/jquery.js',
         'js/library/jquery-ui.js',
-        'js/library/bootstrap.js',
+        //'js/library/bootstrap.js',
         'js/library/jquery.sticky.js',
         'js/library/jquery.jcarousel.js',
         'js/library/jcarousel.connected-carousels.js',
@@ -80,6 +80,8 @@ class AppAsset extends AssetBundle
         'js/footer_slides.js',
         'js/player_test.js',
         'js/main.js',
+        'dropify/dist/js/dropify.js',
+
     ];
     public $depends = [
         'yii\web\YiiAsset',

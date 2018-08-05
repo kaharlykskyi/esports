@@ -58,13 +58,14 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '<controller:(profile)>' => '<controller>/index',
-                '<action:\w+>' => 'site/<action>'
+                '<action:[A-Z,a-z,-]+>' => 'site/<action>',
+                //'recovery-check'=> '/site/recovery-check',
+                //'change-password'=> '/site/change-password',
                 // 'login' => '/site/login',
                 // 'register'=> '/site/register',
                 // 'logout'=> '/site/logout',
                 // 'recovery'=> '/site/recovery',
-                // 'recovery-check'=> '/site/recovery-check',
-                // 'change-password'=> '/site/change-password',
+                
             ],
         ],
     ],

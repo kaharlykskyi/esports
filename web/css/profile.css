@@ -79,15 +79,16 @@
 .wrap-lists::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 40px;
+   top: 0;
+    left: 30px;
     width: 4px;
-    height: 100%;
+ height: 100%;
+ 
     background: #e6e3e39c;
 }
-/*.wrap-lists{
+.wrap-lists{
 	position: relative;
-}*/
+}
 
 .lists .wrap{
 
@@ -142,9 +143,9 @@
 }
 
 .fancy-select{
-	width: 300px;
+	width: 200px;
 	position:relative;
-	bottom: 5px;
+	/*bottom: 5px;*/
 }
 .no-pading{
 	padding:0;
@@ -199,7 +200,7 @@
     display: block;
     padding: 1.25rem 1.8rem;
     font-size: 1.6rem;
-    color: #fff;
+    color: #696666;
     text-decoration: none;
     background: 0 0;
     border: none;
@@ -230,4 +231,100 @@
 }
 .youplay-user-navigation ul li.active>a{
 	color: #000;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: transparent;
+    /*border: 1px solid #ddd;*/
+    border-bottom-color: transparent;
+}
+.youplay-user-navigation ul li.active>a {
+    color: #000;
+    border: 0;
+    margin-right: 0;
+}
+
+.youplay-user-navigation ul li.active>a:hover {
+    border: 0;
+    background-color: transparent;
+}
+
+.youplay-user-navigation ul li.active>a:focus {
+    color: #000;
+    border: 0;
+}
+.nav-tabs>li>a:hover {
+    background-color: transparent;
+}
+.tab-filters li {
+    padding-right: 10px;
+}
+
+table tr td {
+	font-size: 15px;
+	text-align: left;
+	white-space: normal;
+	word-wrap:break-word;
+}
+
+table{
+	table-layout: fixed;
+}
+
+.my_btn a {
+    margin: 0 10px 10px 0;
+    padding: 12px 25px 10px 25px;
+    display: inline-block;
+    position: relative;
+    color: #141414;
+    font-size: 12px;
+    font-family: Montserrat,sans-serif;
+    text-transform: uppercase;
+    border: none;
+    z-index: 10;
+    line-height: normal; 
+}
+.my_btn a:hover {
+	background-color: transparent; 
+ }
+.my_btn a::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border: 1px solid #d92b4c;
+	transform: skewX(-18deg);
+	z-index: 0;
+}
+
+.my_btn a:hover::after {
+	background-color:#1976d26e;
+	z-index: 0;
+}
+.table .text-right {
+	text-align: right;
+	padding: 15px;
+}
+
+.item-title a, #member-list .item-title a, #members-list .item-title a, .item-list .item-title a {
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.6rem;
+}
+
+.date {
+    margin-top: 8px;
+    font-size: 1.2rem;
+    color: #908e8e;
+}
+
+.meta {
+    display: block;
+    margin: 1rem 0;
+    clear: both;
+    font-size: 1.2rem;
 }

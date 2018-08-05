@@ -65,16 +65,16 @@ AppAsset::register($this);
                 <div class="top-language">
                     <ul class="list">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="images/common/en-flag.png" alt="selected language">EN</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/images/common/en-flag.png" alt="selected language">EN</a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#"><img src="images/common/fr-flag.png" alt="language">FR</a>
+                                    <a href="#"><img src="/images/common/fr-flag.png" alt="language">FR</a>
                                 </li>
                                 <li>
-                                    <a href="#"><img src="images/common/en-flag.png" alt="language">EN</a>
+                                    <a href="#"><img src="/images/common/en-flag.png" alt="language">EN</a>
                                 </li>
                                 <li>
-                                    <a href="#"><img src="images/common/ru-flag.png" alt="language">RU</a>
+                                    <a href="#"><img src="/images/common/ru-flag.png" alt="language">RU</a>
                                 </li>
                             </ul>
                         </li>
@@ -96,7 +96,7 @@ AppAsset::register($this);
     <!--MAIN MENU WRAP BEGIN-->
 <div class="main-menu-wrap sticky-menu">
     <div class="container">
-        <a href="index.html" class="custom-logo-link"><img src="images/hockey/logo.png" alt="logo" class="custom-logo"></a>
+        <a href="index.html" class="custom-logo-link"><img src="/images/hockey/logo.png" alt="logo" class="custom-logo"></a>
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#team-menu" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -124,7 +124,7 @@ AppAsset::register($this);
                         <li>
                             <a href="/"><span>Hi, <?=Yii::$app->user->identity->username?></span></a>
                             <ul>
-                                <li><a href="#"><span>My profile</span></a></li>
+                                <li><a href="/profile/index"><span>My profile</span></a></li>
                                 <li><a href="/logout"><span>Logout</span></a></li>
                             </ul>
                         </li>
@@ -227,7 +227,7 @@ AppAsset::register($this);
                 <div class="col-md-4 col-sm-12">
                     <div class="footer-left">
                         <div class="wrap">
-                            <a href="index.html" class="foot-logo"><img src="images/hockey/footer-logo.png" alt="footer-logo"></a>
+                            <a href="index.html" class="foot-logo"><img src="/images/hockey/footer-logo.png" alt="footer-logo"></a>
                             <p>Activated charcoal trust fund ugh prism af, beard marfa air plant stumptown gastropub farm-to-table jianbing.</p>
                             <ul class="foot-left-menu">
                                 <li><a href="staff.html">First team</a></li>
@@ -243,7 +243,7 @@ AppAsset::register($this);
                     <div class="foot-news">
                         <h4>Recent news</h4>
                         <div class="item">
-                            <a href="news.html" class="image"><img class="img-responsive" src="images/hockey/foot-news-img.jpg" alt="news-image"></a>
+                            <a href="news.html" class="image"><img class="img-responsive" src="/images/hockey/foot-news-img.jpg" alt="news-image"></a>
                             <a href="news.html" class="name">When somersaulting Sanchez shouldered Mexico’s hopes</a>
                             <a href="news.html" class="date">25 Sep 2016</a>
                             <span class="separator">in</span>

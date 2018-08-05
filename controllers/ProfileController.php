@@ -4,6 +4,9 @@ namespace app\controllers;
 
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use app\models\Teams;
+use app\models\Games;
+use app\models\UserTeam;
 use Yii;
 
 class ProfileController extends \yii\web\Controller
@@ -52,5 +55,31 @@ class ProfileController extends \yii\web\Controller
     {
         return $this->render('index');
     }
+
+    public function actionCreateTeam()
+    {
+		$id = Yii::$app->user->identity->id;
+		$games = Games::find()->leftJoin('teams', '`teams`.`game_id` = `games`.`id`')
+		->leftJoin('user_team', '`user_team`.`id_team` = `teams`.`id`')
+		->where(['user_team.id_user' => $id])->asArray()->all();
+		$not_gemes = [];
+		foreach($games as $value){
+			$not_gemes[] = $value['id'];
+		}
+		
+		$not_gemes = Games::find()->where(['not in', 'id', $not_gemes])->all();;
+
+        $model = new Teams();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                return;
+            }
+        }
+
+        return $this->render('createteam', compact('model','not_gemes') );
+    }
+
 
 }
