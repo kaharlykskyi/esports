@@ -50,7 +50,16 @@ class m180803_085590_create_table_users_team extends Migration
             'id',
             'CASCADE'
         );
+        
+        $this->insert('user_team', [
+            'id_user' => 1,
+            'id_team' => 1,
+        ]);
 
+        $this->insert('user_team', [
+            'id_user' => 1,
+            'id_team' => 2,
+        ]);
 
     }
 

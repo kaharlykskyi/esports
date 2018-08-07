@@ -335,7 +335,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="checkbox">
                         
                         <input type="checkbox" class='filter-check' id='check'>
-                        <label for="check"><span style="font-size: 18px;">I agree to the <a href="GDPR Terms">GDPR Terms</a></span></label>
+                        <label for="check"  >
+                            <span style="font-size: 18px;position: relative;bottom: 5px;">I agree to the 
+                                <a href="GDPR Terms">GDPR Terms</a>
+                            </span>
+                        </label>
                     </div>
                 </div>
             </div>  

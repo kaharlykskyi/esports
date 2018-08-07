@@ -40,16 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="youplay-user-navigation">
         <div class="container">
             <ul class="flickity-enabled is-draggable nav nav-tabs" tabindex="0">
-                <!-- <div class="flickity-viewport" style="height: 45px; touch-action: pan-y;">
-                    <div class="flickity-slider" style="left: 0px; transform: translateX(0%);"> -->
-                        <li id="activity-personal-li" class="current selected active is-selected" aria-selected="true" ><a id="user-activity" data-toggle="tab" href="#panel1">Profile</a></li>
-                        <li id="xprofile-personal-li" aria-selected="false" ><a id="user-xprofile" data-toggle="tab" href="#panel2">Activity</a></li>
-                        <li id="blogs-personal-li" aria-selected="false" ><a id="user-blogs" data-toggle="tab" href="#panel3">Teams <span class="badge mnb-1">4</span></a></li>
-                        <li id="friends-personal-li" aria-selected="false" ><a id="user-friends" data-toggle="tab" href="#panel4">Friends<span class="badge mnb-1 sr-only">0</span></a></li>
-                        <!-- <li id="groups-personal-li" aria-selected="false" style="position: absolute; left: 33.57%;"><a id="user-groups" href="https://wp.nkdev.info/youplay/members/craager/groups/">Groups <span class="badge mnb-1">1</span></a></li>
-                        <li id="forums-personal-li" aria-selected="false" style="position: absolute; left: 44.06%;"><a id="user-forums" href="https://wp.nkdev.info/youplay/members/craager/forums/">Forums</a></li> -->
-                    <!-- </div>
-                </div> -->
+                <li id="activity-personal-li" class="current selected active is-selected" aria-selected="true" ><a id="user-activity" data-toggle="tab" href="#panel1">Profile</a></li>
+                <li id="xprofile-personal-li" aria-selected="false" ><a id="user-xprofile" data-toggle="tab" href="#panel2">Activity</a></li>
+                <li id="blogs-personal-li" aria-selected="false" ><a id="user-blogs" data-toggle="tab" href="#panel3">My teams <span class="badge mnb-1"><?=$teams['count_teams']?></span></a></li>
+                <li id="friends-personal-li" aria-selected="false" ><a id="user-friends" data-toggle="tab" href="#panel4">Friends<span class="badge mnb-1 sr-only">0</span></a></li>      
             </ul>
         </div>
     </div>
@@ -243,7 +237,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div id="panel3" class="tab-pane fade">
                     <div class="row">
                         <div class="col-md-7" >
-                            <a href="/profile/createteam" class="btn btn-primary">Create team</a>
+                            <?php if ($teams['btn']>0): ?>
+                                <a href="/profile/create-team" class="btn btn-primary">Create team</a>
+                            <?php endif;?>
                         </div>
                         <div class="col-md-5" style="margin-bottom:30px;">
                             <div class="row">
@@ -270,29 +266,35 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-md-12">
                             <table class="table" >
                             <tbody>
-                                <tr>
-                                    <td style="width: 130px;"  >
-                                        <a href="https://wp.nkdev.info/youplay/groups/youplay/" class="angled-img">
-                                            <div class="img"> 
-                                                <img src="https://cdn-wp.nkdev.info/youplay/wp-content/uploads/group-avatars/1/2c4699b205731139dbcf0e419c5b601a-bpthumb.jpg" class="avatar group-1-avatar avatar-100 photo" width="100" height="100" alt="Group logo of Youplay">
-                                            </div> 
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="item-title">
-                                            <a href="https://wp.nkdev.info/youplay/groups/youplay/">Youplay</a>
-                                        </div>
-                                        <div class="item-meta">
-                                            <span class="date">active 7 months, 1 week ago</span>
-                                        </div>
-                                        <div class="item-desc">
-                                            <p>BuddyPress test group</p>
-                                        </div>
-                                    </td>
-                                    <td class="text-right ">
-                                        <div class="meta mr-10"> Public Group<br>1 member</div>
-                                    </td>
-                                </tr>
+                                <?php foreach ($teams['teams'] as $team):?>
+                                    <tr>
+                                        <td style="width: 130px;"  >
+                                            <a href="https://wp.nkdev.info/youplay/groups/youplay/" class="angled-img">
+                                                <div class="img-game"> 
+                                                    <img src="<?=$team->logo ?>" class="avatar group-1-avatar avatar-100 photo" width="100" height="100" alt="Group logo of Youplay">
+                                                </div> 
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="item-title">
+                                                <a href="https://wp.nkdev.info/youplay/groups/youplay/"><?=$team->name?></a>
+                                            </div>
+                                            <div class="item-meta">
+                                                <span class="date">Created <?= date("d-m-Y",$team->created_at) ?></span>
+                                            </div>
+                                            <div class="item-desc">
+                                                <p><?= $team->game->name ?></p>
+                                            </div>
+                                        </td>
+                                        <td class="text-right ">
+                                            <div class="meta mr-10"> <?= $team->coutUsers() ?> member(s)
+                                                <?php if($team->capitan == \Yii::$app->user->identity->id ): ?>
+                                                    <a href="/profile/update-team?id=<?=$team->id?>" class="btn edit-team">Edit team</a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                         </div>

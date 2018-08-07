@@ -17,6 +17,15 @@
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
     -webkit-backface-visibility: hidden;
+    border-radius: 50
+
+}
+
+.img-game{
+    border-radius: 50%;
+     overflow: hidden;
+     height: 100px;
+    width: 100px;
 }
 .youplay-user .user-data {
     position: relative;
@@ -327,4 +336,7 @@ table{
     margin: 1rem 0;
     clear: both;
     font-size: 1.2rem;
+}
+.edit-team{
+    padding: 10px;
 }

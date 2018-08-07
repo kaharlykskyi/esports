@@ -20,15 +20,15 @@ class m180803_085539_create_table_games extends Migration
 
         $this->insert('games', [
             'name' => 'HearthStone',
-            'logo' =>'logo.png',
+            'logo' =>'hart5-0.jpg',
         ]);
         $this->insert('games', [
             'name' => 'Pokémon',
-            'logo' =>'logo.png',
+            'logo' =>'pokemon.jpg',
         ]);
         $this->insert('games', [
             'name' => 'World of Warcraft',
-            'logo' =>'logo.png',
+            'logo' =>'photo1.jpg',
         ]);
     }
 

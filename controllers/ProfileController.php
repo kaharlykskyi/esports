@@ -8,6 +8,7 @@ use app\models\Teams;
 use app\models\Games;
 use app\models\UserTeam;
 use Yii;
+use yii\web\UploadedFile;
 
 class ProfileController extends \yii\web\Controller
 {
@@ -47,17 +48,18 @@ class ProfileController extends \yii\web\Controller
                 Yii::$app->session->setFlash('error', 'Please confirm you email !   '.$a_email);
             }
         }
- 		
  		return parent::beforeAction($action);
 	}
 
     public function actionIndex()
-    {
-        return $this->render('index');
+    {   
+        $teams = Teams::getTeamsThisUser();
+        return $this->render('index',compact('teams'));
     }
 
     public function actionCreateTeam()
     {
+  
 		$id = Yii::$app->user->identity->id;
 		$games = Games::find()->leftJoin('teams', '`teams`.`game_id` = `games`.`id`')
 		->leftJoin('user_team', '`user_team`.`id_team` = `teams`.`id`')
@@ -68,18 +70,90 @@ class ProfileController extends \yii\web\Controller
 		}
 		
 		$not_gemes = Games::find()->where(['not in', 'id', $not_gemes])->all();;
-
+        if (empty($not_gemes)) {
+            return $this->redirect(['index']);
+        }
         $model = new Teams();
+        
+        if (Yii::$app->request->isPost) {
+           
+            $model->capitan = $id;
+            if ($model->load(Yii::$app->request->post())) {
+                    $model->file = UploadedFile::getInstance($model, 'file');
+                    $model->file1 = UploadedFile::getInstance($model,'file1');
+               
+                if (is_object($model->file1) && is_object($model->file) && $model->validate()) {
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                // form inputs are valid, do something here
-                return;
+                    $pathBackground = \Yii::getAlias('@webroot').'/images/background/'.$id.'/';   
+                    if (!is_dir($pathBackground)) {
+                        mkdir($pathBackground, 0777, true);
+                    }
+                    $model->file1->saveAs($pathBackground.$model->file1->baseName.'.'.$model->file1->extension);
+
+                    $pathLogo = \Yii::getAlias('@webroot').'/images/logo/'.$id.'/';
+                    if (!is_dir($pathLogo)) {
+                        mkdir($pathLogo, 0777, true);
+                    }
+                    $model->file->saveAs($pathLogo.$model->file->baseName.'.'.$model->file->extension);
+                     
+                    $model->logo = '/images/logo/'.$id.'/'.$model->file->baseName.'.'.$model->file->extension;
+                    $model->background = '/images/background/'.$id.'/'.$model->file1->baseName.'.'.$model->file1->extension;
+                    if($model->save()){
+                        $user_team = new UserTeam();
+                        $user_team->id_user = $id;
+                        $user_team->id_team = $model->id;
+                        $user_team->save();
+                        return $this->redirect(['index']);;
+                    }
+                }
             }
         }
-
         return $this->render('createteam', compact('model','not_gemes') );
     }
+
+    public function actionUpdateTeam($id = false)
+    {
+        if ($id) {
+            if ($model = Teams::findOne($id)) {
+                
+                if (Yii::$app->request->isPost) {
+                    if ($model->load(Yii::$app->request->post())) {
+                        $model->file = UploadedFile::getInstance($model, 'file');
+                        $model->file1 = UploadedFile::getInstance($model,'file1');
+                        if (is_object($model->file)) { 
+                            $pathLogo = \Yii::getAlias('@webroot').'/images/logo/'.$id.'/';
+                            if (!is_dir($pathLogo)) {
+                                mkdir($pathLogo, 0777, true);
+                            }
+                            $model->file->saveAs($pathLogo.$model->file->baseName.'.'.$model->file->extension);
+                            $model->logo = '/images/logo/'.$id.'/'.$model->file->baseName.'.'.$model->file->extension;
+                        }
+                        if (is_object($model->file1)) { 
+                            $pathLogo = \Yii::getAlias('@webroot').'/images/background/'.$id.'/';
+                            if (!is_dir($pathLogo)) {
+                                mkdir($pathLogo, 0777, true);
+                            }
+                            $model->file1->saveAs($pathLogo.$model->file1->baseName.'.'.$model->file1->extension);
+                            $model->background = '/images/background/'.$id.'/'.$model->file1->baseName.'.'.$model->file1->extension;
+                        }
+                        $model->save();
+                        return $this->redirect(['index']);
+                    }
+                }
+                
+                $users_team = UserTeam::find()->where(['user_team.id_team' => $id])->all();
+                $id_users = [];
+                foreach($users_team as $value){
+                    $id_users[] = $value['id_user'];
+                }
+                $users = \app\models\User::find()->where(['in', 'id', $id_users])->all();
+                return $this->render('update-team', compact('model','users'));
+            }
+            return $this->redirect('/profile');
+        }
+        return $this->redirect('/profile');
+    }
+        
 
 
 }

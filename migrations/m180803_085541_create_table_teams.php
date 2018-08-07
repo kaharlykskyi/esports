@@ -16,10 +16,12 @@ class m180803_085541_create_table_teams extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(200)->notNull()->unique(),
             'logo' => $this->string(200)->notNull(),
-            'bacgraund' => $this->string(200)->notNull(),
+            'background' => $this->string(200)->notNull(),
             'game_id' => $this->integer(),
             'website' => $this->string(200)->Null(),
-            'captain' => $this->string(200)->notNull()
+            'capitan' => $this->integer(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ]);
 
 
@@ -39,9 +41,51 @@ class m180803_085541_create_table_teams extends Migration
             'id',
             'CASCADE'
         );
+        
+         // creates index for column `capitan`
+        $this->createIndex(
+            'idx-capitan',
+            'teams',
+            'capitan'
+        );
+
+        // add foreign key for table `users`
+        $this->addForeignKey(
+            'fk-capitan',
+            'teams',
+            'capitan',
+            'users',
+            'id',
+            'CASCADE'
+        );
+
+            $this->insert('teams', [
+            'name' => 'Start',
+            'logo' => 'logo',
+            'background' => 'background',
+            'game_id' => 1,
+            'website' => 'qqqqqqqqqqqqq',
+            'capitan' => 1,
+            'created_at' => 1533553967,
+            'updated_at' => 1533553967,
+        ]);
+
+    $this->insert('teams', [
+            'name' => 'Stop',
+            'logo' => 'logo',
+            'background' => 'background',
+            'game_id' => 2,
+            'website' => 'qqqqqqqqqqqqq',
+            'capitan' => 1,
+            'created_at' => 1533553967,
+            'updated_at' => 1533553967,
+        ]);
+    
+        
     }
 
-    /**
+/**
+
      * {@inheritdoc}
      */
     public function safeDown()
