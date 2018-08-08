@@ -337,6 +337,52 @@ table{
     clear: both;
     font-size: 1.2rem;
 }
-.edit-team{
-    padding: 10px;
+.edit-team, .invite_btn{
+    padding: 8px;
+    text-transform: capitalize;
+}
+.modal_search {
+    border:1px  solid  #ccc !important;
+}
+.search_btn{
+    padding: 13px;
+}
+#content_modal{
+    margin-bottom:50px;
+    margin-top: 20px;
+    overflow: auto;
+    max-height: 400px;
+}
+
+.plashka_user{
+    border: 1px solid #ccc;
+    margin-top: 10px;
+     
+    padding: 0 ;
+    
+}
+.plashka_user p{
+    margin: 24px;
+    font-size: 19px;
+    font-weight: bold;
+}
+.invite_btn{
+    font-size: 14px;
+    padding: 6px;
+    margin: 24px 0;
+}
+.img_logo_modal{
+    height: 80px;
+    width: 80px;
+}
+.img_logo_modal img{
+    max-width: 100%;
+    max-height: 100%;
+}
+.modal_message{
+    text-align: center;
+}
+
+.modal_message img {
+    height: 100px;
 }

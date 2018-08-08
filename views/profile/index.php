@@ -1,9 +1,11 @@
 <?php
-use app\widgets\Alert;
+    use app\widgets\Alert;
+    use yii\helpers\Html;
 
-$this->registerCssFile('css/profile.css', ['depends' => ['app\assets\AppAsset']]);
-$this->title = 'Profile';
-$this->params['breadcrumbs'][] = $this->title;
+    $this->registerCssFile('css/profile.css', ['depends' => ['app\assets\AppAsset']]);
+    $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/profile.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
+    $this->title = 'Profile';
+    $this->params['breadcrumbs'][] = $this->title;
 ?>
 
    
@@ -43,7 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <li id="activity-personal-li" class="current selected active is-selected" aria-selected="true" ><a id="user-activity" data-toggle="tab" href="#panel1">Profile</a></li>
                 <li id="xprofile-personal-li" aria-selected="false" ><a id="user-xprofile" data-toggle="tab" href="#panel2">Activity</a></li>
                 <li id="blogs-personal-li" aria-selected="false" ><a id="user-blogs" data-toggle="tab" href="#panel3">My teams <span class="badge mnb-1"><?=$teams['count_teams']?></span></a></li>
-                <li id="friends-personal-li" aria-selected="false" ><a id="user-friends" data-toggle="tab" href="#panel4">Friends<span class="badge mnb-1 sr-only">0</span></a></li>      
+                <li id="friends-personal-li" aria-selected="false" ><a id="user-friends" data-toggle="tab" href="#panel4">Friends<span class="badge mnb-1 sr-only">0</span></a></li> 
+                <li id="seting-personal-li" aria-selected="false" ><a id="user-seting" data-toggle="tab" href="#panel5">Settings<span class="badge mnb-1 sr-only">0</span></a></li>     
             </ul>
         </div>
     </div>
@@ -153,7 +156,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-md-5">
                             <div class="row">
-                            <div class="col-md-2 no-pading">
+                            <!-- <div class="col-md-2 no-pading">
                                 <div  ><span>Show:</span></div>
                             </div>
                             <div class="col-md-10">
@@ -175,7 +178,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </select>
                                     </div>    
                                 </div>
-                            </div>
+                            </div> -->
                             </div>   
                         </div>
                     </div>
@@ -236,14 +239,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div id="panel3" class="tab-pane fade">
                     <div class="row">
-                        <div class="col-md-7" >
+                        <div class="col-md-7" style="margin-bottom: 25px;" >
                             <?php if ($teams['btn']>0): ?>
                                 <a href="/profile/create-team" class="btn btn-primary">Create team</a>
                             <?php endif;?>
                         </div>
                         <div class="col-md-5" style="margin-bottom:30px;">
                             <div class="row">
-                            <div class="col-md-3 no-pading">
+                            <!-- <div class="col-md-3 no-pading">
                                 <div  ><span>Order By:</span></div>
                             </div>
                             <div class="col-md-9">
@@ -258,7 +261,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </select>
                                     </div>    
                                 </div>
-                            </div>
+                            </div> -->
                             </div>   
                         </div>
                     </div>
@@ -286,6 +289,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <p><?= $team->game->name ?></p>
                                             </div>
                                         </td>
+                                        <td>
+                                            <?php if($team->capitan == \Yii::$app->user->identity->id ): ?>
+                                                <a class="btn edit-team" href="#myModal1" data-toggle="modal" data-game-id="<?=$team->id ?>"  style="margin-top: 18px;">Add new members</a>
+                                            <?php endif; ?>
+                                        </td>
                                         <td class="text-right ">
                                             <div class="meta mr-10"> <?= $team->coutUsers() ?> member(s)
                                                 <?php if($team->capitan == \Yii::$app->user->identity->id ): ?>
@@ -297,6 +305,33 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+
+                        <div id="myModal1" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <input type="text" class="modal_search" placeholder="Search for players" >
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn search_btn" id="search_mod">Search</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 " id='content_modal'>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         </div>
                     </div>
                 </div>
@@ -304,7 +339,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="row">
                         <div class="col-md-5 col-md-offset-7" style="margin-bottom:30px;">
                             <div class="row">
-                            <div class="col-md-3 no-pading">
+                            <!-- <div class="col-md-3 no-pading">
                                 <div  ><span>Order By:</span></div>
                             </div>
                             <div class="col-md-9">
@@ -319,7 +354,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </select>
                                     </div>    
                                 </div>
-                            </div>
+                            </div> -->
                             </div>   
                         </div>
                     </div> 
@@ -330,6 +365,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <p class="m-0">Sorry, no members were found.</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="panel5" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-12" style="margin-bottom: 40px;" >
+                            <form action="/profile/settings" method="post">
+                                <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []);?>
+                                <div class="checkbox">
+                                    <input type="checkbox" name="visible" class='filter-check' id="check_visible" <?= \Yii::$app->user->identity->visible ? 'checked': ''?>>
+                                    <label for="check_visible" >
+                                        <span style="font-size: 18px;position: relative;bottom: 5px;">I allow to send me invites to the teams</span>
+                                    </label>
+                                 </div>
+                                <button type="submit" class="btn submit-btn" >visible</button>
+                            </form>
                         </div>
                     </div>
                 </div>

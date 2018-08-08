@@ -69,7 +69,7 @@ $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/create-team.css');
                         <label class="col-sm-12 control-label" for="teams-background">Capitan</label>
                         <div class="item select-show">
                             <div class="fancy-select ">
-                                <select class="basic" name="Team[capitan]" required>
+                                <select class="basic" name="Teams[capitan]" required>
                                     <?php foreach ($users as  $user) :?>
                                          <option     <?= $user->id==$model->capitan ? 'selected' : '' ?>  value="<?=$user->id ?>"><?=$user->name?></option>
                                     <?php endforeach; ?> 
@@ -78,7 +78,7 @@ $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/create-team.css');
                         </div>
                     </div>
                 </div>
-                <input type="hidden" id="game_idf" value="<?=$model->game_id?>" name="Team[game_id]" >
+                <input type="hidden" id="game_idf" value="<?=$model->game_id?>" name="Teams[game_id]" >
             </div>   
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
