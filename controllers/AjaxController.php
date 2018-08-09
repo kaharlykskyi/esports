@@ -46,12 +46,12 @@ class AjaxController extends \yii\web\Controller
                 foreach($team as $value){
                 $not_users[] = $value['id_user'];
             }
-            $user = User::find()->select(['id','name'])
+            $user = User::find()->select(['id','name', 'username'])
             ->where(['not in', 'id', $not_users])
             ->andWhere(['LIKE', 'name', $post['search']])
             ->andWhere(['visible' => 1])->asArray()->all();
 
-            $user_not_accept = (new \yii\db\Query())->select(['users.id' ,'name','status'])
+            $user_not_accept = (new \yii\db\Query())->select(['users.id' ,'name','status', 'username'])
             ->from('users')->leftJoin('user_team', 'user_team.id_user = users.id')
             ->where(['!=','status' , UserTeam::ACCEPTED])
             ->andWhere(['users.visible' => 1])
@@ -82,15 +82,17 @@ class AjaxController extends \yii\web\Controller
             if ($user_team->save()) {
                 $user = User::findOne($post['id_user']);
                 $team = Teams::findOne($post['id_team']);
+                $capitanEmail = (User::findOne($team->capitan))->email;
                 if (is_object($user)) {
-                    $url = Url::toRoute(['profile/confirmation-team','confirmation_tokin'=> $stringTokin,'email' => $email,], true);
+                    $url = Url::toRoute(['profile/confirmation-team','confirmation_tokin'=> $stringTokin, 'email' => $user->email,], true);
                     $a = Html::a($url,$url);
+                    $inviteHtml = Teams::getInviteEmailHtml($a, $user, $team, $capitanEmail);
                     Yii::$app->mailer->compose()
-                        ->setFrom(Yii::$app->params['adminEmail'])
-                        ->setTo($user->email)
-                        ->setSubject('Invitation to the team')
-                        ->setTextBody('Invitation to the team '.$team->name)
-                        ->setHtmlBody('<p>You are invited to join the team <b>'.$team->name.'</b> for confirmation or for rejection click on the link '.$a.'</p>')
+                        ->setFrom([Yii::$app->params['adminEmail'] => 'The organization'])
+                        ->setTo([$user->email => $user->name])
+                        ->setSubject("New invitation to the $team->name team")
+                        ->setTextBody("New invitation to the $team->name team")
+                        ->setHtmlBody($inviteHtml)
                         ->send();    
                 }
             }

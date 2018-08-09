@@ -35,9 +35,8 @@ $(document).ready(function () {
             return false;
         }
         errorBlock.text("");
-        
-        if($('#check').prop('checked')) {
-            button.slideDown();
+        if($('#check').prop('checked') || window.location.href.indexOf("recovery-check") > -1) {
+            button.show();
             return true;
         }
         return false;

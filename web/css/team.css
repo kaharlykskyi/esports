@@ -1,8 +1,8 @@
-.image-header {
+/*.image-header {
     min-height: 450px;
-    background: url(/images/profile/images.jpg) no-repeat right;
-   background-size: cover;
-    }
+    !*background: url(/images/profile/images.jpg) no-repeat right;*!
+    background-size: cover;
+ }*/
 
 .staff-box .info:before {
     content: '';
@@ -450,8 +450,8 @@ img {
 }
 .geme-foto{
 	position: absolute;
-	height: 200px;
-	width: 200px;
+	height: 150px;
+	width: 150px;
 	z-index: 80;
 	top:50px;
 	left: 50px;
@@ -487,7 +487,9 @@ img {
     font-size: 20px;
     color: #1976d2;
 }
-
+.blue-font {
+    color: #217ad3;
+}
 
 
 

@@ -65,13 +65,7 @@ $config = [
             'rules' => [
                 '<controller:(profile|teams)>' => '<controller>/index',
                 '<action:[A-Z,a-z,-]+>' => 'site/<action>',
-                //'recovery-check'=> '/site/recovery-check',
-                //'change-password'=> '/site/change-password',
-                // 'login' => '/site/login',
-                // 'register'=> '/site/register',
-                // 'logout'=> '/site/logout',
-                // 'recovery'=> '/site/recovery',
-                
+                '<controller>/<action:(public)>/<id:\d+>' => '<controller>/<action>', //for public pages
             ],
         ],
     ],

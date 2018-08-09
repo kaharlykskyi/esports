@@ -123,7 +123,7 @@ AppAsset::register($this);
                         <li>
                             <a href="/"><span>Hi, <?=Yii::$app->user->identity->username?></span></a>
                             <ul>
-                                <li><a href="/profile/index"><span>My profile</span></a></li>
+                                <li><a href="/profile"><span>My profile</span></a></li>
                                 <li><a href="/logout"><span>Logout</span></a></li>
                             </ul>
                         </li>

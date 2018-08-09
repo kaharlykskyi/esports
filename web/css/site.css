@@ -50,3 +50,10 @@ input[type=email], input[type=password] {
 .errors-list > p {
     font-size: 14px;
 }
+.btn-red {
+    background: #cc2121 !important;
+    color: #fff;
+}
+.btn-red:hover {
+    opacity: .6;
+}

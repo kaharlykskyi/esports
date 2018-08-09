@@ -46,7 +46,7 @@ class ProfileController extends \yii\web\Controller
             if (!Yii::$app->user->identity->is_verified) {
                 $email = Yii::$app->user->identity->email;
                 $a_email = '<a href="http://'.$email.'">'.$email.'</a>';
-                Yii::$app->session->setFlash('error', 'Please confirm you email !   '.$a_email);
+                Yii::$app->session->setFlash('warning', 'Please confirm you email: '.$a_email);
             }
         }
  		return parent::beforeAction($action);

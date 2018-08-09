@@ -45,5 +45,10 @@ class TeamsController extends \yii\web\Controller
         return $this->render('index');
     }
 
-
+    public function actionPublic($id)
+    {
+        $team = Teams::findOne($id);
+        $members = $team->getMembers();
+        return $this->render('team', compact(['team', 'members']));
+    }
 }

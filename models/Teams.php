@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use  yii\behaviors\TimeStampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "teams".
@@ -83,6 +84,11 @@ class Teams extends \yii\db\ActiveRecord
         return $this->hasOne(Games::className(), ['id' => 'game_id']);
     }
 
+    public function getCapitan()
+    {
+        return $this->hasOne(User::className(), ['id' => 'capitan']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -98,7 +104,8 @@ class Teams extends \yii\db\ActiveRecord
         return $count;
     }
 
-    public static function getTeamsThisUser(){
+    public static function getTeamsThisUser()
+    {
         $teams = [];
         $count_teams = 0;
         $userteams =Yii::$app->user->identity->getUserteams()
@@ -111,5 +118,21 @@ class Teams extends \yii\db\ActiveRecord
         $count_games = Games::find()->count();
         $btn = $count_games-$count_teams;
         return compact('teams','count_teams','btn');
+    }
+
+    public static function getInviteEmailHtml($a, $user, $team, $capitanEmail)
+    {
+        return "<p>Hello {$user->name},
+                </p><p>The <b>{$team->name}</b> team invites you to become part of its players. To <b>accept</b> or <b>decline</b> the invitation click the link below: </p>
+                <p><a href='$a'>$a</a></p><p>Finally, if you want more information, contact <b>{$team->name}</b> through their website, or through their captain, by email {$capitanEmail}.</p>
+                <p>We hope you enjoy competing in our tournaments.</p>
+                <p>Sincerely.</p>
+                <p>The organization.</p>";
+    }
+
+    public function getMembers()
+    {
+        $ids = ArrayHelper::getColumn(UserTeam::find()->where(['id_team' => $this->id, 'status' => UserTeam::ACCEPTED])->asArray()->all(), 'id_user');
+        return User::find()->where(['in', 'id', $ids])->all();
     }
 }

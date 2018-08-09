@@ -48,24 +48,24 @@ $(document).ready(function () {
     function contentAdd (e) {
         contentClear();
         $(e).each(function(indx, element){
-            let box = `<button  class="btn  invite_btn" onclick="data_game_sendMess(this)" data-id-user="${element.id}">Invite to the team</button>`;
+            let box = `<button  class="btn invite_btn" onclick="data_game_sendMess(this)" data-id-user="${element.id}">Invite to the team</button>`;
             if (element.hasOwnProperty('status')) {
                 if (element.status == 1) {
-                     box = `<p class="sent" >Sent...</p>`;
+                     box = `<p class="sent" >Sent</p>`;
                 }
                 if (element.status == 3) {
-                     box = `<p class="declined" > DECLINED </p>`;
+                     box = `<p class="declined">Declined</p>`;
                 }
             }
             let html = `<div class="col-md-12 plashka_user" >
                         <div class="row">
-                            <div class="col-md-3 " >
+                            <div class="col-md-2" >
                                 <div class="img_logo_modal">
                                     <img src="/images/profile/images.png" alt="">
                                 </div>
                             </div>
-                            <div class="col-md-5 " >
-                                <p>${element.name}</p>
+                            <div class="col-md-6" >
+                                <p>${element.name} @${element.username}</p>
                             </div>
                             <div class="col-md-4 box" >
                                 ${box}
@@ -81,7 +81,7 @@ $(document).ready(function () {
         let id = button.attr('data-id-user');
         
         sendXmlHttp(id);
-        button.parent(".box").append('<p class="sent" >Sent...</p>');
+        button.parent(".box").append('<p class="sent" >Sent</p>');
         button.hide();
     };
 

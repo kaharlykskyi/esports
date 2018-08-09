@@ -70,7 +70,7 @@
                     </div>
                     <div class="col-md-12">
                         <h4>Base</h4>
-                        <table class="table" >
+                        <table class="table table-profile" >
                             <tbody>
                                 <tr>
                                     <td style="width: 250px;"  >Name</td>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-md-12">
                         <h4>Contact information</h4>
-                        <table class="table"  >
+                        <table class="table table-profile">
                             <tbody>
                                 <tr>
                                     <td style="width: 250px;"  >Hometown</td>
@@ -121,7 +121,7 @@
                     </div>
                     <div class="col-md-12">
                         <h4>Interests</h4>
-                        <table class="table" >
+                        <table class="table table-profile">
                             <tbody>
                                 <tr>
                                     <td style="width: 250px;"  >Activities</td>
@@ -271,16 +271,14 @@
                             <tbody>
                                 <?php foreach ($teams['teams'] as $team):?>
                                     <tr>
-                                        <td style="width: 130px;"  >
-                                            <a href="https://wp.nkdev.info/youplay/groups/youplay/" class="angled-img">
-                                                <div class="img-game"> 
-                                                    <img src="<?=$team->logo ?>" class="avatar group-1-avatar avatar-100 photo" width="100" height="100" alt="Group logo of Youplay">
-                                                </div> 
-                                            </a>
+                                        <td style="width: 130px; vertical-align: middle" >
+                                            <div class="img-game">
+                                                <a href="/teams/public/<?=$team->id?>"><img src="<?=$team->logo ?>" class="avatar group-1-avatar avatar-100 photo" width="100" height="100" alt="Team logo"></a>
+                                            </div>
                                         </td>
-                                        <td>
+                                        <td style="vertical-align: middle; padding-left: 20px;">
                                             <div class="item-title">
-                                                <a href="https://wp.nkdev.info/youplay/groups/youplay/"><?=$team->name?></a>
+                                                <a href="/teams/public/<?=$team->id?>"><?=$team->name?></a>
                                             </div>
                                             <div class="item-meta">
                                                 <span class="date">Created <?= date("d-m-Y",$team->created_at) ?></span>
@@ -288,16 +286,24 @@
                                             <div class="item-desc">
                                                 <p><?= $team->game->name ?></p>
                                             </div>
+                                            <div class="members-small">
+                                                <p> <?= $team->coutUsers() ?> member(s)</p>
+                                            </div>
                                         </td>
-                                        <td>
-                                            <?php if($team->capitan == \Yii::$app->user->identity->id ): ?>
-                                                <a class="btn edit-team" href="#myModal1" data-toggle="modal" data-game-id="<?=$team->id ?>"  style="margin-top: 18px;">Add new members</a>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="text-right ">
-                                            <div class="meta mr-10"> <?= $team->coutUsers() ?> member(s)
+                                        <!--<td style="vertical-align: middle">
+                                            <?php /*if($team->capitan == \Yii::$app->user->identity->id ): */?>
+                                                <a class="btn edit-team" href="#myModal1" data-toggle="modal" data-game-id="<?/*=$team->id */?>">Add new members</a>
+                                            <?php /*endif; */?>
+                                        </td>-->
+                                        <td class="text-right" style="vertical-align: middle">
+                                            <div class="meta">
                                                 <?php if($team->capitan == \Yii::$app->user->identity->id ): ?>
-                                                    <a href="/profile/update-team?id=<?=$team->id?>" class="btn edit-team">Edit team</a>
+                                                <a class="btn edit-team" href="#myModal1" data-toggle="modal" data-game-id="<?=$team->id ?>">Add new members</a>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="meta">
+                                                <?php if($team->capitan == \Yii::$app->user->identity->id ): ?>
+                                                    <a href="/profile/update-team?id=<?=$team->id?>" class="btn edit-team edit-btn">Edit team</a>
                                                 <?php endif; ?>
                                             </div>
                                         </td>
