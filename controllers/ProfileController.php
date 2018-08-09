@@ -104,6 +104,7 @@ class ProfileController extends \yii\web\Controller
                     if($model->save()){
                         $user_team = new UserTeam();
                         $user_team->id_user = $id;
+                        $user_team->status = UserTeam::ACCEPTED;
                         $user_team->id_team = $model->id;
                         $user_team->save();
                         return $this->redirect(['index']);;
@@ -167,15 +168,36 @@ class ProfileController extends \yii\web\Controller
 
             $user = Yii::$app->user->identity;
             $post = Yii::$app->request->post();
-
-            if (!is_null($post['visible'])) {
+                if (!is_null($post['visible'])) {
                 $user->visible = 1;
-            } else {
-                $user->visible = 0;
-            }
-            $user->save();
+                } else {
+                    $user->visible = 0;
+                }
+                $user->save();
         }
         return $this->redirect('/profile');
+    }
+
+    public function actionConfirmationTeam ($confirmation_tokin, $status = false) {
+        $id = Yii::$app->user->identity->id;
+        $user_team = UserTeam::find()
+        ->where(['id_user' => $id])
+        ->andWhere(['status_tokin' => $confirmation_tokin])->one();
+        if( is_object($user_team)) {
+            if (($status == UserTeam::ACCEPTED) || ($status == UserTeam::DECLINED) ) {
+                if ($status == UserTeam::ACCEPTED) {
+                    $user_team->status = UserTeam::ACCEPTED;
+                }
+                if ($status == UserTeam::DECLINED) {
+                     $user_team->status = UserTeam::DECLINED;
+                }
+                $user_team->status_tokin = 'OK';
+                $user_team->save();
+                return $this->redirect('/profile');
+            }
+            return $this->render('confirmation-team',compact('confirmation_tokin'));
+        }
+        return $this->redirect('/profile');    
     }
         
     private function resizeImg ($pathFile)

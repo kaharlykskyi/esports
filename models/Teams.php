@@ -93,18 +93,17 @@ class Teams extends \yii\db\ActiveRecord
 
     public function coutUsers()
     {
-        $count = $this->userTeams;
-        $i = 0;
-        foreach ($count as $value) {
-            $i++;
-        }
-        return $i;
+        $count = $this->getUserTeams()
+        ->where(['user_team.status'=> UserTeam::ACCEPTED])->count();
+        return $count;
     }
 
     public static function getTeamsThisUser(){
         $teams = [];
         $count_teams = 0;
-        foreach (Yii::$app->user->identity->userteams as  $value) {
+        $userteams =Yii::$app->user->identity->getUserteams()
+        ->where(['user_team.status'=> UserTeam::ACCEPTED])->all();
+        foreach ($userteams as  $value) {
            $count_teams++; 
            $teams[] = $value['id_team'];
         }

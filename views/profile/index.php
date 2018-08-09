@@ -379,7 +379,7 @@
                                         <span style="font-size: 18px;position: relative;bottom: 5px;">I allow to send me invites to the teams</span>
                                     </label>
                                  </div>
-                                <button type="submit" class="btn submit-btn" >visible</button>
+                                <button type="submit" class="btn submit-btn" >Save</button>
                             </form>
                         </div>
                     </div>

@@ -4,20 +4,14 @@ namespace app\models;
 
 use Yii;
 
-/**
- * This is the model class for table "user_team".
- *
- * @property int $id_user
- * @property int $id_team
- *
- * @property Teams $team
- * @property Users $user
- */
+
+
 class UserTeam extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    const SENT = 1;
+    const ACCEPTED = 2;
+    const DECLINED = 3;
+
     public static function tableName()
     {
         return 'user_team';

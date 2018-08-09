@@ -13,8 +13,11 @@ class m180803_085590_create_table_users_team extends Migration
     public function safeUp()
     {
         $this->createTable('user_team', [
+            'id' => $this->primaryKey(),
             'id_user' => $this->integer(),
             'id_team' => $this->integer(),
+            'status'=> $this->integer(3)->defaultValue(0),
+            'status_tokin' => $this->string(250)->Null(),
         ]);
 
         // creates index for column `id_user`

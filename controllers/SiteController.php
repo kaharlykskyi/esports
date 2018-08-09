@@ -207,8 +207,8 @@ class SiteController extends Controller
         Yii::$app->mailer->compose()
             ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo($email)
-            ->setSubject('Тема сообщения')
-            ->setTextBody('Текст сообщения')
+            ->setSubject('<p>registration</p>')
+            ->setTextBody('<p>Confirmation of registration</p>')
             ->setHtmlBody($a)
             ->send();
     }

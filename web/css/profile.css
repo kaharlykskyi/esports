@@ -338,11 +338,11 @@ table{
     font-size: 1.2rem;
 }
 .edit-team, .invite_btn{
-    padding: 8px;
+    padding: 10px;
     text-transform: capitalize;
 }
 .modal_search {
-    border:1px  solid  #ccc !important;
+    border:1px  solid  #cccccc7d !important;
 }
 .search_btn{
     padding: 13px;
@@ -355,7 +355,7 @@ table{
 }
 
 .plashka_user{
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc7d;
     margin-top: 10px;
      
     padding: 0 ;
@@ -368,7 +368,7 @@ table{
 }
 .invite_btn{
     font-size: 14px;
-    padding: 6px;
+    padding: 10px;
     margin: 24px 0;
 }
 .img_logo_modal{
@@ -385,4 +385,11 @@ table{
 
 .modal_message img {
     height: 100px;
+}
+.box .sent{
+    color:green;
+}
+
+.table .edit-team, .invite_btn{
+    font-size: 12px;
 }
