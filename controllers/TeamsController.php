@@ -56,15 +56,14 @@ class TeamsController extends \yii\web\Controller
     public function actionContact($id)
     {
         if (Yii::$app->request->isPost) {
-            //Yii::$app->user->identity
             $user = User::find()->leftJoin('teams', '`teams`.`capitan` = `users`.`id`')->where(['teams.id'=> $id])->one();
             $post = Yii::$app->request->post();
             
             Yii::$app->mailer->compose()
                 ->setFrom([Yii::$app->params['adminEmail'] => 'The organization'])
                 ->setTo([$user->email => $user->name])
-                ->setSubject("Message from the user <b>".$post['name'].'</b>')
-                ->setTextBody("Message from the user <b>".$post['name'].'</b>')
+                ->setSubject("Message from the user  ".$post['name'])
+                ->setTextBody("Message from the user ".$post['name'])
                 ->setHtmlBody('<p>'.$post["message"].'</p><p>Mail of the user '.$post["email"].'</p>')
                 ->send(); 
             Yii::$app->session->setFlash('success', '<p> Email sent </p>'); 

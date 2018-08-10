@@ -59,15 +59,15 @@ $(document).ready(function () {
             }
             let html = `<div class="col-md-12 plashka_user" >
                         <div class="row">
-                            <div class="col-md-2" >
+                            <div class="col-xs-2" >
                                 <div class="img_logo_modal">
                                     <img src="/images/profile/images.png" alt="">
                                 </div>
                             </div>
-                            <div class="col-md-6" >
+                            <div class="col-xs-6" >
                                 <p>${element.name} @${element.username}</p>
                             </div>
-                            <div class="col-md-4 box" >
+                            <div class="col-xs-4 box" >
                                 ${box}
                             </div>
                         </div>
@@ -110,7 +110,20 @@ $(document).ready(function () {
     
     $('#myModal1').on('shown.bs.modal', function (e) {
         window.data_game_id = $(e.relatedTarget).attr('data-game-id');
-    })
+    });
+
+    $('.my-tabs').ready(function () {
+        ////Javascript to enable link to tab
+        let url = document.location.toString();
+        if (url.match('#')) {
+            $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+        } 
+    });
+
+    //Change hash for page-reload
+    $('.nav-tabs a').on('shown.bs.tab', function (e) {
+        window.location.hash = e.target.hash;
+    });
 
 });
 

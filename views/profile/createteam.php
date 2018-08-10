@@ -60,7 +60,9 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/create-team.js',['depe
                             <?php $i = 0; foreach($not_gemes as $value):
                                 $i++;
                             ?>      
-                            <label for="input<?=$i?>" class='game' style="background-image:url(../images/game/<?=$value->logo?>);" ></label>
+                            <label for="input<?=$i?>" class='game'  ><!-- style="background-image:url(../images/game/<?=$value->logo?>);" -->
+                                <img class='geme_icon' src="../images/game/<?=$value->logo?>" alt="">
+                            </label>
                             <input id="input<?=$i?>" name="Teams[game_id]" type="radio" value="<?=$value->id?>">
                         <?php endforeach; ?>
                         </div>

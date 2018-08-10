@@ -36,12 +36,16 @@ class AjaxController extends \yii\web\Controller
 
     public function actionGetUsers()
     {
-        // $post['search'] = 'a';
-        // $post['team'] = 1;
+         // $post['search'] = 'v';
+         // $post['team'] = 4;
         $post = Yii::$app->request->post();
          if (!empty($post['search'])) {
+            $game = Teams::findOne($post['team'])->game->id;
             $team = UserTeam::find()->select(['id_user'])
-            ->where(['id_team'=> $post['team']])->asArray()->all();
+            ->leftJoin('teams', '`teams`.`id` = `user_team`.`id_team`')
+            ->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
+            ->where(['games.id'=> $game])
+            ->asArray()->all();
             $not_users = [];
                 foreach($team as $value){
                 $not_users[] = $value['id_user'];
@@ -62,6 +66,9 @@ class AjaxController extends \yii\web\Controller
             if (empty($all_user)) {
                 $all_user = ['not'=>true];
             }
+            // echo "<pre>";
+            //     print_r($all_user);
+            // echo "</pre>";exit;
             return $all_user;
        }
     }

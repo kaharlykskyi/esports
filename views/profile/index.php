@@ -13,10 +13,10 @@
 <section class="image-header img-url" style="margin-bottom:70px">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-12">
                 <div class="info">
-                    <div class="wrap">
-                        <div class="col-md-12">
+                    <div class="wrap clearfix">
+                        <div class="info_user">
                             <div class="youplay-user"> 
                                 <a href="https://wp.nkdev.info/youplay/members/craager/" class="angled-img">
                                     <div class="img"> 
@@ -24,7 +24,7 @@
                                     </div> 
                                 </a>
                                 <div class="user-data">
-                                    <h2 class="user-data-h2"><?= \Yii::$app->user->identity->name ?></h2> <?= \Yii::$app->user->identity->username ?>
+                                    <h2 class="user-data-h2"><?= \Yii::$app->user->identity->name ?></h2> @<?= \Yii::$app->user->identity->username ?>
                                     <div class="youplay-user-activity">
                                         <div>
                                             <div class="title"> active 16 hours, 36 minutes ago</div>
@@ -44,7 +44,7 @@
             <ul class="flickity-enabled is-draggable nav nav-tabs" tabindex="0">
                 <li id="activity-personal-li" class="current selected active is-selected" aria-selected="true" ><a id="user-activity" data-toggle="tab" href="#panel1">Profile</a></li>
                 <li id="xprofile-personal-li" aria-selected="false" ><a id="user-xprofile" data-toggle="tab" href="#panel2">Activity</a></li>
-                <li id="blogs-personal-li" aria-selected="false" ><a id="user-blogs" data-toggle="tab" href="#panel3">My teams <span class="badge mnb-1"><?=$teams['count_teams']?></span></a></li>
+                <li id="blogs-personal-li" aria-selected="false" ><a id="user-blogs" data-toggle="tab" href="#teams">My teams <span class="badge mnb-1"><?=$teams['count_teams']?></span></a></li>
                 <li id="friends-personal-li" aria-selected="false" ><a id="user-friends" data-toggle="tab" href="#panel4">Friends<span class="badge mnb-1 sr-only">0</span></a></li> 
                 <li id="seting-personal-li" aria-selected="false" ><a id="user-seting" data-toggle="tab" href="#panel5">Settings<span class="badge mnb-1 sr-only">0</span></a></li>     
             </ul>
@@ -59,7 +59,7 @@
     <div class="row">
         <div class="col-md-9 ">
 
-            <div class="tab-content">
+            <div class="tab-content my-tabs">
                 <div id="panel1" class="tab-pane fade in active">
                     <div class="row">
                         <div class="col-md-6" style="margin-left: 10px;">
@@ -237,7 +237,7 @@
                         </div>              
                     </div>
                 </div>
-                <div id="panel3" class="tab-pane fade">
+                <div id="teams" class="tab-pane fade">
                     <div class="row">
                         <div class="col-md-7" style="margin-bottom: 25px;" >
                             <?php if ($teams['btn']>0): ?>
@@ -321,10 +321,10 @@
                                     
                                     <div class="modal-body">
                                         <div class="row">
-                                            <div class="col-md-9">
+                                            <div class="col-xs-9">
                                                 <input type="text" class="modal_search" placeholder="Search for players" >
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-xs-3">
                                                 <button class="btn search_btn" id="search_mod">Search</button>
                                             </div>
                                         </div>
