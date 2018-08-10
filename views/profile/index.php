@@ -24,7 +24,7 @@
                                     </div> 
                                 </a>
                                 <div class="user-data">
-                                    <h2 class="user-data-h2">nK</h2> @craager
+                                    <h2 class="user-data-h2"><?= \Yii::$app->user->identity->name ?></h2> <?= \Yii::$app->user->identity->username ?>
                                     <div class="youplay-user-activity">
                                         <div>
                                             <div class="title"> active 16 hours, 36 minutes ago</div>
@@ -74,7 +74,7 @@
                             <tbody>
                                 <tr>
                                     <td style="width: 250px;"  >Name</td>
-                                    <td>nK</td>
+                                    <td><?= \Yii::$app->user->identity->name ?></td>
                                 </tr>
                                 <tr>
                                     <td>Sex</td>
@@ -97,7 +97,7 @@
                             <tbody>
                                 <tr>
                                     <td style="width: 250px;"  >Hometown</td>
-                                    <td>New York</td>
+                                    <td><?= \Yii::$app->user->identity->country ?></td>
                                 </tr>
                                 <tr>
                                     <td>Mobile</td>
@@ -105,7 +105,7 @@
                                 </tr>
                                 <tr>
                                     <td>Email</td>
-                                    <td>nk*******@gmail.com</td>
+                                    <td><?= \Yii::$app->user->identity->email ?></td>
                                 </tr>
                                 <tr>
                                     <td>Instagram</td>

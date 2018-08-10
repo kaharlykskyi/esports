@@ -490,6 +490,11 @@ img {
     color: #217ad3;
 }
 
+.alert-success p{
+    text-align: center;
+    font-size: 19px;
+}
+
 
 
 

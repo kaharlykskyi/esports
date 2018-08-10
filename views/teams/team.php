@@ -213,7 +213,9 @@
 <section class="contacts-wrap">
     <div class="container">
         <div class="row">
+
             <div class="col-md-12">
+                <?= Alert::widget()?>
                 <h4 class="edgtf-st-title" >CONTACT US</h4>
             </div>
         </div>
@@ -237,21 +239,22 @@
             </div>
             <div class="col-md-6"> 
                 <div class="leave-comment-wrap">
-                    <form action="/teams/contact">
+                    <form action="/teams/contact?id=<?=$team->id?>" method="POST" >
                         <div class="row">
+                            <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []);?>
                             <div class="col-md-12">
                                 <div class="item">
-                                    <input type="text" value="<?=Yii::$app->user->identity->name?>" name="name" placeholder="Your Name" >
+                                    <input type="text" value="<?=Yii::$app->user->identity->name?>" name="name" placeholder="Your Name" required>
                                 </div>  
                             </div>
                             <div class="col-md-12">
                                 <div class="item">
-                                    <input type="email" value="<?=Yii::$app->user->identity->email?>" name="email" placeholder="Email">
+                                    <input type="email" value="<?=Yii::$app->user->identity->email?>" name="email" placeholder="Email" required>
                                 </div>  
                             </div>
                             <div class="col-md-12">
                                 <div class="item">
-                                    <textarea>Your message</textarea>
+                                    <textarea name="message" required >Your message</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">

@@ -123,4 +123,9 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(UserTeam::className(), ['id_user' => 'id']);
     }
+
+    public function getTeams()
+    {
+        return $this->hasMany(Teams::className(), ['capitan' => 'id']);
+    }
 }
