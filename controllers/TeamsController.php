@@ -7,6 +7,7 @@ use yii\filters\VerbFilter;
 use app\models\Teams;
 use app\models\Games;
 use app\models\UserTeam;
+use yii\web\HttpException;
 use Yii;
 use app\models\User;
 
@@ -39,15 +40,12 @@ class TeamsController extends \yii\web\Controller
         ];
     }
 
-   
-    // public function actionIndex()
-    // {   
-    //     return $this->render('index');
-    // }
-
     public function actionPublic($id)
     {
         $team = Teams::findOne($id);
+        if (!is_object($team)) {
+           throw new HttpException(404 ,'Page not found');
+        }
         $members = $team->getMembers();
         return $this->render('team', compact(['team', 'members']));
     }
@@ -71,7 +69,30 @@ class TeamsController extends \yii\web\Controller
         return $this->redirect(['public','id'=>$id]);
     }
 
+    public function actionDeleteTeam ($confirmation_tokin, $id_user_team) {
+  
+        $user_team = UserTeam::find()
+        ->where(['id' => $id_user_team])
+        ->andWhere(['status_tokin' => $confirmation_tokin])->one();
+        if (is_object($user_team)) {
+            $team = Teams::findOne($user_team->id_team);
+            if (is_object($team)) {
+                if (Yii::$app->request->isPost) {
+                    $team_name = $team->name;
+                    if ($team->delete()) {
+                        $delete = 1;
+                        Yii::$app->session->setFlash('warning', 'The team of the <b>'.$team_name.'</b> is remote');
+                        return $this->render('delete-team',compact('delete'));
+                    }
+                }
+                return $this->render('delete-team',compact('confirmation_tokin','team','id_user_team'));
+            }
+            throw new HttpException(404 ,'Page not found');
+        }
+        throw new HttpException(404 ,'Page not found');
 
+        
+    }
 
 
 }

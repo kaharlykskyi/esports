@@ -87,6 +87,14 @@ input[type="radio"]{
   transform: translate(-50%,-50%);
 
 }
+.conteiner_btn{
+  padding-left: 150px;
+}
+
+.conteiner_btn p {
+  margin-top: 15px;
+  color: red;
+}
 
 
 

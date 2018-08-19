@@ -38,7 +38,7 @@ $script = "$('.dropify').dropify({
 $this->registerJs($script, yii\web\View::POS_END);
 $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
 $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/create-team.css');
-//$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/update-team.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
+//$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/update-team.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
 
 ?>
 <div class="profile-createteam">
@@ -81,9 +81,12 @@ $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/create-team.css');
                 <input type="hidden" id="game_idf" value="<?=$model->game_id?>" name="Teams[game_id]" >
             </div>   
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-4 col-md-offset-2">
                 <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
             </div>
+            <!-- <div class="col-md-4 conteiner_btn" style="padding-left: 150px;">
+                <button class="btn btn-red" id="delete" data-modeel-id="<?// $model->id ?>" >Delete the team</button>
+            </div> -->
         </div>
         <?php ActiveForm::end(); ?>
     </div>

@@ -153,7 +153,7 @@
 }
 
 .fancy-select{
-	width: 200px;
+	/*width: 200px;*/
 	position:relative;
 	/*bottom: 5px;*/
 }
@@ -334,7 +334,7 @@ table{
 
 .meta {
     display: block;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     clear: both;
     font-size: 1.2rem;
 }
@@ -345,7 +345,7 @@ table{
 .edit-team, .edit-btn{
     min-width: 135px;
 }
-.modal_search {
+.modal_search ,.modal_search_team{
     border:1px  solid  #cccccc7d !important;
 }
 .search_btn{
@@ -358,7 +358,7 @@ table{
     max-height: 400px;
 }
 
-.plashka_user{
+.plashka_user,.plashka_teams{
     border: 1px solid #cccccc7d;
     margin-top: 10px;
     padding: 0 ;
@@ -404,12 +404,7 @@ table{
 .table-profile tbody tr td{
     vertical-align: middle;
 }
-@media screen and (max-width: 560px) {
-    .youplay-user-navigation ul li>a {
-       padding-left: 5px; 
-       padding-right: 5px; 
-    }
-}
+
 .info_user{
     position: absolute;
     top: 50%;
@@ -417,4 +412,192 @@ table{
 }
 .declined{
     color: red;
+}
+/*==============================================================*/
+
+/*==============================================================*/
+input[type="radio"]{
+  position:absolute;
+  right:1000%;
+}
+.game{
+  position: relative;
+  width:100px; padding-bottom:100px;
+  margin:0 2.5%;
+  /*background:#1f7ad3b8;*/
+  background-size: cover; 
+  border-radius:50%;
+  cursor:pointer;
+  position: relative;
+  /*box-shadow:0 0 10px #1f7ad3;*/
+  
+}
+.actives{
+  /*box-shadow:0 0 30px #1f7ad3;*/
+}
+.game:hover::before, .game:hover::after,
+.actives::before, .actives::after
+{
+  content: '';
+  position: absolute;
+  border:2px solid #1f7ad3 !important;
+  left: -8px;
+  right: -8px;
+  top: -8px;
+  bottom: -8px;
+  border-radius: 50%;
+  box-shadow:0 0 15px #1f7ad3;
+  animation: game 1.8s linear infinite;
+}
+.game:hover::after,.actives::after{
+  animation-delay: .9s;
+}
+
+
+
+@keyframes game{
+  0%{
+    -o-transform: scale(0.8);
+     -ms-transform: scale(0.8);
+     -moz-transform: scale(0.8);
+     -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50%{
+  
+    opacity:0.8;
+  }
+  100%{
+    -o-transform: scale(1.2);
+     -ms-transform: scale(1.2);
+     -moz-transform: scale(1.2);
+     -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+.geme_icon{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  width: 100px;
+  transform: translate(-50%,-50%);
+
+}
+
+input[type=date] {
+    padding: 15px 10px;
+    border: 1px solid transparent;
+    width: 100%;
+    background: #fff;
+    font-size: 14px;
+    color: #666;
+    line-height: normal;
+    outline: 0;
+}
+/*-----------------------------------------------------------------------*/
+#myModal2 div.fancy-select div.trigger{
+    border:1px solid #cccccc7d;
+    box-shadow:none;
+    padding: 10px;
+}
+
+.filter_modal_link{
+    color: #00aeff;
+}
+
+.filter_modal_link:hover{
+     color: #00aeff;
+}
+.filtres_modal>div{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+
+.plashka_teams .p_name{
+    margin-top:10px;
+    margin-bottom:5px;
+    font-weight: bold;
+}
+
+.plashka_teams .p_gname{
+    margin-top:0;
+    margin-bottom:0;
+    font-size: 14px;
+}
+.plashka_teams .p_user{
+    margin-top:0;
+    margin-bottom:5px;
+    font-size: 12px;
+}
+.plashka_teams .img_logo_modal_team img{
+    border-radius: 50%;
+}
+
+#content_teams_modal_team{
+    margin-bottom:50px;
+    margin-top: 20px;
+    overflow: auto;
+    max-height: 400px;
+}
+.modal_message {
+    color:red;
+}
+
+.plashka_teams .modal_message{
+    margin-top: 40px;
+}
+
+.block_logo{
+    display: flex;
+    margin:15px 0;
+}
+
+.plashka_teams .box p{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.plashka_teams .box{
+    padding: 10px;
+}
+
+.filter_modal_content div{
+    margin-top:20px;
+}
+
+
+.table-profile tr td:first-child {
+    width: 250px;
+}
+
+
+@media screen and (max-width: 560px) {
+    .table-profile tr td:first-child {
+        width: 100px;
+    }
+}
+
+.conteiner_btn p{
+    color: red;
+    padding-right: 12px;
+}
+
+.youplay-user-navigation .container{
+    margin-left: 15px;
+}
+.youplay-user-navigation ul li>a{
+    padding: 1.2rem 1.5rem; 
+    font-size: 1.4rem;
+}
+@media screen and (max-width: 560px) {
+    .youplay-user-navigation ul li>a {
+       padding-left: 5px; 
+       padding-right: 5px; 
+    }
 }

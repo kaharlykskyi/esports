@@ -130,6 +130,15 @@ class Teams extends \yii\db\ActiveRecord
                 <p>The organization.</p>";
     }
 
+    public static function sentDeleteHtml($a, $user, $team)
+    {
+        return "<p>Team captain {$user->name},
+                </p><p>I ask to remove a command <b>{$team->name}</b></p>
+                <p>To delete or cancel, follow the link   <a href='$a'>$a</a></p>
+                <p>You can write a letter to the captain of the team <b>{$team->name}</b> his mail  {$user->email}.</p>
+                <p>The capitan.</p>";
+    }
+
     public function getMembers()
     {
         $ids = ArrayHelper::getColumn(UserTeam::find()->where(['id_team' => $this->id, 'status' => UserTeam::ACCEPTED])->asArray()->all(), 'id_user');

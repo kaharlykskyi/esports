@@ -1,0 +1,215 @@
+.ent_m171 div {
+    outline: none;
+}
+.s_layouts_snapWrapper h1, .s_layouts_snapWrapper h2{
+	color: #888 !important;
+}
+.s_layouts_snapWrapper {
+	
+	background-color: rgba(22,22,22,0.95);
+
+	
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+    -webkit-overflow-scrolling: touch;
+    opacity: 1;
+    z-index: 2000000001;
+    width: 100%;
+    height: 100%; 
+
+}
+
+/*body {
+	overflow: hidden;
+}*/
+
+.wrap_blur{
+	-webkit-filter: url(filters_clean.svg#blur);
+	-o-filter: url(filters_clean.svg#blur);
+	
+	filter: url(filters_clean.svg#blur);
+}
+
+.container_search{
+	padding-top: 70px;
+}
+
+.container_search input{
+	background: transparent;
+	border-bottom: 2px solid #3cb9d5;
+}
+
+.container_search input{
+	background: transparent;
+	border-bottom: 2px solid #3cb9d5;
+}
+
+.s_layouts_snapWrapper .s_layouts_snapInputWrapper .s_layouts_snapInput {
+    
+    font: 7vw/1.5 'BrandonTextBoldItalic', Helvetica, Arial, sans-serif;
+    font-size: 35px;
+    font-style: italic;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.s_layouts_snapWrapper .s_layouts_snapInputWrapper {
+    position: relative;
+    width: 100%;
+    white-space: nowrap;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    transition: margin-bottom .35s ease-in-out;
+    -moz-transition: margin-bottom .35s ease-in-out;
+    -webkit-transition: margin-bottom .35s ease-in-out;
+}
+
+.s_layouts_snapClose .close {
+	width: 50px;
+	position: relative;
+	bottom: 5px;
+	height: 32px;
+	opacity: 1;
+}
+.s_layouts_snapClose .close:hover {
+	opacity: 1;
+}
+.s_layouts_snapClose .close:before, .s_layouts_snapClose .close:after {
+	position: absolute;
+	left: 30px;
+	content: ' ';
+	height: 40px;
+	width: 3px;
+	background-color: #fff;
+}
+.s_layouts_snapClose .close:before {
+	transform: rotate(45deg);
+}
+.s_layouts_snapClose .close:after {
+	transform: rotate(-45deg);
+}
+
+.s_layouts_snapWrapper .s_layouts_snapHeaderWrapper {
+    padding: 30px 0;
+}
+
+.s_layouts_snapTabs, .s_layouts_snapWrapper .s_layouts_snapHeader {
+    font-size: 18px;
+}
+
+.s_layouts_snapWrapper .s_layouts_snapTabs .s_layouts_snapTab.active {
+    color: #222c32;
+    background-color: #3cb9d5;
+    border-radius: 15px;
+}
+
+.s_layouts_snapWrapper .s_layouts_snapTabs .s_layouts_snapTab {
+    color: #3cb9d5;
+    font-family: 'BrandonGrotesque-Black', Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    letter-spacing: 1px;
+    margin-right: .7em;
+}
+
+.s_layouts_snapWrapper .s_layouts_snapTabs .s_layouts_snapTab {
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 1em;
+    padding: 5px 10px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.s_layouts_snapWrapper .s_layouts_snapInputWrapper .s_layouts_snapInput:focus {
+    color: #fff;
+}
+
+.container_search_modal{
+    margin-right: -30px;
+    margin-left: -30px;
+    padding: 0;
+}
+.container_search_modal .blok_search_username, .container_search_modal .blok_search_teams{
+    border:1px solid #3cb9d5;
+    height: 150px;
+    width: 100%;
+    margin-top: 15px;
+    overflow: hidden;
+    border-radius: 5px;
+   
+}
+
+.container_search_modal .blok_search_username p,.container_search_modal .blok_search_teams p{
+    color: #fff;
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    margin-top: 7px;
+}
+.container_search_modal .blok_search_username .username,
+.container_search_modal .blok_search_teams .teams
+{
+    margin-top: 20px;
+    font-size: 2rem;
+}
+
+.container_search_modal .blok_search_username .img_cont_search,
+.container_search_modal .blok_search_teams .img_cont_search
+{
+    position:relative;
+}
+
+.container_search_modal .blok_search_username img,
+.container_search_modal .blok_search_teams img
+{
+
+    height: 80px;
+    border-radius: 50%;
+    position: absolute;
+    top:75px;
+    transform: translateY(-50%);
+}
+.s_layouts_snapMessageWrapper{
+    text-align: center;
+}
+
+.container_search_modal .list_teams{
+    margin-top:5px;
+}
+.top-search{
+    /*margin-top:5px;*/
+    height: 55px;
+    width: 55px;
+    border: none;
+}
+
+.top-search i{
+    font-size: 20px;
+}
+.top-search button{
+    left: 12px;
+
+}
+.s_layouts_snapMessageWrapper .message_search{
+    font-size: 2.5rem;
+    margin: 5px 0;
+    color: #eee;
+    font-family: 'BrandonGrotesque-Black', Helvetica, Arial, sans-serif;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.container_search_modal a:hover{
+    color: #fff;
+}

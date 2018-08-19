@@ -12,6 +12,18 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return 'users';
     }
 
+    public function rules()
+    {
+        return [
+            [['name','email'], 'required'],
+            [['name','email'], 'unique'],
+            ['email','email'],
+            [['sex','favorite_game'],'number'],
+            ['visible', 'boolean',],
+            [['username','name',  'birthday','activities','interests'], 'string'],
+        ];
+    }
+
     /**
      * Finds an identity by the given ID.
      *
@@ -117,6 +129,16 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 'message' => "Recovery email was successfully send to $email. <br> Please check your inbox!"
             ];
         }
+    }
+
+    public function getMessageTeams(){
+        $team = (new \yii\db\Query())
+        ->select(['teams.*' ,'user_team.status_tokin','users.name as u_name','users.email as u_email'])
+        ->from('teams')->leftJoin('user_team', 'user_team.id_team = teams.id')
+        ->leftJoin('users', 'users.id = teams.capitan')
+        ->where(['user_team.status' => UserTeam::SENT])
+        ->andWhere(['user_team.id_user' => $this->id])->all();
+        return $team;
     }
 
     public function getUserteams()

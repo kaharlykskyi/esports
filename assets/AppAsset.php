@@ -22,6 +22,7 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/style.min.css',
         'css/site.css',
+        'css/search-bar.css',
     ];
     public $js = [
         //'js/library/jquery.js',
@@ -81,10 +82,11 @@ class AppAsset extends AssetBundle
         'js/player_test.js',
         'js/main.js',
         'dropify/dist/js/dropify.js',
+        'js/search-bar.js',
 
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
     ];
 }

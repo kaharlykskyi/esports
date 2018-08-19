@@ -8,7 +8,7 @@ $(document).ready(function () {
     });
 
     function FSsrf () {
-       const fdata = new FormData();
+        const fdata = new FormData();
         const csrfParam = $('meta[name="csrf-param"]').attr("content");
         const csrfToken = $('meta[name="csrf-token"]').attr("content");
         fdata.append(csrfParam,csrfToken); 
@@ -58,20 +58,20 @@ $(document).ready(function () {
                 }
             }
             let html = `<div class="col-md-12 plashka_user" >
-                        <div class="row">
-                            <div class="col-xs-2" >
-                                <div class="img_logo_modal">
-                                    <img src="/images/profile/images.png" alt="">
+                            <div class="row">
+                                <div class="col-xs-2" >
+                                    <div class="img_logo_modal">
+                                        <img src="/images/profile/images.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" >
+                                    <p>${element.name} @${element.username}</p>
+                                </div>
+                                <div class="col-xs-4 box" >
+                                    ${box}
                                 </div>
                             </div>
-                            <div class="col-xs-6" >
-                                <p>${element.name} @${element.username}</p>
-                            </div>
-                            <div class="col-xs-4 box" >
-                                ${box}
-                            </div>
-                        </div>
-                    </div>`;
+                        </div>`;
           $('#content_modal').append(html);
         });
     }
@@ -118,12 +118,106 @@ $(document).ready(function () {
         if (url.match('#')) {
             $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
         } 
+        window.history.pushState(null, null, 'profile');
     });
 
-    //Change hash for page-reload
-    $('.nav-tabs a').on('shown.bs.tab', function (e) {
-        window.location.hash = e.target.hash;
+    $('.game' ).on('click',function(){
+        $('.game' ).removeClass("actives");
+        $(this).addClass("actives");
     });
 
+});
+
+$(document).ready(function () {
+
+    $('.filter_modal_link').on('click',function(event){
+        event.preventDefault();
+        $('.filter_modal_content').slideToggle();
+    });
+
+    $('#search_mod_team_btn').on('click',function(e){
+        const qualit = $('.team_quality').find('.options').find('.selected').attr('data-raw-value');
+        const game = $('.team_game').find('.options').find('.selected').attr('data-raw-value');
+        const search = $('.modal_search_team').val();
+        if (search.trim() == '') return;
+        contentClear();
+        //alert('fff');
+        searcTeams(search,game,qualit);
+        $('.modal_search_team').val('');
+
+    });
+
+    function FSsrf () {
+        const fdata = new FormData();
+        const csrfParam = $('meta[name="csrf-param"]').attr("content");
+        const csrfToken = $('meta[name="csrf-token"]').attr("content");
+        fdata.append(csrfParam,csrfToken); 
+        return fdata;
+    }
+
+    function contentClear () {
+        $('#content_teams_modal_team').empty();
+    }
+
+    function searcTeams(search,game,qualit){
+        const fdata = FSsrf();
+        fdata.append('search',search);
+        fdata.append('game',game);
+        fdata.append('qualit',qualit);
+        const statechange = function() {
+            if(this.readyState == 4) {
+                let response = JSON.parse(this.responseText);
+                console.log(response);
+                setTimeout(function(){
+                    if (response.not) {
+                        message('No results found');
+                    } else {
+                        contentAdd(response);
+                    }
+                }, 1000);
+            }
+            if(this.readyState == 2) {
+                load_img();
+            }
+        };
+        const xml = new XMLHttpRequest();
+        xml.open('POST','/ajax/get-teams',true);
+        xml.onreadystatechange = statechange;
+        xml.send(fdata);
+    }
+
+    function load_img () {
+        message ('<img src="/images/profile/load.gif">');
+    } 
+
+    function message (message){
+        contentClear();
+        let html = `<p style="font-size:19px;" class="modal_message" >${message}</p>`;
+        $('#content_teams_modal_team').append(html);
+    }
+
+    function contentAdd (e) {
+        contentClear();
+        $(e).each(function(indx, element){
+            let html = `<div class="col-xs-12 col-md-10 col-md-offset-1 plashka_teams clearfix " >
+                                <div class="col-xs-3 block_logo" >
+                                    <div class="img_logo_modal_team">
+                                        <img src="${element.logo}" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-md-6" >
+                                    <p class="p_name" >${element.name}</p>
+                                    <p class="p_gname" >${element.g_name}</p>
+                                    <p class="p_user" >${element.c_user} member(s)</p>
+                                </div>
+                                <div class="col-xs-4 col-md-3 box" >
+                                    <p>Participtes in</p>
+                                    <p>{cup name}</p>
+                                    <p>Position: 3</p>
+                                </div>
+                        </div>`;
+          $('#content_teams_modal_team').append(html);
+        });
+    }
 });
 

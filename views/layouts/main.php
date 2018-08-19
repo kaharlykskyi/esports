@@ -31,18 +31,19 @@ AppAsset::register($this);
 
 <body>
 <?php $this->beginBody() ?>
-<div>
+<div class="wrap_search_fon"> <!-- wrap_blur -->
+    
 	<div class="preloader-wrapper" id="preloader">
-    <div class="motion-line dark-big"></div>
-    <div class="motion-line yellow-big"></div>
-    <div class="motion-line dark-small"></div>
-    <div class="motion-line yellow-normal"></div>
-    <div class="motion-line yellow-small1"></div>
-    <div class="motion-line yellow-small2"></div>
-</div>
+        <div class="motion-line dark-big"></div>
+        <div class="motion-line yellow-big"></div>
+        <div class="motion-line dark-small"></div>
+        <div class="motion-line yellow-normal"></div>
+        <div class="motion-line yellow-small1"></div>
+        <div class="motion-line yellow-small2"></div>
+    </div>
 
     
-<div class="top-bar">
+    <div class="top-bar">
     <div class="container">
         <div class="row">
             <div class="col-md-7 hidden-sm hidden-xs">
@@ -79,21 +80,18 @@ AppAsset::register($this);
                         </li>
                     </ul>
                 </div>
-                    <div class="top-search">
-                            <form>
-                                    <input type="text" name="text">
-                                    <button><i class="fa fa-search" aria-hidden="true"></i></button>
-                            </form>
+                    <div class="top-search clearfix" id="search-bar">
+                        <button><i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>
 
                     <div class="clear"></div>
             </div>
         </div>
     </div>
-</div>
+    </div>
 
     <!--MAIN MENU WRAP BEGIN-->
-<div class="main-menu-wrap sticky-menu">
+    <div class="main-menu-wrap sticky-menu">
     <div class="container">
         <a href="index.html" class="custom-logo-link"><img src="/images/hockey/logo.png" alt="logo" class="custom-logo"></a>
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#team-menu" aria-expanded="false">
@@ -211,15 +209,14 @@ AppAsset::register($this);
             </div>       
         </nav>
     </div>
-</div>
+    </div>
 
-    <?= Alert::widget() ?>
+    <?//Alert::widget() ?>
     <?= $content ?>
 <!--MAIN MENU WRAP END-->
 
-
-    <!--FOOTER BEGIN-->
-<footer class="footer">
+<!--FOOTER BEGIN-->
+    <footer class="footer">
     <div class="wrapper-overfllow">
         <div class="container">
             <div class="row">
@@ -303,8 +300,44 @@ AppAsset::register($this);
             </div>
         </div>
     </div>-->
-</footer>
+    </footer>
+</div>
 <!--FOOTER END-->
+
+<!--SEARCH BAR BEGIN-->
+
+<div class="s_layouts_snapWrapper" style="display: none;">
+    <div class="container container_search">
+        <div class="row">
+            <div class="s_layouts_snapInputWrapper">
+                <input type="text" class="s_layouts_snapInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="So, what are you looking for?">
+                <div class="s_layouts_snapClose">
+                    <span class="close"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="s_layouts_snapHeaderWrapper">
+                <div class="s_layouts_snapTabs">
+                    <span class="s_layouts_snapTab all_snapTab" data-search-menu="0" style="display:none;" >All Results</span>
+                    <span class="s_layouts_snapTab users_snapTab" data-search-menu="1" style="display:none;" >User profiles</span>
+                    <span class="s_layouts_snapTab teams_snapTab" data-search-menu="2" style="display:none;">Teams</span>
+                    <span class="s_layouts_snapTab tournaments_snapTab" data-search-menu="3" style="display:none;" >Tournaments</span>
+                </div>
+            </div>
+        </div>
+       <div class="row container_search_modal">
+               
+        </div>
+        <div class="s_layouts_snapMessageWrapper">
+            <p class="img_downloder" style="display: none;" ><img src="/images/profile/45.gif"></p>
+            <p class="message_search"></p>
+        </div>
+    </div>
+</div>
+
+<!--SEARCH BAR END-->
+
 <?php $this->endBody() ?>
 </body>
 </html>

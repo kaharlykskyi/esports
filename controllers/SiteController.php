@@ -197,6 +197,16 @@ class SiteController extends Controller
        return $this->redirect('/');  
     }
 
+    public function actionResend () {
+        $user = Yii::$app->user->identity;
+        $tokin = (string)bin2hex(random_bytes(24));
+        $user->tokin_conf = $tokin;
+        if ($user->save()) {
+            $this->sendEmail($user->email,$tokin);
+        }
+        return $this->goBack('profile');
+    }
+
     private function sendEmail($email,$stringTokin)
     {
         $url = Url::toRoute(
@@ -207,7 +217,7 @@ class SiteController extends Controller
         Yii::$app->mailer->compose()
             ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo($email)
-            ->setSubject('<p>registration</p>')
+            ->setSubject('Registration')
             ->setTextBody('<p>Confirmation of registration</p>')
             ->setHtmlBody($a)
             ->send();

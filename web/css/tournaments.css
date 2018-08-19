@@ -1,0 +1,59 @@
+.format_campions{
+    display: flex;
+    /*justify-content: space-around;*/
+    align-items: center;
+    border: 1px solid #207ad3;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow:0 0 15px #1f7ad3;
+    overflow: hidden;
+}
+
+.format_campions .container_img img{
+    height: 100px;
+}
+
+.format_campions h5{
+    padding-top: 15px;
+    margin-right:15px;
+    font-style: italic;
+    text-align: center;
+}
+.elimination h5{
+    margin-right:0;
+    font-size: 14px;
+    
+}
+
+.active_campions{
+    border: 1px solid #ff1c1c;
+    box-shadow:0 0 15px #ff1c1c;
+}
+.radiolist_elimination{
+    display: none;
+}
+.table-condensed tr td:last-child span{
+    background: transparent;
+    color:#000;
+}
+.table-condensed tr td:first-child{
+    text-align: center;
+}
+.table-condensed tr th{
+   background: transparent;
+    color:#000;
+}
+#tournaments-start_date-datetime .datainput{
+    padding: 25px 10px;
+    border: 1px solid transparent;
+    width: 100%;
+    background: #fff;
+    font-size: 14px;
+    color: #666;
+    line-height: normal;
+    outline: 0;
+    height: 15px;
+}
+#tournaments-start_date-datetime .datainput:focus{
+    box-shadow: none;
+}

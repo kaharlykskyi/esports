@@ -1,7 +1,16 @@
+<?php
+    use app\widgets\Alert;
+    use yii\helpers\Html;
+    $this->title = 'Team-delete';
+    $this->params['breadcrumbs'][] = $this->title;
+?>
 <div class="container" style="margin-top: 50px;">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3 text-center" style="margin-bottom: 40px;">
-            <h2>New invite to the team</h2>
+			<?php if (isset($delete)):?>
+				<?=Alert::widget()?>
+			<?php else: ?>
+				<h2>Delete the command</h2>
             <div class="col-md-12" style="margin-bottom: 60px;">
             	<div class="col-md-5" class="clearfix" >
             		<a href="/teams/public/<?=$team->id?>" target="_blank">
@@ -14,12 +23,14 @@
             		<p><b><?=$team->game->name?></b></p>
             	</div>
             </div>
-			<div class="col-md-6">
-				<a href="/profile/confirmation-team?confirmation_tokin=<?=$confirmation_tokin?>&status=2" class="btn">ACCEPT</a>
+			<div class="col-md-6" style="text-align: center;">
+				<form action="/teams/delete-team?confirmation_tokin=<?=$confirmation_tokin?>&id_user_team=<?=$id_user_team?>" method="POST">
+					<?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []);?>
+					<button type="submit" class="btn btn-red" >DElETE</button>
+				</form>
 			</div>
-			<div class="col-md-6">
-				<a href="/profile/confirmation-team?confirmation_tokin=<?=$confirmation_tokin?>&status=3" class="btn btn-red">DECLINE</a>
-			</div>
+			<?php endif;?>
+            
 		</div>
 	</div>
 </div>

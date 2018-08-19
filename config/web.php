@@ -63,7 +63,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<controller:(profile|teams)>' => '<controller>/index',
+                '<controller:(profile|teams|tournaments)>' => '<controller>/index',
                 '<action:[A-Z,a-z,-]+>' => 'site/<action>',
                 '<controller>/<action:(public)>/<id:\d+>' => '<controller>/<action>', //for public pages
             ],
