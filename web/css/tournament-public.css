@@ -1,0 +1,33 @@
+.table-condensed tr td:last-child span{
+    background: transparent;
+    color:#000;
+}
+.table-condensed tr td:first-child{
+    text-align: center;
+}
+.table-condensed tr th{
+   background: transparent;
+    color:#000;
+}
+#tournaments-start_date-datetime .datainput{
+    padding: 25px 10px;
+    border: 1px solid transparent;
+    width: 100%;
+    background: #fff;
+    font-size: 14px;
+    color: #666;
+    line-height: normal;
+    outline: 0;
+    height: 15px;
+}
+#tournaments-start_date-datetime .datainput:focus{
+    box-shadow: none;
+}
+
+.help-block{
+    color:red;
+}
+
+.alert_tour .alert{
+ font-size: 16px;
+}

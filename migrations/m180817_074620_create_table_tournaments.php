@@ -16,6 +16,7 @@ class m180817_074620_create_table_tournaments extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(200)->notNull()->unique(),
             'game_id' => $this->integer(),
+            'user_id' => $this->integer(),
             'format' => $this->integer(3)->notNull(),
             'rules' => $this->text()->notNull(),
             'prizes' => $this->text()->notNull(),
@@ -24,20 +25,36 @@ class m180817_074620_create_table_tournaments extends Migration
             'updated_at' => $this->integer()->notNull(),
         ]);
 
-    $this->createIndex (
-            'idx-game_id',
-            'tournaments',
-            'game_id'
-    );
+        $this->createIndex (
+                'idx-game_id',
+                'tournaments',
+                'game_id'
+        );
 
-    $this->addForeignKey(
-            'fk-games_id',
-            'tournaments',
-            'game_id',
-            'games',
-            'id',
-            'CASCADE'
-    );
+        $this->addForeignKey(
+                'fk-games_id',
+                'tournaments',
+                'game_id',
+                'games',
+                'id',
+                'CASCADE'
+        );
+
+
+         $this->createIndex (
+                'idx-user_id',
+                'tournaments',
+                'user_id'
+        );
+
+        $this->addForeignKey(
+                'fk-users_id',
+                'tournaments',
+                'user_id',
+                'users',
+                'id',
+                'CASCADE'
+        );
 
     }
 

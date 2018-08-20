@@ -306,7 +306,7 @@ AppAsset::register($this);
 
 <!--SEARCH BAR BEGIN-->
 
-<div class="s_layouts_snapWrapper" style="display: none;">
+<div class="s_layouts_snapWrapper">
     <div class="container container_search">
         <div class="row">
             <div class="s_layouts_snapInputWrapper">

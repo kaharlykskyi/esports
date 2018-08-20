@@ -3,21 +3,29 @@ $(document).ready(function(){
 
 
     $('#search-bar').on('click',function(){
-        $('.s_layouts_snapWrapper').show();
+
+        //$('.s_layouts_snapWrapper').show();
+        $('.s_layouts_snapWrapper').addClass('visible-search');
         $('body').attr('style','overflow: hidden;');
         $('.wrap_search_fon').addClass('wrap_blur');
     });
 
     $('.s_layouts_snapClose').on('click',function(){
-        $('.s_layouts_snapWrapper').hide();
+
+
+        $('.s_layouts_snapWrapper').removeClass('visible-search');
+        //$('.s_layouts_snapWrapper').hide();
         $('body').attr('style','overflow: auto;');
         $('.wrap_search_fon').removeClass('wrap_blur');
+
+
+
+
         menuSerchHide();
         contentClear();
         messageClean();
         $('.s_layouts_snapInput').val('');
     });
-
 
 
     $('.s_layouts_snapTab').on('click',function(event){

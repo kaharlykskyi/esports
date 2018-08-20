@@ -12,7 +12,7 @@ class m180808_095053_add_colums_user_teams extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('user_team', 'id', $this->primaryKey());
+        //$this->addColumn('user_team', 'id', $this->primaryKey());
         $this->addColumn('user_team', 'status', $this->integer(3)->defaultValue(0));
         $this->addColumn('user_team', 'status_tokin', $this->string(250)->Null());
 
@@ -23,7 +23,7 @@ class m180808_095053_add_colums_user_teams extends Migration
      */
     public function safeDown()
     {
-        return $this->dropColumn('user_team', 'id');
+        //return $this->dropColumn('user_team', 'id');
         return $this->dropColumn('user_team', 'status');
         return $this->dropColumn('user_team', 'status_tokin');
     }

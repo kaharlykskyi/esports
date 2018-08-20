@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use  yii\behaviors\TimeStampBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -31,7 +31,7 @@ class Teams extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimeStampBehavior::className(),
         ];
     }
 

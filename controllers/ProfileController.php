@@ -10,6 +10,7 @@ use app\models\UserTeam;
 use Yii;
 use yii\web\UploadedFile;
 use app\models\User;
+use app\models\Tournaments;
 
 class ProfileController extends \yii\web\Controller
 {
@@ -56,14 +57,12 @@ class ProfileController extends \yii\web\Controller
     public function actionIndex()
     {   
 
-        // echo "<pre>";
-        //     print_r(Yii::$app->user->identity->getMessageTeams());
-        // echo "</pre>";exit;
+        $tournaments = Tournaments::findAll(Yii::$app->user->identity->id);
 
         $teams = Teams::getTeamsThisUser();
         $games = Games::find()->all();
         $not_games = $this->games();
-        return $this->render('index',compact('teams','games','not_games'));
+        return $this->render('index',compact('teams','games','not_games','tournaments'));
     }
 
     public function actionCreateTeam()
@@ -184,8 +183,21 @@ class ProfileController extends \yii\web\Controller
         $id = Yii::$app->user->identity->id;
         $user_team = UserTeam::find()
         ->where(['id_user' => $id])
-        ->andWhere(['status_tokin' => $confirmation_tokin])->one();
-        if( is_object($user_team)) {
+        ->andWhere(['status' => UserTeam::SENT])
+        ->andWhere(['status_tokin' => $confirmation_tokin])
+        ->one();
+
+        $team = Teams::findOne($user_team->id_team);
+        $game_pred = $team->game->id;
+
+        $team_my = Teams::find()
+        ->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
+        ->leftJoin('user_team', '`user_team`.`id_team` = `teams`.`id`')
+        ->where(['user_team.id_user' => $id])
+        ->andWhere(['user_team.status' => UserTeam::ACCEPTED])
+        ->andWhere(['games.id' => $game_pred])->one();
+
+        if( is_object($user_team) && !is_object($team_my)) {
             if (($status == UserTeam::ACCEPTED) || ($status == UserTeam::DECLINED) ) {
                 if ($status == UserTeam::ACCEPTED) {
                     $user_team->status = UserTeam::ACCEPTED;
@@ -197,7 +209,7 @@ class ProfileController extends \yii\web\Controller
                 $user_team->save();
                 return $this->redirect('/profile');
             }
-            $team = Teams::findOne($user_team->id_team);
+            //$team = Teams::findOne($user_team->id_team);
             return $this->render('confirmation-team',compact('confirmation_tokin','team'));
         }
         return $this->redirect('/profile');    

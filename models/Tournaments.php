@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use  yii\behaviors\TimeStampBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "tournaments".
@@ -26,7 +26,7 @@ class Tournaments extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+             TimeStampBehavior::className(),
         ];
     }
 

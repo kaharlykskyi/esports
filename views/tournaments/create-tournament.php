@@ -102,8 +102,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                   
                 <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
                 <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
-                <?// $form->field($model, 'start_date')->widget(yii\jui\DatePicker::class, ['dateFormat' => 'php:d-m-Y-H',]) ?>
-
+               
 
                 <?php  
                 echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[

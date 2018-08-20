@@ -100,7 +100,11 @@
                                 </tr>
                                 <tr>
                                     <td>Favorite game</td>
-                                    <td><?= (app\models\Games::findOne($user->favorite_game))->name ?></td>
+                                    <td><?php if ($game_favorite = app\models\Games::findOne($user->favorite_game)) {
+                                        echo $game_favorite->name;
+                                    }
+
+                                     ?></td>
                                 </tr>        
                             </tbody>
                         </table>
@@ -244,53 +248,53 @@
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table" >
-                            <tbody>
-                                <?php foreach ($teams['teams'] as $team):?>
-                                    <tr>
-                                        <td style="width: 130px; vertical-align: middle" >
-                                            <div class="img-game">
-                                                <a href="/teams/public/<?=$team->id?>"><img src="<?=$team->logo ?>" class="avatar group-1-avatar avatar-100 photo" width="100" height="100" alt="Team logo"></a>
-                                            </div>
-                                        </td>
-                                        <td style="vertical-align: middle; padding-left: 20px;">
-                                            <div class="item-title">
-                                                <a href="/teams/public/<?=$team->id?>"><?=$team->name?></a>
-                                            </div>
-                                            <div class="item-meta">
-                                                <span class="date">Created <?= date("d-m-Y",$team->created_at) ?></span>
-                                            </div>
-                                            <div class="item-desc">
-                                                <p><?= $team->game->name ?></p>
-                                            </div>
-                                            <div class="members-small">
-                                                <p> <?= $team->coutUsers() ?> member(s)</p>
-                                            </div>
-                                        </td>
-                                        <td class="text-right" style="vertical-align: middle">
-                                            <div class="meta">
-                                                <?php if($team->capitan == $user->id ): ?>
-                                                <a class="btn edit-team" href="#myModal1" data-toggle="modal" data-game-id="<?=$team->id ?>">Add new members</a>
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="meta">
-                                                <?php if($team->capitan == $user->id ): ?>
-                                                    <a href="/profile/update-team?id=<?=$team->id?>" class="btn edit-team edit-btn">Edit team</a>
-                                                <?php else: ?>
-                                                    <a href="/profile/exit-team?id=<?=$team->id?>" class="btn edit-team btn-red">Exit team</a>   
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="meta conteiner_btn">
-                                                <?php if($team->capitan == $user->id ): ?>
-                                                    <button class="btn edit-team btn-red delete"  data-modeel-id="<?=$team->id?>">
-                                                       Delete the team
-                                                    </button>  
-                                                <?php endif; ?>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                <tbody>
+                                    <?php foreach ($teams['teams'] as $team):?>
+                                        <tr>
+                                            <td style="width: 130px; vertical-align: middle" >
+                                                <div class="img-game">
+                                                    <a href="/teams/public/<?=$team->id?>"><img src="<?=$team->logo ?>" class="avatar group-1-avatar avatar-100 photo" width="100" height="100" alt="Team logo"></a>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle; padding-left: 20px;">
+                                                <div class="item-title">
+                                                    <a href="/teams/public/<?=$team->id?>"><?=$team->name?></a>
+                                                </div>
+                                                <div class="item-meta">
+                                                    <span class="date">Created <?= date("d-m-Y",$team->created_at) ?></span>
+                                                </div>
+                                                <div class="item-desc">
+                                                    <p><?= $team->game->name ?></p>
+                                                </div>
+                                                <div class="members-small">
+                                                    <p> <?= $team->coutUsers() ?> member(s)</p>
+                                                </div>
+                                            </td>
+                                            <td class="text-right" style="vertical-align: middle">
+                                                <div class="meta">
+                                                    <?php if($team->capitan == $user->id ): ?>
+                                                    <a class="btn edit-team" href="#myModal1" data-toggle="modal" data-game-id="<?=$team->id ?>">Add new members</a>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="meta">
+                                                    <?php if($team->capitan == $user->id ): ?>
+                                                        <a href="/profile/update-team?id=<?=$team->id?>" class="btn edit-team edit-btn">Edit team</a>
+                                                    <?php else: ?>
+                                                        <a href="/profile/exit-team?id=<?=$team->id?>" class="btn edit-team btn-red">Exit team</a>   
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="meta conteiner_btn">
+                                                    <?php if($team->capitan == $user->id ): ?>
+                                                        <button class="btn edit-team btn-red delete"  data-modeel-id="<?=$team->id?>">
+                                                           Delete the team
+                                                        </button>  
+                                                    <?php endif; ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
 
                         <div id="myModal1" class="modal fade">
                             <div class="modal-dialog">
@@ -376,8 +380,49 @@
                         </div>
                     </div>
                 </div>
-                 <div id="tournaments" class="tab-pane fade">
-                    <a href="/tournaments/create" class="btn btn-primary">Create a tournament</a>
+                <div id="tournaments" class="tab-pane fade">
+
+                    <div class="row">
+                        <div class="col-md-12" style="margin-bottom: 30px;">
+                            <a href="/tournaments/create" class="btn btn-primary">Create a tournament</a> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                        <table class="table" >
+                                <tbody>
+                                    <?php foreach ($tournaments as $tournament):?>
+                                        <tr>
+                                            <td style="width: 130px; vertical-align: middle" >
+                                                
+                                            </td>
+                                            <td style="vertical-align: middle; padding-left: 20px;">
+                                                <div class="item-title">
+                                                    <p>
+                                                        <a href="/tournaments/public/<?=$tournament->id?>">
+                                                            <?=$tournament->name?>    
+                                                        </a>
+                                                    </p>
+                                                    <p><?=$tournament->game->name?></p>
+                                                </div>
+                                            </td>
+                                            <td class="text-right" style="vertical-align: middle">
+                                                <div class="meta">
+                                                    <a class="btn edit-team" 
+                                                    href="/tournaments/public/<?=$tournament->id?>#manage_tournament">
+                                                    Edit tournament
+                                                </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                        </table>
+
+                        </div>
+                    </div>
+
                 </div>
                 <div id="panel4" class="tab-pane fade">
                     <div class="row">
@@ -445,7 +490,7 @@
                                 <div style="margin-bottom: 80px;">
                                     <label class="control-label" >Favorite game</label>
                                     <div id="radios" class="clearfix" style="text-align: center;">
-                                        <?php  foreach($games as $value):
+                                        <?php $i=0; foreach($games as $value):
                                             $i++;
                                         ?> 
                                             <label for="input<?=$i?>" class='game <?=$user->favorite_game == $value->id ?'actives':'' ?>'  >
@@ -492,7 +537,7 @@
         </div>
         
         <div class="col-md-3">
-            
+           
         </div>
     </div>
 </div>
