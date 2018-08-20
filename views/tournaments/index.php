@@ -15,6 +15,8 @@
 ?>
 <!--CHAMPIONSHIP WRAP BEGIN-->
     <div class="championship-wrap">
+
+        <h1 style="text-align: center;"><?=$model->name?></h1>
         <!--CHAMPIONSHIP NAVIGATION BEGIN -->
         <div class="champ-navigation">
             <div class="container">
@@ -46,61 +48,61 @@
                     <div class="row">
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo1.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo1.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 1</span>
                             </a>
                         </div>
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo2.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo2.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 2</span>
                             </a>
                         </div>
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo3.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo3.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 3</span>
                             </a>
                         </div>
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo4.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo4.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 4</span>
                             </a>
                         </div>
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo5.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo5.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 5</span>
                             </a>
                         </div>
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo1.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo1.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 6</span>
                             </a>
                         </div>
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo2.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo2.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 7</span>
                             </a>
                         </div>
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo3.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo3.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 8</span>
                             </a>
                         </div>
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo4.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo4.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 9</span>
                             </a>
                         </div>
                         <div class="col-md-3">
                             <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="images/hockey/team-logo5.png" width="80" height="80" alt="team-logo"></span>
+                                <span class="logo"><img src="/images/hockey/team-logo5.png" width="80" height="80" alt="team-logo"></span>
                                 <span class="name">Team 10</span>
                             </a>
                         </div>
@@ -439,7 +441,7 @@
                                         $form->successCssClass = false;
                                     ?>
                                     <div class="row">
-                                        <h4 style="text-align: center;"  >Update tournaments</h4>
+                                        <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
                                         <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
                                         
                                         <div class="col-md-12">

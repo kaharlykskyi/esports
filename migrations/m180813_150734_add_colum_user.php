@@ -24,11 +24,11 @@ class m180813_150734_add_colum_user extends Migration
      */
     public function safeDown()
     {
-        return $this->dropColumn('users', 'sex');
-        return $this->dropColumn('users', 'birthday');
-        return $this->dropColumn('users', 'favorite_game');
-        return $this->dropColumn('users', 'activities');
-        return $this->dropColumn('users', 'interests');
+        $this->dropColumn('users', 'sex');
+        $this->dropColumn('users', 'birthday');
+        $this->dropColumn('users', 'favorite_game');
+        $this->dropColumn('users', 'activities');
+        $this->dropColumn('users', 'interests');
     }
 
     /*

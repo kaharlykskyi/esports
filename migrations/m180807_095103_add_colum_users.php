@@ -47,8 +47,7 @@ class m180807_095103_add_colum_users extends Migration
      */
     public function safeDown()
     {
-        return $this->dropColumn('users', 'visible');
-         
+        $this->dropColumn('users', 'visible');
     }
 
     /*

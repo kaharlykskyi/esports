@@ -57,7 +57,7 @@ class ProfileController extends \yii\web\Controller
     public function actionIndex()
     {   
 
-        $tournaments = Tournaments::findAll(Yii::$app->user->identity->id);
+        $tournaments = Tournaments::findAll(['user_id' => Yii::$app->user->identity->id]);
 
         $teams = Teams::getTeamsThisUser();
         $games = Games::find()->all();
@@ -236,7 +236,9 @@ class ProfileController extends \yii\web\Controller
         $id = Yii::$app->user->identity->id;
         $games = Games::find()->leftJoin('teams', '`teams`.`game_id` = `games`.`id`')
         ->leftJoin('user_team', '`user_team`.`id_team` = `teams`.`id`')
-        ->where(['user_team.id_user' => $id])->asArray()->all();
+        ->where(['user_team.id_user' => $id])
+        ->andWhere(['user_team.status' => UserTeam::ACCEPTED])
+        ->asArray()->all();
         $not_gemes = [];
         foreach($games as $value){
             $not_gemes[] = $value['id'];

@@ -21,7 +21,9 @@ use yii\behaviors\TimestampBehavior;
  */
 class Tournaments extends \yii\db\ActiveRecord
 {
-    
+    const LEAGUE = 1;
+    const SINGLE_E = 2;
+    const DUBLE_E = 3;
 
     public function behaviors()
     {

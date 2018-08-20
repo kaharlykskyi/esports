@@ -2,15 +2,24 @@
     display: flex;
     /*justify-content: space-around;*/
     align-items: center;
-    border: 1px solid #207ad3;
+    border: 1px solid #98bee475;
     cursor: pointer;
     border-radius: 5px;
-    box-shadow:0 0 15px #1f7ad3;
+    /*box-shadow:0 0 15px #1f7ad3;*/
     overflow: hidden;
 }
 
 .format_campions .container_img img{
-    height: 100px;
+    height: 65px;
+}
+
+.format_campions .container_img{
+    padding: 10px 8px;
+}
+
+
+.format_campions{
+    background-color:#fff;
 }
 
 .format_campions h5{
@@ -26,8 +35,8 @@
 }
 
 .active_campions{
-    border: 1px solid #ff1c1c;
-    box-shadow:0 0 15px #ff1c1c;
+    border: 1px solid #1f7ad3;
+    box-shadow:0 0 20px #1f7ad3;
 }
 .radiolist_elimination{
     display: none;

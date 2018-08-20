@@ -30,7 +30,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
             $form->successCssClass = false;
         ?>
         <div class="row">
-            <h1>Create tournaments</h1>
+            <h1>Create tournament</h1>
             <div class="col-md-8 col-md-offset-2">
                 <?= $form->field($model, 'name')->textInput(['class' => false]) ?>
                 
@@ -57,7 +57,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                     
                     <div class="col-md-10 col-md-offset-1 "  style="margin-top:25px;">
                         <div class="col-md-6 ">
-                            <div class="format_campions" data-farmat='1' >
+                            <div class="format_campions"  data-farmat ='0' >
                                 <div class="container_img" >
                                     <img src="/images/profile/cup.png"  alt="cup">
                                 </div>
@@ -66,9 +66,9 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         </div>
 
                         <div class="col-md-6 ">
-                            <div class="format_campions" data-farmat ='0' >
+                            <div class="format_campions" data-farmat='1'>
                                 <div class="container_img" style="padding-left: 10px;">
-                                    <img src="/images/profile/league.png"  alt="cup">
+                                    <img src="/images/profile/league.png"  alt="league">
                                 </div>
                                 <div style="padding-left: 25px;" ><h5>league</h5></div>
                             </div>
@@ -78,7 +78,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         <div class="col-md-6 ">
                             <div class="format_campions elimination " data-farmat ='2'>
                                 <div class="container_img" >
-                                    <img src="/images/profile/single_elimination.png"  alt="cup">
+                                    <img src="/images/profile/single_elimination.png"  alt="s_cup">
                                 </div>
                                 <div style="flex-grow: " ><h5>Single elimination</h5></div>
                             </div>
@@ -87,7 +87,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         <div class="col-md-6 ">
                             <div class="format_campions elimination" data-farmat ='3'>
                                 <div class="container_img" >
-                                    <img src="/images/profile/duble_elimination.png"  alt="cup">
+                                    <img src="/images/profile/duble_elimination.png"  alt="d_cup">
                                 </div>
                                 <div><h5>Double elimination</h5></div>
                             </div>

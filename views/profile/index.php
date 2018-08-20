@@ -77,7 +77,11 @@
                                 </tr>
                                 <tr>
                                     <td>Sex</td>
-                                    <td><?=$user->sex == 1 ? 'Male': 'Female' ?></td>
+                                    <td>
+                                        <?php if ($user->sex) :?>
+                                            <?=$user->sex == 1 ? 'Male': 'Female' ?>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Birthday</td>
@@ -100,11 +104,11 @@
                                 </tr>
                                 <tr>
                                     <td>Favorite game</td>
-                                    <td><?php if ($game_favorite = app\models\Games::findOne($user->favorite_game)) {
-                                        echo $game_favorite->name;
-                                    }
-
-                                     ?></td>
+                                    <td>
+                                        <?php if ($game_favorite = app\models\Games::findOne($user->favorite_game)) :?>
+                                            <?=$game_favorite->name;?>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>        
                             </tbody>
                         </table>
@@ -394,10 +398,7 @@
                                 <tbody>
                                     <?php foreach ($tournaments as $tournament):?>
                                         <tr>
-                                            <td style="width: 130px; vertical-align: middle" >
-                                                
-                                            </td>
-                                            <td style="vertical-align: middle; padding-left: 20px;">
+                                            <td style="vertical-align: middle; padding-left: 20px;"" >
                                                 <div class="item-title">
                                                     <p>
                                                         <a href="/tournaments/public/<?=$tournament->id?>">
@@ -406,6 +407,9 @@
                                                     </p>
                                                     <p><?=$tournament->game->name?></p>
                                                 </div>
+                                            </td>
+                                            <td style="vertical-align: middle; padding-left: 20px;">
+                                                
                                             </td>
                                             <td class="text-right" style="vertical-align: middle">
                                                 <div class="meta">
