@@ -102,7 +102,8 @@ class Tournaments extends \yii\db\ActiveRecord
                             $options[$option] = $option;
                         }
 
-                        $result .= '<div class="conteiner_filed '.$class.'" ><label class="control-label col-md-12" >'. $filed->title .
+                        $result .= '<div class="conteiner_filed '.$class.'" >
+                             <label class="control-label col-md-12" >'. $filed->title .
                             '</label><div class="item select-show"><select name="Data['.$filed->name.']" class="basic" >'. Html::renderSelectOptions(null, $options) .'</select></div></div>';
                     } elseif ($filed->type === 'checkbox') {
                         $options = '';

@@ -49,3 +49,8 @@
 .nidden_select,.hidden_num{
     display: none;
 }
+.system_select_message{
+    margin-top: 10px;
+    font-size: 14px;
+    color: red;
+}

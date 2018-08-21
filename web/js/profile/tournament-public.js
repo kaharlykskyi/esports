@@ -13,7 +13,46 @@ $(document).ready(function(){
     });
 
 
-    $('.conteiner_filed').find('').on('change',function(),{
+    $('.system_select').find('.options').find('li').on('click',function(){
+        let value = $(this).text();
+        let i ='';
+        if (value == 'Bo1') {
+            i = 2;
+        }
+        if (value == 'Bo3') {
+            i = 3;
+        }
+        if (value == 'Bo5') {
+            i = 4;
+        }
+         $('.system_select').find('.system_select_message').remove();
+        $('.system_select').append(`<div class="system_select_message">*With the selected format, each player will have **${i}** decks, and will be able to ban a deck of the opponent.*</div>`);
+    });
 
-    })
+    $('.select_format').find('.options').find('li').on('click',function(){
+        let value = $(this).text();
+        if (value == 'PvP') {
+
+           $('.hidden_num').hide();
+           $('.hidden_num').find('input').attr('name', '');
+
+           $('.nidden_select').show();
+           $('.nidden_select').find('select').attr('name', 'Data[pvp]');
+        }
+        if (value == 'PvE') {
+
+            $('.nidden_select').hide();
+            $('.nidden_select').find('select').attr('name', '');
+
+            $('.hidden_num').show();
+            $('.hidden_num').find('input').attr('name', 'Data[mythical]');
+        }
+    });
+
+    $('.nidden_select').find('select').attr('name', '');
+    $('.hidden_num').find('input').attr('name', '');
+    $('.select_format').find('select').attr('name', '');
+
+
+
 });
