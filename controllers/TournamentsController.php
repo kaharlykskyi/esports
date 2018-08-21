@@ -49,4 +49,14 @@ class TournamentsController extends \yii\web\Controller
         return $this->render('create-tournament',compact('model','games'));
     }
 
+
+    public function actionIndex($id){
+
+        $model = Tournaments::findOne($id);
+        echo "<pre>";
+        print_r($model->generateForm());
+        echo "</pre>";exit;
+
+    }
+
 }

@@ -9,7 +9,7 @@
    background: transparent;
     color:#000;
 }
-#tournaments-start_date-datetime .datainput{
+#tournaments-start_date-datetime .datainput,.input_numeric,.hidden_num input{
     padding: 25px 10px;
     border: 1px solid transparent;
     width: 100%;
@@ -30,4 +30,22 @@
 
 .alert_tour .alert{
  font-size: 16px;
+}
+
+.radiolist_only{
+    text-align: center;
+}
+
+#tournaments-flag label{
+    display: inline-block;
+    margin-left: 35px;
+}
+
+.conteiner_filed {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.nidden_select,.hidden_num{
+    display: none;
 }

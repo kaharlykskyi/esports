@@ -11,4 +11,9 @@ $(document).ready(function(){
         //console.log(arr.split('#')[0]);
         window.history.pushState(null, null, arr.split('#')[0]);
     });
+
+
+    $('.conteiner_filed').find('').on('change',function(),{
+
+    })
 });

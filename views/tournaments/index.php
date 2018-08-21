@@ -445,32 +445,57 @@
                                         <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
                                         
                                         <div class="col-md-12">
-                                        <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
-                                        <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
+                                            <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
+                                            <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
                                        
-
-                                    <?php  
-                                    echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
-                                        'name' => 'datetime_10',
-                                        'options' => [  
-                                            'placeholder' => 'Select operating time ...',
-                                            'autocomplete'=>"off",'class'=>'datainput',
-                                        ],
-                                        'convertFormat' => true,
-                                        'pluginOptions' => [
-                                            'format' => 'yyyy-MM-dd hh:i',
-                                            'startDate' => '01-Mar-2018 12:00 AM',
-                                            'todayHighlight' => true
-                                    ]]); ?>
+                                            <?php  
+                                            echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
+                                                'name' => 'datetime_10',
+                                                'options' => [  
+                                                    'placeholder' => 'Select operating time ...',
+                                                    'autocomplete'=>"off",'class'=>'datainput',
+                                                ],
+                                                'convertFormat' => true,
+                                                'pluginOptions' => [
+                                                    'format' => 'yyyy-MM-dd hh:i',
+                                                    'startDate' => '01-Mar-2018 12:00 AM',
+                                                    'todayHighlight' => true
+                                            ]]); ?>
 
                                         </div>
+                                        <div class="col-md-12">
+                                            <?= $form->field($model,'flag')->radioList([1 => 'Only players', 2 => 'Only teams', 3 => 'Mixed'],['class' =>'radiolist_only'])->label('Format') ?>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <?= $form->field($model, 'time_limit')
+                                            ->textInput(['type' => 'number','class' => 'input_numeric','min' => '15','step' => '5', 'value'=>$model->time_limit])->label('Time limit')?>
+                                        </div>
+                                        
+                                        <div class="col-md-12">
+                                            <label class="col-sm-12 control-label" for="teams-background">Region</label>
+                                            <div class="item select-show">
+                                                <div class="fancy-select ">
+                                                    <select class="basic" name="Tournaments[region]" required>
+                                                        <option  value="Europe" <?=$model->region == 'Europe' ? 'selected' : '' ?> >Europe</option> 
+                                                        <option  value="America" <?=$model->region == 'America' ? 'selected' : '' ?> >America</option>
+                                                        <option  value="Asia" <?=$model->region == 'Asia' ? 'selected' : '' ?> >Asia</option>
+                                                    </select>
+                                                </div>    
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" style="margin-top: 20px;">
+                                            <?=$model->generateForm()?>
+                                        </div>
+
                                     </div>   
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                                    <div class="row">
+
+
+                                        <div class="col-md-12">
+                                            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                                        </div>
                                     </div>
-                                </div>
-                                <?php ActiveForm::end(); ?>
+                                    <?php ActiveForm::end(); ?>
                                 </div>  
                             </div>
                             <div id="main" class="tab-pane fade in">
