@@ -49,10 +49,23 @@ $(document).ready(function(){
         }
     });
 
-    $('.nidden_select').find('select').attr('name', '');
-    $('.hidden_num').find('input').attr('name', '');
+
     $('.select_format').find('select').attr('name', '');
 
+    let input_num  = $('.hidden_num').find('input');
+    let select_hidden  = $('.nidden_select').find('select');
 
+    if(input_num.val().trim() == ''){
+        input_num.attr('name', '');
+        $('.hidden_num').hide();
+    }
+
+    let i = $('.nidden_select option').attr("selected");
+    if (typeof i === typeof undefined || i === false) {
+        select_hidden.attr('name', '');
+        $('.nidden_select').hide();
+    }
+
+    
 
 });

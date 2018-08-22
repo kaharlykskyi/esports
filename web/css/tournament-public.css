@@ -42,13 +42,15 @@
 }
 
 .conteiner_filed {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+   
+   
 }
 
-.nidden_select,.hidden_num{
+/*.nidden_select,.hidden_num{
     display: none;
-}
+}*/
 .system_select_message{
     margin-top: 10px;
     font-size: 14px;

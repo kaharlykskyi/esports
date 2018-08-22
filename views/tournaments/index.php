@@ -444,25 +444,7 @@
                                         <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
                                         <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
                                         
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
-                                            <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
-                                       
-                                            <?php  
-                                            echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
-                                                'name' => 'datetime_10',
-                                                'options' => [  
-                                                    'placeholder' => 'Select operating time ...',
-                                                    'autocomplete'=>"off",'class'=>'datainput',
-                                                ],
-                                                'convertFormat' => true,
-                                                'pluginOptions' => [
-                                                    'format' => 'yyyy-MM-dd hh:i',
-                                                    'startDate' => '01-Mar-2018 12:00 AM',
-                                                    'todayHighlight' => true
-                                            ]]); ?>
-
-                                        </div>
+                                        
                                         <div class="col-md-12">
                                             <?= $form->field($model,'flag')->radioList([1 => 'Only players', 2 => 'Only teams', 3 => 'Mixed'],['class' =>'radiolist_only'])->label('Format') ?>
                                         </div>
@@ -483,7 +465,7 @@
                                                 </div>    
                                             </div>
                                         </div>
-                                        <div class="col-md-12" style="margin-top: 20px;">
+                                        <div class="col-md-12" style="margin-top: 5px;">
                                             <?=$model->generateForm()?>
                                         </div>
 
@@ -499,8 +481,49 @@
                                 </div>  
                             </div>
                             <div id="main" class="tab-pane fade in">
-                                <div class="wrap-lists"> 
-                                                                        
+                                                                <div class="col-md-8 col-md-offset-2" style="margin-bottom: 40px;" >
+                                    <?php $form = ActiveForm::begin([ 
+                                            'validateOnBlur'=>false,  
+                                            'options' => ['enctype' => 'multipart/form-data'],
+                                            'fieldConfig' => [
+                                                'template' => '{label}{hint}{input}{error}',
+                                                'labelOptions' => ['class' => 'col-sm-12 control-label'],
+                                            ],
+                                        ]); 
+                                        $form->errorCssClass = false;
+                                        $form->successCssClass = false;
+                                    ?>
+                                    <div class="row">
+                                        <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
+                                        <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
+                                        
+                                        <div class="col-md-12">
+                                            <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
+                                            <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
+                                       
+                                            <?php  
+                                            echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
+                                                'name' => 'datetime_10',
+                                                'options' => [  
+                                                    'placeholder' => 'Select operating time ...',
+                                                    'autocomplete'=>"off",'class'=>'datainput',
+                                                ],
+                                                'convertFormat' => true,
+                                                'pluginOptions' => [
+                                                    'format' => 'yyyy-MM-dd hh:i',
+                                                    'startDate' => '01-Mar-2018 12:00 AM',
+                                                    'todayHighlight' => true
+                                            ]]); ?>
+
+                                        </div>
+                                        
+                                    </div>   
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                                        </div>
+                                    </div>
+                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>

@@ -66,3 +66,32 @@
 #tournaments-start_date-datetime .datainput:focus{
     box-shadow: none;
 }
+
+.close_stream{
+    cursor: pointer;
+    width: 40px;
+    position: relative;
+    bottom: 5px;
+    height: 42px;
+    opacity: 1;
+    padding: 0;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.close_stream:before, .close_stream:after {
+    position: absolute;
+    left: 20px;
+    content: ' ';
+    height: 40px;
+    width: 3px;
+    background-color: red;
+}
+
+.close_stream:before {
+    transform: rotate(45deg);
+}
+.close_stream:after {
+    transform: rotate(-45deg);
+}

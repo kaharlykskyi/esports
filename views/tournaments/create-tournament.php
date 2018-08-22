@@ -93,11 +93,39 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-10 col-md-offset-1" id="match_schedule" style="margin-top:25px;display:none;">
+                        <div class="col-md-12" >
+                            <label>Match schedule</label>
+                            <div class="item select-show">
+                                <select class="basic" name="Tournaments[match_schedule]" required>
+                                    <option value="1">one day</option>
+                                    <option value="3">three days</option>
+                                    <option value="5">five days</option>
+                                    <option value="7">one week</option>
+                                    <option value="14">two weeks</option>
+                                </select>
+                            </div>         
+                        </div>
+
+                    </div>
                     
                     
                 </div>
                 <div ><!-- style="display: none; -->
                     <?= $form->field($model, 'format')->radioList([1 => 'a', 2 => 'b', 3 => 'c'],['class' =>'radiolist_elimination'])->label(false) ?>
+                </div>
+
+                <div class="row"  style="margin:45px 0;" >
+                     <div class="col-md-10 col-md-offset-1">
+                         <div class="col-md-5" style="margin-bottom: 15px;">
+                            <button style="width: 100%;"  id="stream_add"  class="btn btn-primary">Add new stream</button> 
+                        </div>
+                     </div>
+                    <div id="conteiner_stream">
+
+
+                    </div>
                 </div>
                   
                 <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
@@ -118,7 +146,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         'todayHighlight' => true
                 ]]); ?>
 
-        
+                
 
 
 
@@ -131,4 +159,25 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
         </div>
         <?php ActiveForm::end(); ?>
     </div>
+</div>
+
+
+<div id="stream_zaotovka" style="display: none;">
+
+    <div class="col-md-11 col-md-offset-1 plashka_stream">
+        <div class="col-md-5" >
+                            <div class="item select-show">
+                                <select class="basic" name="Tournaments[match_schedule]" required>
+                                    <option value="1">Youtube</option>
+                                    <option value="2">Twitch</option>
+                                    <option value="3">Mixer</option>
+                                </select>
+                            </div>         
+        </div>       
+        <div class="col-xs-10 col-md-6">
+            <input type="text" name="Tournaments[name]" placeholder="Enter stream link here" autocomplete="off">
+        </div>
+        <span class="close_stream">
+        </span>          
+    </div>   
 </div>

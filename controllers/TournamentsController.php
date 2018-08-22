@@ -24,14 +24,15 @@ class TournamentsController extends \yii\web\Controller
 
         if(Yii::$app->request->isPost){
 
-
             // echo "<pre>";
             // print_r(Yii::$app->request->post()['Data']);
             // echo "</pre>";exit;
 
             if ($model->load(Yii::$app->request->post())) {
-                if($model->save()) {
                     $post = Yii::$app->request->post();
+                    $model->data = json_encode($post['Data']);
+
+                if($model->save()) {
                    
                     foreach ($post['Data'] as $key => $value ) {
                         $tournament_data = new TournamentData();
@@ -41,7 +42,6 @@ class TournamentsController extends \yii\web\Controller
                         $tournament_data->save();
                     }
                     
-
                     Yii::$app->session->setFlash('success', 'Tournament settings updated');
                     return $this->redirect('/tournaments/public/'.$model->id.'#manage_tournament');
                 }

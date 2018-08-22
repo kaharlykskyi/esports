@@ -44,10 +44,10 @@ class Tournaments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['game_id', 'format','flag','time_limit'], 'integer'],
+            [['game_id', 'format','flag','time_limit','match_schedule'], 'integer'],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
             [['rules', 'prizes','name'], 'string'],
-            [['start_date','region'], 'safe'],
+            [['start_date','region','data'], 'safe'],
             [['name'], 'unique'],
             [['game_id'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['game_id' => 'id']],
         ];
@@ -83,17 +83,23 @@ class Tournaments extends \yii\db\ActiveRecord
 
             $fileds = json_decode($this->game->filed);
 
+            $data = $this->data !== '' ? json_decode($this->data) : [];
+
             if(!is_null($this->game->filed)){
                 $result="";
 
                 foreach ($fileds as $filed) {
+
                     $class = "";
                     if (!empty($filed->class)){
                         $class = $filed->class;
                     }
+                    $value = !empty($data->{$filed->name}) ? $data->{$filed->name} : null;
 
                     if ($filed->type =='number') {
-                        $result .= '<div class="conteiner_filed '.$class.'" ><label class="col-sm-12" >'. $filed->title .'</label>'. Html::input('number', "Data[{$filed->name}]",null, ['class' => false,'min'=>"1" ,'max'=>"30"]) .'</div>';
+                        
+                        $result .= '<div class="conteiner_filed '.$class.'" ><label class="col-sm-12" >'
+                        . $filed->title .'</label>'. Html::input('number', "Data[{$filed->name}]",$value, ['class' => false,'min'=>"1" ,'max'=>"30"]) .'</div>';
 
                     } elseif ($filed->type === 'select') {
 
@@ -104,13 +110,15 @@ class Tournaments extends \yii\db\ActiveRecord
 
                         $result .= '<div class="conteiner_filed '.$class.'" >
                              <label class="control-label col-md-12" >'. $filed->title .
-                            '</label><div class="item select-show"><select name="Data['.$filed->name.']" class="basic" >'. Html::renderSelectOptions(null, $options) .'</select></div></div>';
+                            '</label><div class="item select-show"><select name="Data['.$filed->name.']" class="basic" >'
+                            . Html::renderSelectOptions($value, $options) .'</select></div></div>';
+
                     } elseif ($filed->type === 'checkbox') {
                         $options = '';
                         $i = 0;
-                        foreach($filed->options as $option){
+                        foreach($filed->options as $option) {
                             $i++;
-                            $checked = null && in_array($option, null);
+                            $checked = $value && in_array($option, $value);
                             $options .= Html::checkbox("Data[{$filed->name}][]", $checked, ['id' => $filed->name.$i,'value' => $option ,'class' =>'filter-check'])
                             .'<label for="'.$filed->name.$i.'">
                                 <span style="font-size: 18px;position: relative;bottom: 5px;">'.$filed->title.'</span>
@@ -128,3 +136,4 @@ class Tournaments extends \yii\db\ActiveRecord
     }
 
 }
+//value='1' uncheckValue='0'
