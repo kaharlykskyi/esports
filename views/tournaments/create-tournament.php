@@ -166,16 +166,16 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
 
     <div class="col-md-11 col-md-offset-1 plashka_stream">
         <div class="col-md-5" >
-                            <div class="item select-show">
-                                <select class="basic" name="Tournaments[match_schedule]" required>
-                                    <option value="1">Youtube</option>
-                                    <option value="2">Twitch</option>
-                                    <option value="3">Mixer</option>
-                                </select>
-                            </div>         
+            <div class="form-group">
+                <select class="form-control" name="stream_chanal[]" required>
+                    <option value="1">Youtube</option>
+                    <option value="2">Twitch</option>
+                    <option value="3">Mixer</option>
+                </select>
+            </div>         
         </div>       
         <div class="col-xs-10 col-md-6">
-            <input type="text" name="Tournaments[name]" placeholder="Enter stream link here" autocomplete="off">
+            <input type="text" name="stream_url[]" placeholder="Enter stream link here" autocomplete="off">
         </div>
         <span class="close_stream">
         </span>          

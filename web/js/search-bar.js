@@ -163,6 +163,11 @@ $(document).ready(function(){
         });      
     }
 
+    function addContentToutnaments (toutnaments) {
+        alert();
+
+    }
+
 
     function contentClear () {
         $('.container_search_modal').empty();

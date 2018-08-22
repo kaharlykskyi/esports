@@ -171,6 +171,7 @@ class AjaxController extends \yii\web\Controller
     public function actionSearchBar () 
     {
         $post = Yii::$app->request->post();
+        $post['input'] = 'a';
         $users = (new \yii\db\Query())->select(['id'])->from('users')
         ->where(['LIKE', 'name', $post['input']]);
        
@@ -186,7 +187,7 @@ class AjaxController extends \yii\web\Controller
             ->limit(18)
             ->all();
 
-        $users = (new \yii\db\Query())
+        $users_m = (new \yii\db\Query())
             ->select(['users.id','users.name','users.created_at','teams.name as t_name','teams.id as t_id'])
             ->from('users')
             ->leftJoin('user_team', '`user_team`.`id_user` = `users`.`id`')
@@ -195,8 +196,21 @@ class AjaxController extends \yii\web\Controller
             ->limit(18)
             ->all();
 
+        $tournaments = (new \yii\db\Query())->select(['tournaments.*','(select count(*) from tournament_team where team_id = tournaments.id  ) as c_team'])
+            ->from('tournaments')
+            ->leftJoin('tournament_user', '`tournament_user`.`tournament_id` = `tournaments`.`id`')
+            //->leftJoin('tournament_team', '`tournament_team`.`tournament_id` = `tournaments`.`id`')
+            ->where(['LIKE', 'tournaments.name', $post['input']])
+            ->orWhere(['in', 'tournament_user.user_id', $users])
+            ->orWhere(['in', 'tournaments.user_id', $users])
+            ->groupBy(['tournaments.name'])
+            ->limit(18)
+            ->all();
+
+
+
         $user_mass = [];
-        foreach ($users as $user) {
+        foreach ($users_m as $user) {
             if (array_key_exists($user['id'], $user_mass)) {
                 if (isset($user['t_id'])) {
                     $user_mass[$user['id']]['teams'][] = ['name'=>$user['t_name'],'id'=>$user['t_id'],];
@@ -210,29 +224,19 @@ class AjaxController extends \yii\web\Controller
         }
 
 
-
-        // foreach ($users as $value) {
-        //     $mass = [];
-        //     $mass['name'] = $value->name;
-        //     $mass['created_at'] = substr($value->created_at,0,10);
-        //     foreach($value->userteams as $userteams){
-        //         $mass['teams'][] = ['name'=>$userteams->team->name,'id'=>$userteams->team->id,];
-        //     }
-        //     $user_mass[] = $mass;          
-        // }
-
         $arry_search['users'] = $user_mass;
         $arry_search['teams'] = $teams;
-
-        if (empty($arry_search['users']) && empty($arry_search['teams'])) {
+        $arry_search['tournaments'] = $tournaments;
+        if (empty($arry_search['users']) && empty($arry_search['teams']) && empty($arry_search['tournaments'])) {
             $arry_search = ['not'=>true];
         }
            
+       
+        echo "<pre>";
+            print_r($tournaments);
+        echo "</pre>";
+       exit; 
         return $arry_search;
-       //  echo "<pre>";
-       //      print_r($arry_search);
-       //  echo "</pre>";
-       // exit;
     }
 
 }

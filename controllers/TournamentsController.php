@@ -9,6 +9,7 @@ use app\models\Teams;
 use app\models\Games;
 use app\models\TournamentData;
 use app\models\UserTeam;
+use app\models\Stream;
 use Yii;
 use yii\web\HttpException;
 
@@ -24,9 +25,7 @@ class TournamentsController extends \yii\web\Controller
 
         if(Yii::$app->request->isPost){
 
-            // echo "<pre>";
-            // print_r(Yii::$app->request->post()['Data']);
-            // echo "</pre>";exit;
+            
 
             if ($model->load(Yii::$app->request->post())) {
                     $post = Yii::$app->request->post();
@@ -56,10 +55,27 @@ class TournamentsController extends \yii\web\Controller
     	$games = Games::find()->all();
     	$model = new Tournaments();
     	if (Yii::$app->request->isPost) {
+
+            // echo "<pre>";
+            // print_r(Yii::$app->request->post());
+            // echo "</pre>";exit;
+
+
     		if ($model->load(Yii::$app->request->post())) {
                 $model->user_id = Yii::$app->user->identity->id;
     			if($model->save()) {
-
+                    $post = Yii::$app->request->post();
+                    if(!empty($post['stream_chanal'])) {
+                       $i = count($post['stream_chanal']);
+        
+                       for ($a=0; $a < $i; $a++) { 
+                            $stream = new Stream();
+                            $stream->tournament_id = $model->id;
+                            $stream->stream_chanal = $post['stream_chanal'][$a];
+                            $stream->stream_url = $post['stream_url'][$a];
+                            $stream->save();
+                       }
+                    } 
     				return $this->redirect('/profile#tournaments');
     			}
     		}
