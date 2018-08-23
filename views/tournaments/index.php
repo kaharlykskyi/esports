@@ -42,7 +42,11 @@
                 <div class="container">
                     <div class="row"> 
                         <div class="col-md-12" style="margin-bottom: 30px;">
-                             <a href="" class="btn btn-secusses" >Invite participants</a>
+                            <?php if(empty($model->flag)):?>
+                                <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
+                            <?php else: ?>
+                                <a href="#myModal1" class="btn btn-secusses" data-toggle="modal" data-flag ="<?=$model->flag ?>"  data-tournament-id="<?=$model->id?>" >Invite participants</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="row">
@@ -533,5 +537,29 @@
             
         </div>
     </div>
-
     <!--CHAMPIONSHIP WRAP END-->
+    <div id="myModal1" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                                    
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            <input type="text" class="modal_search" placeholder="Search for players" >
+                        </div>
+                        <div class="col-xs-3">
+                            <button class="btn search_btn" id="search_mod">Search</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 " id='content_modal'>
+                                               
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

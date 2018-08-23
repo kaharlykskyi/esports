@@ -23,7 +23,7 @@ class UserTeam extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_team'], 'integer'],
+            [['id_user', 'id_team','status'], 'integer'],
             [['id_team'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['id_team' => 'id']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];

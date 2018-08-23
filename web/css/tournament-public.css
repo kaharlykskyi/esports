@@ -48,11 +48,78 @@
    
 }
 
-/*.nidden_select,.hidden_num{
-    display: none;
-}*/
+
 .system_select_message{
     margin-top: 10px;
     font-size: 14px;
     color: red;
+}
+
+/*/////////////////////////////////////////////////////////////////*/
+
+.modal_search, .modal_search_team {
+    border: 1px solid #cccccc7d !important;
+}
+
+
+#content_modal {
+    margin-bottom: 50px;
+    margin-top: 20px;
+    overflow: auto;
+    max-height: 400px;
+}
+
+.plashka_user, .plashka_teams {
+    border: 1px solid #cccccc7d;
+    margin-top: 10px;
+    padding: 0;
+    border-radius: 7px;
+}
+
+.img_logo_modal {
+    height: 80px;
+    width: 80px;
+}
+
+
+.img_logo_modal img {
+    max-width: 100%;
+    max-height: 100%;
+    padding: 7px;
+    border-radius: 50%;
+}
+
+.plashka_user p {
+    margin: 24px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.invite_btn {
+    font-size: 11px;
+    text-transform: capitalize;
+    padding: 8px;
+    margin: 24px 0;
+}
+.modal_message{
+    text-align: center;
+}
+
+.plashka_user.plashka_team p{
+
+    margin-top: 7px;
+    margin-bottom: 2px;
+    font-size: 13px;
+    padding: 0;
+    font-weight: normal;
+    line-height: 16px;
+}
+
+.plashka_user .sent{
+    
+    margin: 24px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    color:green !important;
 }

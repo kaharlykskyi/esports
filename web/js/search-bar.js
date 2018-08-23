@@ -33,7 +33,6 @@ $(document).ready(function(){
         let elementJQry = $(event.target);
         $('.s_layouts_snapHeaderWrapper').find('.s_layouts_snapTab').removeClass('active');
         elementJQry.addClass('active');
-        console.log(elementJQry.attr('data-search-menu'));
         let i = elementJQry.attr('data-search-menu');
         contentClear();
         load_imgShow();
@@ -50,7 +49,7 @@ $(document).ready(function(){
                     addContentTeams($.myVarContainer.contentSearch.teams);
                     break;
                 case '3':
-                    alert( 'Перебор' );
+                    addContentTturnaments($.myVarContainer.contentSearch.tournaments);
                     break;
             }
         },500);
@@ -111,12 +110,12 @@ $(document).ready(function(){
         menuSerchShow(response);
         addContentUser(response.users);
         addContentTeams(response.teams);
+        addContentTturnaments(response.tournaments);
     }
 
 
     function addContentUser(users) {
         $.each(users ,function (indx, element) {
-            console.log(element);
             let teamsl = '';
             $(element.teams).each(function (indx, element) {
                 teamsl +=` <a href="/teams/public/${element.id}">${element.name}</a>`;
@@ -143,8 +142,12 @@ $(document).ready(function(){
         $(teams).each( function (indx, element) {
             let date = new Date(element.created_at*1000);
             let month = date.getMonth();
-            if(date.getMonth()<10){
-                month ='0'+ date.getMonth();
+            if(month < 10){
+                month ='0'+ month;
+            }
+            let day = date.getDate();
+            if(day < 10){
+                day ='0'+ day;
             }
             let content = `<div class="col-sm-6 col-md-4">
                                         <div class="blok_search_teams">
@@ -153,7 +156,7 @@ $(document).ready(function(){
                                             </div>
                                             <div class="col-xs-8">
                                                 <p class="teams"><a href="/teams/public/${element.id}">${element.name}</a></p>
-                                                <p>Registration date : ${date.getFullYear()}-${month}-${date.getDate()}</p>
+                                                <p>Registration date : ${date.getFullYear()}-${month}-${day}</p>
                                                 <p>Game: ${element.g_name}</p>
                                                 <p class="list_teams">Members ${element.c_user}</p>
                                             </div>
@@ -163,9 +166,27 @@ $(document).ready(function(){
         });      
     }
 
-    function addContentToutnaments (toutnaments) {
-        alert();
+    function addContentTturnaments (tournaments) {
+        $(tournaments).each( function (indx, element) {
+          
+            
+            let content = `<div class="col-sm-6 col-md-4">
+                                        <div class="blok_search_teams tournaments_block">
+                                            <div class="col-xs-4 img_cont_search clearfix">
+                                                <a href="/toutnaments/public/${element.id}"><img src="/images/profile/images.png" alt=""></a>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <p class="tournaments"><a href="/tournaments/public/${element.id}">${element.name}</a></p>
+                                                <p>Start date: ${element.start_date.substr(0, 10)}</p>
+                                                <p>Game: ${element.g_name}</p>
+                                                <p>Teams: ${element.c_teams}</p>
+                                                <p>Stage </p>
+                                            </div>
+                                        </div>
+                                    </div>`;
 
+            $('.container_search_modal').append(content);
+        });      
     }
 
 
@@ -196,6 +217,10 @@ $(document).ready(function(){
         let activ;
         let menu = $('.s_layouts_snapHeaderWrapper');
 
+        if(element.tournaments.length != 0){
+            activ = 3;
+            menu.find('.tournaments_snapTab').show();
+        }
 
         if(element.teams.length != 0){
             activ = 2;

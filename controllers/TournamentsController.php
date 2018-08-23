@@ -10,6 +10,8 @@ use app\models\Games;
 use app\models\TournamentData;
 use app\models\UserTeam;
 use app\models\Stream;
+use app\models\TournamentTeam;
+use app\models\TournamentUser;
 use Yii;
 use yii\web\HttpException;
 
@@ -56,10 +58,6 @@ class TournamentsController extends \yii\web\Controller
     	$model = new Tournaments();
     	if (Yii::$app->request->isPost) {
 
-            // echo "<pre>";
-            // print_r(Yii::$app->request->post());
-            // echo "</pre>";exit;
-
 
     		if ($model->load(Yii::$app->request->post())) {
                 $model->user_id = Yii::$app->user->identity->id;
@@ -84,13 +82,55 @@ class TournamentsController extends \yii\web\Controller
     }
 
 
-    public function actionIndex($id){
+    public function actionInvitation ($tokin,$tournament,$team = false)
+    {
 
-        $model = Tournaments::findOne($id);
-        echo "<pre>";
-        print_r($model->generateForm());
-        echo "</pre>";exit;
+        $tournament = Tournaments::findOne($tournament);
+        $user = Yii::$app->user->identity;
+        if (!is_object($tournament)) {
+            throw new HttpException(404 ,'Page not found');
+        }
+        
+        if ($team) {
+            $model = TournamentTeam::find()
+                ->where(['tournament_id'=> $tournament->id])
+                ->andWhere(['tokin' => $tokin])
+                ->andWhere(['team_id' => $team])
+                ->andWhere(['status' => TournamentTeam::SENT])
+                ->one();
+            
+        } else {
+            $model = TournamentUser::find()
+                ->where(['tournament_id'=> $tournament->id])
+                ->andWhere(['tokin' => $tokin])
+                ->andWhere(['user_id' => $user->id])
+                ->andWhere(['status' => TournamentUser::SENT])
+                ->one();
+        }
+        if (!is_object($model)) {
+            throw new HttpException(404 ,'Page not found');
+        }
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
 
+            if (isset($post['ACCEPT'])) {
+                $model->status = 2;
+                $model->tokin = 'ok';
+                $model->save();
+            }
+
+            if (isset($post['DECLINE'])) {
+                $model->status = 3;
+                $model->tokin = 'ok';
+                $model->save();
+            }
+            return $this->redirect('/profile#tournaments');
+            // echo "<pre>";
+            // print_r(Yii::$app->request->post());
+            // echo "</pre>";exit;
+
+        }
+        return $this->render('confirmation',compact('tournament','tokin','team'));
     }
 
 }

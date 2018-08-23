@@ -11,6 +11,9 @@ use Yii;
 use app\models\User;
 use yii\helpers\Url;
 use yii\helpers\Html;
+use app\models\Tournaments;
+use app\models\TournamentUser;
+use app\models\TournamentTeam;
 
 class AjaxController extends \yii\web\Controller
 {
@@ -163,7 +166,7 @@ class AjaxController extends \yii\web\Controller
             }
         $teams = $teams->all();
         if (empty($teams)) {
-            $teams = ['not'=>true];
+            $teams = ['not'=> true];
         }
         return $teams;
     }
@@ -171,11 +174,9 @@ class AjaxController extends \yii\web\Controller
     public function actionSearchBar () 
     {
         $post = Yii::$app->request->post();
-        $post['input'] = 'a';
         $users = (new \yii\db\Query())->select(['id'])->from('users')
-        ->where(['LIKE', 'name', $post['input']]);
+            ->where(['LIKE', 'name', $post['input']]);
        
-
         $teams = (new \yii\db\Query())
             ->select(['teams.name','teams.logo','teams.id','teams.created_at', 'games.name as g_name',
             '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) as c_user'])
@@ -196,9 +197,11 @@ class AjaxController extends \yii\web\Controller
             ->limit(18)
             ->all();
 
-        $tournaments = (new \yii\db\Query())->select(['tournaments.*','(select count(*) from tournament_team where team_id = tournaments.id  ) as c_team'])
+        $tournaments = (new \yii\db\Query())->select(['tournaments.*','games.name as g_name',
+            '(select count(*) from tournament_team where team_id = tournaments.id  ) as c_teams'])
             ->from('tournaments')
             ->leftJoin('tournament_user', '`tournament_user`.`tournament_id` = `tournaments`.`id`')
+            ->leftJoin('games', '`games`.`id` = `tournaments`.`game_id`')
             //->leftJoin('tournament_team', '`tournament_team`.`tournament_id` = `tournaments`.`id`')
             ->where(['LIKE', 'tournaments.name', $post['input']])
             ->orWhere(['in', 'tournament_user.user_id', $users])
@@ -206,8 +209,6 @@ class AjaxController extends \yii\web\Controller
             ->groupBy(['tournaments.name'])
             ->limit(18)
             ->all();
-
-
 
         $user_mass = [];
         foreach ($users_m as $user) {
@@ -223,20 +224,97 @@ class AjaxController extends \yii\web\Controller
             } 
         }
 
-
         $arry_search['users'] = $user_mass;
         $arry_search['teams'] = $teams;
         $arry_search['tournaments'] = $tournaments;
         if (empty($arry_search['users']) && empty($arry_search['teams']) && empty($arry_search['tournaments'])) {
-            $arry_search = ['not'=>true];
+            $arry_search = ['not' => true];
         }
            
-       
-        echo "<pre>";
-            print_r($tournaments);
-        echo "</pre>";
-       exit; 
         return $arry_search;
+    }
+
+    public function actionGetTeamsPlayers() {
+        $post = Yii::$app->request->post();
+
+        $flag = (int)$post['flag'];
+        $teams = [];
+        $users = [];
+
+        if((Tournaments::USERS == $flag) || (Tournaments::MIXED == $flag)) {
+            $users = (new \yii\db\Query())->select(['*'])->from('users')
+                ->where(['LIKE', 'name', $post['search']])
+                ->limit(50)->all();
+        } 
+
+        if((Tournaments::TEAMS == $flag) || (Tournaments::MIXED == $flag)) {
+            $teams = (new \yii\db\Query())->select(['teams.id','teams.name','games.name as g_name','teams.logo','teams.capitan',
+               '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) as c_user'])
+            ->from('teams')->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
+            ->where(['LIKE', 'teams.name', $post['search']])
+            ->limit(50)->all();
+                
+        } 
+       
+        $response['users'] = $users;
+        $response['teams'] = $teams;
+
+        if (empty($response['teams']) && empty($response['users'])) {
+            $response = ['not' => true];
+        }
+        return $response;
+
+    }
+
+    public function actionInviteTournament () {
+
+        $post = Yii::$app->request->post();
+        $user = User::findOne($post['user_id']); 
+        $tournament = Tournaments::findOne($post['tournament_id']);
+        if (is_object($user) && is_object($tournament)) {
+            $tokin = (string)bin2hex(random_bytes(24));
+            if(!empty($post['team_id'])) {
+                $team = Teams::findOne($post['team_id']); 
+                if (is_object($team)) {
+                    $tournament_team = new TournamentTeam();
+                    $tournament_team->status = TournamentTeam::SENT;
+                    $tournament_team->tokin = $tokin;
+                    $tournament_team->tournament_id = $tournament->id; 
+                    $tournament_team->team_id = $team->id;
+                    $tournament_team->save();
+
+                    $url = Url::toRoute(['tournaments/invitation','tokin'=> $tokin,
+                        'tournament' => $tournament->id, 'team' => $team->id], true);
+                    $a = Html::a($url,$url);
+                    $message = '<p>The invitation to join the tournament for the team '.$team->name.' 
+                               for confirmation or rejection click on the link<br> '.$a.'</p>';
+
+                }  
+            } else {
+                $tournament_user = new TournamentUser();
+                $tournament_user->status = TournamentUser::SENT;
+                $tournament_user->tokin = $tokin;
+                $tournament_user->tournament_id = $tournament->id; 
+                $tournament_user->user_id = $user->id;
+                $tournament_user->save();
+
+                $url = Url::toRoute(['tournaments/invitation','tokin'=> $tokin,
+                    'tournament' => $tournament->id], true);
+                $a = Html::a($url,$url);
+                $message = '<p>Invitation to enter the tournament for the player '.$user->name.'
+                            to confirm or reject the move click on the link<br> '.$a.'</p>';
+            }
+            $a = Html::a($url,$url);
+            Yii::$app->mailer->compose()
+                ->setFrom([Yii::$app->params['adminEmail'] => 'Invitation to join the tournament '.$tournament->name])
+                ->setTo([$user->email])
+                ->setSubject("Invitation to join the tournament")
+                ->setTextBody("Invitation to join the tournament")
+                ->setHtmlBody($message)
+                ->send();    
+            return ['sent' => true];
+        }
+        return ['sent' => false];
     }
 
 }

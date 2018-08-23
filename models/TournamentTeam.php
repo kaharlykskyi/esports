@@ -16,9 +16,11 @@ use Yii;
  */
 class TournamentTeam extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    
+    const SENT = 1;
+    const ACCEPTED = 2;
+    const DECLINED = 3;
+
     public static function tableName()
     {
         return 'tournament_team';
@@ -30,7 +32,7 @@ class TournamentTeam extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tournament_id', 'team_id'], 'integer'],
+            [['tournament_id', 'team_id','status'], 'integer'],
             [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team_id' => 'id']],
             [['tournament_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tournaments::className(), 'targetAttribute' => ['tournament_id' => 'id']],
         ];

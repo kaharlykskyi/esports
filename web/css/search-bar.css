@@ -225,3 +225,16 @@
 }
 
 
+.blok_search_teams.tournaments_block p{
+    margin-top: 0px;
+}
+
+.blok_search_teams.tournaments_block .tournaments{
+
+    margin-top: 20px;
+    font-size: 2rem;
+    margin-bottom: 4px;
+    
+}
+
+

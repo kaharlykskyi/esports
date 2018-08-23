@@ -26,6 +26,11 @@ class Tournaments extends \yii\db\ActiveRecord
     const SINGLE_E = 2;
     const DUBLE_E = 3;
 
+    const USERS = 1;
+    const TEAMS = 2;
+    const MIXED = 3;
+
+
     public function behaviors()
     {
         return [
@@ -126,7 +131,6 @@ class Tournaments extends \yii\db\ActiveRecord
                         }
                         $result .= '<div class="checkbox conteiner_filed" >'. $options .'</div>';
                     }
-
                 }
                 return $result;
             }
