@@ -123,3 +123,10 @@
     text-align: center !important;
     color:green !important;
 }
+
+#content_modal .invite_btn{
+    width: 160px;
+    height: 40px;
+    text-align: center;
+
+}

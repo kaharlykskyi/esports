@@ -84,6 +84,7 @@ $(document).ready( function() {
         const fdata = FSsrf();
         fdata.append('search',data);
         fdata.append('flag',window.data_flag);
+        fdata.append('tournament_id',window.data_tournament_id);
         let statechange = function() {
             if(this.readyState == 4) {
                 let response = JSON.parse(this.responseText);
@@ -111,7 +112,6 @@ $(document).ready( function() {
         contentAddUsers(response.users);
         contentAddTeams(response.teams);
     }
-
 
     function contentAddUsers (users) {
         $(users).each(function(indx, element){
@@ -159,7 +159,9 @@ $(document).ready( function() {
 
 
     window.data_game_sendMess = function (btn) {
+
         let button = $(btn);
+        button.attr("disabled",true);
         let id = button.attr('data-id-user');
         if(typeof button.attr('data-id-team') == "undefined"){
             sendXmlHttp(button,id);
@@ -182,7 +184,9 @@ $(document).ready( function() {
                 if (response.sent) {
                     button.parent(".box").html('<p class="sent" >Sent</p>');
                 }
-                //console.log(this.responseText); 
+            } else {
+
+                button.html('<img style="height: 20px;" src="/images/profile/load.gif">');
             }
         };
 

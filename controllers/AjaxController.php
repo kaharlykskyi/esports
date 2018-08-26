@@ -237,13 +237,19 @@ class AjaxController extends \yii\web\Controller
     public function actionGetTeamsPlayers() {
         $post = Yii::$app->request->post();
 
+        $tournament = Tournaments::findOne($post['tournament_id']);
+        $id_game  = $tournament->game_id;
         $flag = (int)$post['flag'];
         $teams = [];
         $users = [];
 
         if((Tournaments::USERS == $flag) || (Tournaments::MIXED == $flag)) {
             $users = (new \yii\db\Query())->select(['*'])->from('users')
+                ->leftJoin('tournament_user', '`tournament_user`.`user_id` = `users`.`id`')
                 ->where(['LIKE', 'name', $post['search']])
+                ->andWhere(['!=', 'users.id', $tournament->user_id])
+                ->andWhere(['tournament_user.status' => null])
+                //->andWhere(['!=','tournament_user.status', UserTeam::ACCEPTED])
                 ->limit(50)->all();
         } 
 
@@ -251,7 +257,10 @@ class AjaxController extends \yii\web\Controller
             $teams = (new \yii\db\Query())->select(['teams.id','teams.name','games.name as g_name','teams.logo','teams.capitan',
                '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) as c_user'])
             ->from('teams')->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
-            ->where(['LIKE', 'teams.name', $post['search']])
+            ->leftJoin('tournament_team', '`tournament_team`.`team_id` = `teams`.`id`')
+            ->where(['games.id'=> $id_game])
+            ->andWhere(['LIKE', 'teams.name', $post['search']])
+            ->andWhere(['tournament_team.status' => null])
             ->limit(50)->all();
                 
         } 
