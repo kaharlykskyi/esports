@@ -155,14 +155,13 @@ class AjaxController extends \yii\web\Controller
             ->andWhere(['user_team.status' => UserTeam::ACCEPTED ]);
 
         $teams = (new \yii\db\Query())
-            ->select(['teams.*' ,'games.name as g_name','tournaments.name as turname',
+            ->select(['teams.*' ,'games.name as g_name','tournaments.name as turname','tournaments.id as turid',
             '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) as c_user'])
             ->from('teams')->leftJoin('games', 'games.id = teams.game_id')
             ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
             ->leftJoin('tournaments', 'tournaments.id = tournament_team.tournament_id')
             ->where(['not in', 'games.id', $not_games])
             ->andWhere(['LIKE', 'teams.name', $post['search']]);
-         
             if((int)$post['game']){
 
                 $teams->andWhere(['games.id' => (int)$post['game']]);
@@ -179,6 +178,7 @@ class AjaxController extends \yii\web\Controller
                 $teami['g_name'] = $team['g_name'];
                 $teami['turname'] = $team['turname'];
                 $teami['c_user'] = $team['c_user'];
+                $teami['turid'] = $team['turid'];
                 $teams_sort[$team['id']] = $teami;
             } 
         }
@@ -187,8 +187,6 @@ class AjaxController extends \yii\web\Controller
         if (empty($teams_sort)) {
             $teams_sort = ['not'=> true];
         }
-
-
         // echo "<pre>";
         // print_r($teams_sort);
         //  echo "</pre>";exit;

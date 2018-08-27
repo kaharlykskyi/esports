@@ -198,7 +198,7 @@ $(document).ready(function () {
 
     function contentAdd (e) {
         contentClear();
-        $(e).each(function(indx, element){
+        $.each(e,function(indx, element){
             let html = `<div class="col-xs-12 col-md-10 col-md-offset-1 plashka_teams clearfix " >
                                 <div class="col-xs-3 block_logo" >
                                     <div class="img_logo_modal_team">
@@ -212,7 +212,7 @@ $(document).ready(function () {
                                 </div>
                                 <div class="col-xs-4 col-md-3 box" >
                                     <p>Participtes in</p>
-                                    <p>{cup name}</p>
+                                    <p><a href="/tournaments/public/${element.turid}">${element.turname}</a></p>
                                     <p>Position: 3</p>
                                 </div>
                         </div>`;
