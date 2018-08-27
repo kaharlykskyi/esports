@@ -74,7 +74,7 @@ class TournamentsController extends \yii\web\Controller
                             $stream->save();
                        }
                     } 
-    				return $this->redirect('/profile#tournaments');
+    				return $this->redirect('/tournaments/public/'.$model->id.'#manage_tournament');
     			}
     		}
     	}
@@ -125,11 +125,11 @@ class TournamentsController extends \yii\web\Controller
                 $model->save();
             }
             return $this->redirect('/profile#tournaments');
-            // echo "<pre>";
-            // print_r(Yii::$app->request->post());
-            // echo "</pre>";exit;
 
         }
+            // echo "<pre>";
+            // print_r($tournament);
+            // echo "</pre>";exit;
         return $this->render('confirmation',compact('tournament','tokin','team'));
     }
 

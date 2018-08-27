@@ -76,7 +76,7 @@ $(document).ready( function() {
         if (data.trim() == '') return;
         contentClear();
         searchMix(data);
-        $('.modal_search').val('');
+        
     });
 
 
@@ -225,5 +225,6 @@ $(document).ready( function() {
 
     $('#myModal1').on('hidden.bs.modal',function (e) {
         contentClear();
+        $('.modal_search').val('');
     });
 });

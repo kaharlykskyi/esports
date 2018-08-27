@@ -7,6 +7,9 @@ $(document).ready(function () {
         if(id == 0){
             $('#match_schedule').slideUp();
             $('#elimination').slideToggle();
+            $('.format_campions').prop('checked', false);
+            $('.format_campions').removeClass('active_campions');
+
             return;
         }
         if(id != 0){

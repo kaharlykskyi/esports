@@ -110,3 +110,17 @@
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
+.datetimepicker thead tr:first-child th:hover, .datetimepicker tfoot th:hover {
+    background: #eeeeee;
+    color: #000;
+}
+
+.datetimepicker table tr td span:hover {
+    background: #eeeeee;
+    color: #000;
+}
+
+table tr td:first-child {
+    text-align: center;
+}

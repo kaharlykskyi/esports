@@ -145,7 +145,7 @@ class AjaxController extends \yii\web\Controller
     public function actionGetTeams () 
     {
         $post = Yii::$app->request->post();
-        //$post['search'] = '5';
+        //$post['search'] = 's';
         $id = Yii::$app->user->identity->id;
         
         $not_games = (new \yii\db\Query())->select(['games.id'])->from('games')
@@ -155,20 +155,44 @@ class AjaxController extends \yii\web\Controller
             ->andWhere(['user_team.status' => UserTeam::ACCEPTED ]);
 
         $teams = (new \yii\db\Query())
-            ->select(['teams.*' ,'games.name as g_name',
+            ->select(['teams.*' ,'games.name as g_name','tournaments.name as turname',
             '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) as c_user'])
             ->from('teams')->leftJoin('games', 'games.id = teams.game_id')
+            ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
+            ->leftJoin('tournaments', 'tournaments.id = tournament_team.tournament_id')
             ->where(['not in', 'games.id', $not_games])
             ->andWhere(['LIKE', 'teams.name', $post['search']]);
+         
             if((int)$post['game']){
 
                 $teams->andWhere(['games.id' => (int)$post['game']]);
             }
-        $teams = $teams->all();
-        if (empty($teams)) {
-            $teams = ['not'=> true];
+        $teams = $teams->limit(50)
+            ->orderBy(['tournaments.id' => SORT_DESC])
+            ->all();
+
+        $teams_sort = [];
+        foreach ($teams as $team) {
+            if (!array_key_exists($team['id'], $teams_sort)) {
+                $teami['id'] = $team['id'];
+                $teami['name'] = $team['name'];
+                $teami['g_name'] = $team['g_name'];
+                $teami['turname'] = $team['turname'];
+                $teami['c_user'] = $team['c_user'];
+                $teams_sort[$team['id']] = $teami;
+            } 
         }
-        return $teams;
+        
+
+        if (empty($teams_sort)) {
+            $teams_sort = ['not'=> true];
+        }
+
+
+        // echo "<pre>";
+        // print_r($teams_sort);
+        //  echo "</pre>";exit;
+        return $teams_sort;
     }
 
     public function actionSearchBar () 

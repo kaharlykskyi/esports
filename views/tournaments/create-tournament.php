@@ -134,7 +134,8 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
 
                 <?php  
                 echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
-                    'name' => 'datetime_10',
+                    //'name' => 'datetime_10',
+                    //'value' => '01-Jan-2017 10:00',
                     'options' => [  
                         'placeholder' => 'Select operating time ...',
                         'autocomplete'=>"off",'class'=>'datainput',
@@ -142,7 +143,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                     'convertFormat' => true,
                     'pluginOptions' => [
                         'format' => 'yyyy-MM-dd hh:i',
-                        'startDate' => '01-Mar-2014 12:00 AM',
+                        'startDate' => date("Y-m-d H:i"),//'2018-08-22 02:55'
                         'todayHighlight' => true
                 ]]); ?>
 

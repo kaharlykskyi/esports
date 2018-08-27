@@ -4,7 +4,7 @@ $(document).ready(function () {
         if (data.trim() == '') return;
         contentClear();
         searchuser(data);
-        $('.modal_search').val('');
+        //$('.modal_search').val('');
     });
 
     function FSsrf () {
@@ -106,6 +106,7 @@ $(document).ready(function () {
     
     $('#myModal1').on('hidden.bs.modal',function (e) {
         contentClear();
+        $('.modal_search').val('');
     });
     
     $('#myModal1').on('shown.bs.modal', function (e) {
@@ -141,9 +142,8 @@ $(document).ready(function () {
         const search = $('.modal_search_team').val();
         if (search.trim() == '') return;
         contentClear();
-        //alert('fff');
         searcTeams(search,game,qualit);
-        $('.modal_search_team').val('');
+        //$('.modal_search_team').val('');
 
     });
 
@@ -219,5 +219,9 @@ $(document).ready(function () {
           $('#content_teams_modal_team').append(html);
         });
     }
+    $('#myModal2').on('hidden.bs.modal',function (e) {
+        contentClear();
+        $('.modal_search_team').val('');
+    });
 });
 

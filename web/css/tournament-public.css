@@ -130,3 +130,55 @@
     text-align: center;
 
 }
+
+/*//////////////////////////////////RADIO////////////////////////////////////////////*/
+
+
+
+.field-tournaments-flag input[type="radio"]{
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+.field-tournaments-flag label {
+  display: inline-block;
+  vertical-align:middle;
+  height: 60px;
+  width: 150px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #454545;
+  color: white;
+  padding: 5px 18px;
+  border-radius: 3px;
+  transition: all .3s ease-out;
+ margin-left: 15px;
+ font-weight: normal;
+ line-height: 3;
+}
+
+
+.center-align{
+    width: 100%;
+    text-align: center;
+
+}
+
+.field-tournaments-flag{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+ input[type="radio"]:checked + label{
+  background-color: #1f7ad3;
+}
+
+
+/*////////////////////////////////END RADIO/////////////////////////////////////////*/
+
+.castom_seting input[type=number]::-webkit-inner-spin-button,
+.castom_seting input[type=number]::-webkit-outer-spin-button {
+    height: 50px;
+    border-radius: 20%;
+}

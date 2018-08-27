@@ -450,7 +450,19 @@
                                         
                                         
                                         <div class="col-md-12">
-                                            <?= $form->field($model,'flag')->radioList([1 => 'Only players', 2 => 'Only teams', 3 => 'Mixed'],['class' =>'radiolist_only'])->label('Format') ?>
+                                            <label class="col-sm-12 control-label" >Format</label>
+                                            <div class="center-align field-tournaments-flag"> 
+                                                <input type="radio" name="Tournaments[flag]" id="size_1" value="1" <?= $model->flag==1 ? 'checked' : ''?> />
+                                                <label for="size_1">Only players</label>
+                                                  
+                                                <input type="radio" name="Tournaments[flag]" id="size_2" value="2" <?= $model->flag==2 ? 'checked' : ''?> />
+                                                <label for="size_2">Only teams</label>
+                                                  
+                                                <input type="radio" name="Tournaments[flag]" id="size_3" value="3" <?= $model->flag==3 ? 'checked' : ''?> />
+                                                <label for="size_3">Mixed</label>
+                                            </div>
+
+                                           
                                         </div>
                                         <div class="col-md-12">
                                             <?= $form->field($model, 'time_limit')
@@ -469,7 +481,7 @@
                                                 </div>    
                                             </div>
                                         </div>
-                                        <div class="col-md-12" style="margin-top: 5px;">
+                                        <div class="col-md-12 castom_seting" style="margin-top: 5px;">
                                             <?=$model->generateForm()?>
                                         </div>
 
@@ -515,7 +527,7 @@
                                                 'convertFormat' => true,
                                                 'pluginOptions' => [
                                                     'format' => 'yyyy-MM-dd hh:i',
-                                                    'startDate' => '01-Mar-2018 12:00 AM',
+                                                    'startDate' => date("Y-m-d H:i"),
                                                     'todayHighlight' => true
                                             ]]); ?>
 

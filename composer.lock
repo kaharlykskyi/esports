@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "b186ab58e82ece9a9816c1c1906a7de8",
@@ -238,16 +238,16 @@
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v1.9.1",
+            "version": "v1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "43553e2ee7206d7feb8976ad1861a9be5e50d83e"
+                "reference": "2c007b06602d4af59c7d3e708921d539bc81bc40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/43553e2ee7206d7feb8976ad1861a9be5e50d83e",
-                "reference": "43553e2ee7206d7feb8976ad1861a9be5e50d83e",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/2c007b06602d4af59c7d3e708921d539bc81bc40",
+                "reference": "2c007b06602d4af59c7d3e708921d539bc81bc40",
                 "shasum": ""
             },
             "require": {
@@ -285,29 +285,34 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2018-08-16T08:17:30+00:00"
+            "time": "2018-08-20T18:10:23+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-datetimepicker",
-            "version": "v1.4.4",
+            "version": "v1.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datetimepicker.git",
-                "reference": "e843520aca008dc0807aa7ea99bfab2cc03c9a3c"
+                "reference": "d8fea07ab72bba93a8bb286646ded38cf2c860c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/e843520aca008dc0807aa7ea99bfab2cc03c9a3c",
-                "reference": "e843520aca008dc0807aa7ea99bfab2cc03c9a3c",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/d8fea07ab72bba93a8bb286646ded38cf2c860c0",
+                "reference": "d8fea07ab72bba93a8bb286646ded38cf2c860c0",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-krajee-base": "*"
+                "kartik-v/yii2-krajee-base": "~1.9"
             },
             "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "kartik\\datetime\\": ""
+                    "kartik\\datetime\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -334,7 +339,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-06-08T05:53:28+00:00"
+            "time": "2018-08-25T15:09:46+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
