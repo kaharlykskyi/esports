@@ -228,3 +228,37 @@ $(document).ready( function() {
         $('.modal_search').val('');
     });
 });
+
+
+
+  
+
+
+
+
+
+
+// $(document).ready(function(){
+// var doubleElimination = {
+//                 teams: [
+//                     ["Team 1", "Team 2"],
+//                     ["Team 6", "Team 7"]
+//                 ],
+//                 results: [
+//                     [[4, 6], [2, 1]],
+//                     [[2, 1]]
+//                 ]
+//             };
+
+// $('#brekets').bracket({
+//                     init: doubleElimination,
+//                     skipConsolationRound: true,
+//                     matchMargin: 150,
+//                     roundMargin: 180,
+//                     teamWidth: 200,
+//                     scoreWidth: 40,
+//                     //centerConnectors: true,
+//                     disableHighlight: true
+//                 });
+// });
+

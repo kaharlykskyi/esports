@@ -183,7 +183,50 @@
     border-radius: 20%;
 }
 
-/*/////////////////////////////////////////////////////////////////////////////////////*/
 .part-list .item .logo img {
     border-radius: 50%;
+}
+/*/////////////////////////////////////////////////////////////////////////////////////*/
+.jQBracket .round{
+    width: 220px; 
+    margin-right: 90px;
+}
+
+.jQBracket .team{
+    width: 220px;
+}
+.jQBracket .label{
+    width: 400px;
+}
+.jQBracket .score{
+    width: 40px;
+}
+.jQBracket .connector .connector{
+    width: 50px;
+    right: -50px; 
+}
+
+.jQBracket .connector{
+    width: 50px; 
+    right: -50px;
+}
+
+.jQBracket .match:nth-child(odd) .teamContainer>.connector{
+    border-bottom: none;
+    top: 76px;
+}
+
+.jQBracket .match:nth-child(even) .teamContainer>.connector{
+    border-top: none;
+    bottom: 76px;
+}
+
+.jQBracket .match:nth-child(odd) .connector .connector{
+    bottom: 0px;
+    
+}
+
+.jQBracket .match:nth-child(even) .connector .connector{
+    top: 0px;
+    
 }

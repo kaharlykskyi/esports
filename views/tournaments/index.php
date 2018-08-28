@@ -378,79 +378,140 @@
 
 
 
+<!-- <div class="row">
+    
+<div class="col-md-12 overflow-scroll">
+                
+
+                <div id="brekets" >
+                    
+
+                </div>
+                  
+            </div>
+
+</div> -->
 
 
 
+    
+    
+        
 
-
-
-
-            
-                <div class="cup-body tab-pane active" id="qualification">
-                    <div class="jQBracket lr" style="width: 1870px;">
+            <section class="standing-cup">
+                <div class="cup-body " >
+                    <div class="jQBracket" >
                         <div class="bracket" style="height: 780px;">
-                            <div class="round" style="width: 440px; margin-right: 180px">
+                            <div class="round" ">
                                 <div class="match" style="height: 195px;">
                                     <div class="teamContainer" style="top: 20.5px;">
-                                        <div class="team win" style="width: 440px;" data-teamid="0">
-                                            <div class="label" style="width: 400px;">Team 1</div>
-                                                <div class="score" style="width: 40px;" data-resultid="result-1">3</div>
+                                        <div class="team win"  data-teamid="0">
+                                            <div class="label" >Team 1</div>
+                                            <div class="score"  data-resultid="result-1">3</div>
                                         </div>
-                                        <div class="team lose" style="width: 440px;" data-teamid="1">
-                                            <div class="label" style="width: 400px;">Team 2</div>
-                                            <div class="score" style="width: 40px;" data-resultid="result-2">2</div>
+                                        <div class="team lose"  data-teamid="1">
+                                            <div class="label" >Team 2</div>
+                                            <div class="score"  data-resultid="result-2">2</div>
                                         </div>
-                                        <div class="connector" style="height: 97.5px; width: 90px; right: -92px; top: 76px; border-bottom: none;">
-                                            <div class="connector" style="width: 90px; right: -90px; bottom: 0px;"> </div>
+                                        <div class="connector" style="height: 97.5px;  ">
+                                            <div class="connector" > </div>
                                         </div>
                                     </div>
-                            </div>
+                                </div>
                                 <div class="match" style="height: 195px;">
                                     <div class="teamContainer" style="top: 20.5px;">
-                                        <div class="team lose" style="width: 440px;" data-teamid="2"><div class="label" style="width: 400px;">Team 3</div><div class="score" style="width: 40px;" data-resultid="result-3">3</div>
-                            </div><div class="team win" style="width: 440px;" data-teamid="3">
-                                <div class="label" style="width: 400px;">Team 4</div>
-                                <div class="score" style="width: 40px;" data-resultid="result-4">4</div>
-                            </div>
-                            <div class="connector" style="height: 97.5px; width: 90px; right: -92px; bottom: 76px; border-top: none;">
-                                <div class="connector" style="width: 90px; right: -90px; top: 0px;"></div></div>
-                            </div></div><div class="match" style="height: 195px;">
-                                <div class="teamContainer" style="top: 20.5px;">
-                                    <div class="team lose" style="width: 440px;" data-teamid="4"><div class="label" style="width: 400px;">Team 8</div>
-                                    <div class="score" style="width: 40px;" data-resultid="result-5">4</div></div><div class="team win" style="width: 440px;" data-teamid="5"><div class="label" style="width: 400px;">Team 5</div><div class="score" style="width: 40px;" data-resultid="result-6">5</div></div>
-                                    <div class="connector" style="height: 97.5px; width: 90px; right: -92px; top: 76px; border-bottom: none;"><div class="connector" style="width: 90px; right: -90px; bottom: 0px;"></div></div>
-                                </div></div><div class="match" style="height: 195px;"><div class="teamContainer" style="top: 20.5px;">
-                                        <div class="team win" style="width: 440px;" data-teamid="6">
-                                        <div class="label" style="width: 400px;">Team 6</div>
-                                    <div class="score" style="width: 40px;" data-resultid="result-7">1</div>
+                                        <div class="team lose"  data-teamid="2">
+                                            <div class="label" >Team 3</div>
+                                            <div class="score"  data-resultid="result-3">3</div>
+                                        </div>
+                                        <div class="team win"  data-teamid="3">
+                                            <div class="label" >Team 4</div>
+                                            <div class="score"  data-resultid="result-4">4</div>
+                                        </div>
+                                        <div class="connector" style="height: 97.5px;   ">
+                                            <div class="connector" ></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                    <div class="team lose" style="width: 440px;" data-teamid="7"><div class="label" style="width: 400px;">Team 7</div>
-                                    <div class="score" style="width: 40px;" data-resultid="result-8">0</div></div>
-                            <div class="connector" style="height: 97.5px; width: 90px; right: -92px; bottom: 76px; border-top: none;"><div class="connector" style="width: 90px; right: -90px; top: 0px;"></div></div>
-                        </div></div></div><div class="round" style="width: 440px; margin-right: 180px">
+                                <div class="match" style="height: 195px;">
+                                    <div class="teamContainer" style="top: 20.5px;">
+                                        <div class="team lose"  data-teamid="4"><div class="label" >Team 8</div>
+                                            <div class="score"  data-resultid="result-5">4</div>
+                                        </div>
+                                        <div class="team win"  data-teamid="5">
+                                            <div class="label" >Team 5</div>
+                                            <div class="score"  data-resultid="result-6">5</div>
+                                        </div>
+                                        <div class="connector" style="height: 97.5px;  ">
+                                            <div class="connector" ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="match" style="height: 195px;">
+                                    <div class="teamContainer" style="top: 20.5px;">
+                                        <div class="team win"  data-teamid="6">
+                                            <div class="label" >Team 6</div>
+                                            <div class="score"  data-resultid="result-7">1</div>
+                                        </div>
+                                        <div class="team lose"  data-teamid="7">
+                                            <div class="label" >Team 7</div>
+                                            <div class="score"  data-resultid="result-8">0</div>
+                                        </div>
+                                        <div class="connector" style="height: 97.5px;  ">
+                                            <div class="connector" ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="round" ">
                                 <div class="match" style="height: 390px;">
-                                <div class="teamContainer" style="top: 118px;"><div class="team lose" style="width: 440px;" data-teamid="0"><div class="label" style="width: 400px;">Team 1</div>
-                            <div class="score" style="width: 40px;" data-resultid="result-9">4</div></div><div class="team win" style="width: 440px;" data-teamid="3"><div class="label" style="width: 400px;">Team 4</div><div class="score" style="width: 40px;" data-resultid="result-10">6</div>
-                        </div><div class="connector" style="height: 195px; width: 90px; right: -92px; top: 76px; border-bottom: none;">
-                                <div class="connector" style="width: 90px; right: -90px; bottom: 0px;"></div></div></div></div>
-                            <div class="match" style="height: 390px;"><div class="teamContainer" style="top: 118px;"><div class="team win" style="width: 440px;" data-teamid="5">
-                                <div class="label" style="width: 400px;">Team 5</div><div class="score" style="width: 40px;" data-resultid="result-11">2</div></div><div class="team lose" style="width: 440px;" data-teamid="6"><div class="label" style="width: 400px;">Team 6</div><div class="score" style="width: 40px;" data-resultid="result-12">1</div></div>
-                                <div class="connector" style="height: 195px; width: 90px; right: -92px; bottom: 76px; border-top: none;">
-                                    <div class="connector" style="width: 90px; right: -90px; top: 0px;">
-                                        
+                                    <div class="teamContainer" style="top: 118px;">
+                                        <div class="team lose"  data-teamid="0">
+                                            <div class="label" >Team 1</div>
+                                            <div class="score"  data-resultid="result-9">4</div>
+                                        </div>
+                                        <div class="team win"  data-teamid="3">
+                                            <div class="label" >Team 4</div><div class="score"  data-resultid="result-10">6</div>
+                                        </div>
+                                        <div class="connector" style="height: 195px;  ">
+                                            <div class="connector" ></div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="match" style="height: 390px;">
+                                    <div class="teamContainer" style="top: 118px;">
+                                        <div class="team win"  data-teamid="5">
+                                            <div class="label" >Team 5</div>
+                                            <div class="score"  data-resultid="result-11">2</div>
+                                        </div>
+                                        <div class="team lose"  data-teamid="6">
+                                            <div class="label" >Team 6</div>
+                                            <div class="score"  data-resultid="result-12">1</div>
+                                        </div>
+                                        <div class="connector" style="height: 195px;   ">
+                                            <div class="connector" ></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                </div></div><div class="round" style="width: 440px; margin-right: 180px">
-                                    <div class="match" style="height: 780px;"><div class="teamContainer" style="position: absolute; top: 313px;">
-                                        <div class="team" style="width: 440px;" data-teamid="3"><div class="label" style="width: 400px;">Team 4</div>
-                                <div class="score" style="width: 40px;" data-resultid="result-13">--</div><
-                                /div><div class="team" style="width: 440px;" data-teamid="5">
-                                    <div class="label" style="width: 400px;">Team 5</div>
-                                    <div class="score" style="width: 40px;" data-resultid="result-14">--</div>
+                            </div>
+                            <div class="round" ">
+                                <div class="match" style="height: 780px;">
+                                    <div class="teamContainer" style="position: absolute; top: 313px;">
+                                        <div class="team"  data-teamid="3">
+                                            <div class="label" >Team 4</div>
+                                            <div class="score"  data-resultid="result-13">--</div>
+                                        </div>
+                                        <div class="team"  data-teamid="5">
+                                            <div class="label" >Team 5</div>
+                                            <div class="score"  data-resultid="result-14">--</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                </div>
-                                </div></div></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 
 
