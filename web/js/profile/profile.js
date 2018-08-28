@@ -202,11 +202,11 @@ $(document).ready(function () {
             let html = `<div class="col-xs-12 col-md-10 col-md-offset-1 plashka_teams clearfix " >
                                 <div class="col-xs-3 block_logo" >
                                     <div class="img_logo_modal_team">
-                                        <img src="${element.logo}" alt="">
+                                        <a href="/teams/public/${element.id}"><img src="${element.logo}" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="col-xs-5 col-md-6" >
-                                    <p class="p_name" >${element.name}</p>
+                                    <p class="p_name" ><a href="/teams/public/${element.id}">${element.name}<a/></p>
                                     <p class="p_gname" >${element.g_name}</p>
                                     <p class="p_user" >${element.c_user} member(s)</p>
                                 </div>

@@ -284,7 +284,7 @@
                                                     <?php if($team->capitan == $user->id ): ?>
                                                         <a href="/profile/update-team?id=<?=$team->id?>" class="btn edit-team edit-btn">Edit team</a>
                                                     <?php else: ?>
-                                                        <a href="/profile/exit-team?id=<?=$team->id?>" class="btn edit-team btn-red">Exit team</a>   
+                                                        <a href="/profile/exit-team?id=<?=$team->id?>" class="btn edit-team btn-red">Leave the team</a>   
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="meta conteiner_btn">

@@ -57,3 +57,8 @@ input[type=email], input[type=password] {
 .btn-red:hover {
     opacity: .6;
 }
+
+
+.main-menu-wrap .custom-logo-link {
+    z-index: 100000;
+}

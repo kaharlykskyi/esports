@@ -124,3 +124,16 @@
 table tr td:first-child {
     text-align: center;
 }
+
+.league{
+    vertical-align: middle;
+    height: 80px;
+    text-align: center;
+}
+
+.league span{
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+}

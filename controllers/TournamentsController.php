@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use app\models\Teams;
 use app\models\Games;
+use app\models\User;
 use app\models\TournamentData;
 use app\models\UserTeam;
 use app\models\Stream;
@@ -24,10 +25,7 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($model)) {
            throw new HttpException(404 ,'Page not found');
         }
-
         if(Yii::$app->request->isPost){
-
-            
 
             if ($model->load(Yii::$app->request->post())) {
                     $post = Yii::$app->request->post();
@@ -49,7 +47,13 @@ class TournamentsController extends \yii\web\Controller
             }
         }
 
-        return $this->render('index',compact('model'));
+        $teams = Teams::find()->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
+            ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $model->id])->all();
+        $users = User::find()->leftJoin('tournament_user', 'tournament_user.user_id = users.id')
+            ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $model->id])->all();
+        $players = array_merge($teams,$users);
+
+        return $this->render('index',compact('model','players'));
     }
 
     public function actionCreate()

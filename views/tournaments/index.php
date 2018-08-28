@@ -12,6 +12,8 @@
     $this->title = 'Tournament';
     $this->params['breadcrumbs'][] = $this->title;
 
+    $capitan = $model->user_id == Yii::$app->user->identity->id;
+
 ?>
 <!--CHAMPIONSHIP WRAP BEGIN-->
     <div class="championship-wrap">
@@ -26,7 +28,9 @@
                             <li class="active"><a href="#participants">participants</a></li>
                             <li><a href="#matches">Matches</a></li>
                             <li><a href="#tournamentgrid">Tournament grid</a></li>
-                            <li><a href="#manage_tournament">Manage Tournament</a></li>
+                            <?php if($capitan):?>
+                                <li><a href="#manage_tournament">Manage Tournament</a></li>
+                            <?php endif; ?>
                         </ul>       
                     </div>
                 </div>
@@ -42,74 +46,32 @@
                 <div class="container">
                     <div class="row"> 
                         <div class="col-md-12" style="margin-bottom: 30px;">
-                            <?php if(empty($model->flag)):?>
-                                <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
-                            <?php else: ?>
-                                <a href="#myModal1" class="btn btn-secusses" data-toggle="modal" data-flag ="<?=$model->flag ?>"  data-tournament-id="<?=$model->id?>" >Invite participants</a>
+
+                            
+                            <?php if($capitan):?>
+                                <?php if(empty($model->flag)):?>
+                                    <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
+                                <?php else: ?>
+                                    <a href="#myModal1" class="btn btn-secusses" data-toggle="modal" data-flag ="<?=$model->flag ?>"  data-tournament-id="<?=$model->id?>" >Invite participants</a>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo1.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 1</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo2.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 2</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo3.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 3</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo4.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 4</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo5.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 5</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo1.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 6</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo2.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 7</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo3.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 8</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo4.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 9</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="club-stats.html" class="item">
-                                <span class="logo"><img src="/images/hockey/team-logo5.png" width="80" height="80" alt="team-logo"></span>
-                                <span class="name">Team 10</span>
-                            </a>
-                        </div>
+
+
+
+
+                        <?php foreach ($players as $player): ?>
+
+                            <div class="col-md-3">
+                                <a href="club-stats.html" class="item">
+                                    <span class="logo"><img src="<?= $player->logo ?? "/images/profile/images.png" ?>" width="80" height="80" alt="team-logo"></span>
+                                    <span class="name"><?=$player->name?></span>
+                                </a>
+                            </div>
+                        <?php endforeach ;?>
+
                     </div>
                 </div>
                 </div>
@@ -178,7 +140,7 @@
             <div class="tab-item tournament-tab tab-pane" id="tournamentgrid">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <!-- <div class="col-md-12 col-sm-12 col-xs-12">
                             <ul class="tab-filters">
                                 <li class="active"><a href="#groupstage" data-toggle="tab">Group stage</a></li>
                                 <li><a href="#playoff" data-toggle="tab">Playoffs</a></li>
@@ -412,139 +374,268 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
+
+
+
+
+
+
+
+
+
+
+            
+                <div class="cup-body tab-pane active" id="qualification">
+                    <div class="jQBracket lr" style="width: 1870px;">
+                        <div class="bracket" style="height: 780px;">
+                            <div class="round" style="width: 440px; margin-right: 180px">
+                                <div class="match" style="height: 195px;">
+                                    <div class="teamContainer" style="top: 20.5px;">
+                                        <div class="team win" style="width: 440px;" data-teamid="0">
+                                            <div class="label" style="width: 400px;">Team 1</div>
+                                                <div class="score" style="width: 40px;" data-resultid="result-1">3</div>
+                                        </div>
+                                        <div class="team lose" style="width: 440px;" data-teamid="1">
+                                            <div class="label" style="width: 400px;">Team 2</div>
+                                            <div class="score" style="width: 40px;" data-resultid="result-2">2</div>
+                                        </div>
+                                        <div class="connector" style="height: 97.5px; width: 90px; right: -92px; top: 76px; border-bottom: none;">
+                                            <div class="connector" style="width: 90px; right: -90px; bottom: 0px;"> </div>
+                                        </div>
+                                    </div>
+                            </div>
+                                <div class="match" style="height: 195px;">
+                                    <div class="teamContainer" style="top: 20.5px;">
+                                        <div class="team lose" style="width: 440px;" data-teamid="2"><div class="label" style="width: 400px;">Team 3</div><div class="score" style="width: 40px;" data-resultid="result-3">3</div>
+                            </div><div class="team win" style="width: 440px;" data-teamid="3">
+                                <div class="label" style="width: 400px;">Team 4</div>
+                                <div class="score" style="width: 40px;" data-resultid="result-4">4</div>
+                            </div>
+                            <div class="connector" style="height: 97.5px; width: 90px; right: -92px; bottom: 76px; border-top: none;">
+                                <div class="connector" style="width: 90px; right: -90px; top: 0px;"></div></div>
+                            </div></div><div class="match" style="height: 195px;">
+                                <div class="teamContainer" style="top: 20.5px;">
+                                    <div class="team lose" style="width: 440px;" data-teamid="4"><div class="label" style="width: 400px;">Team 8</div>
+                                    <div class="score" style="width: 40px;" data-resultid="result-5">4</div></div><div class="team win" style="width: 440px;" data-teamid="5"><div class="label" style="width: 400px;">Team 5</div><div class="score" style="width: 40px;" data-resultid="result-6">5</div></div>
+                                    <div class="connector" style="height: 97.5px; width: 90px; right: -92px; top: 76px; border-bottom: none;"><div class="connector" style="width: 90px; right: -90px; bottom: 0px;"></div></div>
+                                </div></div><div class="match" style="height: 195px;"><div class="teamContainer" style="top: 20.5px;">
+                                        <div class="team win" style="width: 440px;" data-teamid="6">
+                                        <div class="label" style="width: 400px;">Team 6</div>
+                                    <div class="score" style="width: 40px;" data-resultid="result-7">1</div>
+                                </div>
+                                    <div class="team lose" style="width: 440px;" data-teamid="7"><div class="label" style="width: 400px;">Team 7</div>
+                                    <div class="score" style="width: 40px;" data-resultid="result-8">0</div></div>
+                            <div class="connector" style="height: 97.5px; width: 90px; right: -92px; bottom: 76px; border-top: none;"><div class="connector" style="width: 90px; right: -90px; top: 0px;"></div></div>
+                        </div></div></div><div class="round" style="width: 440px; margin-right: 180px">
+                                <div class="match" style="height: 390px;">
+                                <div class="teamContainer" style="top: 118px;"><div class="team lose" style="width: 440px;" data-teamid="0"><div class="label" style="width: 400px;">Team 1</div>
+                            <div class="score" style="width: 40px;" data-resultid="result-9">4</div></div><div class="team win" style="width: 440px;" data-teamid="3"><div class="label" style="width: 400px;">Team 4</div><div class="score" style="width: 40px;" data-resultid="result-10">6</div>
+                        </div><div class="connector" style="height: 195px; width: 90px; right: -92px; top: 76px; border-bottom: none;">
+                                <div class="connector" style="width: 90px; right: -90px; bottom: 0px;"></div></div></div></div>
+                            <div class="match" style="height: 390px;"><div class="teamContainer" style="top: 118px;"><div class="team win" style="width: 440px;" data-teamid="5">
+                                <div class="label" style="width: 400px;">Team 5</div><div class="score" style="width: 40px;" data-resultid="result-11">2</div></div><div class="team lose" style="width: 440px;" data-teamid="6"><div class="label" style="width: 400px;">Team 6</div><div class="score" style="width: 40px;" data-resultid="result-12">1</div></div>
+                                <div class="connector" style="height: 195px; width: 90px; right: -92px; bottom: 76px; border-top: none;">
+                                    <div class="connector" style="width: 90px; right: -90px; top: 0px;">
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                                </div></div><div class="round" style="width: 440px; margin-right: 180px">
+                                    <div class="match" style="height: 780px;"><div class="teamContainer" style="position: absolute; top: 313px;">
+                                        <div class="team" style="width: 440px;" data-teamid="3"><div class="label" style="width: 400px;">Team 4</div>
+                                <div class="score" style="width: 40px;" data-resultid="result-13">--</div><
+                                /div><div class="team" style="width: 440px;" data-teamid="5">
+                                    <div class="label" style="width: 400px;">Team 5</div>
+                                    <div class="score" style="width: 40px;" data-resultid="result-14">--</div>
+                                </div>
+                                </div>
+                                </div></div></div></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </div>
                 </div>
             </div>
             
             <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->
-            <div class="tab-item news-tab tab-pane" id="manage_tournament">
+            <?php if($capitan):?>
+                <div class="tab-item news-tab tab-pane" id="manage_tournament">
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <ul class="tab-filters">
-                                    <li class="active"><a href="#games_settings">Game settings</a></li>
-                                    <li><a href="#main">Main</a></li>
-                                </ul>
-                            </div>
-                            
-                        </div>
-                        <div class="tab-content">
-                            <div id="games_settings" class="tab-pane fade in active">
-                                <div class="col-md-8 col-md-offset-2" style="margin-bottom: 40px;" >
-                                    <?php $form = ActiveForm::begin([ 
-                                            'validateOnBlur'=>false,  
-                                            'options' => ['enctype' => 'multipart/form-data'],
-                                            'fieldConfig' => [
-                                                'template' => '{label}{hint}{input}{error}',
-                                                'labelOptions' => ['class' => 'col-sm-12 control-label'],
-                                            ],
-                                        ]); 
-                                        $form->errorCssClass = false;
-                                        $form->successCssClass = false;
-                                    ?>
-                                    <div class="row">
-                                        <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
-                                        <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
-                                        
-                                        
-                                        <div class="col-md-12">
-                                            <label class="col-sm-12 control-label" >Format</label>
-                                            <div class="center-align field-tournaments-flag"> 
-                                                <input type="radio" name="Tournaments[flag]" id="size_1" value="1" <?= $model->flag==1 ? 'checked' : ''?> />
-                                                <label for="size_1">Only players</label>
-                                                  
-                                                <input type="radio" name="Tournaments[flag]" id="size_2" value="2" <?= $model->flag==2 ? 'checked' : ''?> />
-                                                <label for="size_2">Only teams</label>
-                                                  
-                                                <input type="radio" name="Tournaments[flag]" id="size_3" value="3" <?= $model->flag==3 ? 'checked' : ''?> />
-                                                <label for="size_3">Mixed</label>
-                                            </div>
-
-                                           
-                                        </div>
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'time_limit')
-                                            ->textInput(['type' => 'number','class' => 'input_numeric','min' => '15','step' => '5', 'value'=>$model->time_limit])->label('Time limit')?>
-                                        </div>
-                                        
-                                        <div class="col-md-12">
-                                            <label class="col-sm-12 control-label" for="teams-background">Region</label>
-                                            <div class="item select-show">
-                                                <div class="fancy-select ">
-                                                    <select class="basic" name="Tournaments[region]" required>
-                                                        <option  value="Europe" <?=$model->region == 'Europe' ? 'selected' : '' ?> >Europe</option> 
-                                                        <option  value="America" <?=$model->region == 'America' ? 'selected' : '' ?> >America</option>
-                                                        <option  value="Asia" <?=$model->region == 'Asia' ? 'selected' : '' ?> >Asia</option>
-                                                    </select>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 castom_seting" style="margin-top: 5px;">
-                                            <?=$model->generateForm()?>
-                                        </div>
-
-                                    </div>   
-                                    <div class="row">
-
-
-                                        <div class="col-md-12">
-                                            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
-                                        </div>
-                                    </div>
-                                    <?php ActiveForm::end(); ?>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <ul class="tab-filters">
+                                        <li class="active"><a href="#games_settings">Game settings</a></li>
+                                        <li><a href="#main">Main</a></li>
+                                    </ul>
                                 </div>  
                             </div>
-                            <div id="main" class="tab-pane fade in">
-                                                                <div class="col-md-8 col-md-offset-2" style="margin-bottom: 40px;" >
-                                    <?php $form = ActiveForm::begin([ 
-                                            'validateOnBlur'=>false,  
-                                            'options' => ['enctype' => 'multipart/form-data'],
-                                            'fieldConfig' => [
-                                                'template' => '{label}{hint}{input}{error}',
-                                                'labelOptions' => ['class' => 'col-sm-12 control-label'],
-                                            ],
-                                        ]); 
-                                        $form->errorCssClass = false;
-                                        $form->successCssClass = false;
-                                    ?>
-                                    <div class="row">
-                                        <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
-                                        <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
-                                        
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
-                                            <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
-                                       
-                                            <?php  
-                                            echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
-                                                'name' => 'datetime_10',
-                                                'options' => [  
-                                                    'placeholder' => 'Select operating time ...',
-                                                    'autocomplete'=>"off",'class'=>'datainput',
+                            <div class="tab-content">
+                                <div id="games_settings" class="tab-pane fade in active">
+                                    <div class="col-md-8 col-md-offset-2" style="margin-bottom: 40px;" >
+                                        <?php $form = ActiveForm::begin([ 
+                                                'validateOnBlur'=>false,  
+                                                'options' => ['enctype' => 'multipart/form-data'],
+                                                'fieldConfig' => [
+                                                    'template' => '{label}{hint}{input}{error}',
+                                                    'labelOptions' => ['class' => 'col-sm-12 control-label'],
                                                 ],
-                                                'convertFormat' => true,
-                                                'pluginOptions' => [
-                                                    'format' => 'yyyy-MM-dd hh:i',
-                                                    'startDate' => date("Y-m-d H:i"),
-                                                    'todayHighlight' => true
-                                            ]]); ?>
+                                            ]); 
+                                            $form->errorCssClass = false;
+                                            $form->successCssClass = false;
+                                        ?>
+                                        <div class="row">
+                                            <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
+                                            <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
+                                            
+                                            
+                                            <div class="col-md-12">
+                                                <label class="col-sm-12 control-label" >Format</label>
+                                                <div class="center-align field-tournaments-flag"> 
+                                                    <input type="radio" name="Tournaments[flag]" id="size_1" value="1" <?= $model->flag==1 ? 'checked' : ''?> />
+                                                    <label for="size_1">Only players</label>
+                                                      
+                                                    <input type="radio" name="Tournaments[flag]" id="size_2" value="2" <?= $model->flag==2 ? 'checked' : ''?> />
+                                                    <label for="size_2">Only teams</label>
+                                                      
+                                                    <input type="radio" name="Tournaments[flag]" id="size_3" value="3" <?= $model->flag==3 ? 'checked' : ''?> />
+                                                    <label for="size_3">Mixed</label>
+                                                </div>
 
+                                               
+                                            </div>
+                                            <div class="col-md-12">
+                                                <?= $form->field($model, 'time_limit')
+                                                ->textInput(['type' => 'number','class' => 'input_numeric','min' => '15','step' => '5', 'value'=>$model->time_limit])->label('Time limit')?>
+                                            </div>
+                                            
+                                            <div class="col-md-12">
+                                                <label class="col-sm-12 control-label" for="teams-background">Region</label>
+                                                <div class="item select-show">
+                                                    <div class="fancy-select ">
+                                                        <select class="basic" name="Tournaments[region]" required>
+                                                            <option  value="Europe" <?=$model->region == 'Europe' ? 'selected' : '' ?> >Europe</option> 
+                                                            <option  value="America" <?=$model->region == 'America' ? 'selected' : '' ?> >America</option>
+                                                            <option  value="Asia" <?=$model->region == 'Asia' ? 'selected' : '' ?> >Asia</option>
+                                                        </select>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 castom_seting" style="margin-top: 5px;">
+                                                <?=$model->generateForm()?>
+                                            </div>
+
+                                        </div>   
+                                        <div class="row">
+
+
+                                            <div class="col-md-12">
+                                                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                                            </div>
                                         </div>
-                                        
-                                    </div>   
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                                        <?php ActiveForm::end(); ?>
+                                    </div>  
+                                </div>
+                                <div id="main" class="tab-pane fade in">
+                                                                    <div class="col-md-8 col-md-offset-2" style="margin-bottom: 40px;" >
+                                        <?php $form = ActiveForm::begin([ 
+                                                'validateOnBlur'=>false,  
+                                                'options' => ['enctype' => 'multipart/form-data'],
+                                                'fieldConfig' => [
+                                                    'template' => '{label}{hint}{input}{error}',
+                                                    'labelOptions' => ['class' => 'col-sm-12 control-label'],
+                                                ],
+                                            ]); 
+                                            $form->errorCssClass = false;
+                                            $form->successCssClass = false;
+                                        ?>
+                                        <div class="row">
+                                            <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
+                                            <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
+                                            
+                                            <div class="col-md-12">
+                                                <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
+                                                <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
+                                           
+                                                <?php  
+                                                echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
+                                                    'name' => 'datetime_10',
+                                                    'options' => [  
+                                                        'placeholder' => 'Select operating time ...',
+                                                        'autocomplete'=>"off",'class'=>'datainput',
+                                                    ],
+                                                    'convertFormat' => true,
+                                                    'pluginOptions' => [
+                                                        'format' => 'yyyy-MM-dd hh:i',
+                                                        'startDate' => date("Y-m-d H:i"),
+                                                        'todayHighlight' => true
+                                                ]]); ?>
+
+                                            </div>
+                                            
+                                        </div>   
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                                            </div>
                                         </div>
+                                        <?php ActiveForm::end(); ?>
                                     </div>
-                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
-                    </div>
-            </div>
+                </div>
+            <?php endif; ?>
             <!--CHAMPIONSHIP manage_tournament TAB END -->
             
         </div>

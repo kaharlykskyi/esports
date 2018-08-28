@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/create-team.css');
 $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/tournaments.css');
-$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/create-team.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
+//$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/create-team.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
 $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
 
 ?>
@@ -44,7 +44,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                             <label for="input<?=$i?>" class='game'  ><!-- style="background-image:url(../images/game/<?=$value->logo?>);" -->
                                 <img class='geme_icon' src="../images/game/<?=$value->logo?>" alt="">
                             </label>
-                            <input id="input<?=$i?>" name="Tournaments[game_id]" type="radio" value="<?=$value->id?>">
+                            <input id="input<?=$i?>" name="Tournaments[game_id]" class="input_radio_games" type="radio" value="<?=$value->id?>">
                         <?php endforeach; ?>
                         </div>
                         <div class="erroe-massage" style="display: none;">To select a game press the logo</div>                    
@@ -57,7 +57,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                     
                     <div class="col-md-10 col-md-offset-1 "  style="margin-top:25px;">
                         <div class="col-md-6 ">
-                            <div class="format_campions"  data-farmat ='0' >
+                            <div class="format_campions"  data-farmat ='c' >
                                 <div class="container_img" >
                                     <img src="/images/profile/cup.png"  alt="cup">
                                 </div>
@@ -66,7 +66,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         </div>
 
                         <div class="col-md-6 ">
-                            <div class="format_campions" data-farmat='1'>
+                            <div class="format_campions" data-farmat='l'>
                                 <div class="container_img" style="padding-left: 10px;">
                                     <img src="/images/profile/league.png"  alt="league">
                                 </div>
@@ -76,7 +76,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                     </div>
                     <div class="col-md-10 col-md-offset-1" id="elimination" style="display:none;margin-top:25px;">
                         <div class="col-md-6 ">
-                            <div class="format_campions elimination " data-farmat ='2'>
+                            <div class="format_campions elimination " data-farmat ='1'>
                                 <div class="container_img" >
                                     <img src="/images/profile/single_elimination.png"  alt="s_cup">
                                 </div>
@@ -85,7 +85,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         </div>
 
                         <div class="col-md-6 ">
-                            <div class="format_campions elimination" data-farmat ='3'>
+                            <div class="format_campions elimination" data-farmat ='2'>
                                 <div class="container_img" >
                                     <img src="/images/profile/duble_elimination.png"  alt="d_cup">
                                 </div>
@@ -95,6 +95,26 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                     </div>
 
                     <div class="col-md-10 col-md-offset-1" id="match_schedule" style="margin-top:25px;display:none;">
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom: 25px;" >
+                                <div class="col-md-4 ">
+                                    <div class="format_campions league default" data-farmat ='3'>
+                                        <span>Regular League</span> 
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="format_campions league" data-farmat ='4'>
+                                        <span>Regular League + PlayOff </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="format_campions league" data-farmat ='5' >
+                                        <span>Groups</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="col-md-12" >
                             <label>Match schedule</label>
                             <div class="item select-show">
@@ -113,20 +133,10 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                     
                 </div>
                 <div ><!-- style="display: none; -->
-                    <?= $form->field($model, 'format')->radioList([1 => 'a', 2 => 'b', 3 => 'c'],['class' =>'radiolist_elimination'])->label(false) ?>
+                    <?= $form->field($model, 'format')->radioList([1 => 'a', 2 => 'b', 3 => 'c',4 => 'd', 5 => 'e'],['class' =>'radiolist_elimination'])->label(false) ?>
                 </div>
 
-                <div class="row"  style="margin:45px 0;" >
-                     <div class="col-md-10 col-md-offset-1">
-                         <div class="col-md-5" style="margin-bottom: 15px;">
-                            <button style="width: 100%;"  id="stream_add"  class="btn btn-primary">Add new stream</button> 
-                        </div>
-                     </div>
-                    <div id="conteiner_stream">
 
-
-                    </div>
-                </div>
                   
                 <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
                 <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
@@ -148,7 +158,15 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                 ]]); ?>
 
                 
-
+                <div class="row"  style="margin:45px 0;" >
+                    <div class="row">
+                         <div class="col-md-4" style="margin-bottom: 15px;">
+                            <button style="width: 100%;"  id="stream_add"  class="btn btn-primary">Add new stream</button> 
+                        </div>
+                    </div>
+                    <div id="conteiner_stream">
+                    </div>
+                </div>
 
 
             </div>

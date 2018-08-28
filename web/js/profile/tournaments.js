@@ -4,23 +4,29 @@ $(document).ready(function () {
         let elementJq = $(this);
         let id = elementJq.attr('data-farmat');
 
-        if(id == 0){
+        if(id == 'c'){
             $('#match_schedule').slideUp();
-            $('#elimination').slideToggle();
-            $('.format_campions').prop('checked', false);
+            $('#elimination').slideDown();
+            $('.radiolist_elimination').find('input').prop('checked', false);
             $('.format_campions').removeClass('active_campions');
 
             return;
         }
+
+        if(id == 'l'){
+
+            $('#elimination').slideUp();
+            $('#match_schedule').slideDown();
+            $('.format_campions').removeClass('active_campions');
+            $('.default').addClass('active_campions');
+            $('.radiolist_elimination').find('label').eq(2).click();
+            return;
+        }
+
         if(id != 0){
             $('.format_campions').removeClass('active_campions');
             elementJq.addClass('active_campions');
            $('.radiolist_elimination').find('label').eq(id-1).click();
-        }
-
-        if(id == 1){
-            $('#elimination').slideUp();
-            $('#match_schedule').slideDown();
         }
     });
 
@@ -48,6 +54,19 @@ $(document).ready(function () {
         });
             
         
+    }); 
+
+    $('.game' ).on('click',function(){
+        $('.game' ).removeClass("actives");
+        $(this).addClass("actives");
+        $('.erroe-massage').hide();
+    });
+
+    $('.formbtn' ).on('click',function(event){
+        if (!$('.input_radio_games').filter(":checked").length) {
+            event.preventDefault();
+            $('.erroe-massage').show();
+        } 
     }); 
 
 });

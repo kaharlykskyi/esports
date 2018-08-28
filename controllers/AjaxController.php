@@ -174,6 +174,7 @@ class AjaxController extends \yii\web\Controller
         foreach ($teams as $team) {
             if (!array_key_exists($team['id'], $teams_sort)) {
                 $teami['id'] = $team['id'];
+                $teami['logo'] = $team['logo'];
                 $teami['name'] = $team['name'];
                 $teami['g_name'] = $team['g_name'];
                 $teami['turname'] = $team['turname'];
