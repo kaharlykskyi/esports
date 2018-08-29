@@ -47,9 +47,11 @@ class TournamentsController extends \yii\web\Controller
             }
         }
 
-        $teams = Teams::find()->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
+        $teams = (new \yii\db\Query())->select(['*'])->from('teams')//Teams::find()
+            ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
             ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $model->id])->all();
-        $users = User::find()->leftJoin('tournament_user', 'tournament_user.user_id = users.id')
+        $users = (new \yii\db\Query())->select(['*'])->from('users')//User::find()
+            ->leftJoin('tournament_user', 'tournament_user.user_id = users.id')
             ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $model->id])->all();
         $players = array_merge($teams,$users);
 

@@ -6,6 +6,7 @@
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
     use kartik\datetime\DateTimePicker;
+    use app\widgets\Bracket;
 
     $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournament-public.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
@@ -13,6 +14,17 @@
     $this->params['breadcrumbs'][] = $this->title;
 
     $capitan = $model->user_id == Yii::$app->user->identity->id;
+
+
+    if(($model->format == 1) || ($model->format == 2)){
+        $playerssort = $players;
+        shuffle ($playerssort);
+        $script = "
+            $.comandTeams = ".json_encode($playerssort).";
+        ";
+        $this->registerJs($script, yii\web\View::POS_END);
+    }
+
 
 ?>
 <!--CHAMPIONSHIP WRAP BEGIN-->
@@ -66,8 +78,8 @@
 
                             <div class="col-md-3">
                                 <a href="club-stats.html" class="item">
-                                    <span class="logo"><img src="<?= $player->logo ?? "/images/profile/images.png" ?>" width="80" height="80" alt="team-logo"></span>
-                                    <span class="name"><?=$player->name?></span>
+                                    <span class="logo"><img src="<?= $player['logo'] ?? "/images/profile/images.png" ?>" width="80" height="80" alt="team-logo"></span>
+                                    <span class="name"><?=$player['name']?></span>
                                 </a>
                             </div>
                         <?php endforeach ;?>
@@ -138,434 +150,20 @@
 
 
             <div class="tab-item tournament-tab tab-pane" id="tournamentgrid">
-                <div class="container">
-                    <div class="row">
-                        <!-- <div class="col-md-12 col-sm-12 col-xs-12">
-                            <ul class="tab-filters">
-                                <li class="active"><a href="#groupstage" data-toggle="tab">Group stage</a></li>
-                                <li><a href="#playoff" data-toggle="tab">Playoffs</a></li>
-                            </ul>
+
+
+
+                    <?php// if (in_array(count($players),[4,8,16,32,64])): ?>
+
+                        
+
+                        <div class="container">
+                            <div class="row">
+                                <button class="btn btn-primary" id="btn_randomset" >Schedule tournament automatically</button>
+                            </div>
+                            <?=Bracket::widget(['teams' => $players])?>
                         </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12 overflow-scroll">
-                            <div class="tab-content">
-                                <div id="groupstage" class="tab-pane fade in active">
-                                    <table class="standing-full">
-                                        <tbody>
-                                            <tr>
-                                                <th>club</th>
-                                                <th>played</th>
-                                                <th>won</th>
-                                                <th>drawn</th>
-                                                <th>lost</th>
-                                                <th>gd</th>
-                                                <th>points</th>
-                                                <th>form</th>
-                                                <th>next</th>
-                                            </tr>
-                                            <tr>
-                                                <td class="up">
-                                                    <i class="fa fa-caret-up" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo1.png" width="30" height="30" alt="team-logo"> </span>Team 1
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="win">w</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="win">w</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo2.png" width="30" height="30" alt="team-logo"></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">
-                                                    <i class="fa fa-caret-down" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo2.png" width="30" height="30" alt="team-logo"> </span>Team 2
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="win">w</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="lose">l</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo1.png" width="30" height="30" alt="team-logo"></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">
-                                                    <i class="fa fa-caret-down" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo3.png" width="30" height="30" alt="team-logo"> </span>Team 3
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="lose">l</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="win">w</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo4.png" width="30" height="30" alt=""></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">
-                                                    <i class="fa fa-caret-down" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo4.png" width="30" height="30" alt="team-logo"> </span>Team 4
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="win">w</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="lose">l</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo3.png" width="30" height="30" alt="team-logo"></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="none">
-                                                    <i class="fa fa-circle" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo5.png" width="30" height="30" alt="team-logo"> </span>Team 5
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="win">w</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="win">w</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo1.png" width="30" height="30" alt="team-logo"></a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-    
-                                <div id="playoff" class="tab-pane fade">
-                                    <table class="standing-full">
-                                        <tbody>
-                                            <tr>
-                                                <th>club</th>
-                                                <th>played</th>
-                                                <th>won</th>
-                                                <th>drawn</th>
-                                                <th>lost</th>
-                                                <th>gd</th>
-                                                <th>points</th>
-                                                <th>form</th>
-                                                <th>next</th>
-                                            </tr>
-                                            <tr>
-                                                <td class="up">
-                                                    <i class="fa fa-caret-up" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo1.png" width="30" height="30" alt="team-logo"> </span>Team 5
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="win">w</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="win">w</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo2.png" width="30" height="30" alt="team-logo"></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">
-                                                    <i class="fa fa-caret-down" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo2.png" width="30" height="30" alt="team-logo"> </span>Team 3
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="win">w</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="lose">l</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo1.png" width="30" height="30" alt="team-logo"></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">
-                                                    <i class="fa fa-caret-down" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo3.png" width="30" height="30" alt="team-logo"> </span>Team 4
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="lose">l</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="win">w</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo4.png" width="30" height="30" alt=""></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">
-                                                    <i class="fa fa-caret-down" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo4.png" width="30" height="30" alt="team-logo"> </span>Team 2
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="win">w</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="lose">l</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo3.png" width="30" height="30" alt="team-logo"></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="none">
-                                                    <i class="fa fa-circle" aria-hidden="true"></i> 1 <span class="team"><img src="/images/hockey/team-logo5.png" width="30" height="30" alt="team-logo"> </span>Team 1
-                                                </td>
-                                                <td>11</td>
-                                                <td>8</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>+16</td>
-                                                <td class="points"><span>26</span></td>
-                                                <td class="form">
-                                                    <span class="win">w</span>
-                                                    <span class="drawn">d</span>
-                                                    <span class="lose">l</span>
-                                                    <span class="win">w</span>
-                                                    <span class="win">w</span>
-                                                </td>
-                                                <td><a href="matches.html"><img src="/images/hockey/team-logo1.png" width="30" height="30" alt="team-logo"></a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div> -->
-
-
-
-<!-- <div class="row">
-    
-<div class="col-md-12 overflow-scroll">
-                
-
-                <div id="brekets" >
-                    
-
-                </div>
-                  
-            </div>
-
-</div> -->
-
-
-
-    
-    
-        
-
-            <section class="standing-cup">
-                <div class="cup-body " >
-                    <div class="jQBracket" >
-                        <div class="bracket" style="height: 780px;">
-                            <div class="round" ">
-                                <div class="match" style="height: 195px;">
-                                    <div class="teamContainer" style="top: 20.5px;">
-                                        <div class="team win"  data-teamid="0">
-                                            <div class="label" >Team 1</div>
-                                            <div class="score"  data-resultid="result-1">3</div>
-                                        </div>
-                                        <div class="team lose"  data-teamid="1">
-                                            <div class="label" >Team 2</div>
-                                            <div class="score"  data-resultid="result-2">2</div>
-                                        </div>
-                                        <div class="connector" style="height: 97.5px;  ">
-                                            <div class="connector" > </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="match" style="height: 195px;">
-                                    <div class="teamContainer" style="top: 20.5px;">
-                                        <div class="team lose"  data-teamid="2">
-                                            <div class="label" >Team 3</div>
-                                            <div class="score"  data-resultid="result-3">3</div>
-                                        </div>
-                                        <div class="team win"  data-teamid="3">
-                                            <div class="label" >Team 4</div>
-                                            <div class="score"  data-resultid="result-4">4</div>
-                                        </div>
-                                        <div class="connector" style="height: 97.5px;   ">
-                                            <div class="connector" ></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="match" style="height: 195px;">
-                                    <div class="teamContainer" style="top: 20.5px;">
-                                        <div class="team lose"  data-teamid="4"><div class="label" >Team 8</div>
-                                            <div class="score"  data-resultid="result-5">4</div>
-                                        </div>
-                                        <div class="team win"  data-teamid="5">
-                                            <div class="label" >Team 5</div>
-                                            <div class="score"  data-resultid="result-6">5</div>
-                                        </div>
-                                        <div class="connector" style="height: 97.5px;  ">
-                                            <div class="connector" ></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="match" style="height: 195px;">
-                                    <div class="teamContainer" style="top: 20.5px;">
-                                        <div class="team win"  data-teamid="6">
-                                            <div class="label" >Team 6</div>
-                                            <div class="score"  data-resultid="result-7">1</div>
-                                        </div>
-                                        <div class="team lose"  data-teamid="7">
-                                            <div class="label" >Team 7</div>
-                                            <div class="score"  data-resultid="result-8">0</div>
-                                        </div>
-                                        <div class="connector" style="height: 97.5px;  ">
-                                            <div class="connector" ></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="round" ">
-                                <div class="match" style="height: 390px;">
-                                    <div class="teamContainer" style="top: 118px;">
-                                        <div class="team lose"  data-teamid="0">
-                                            <div class="label" >Team 1</div>
-                                            <div class="score"  data-resultid="result-9">4</div>
-                                        </div>
-                                        <div class="team win"  data-teamid="3">
-                                            <div class="label" >Team 4</div><div class="score"  data-resultid="result-10">6</div>
-                                        </div>
-                                        <div class="connector" style="height: 195px;  ">
-                                            <div class="connector" ></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="match" style="height: 390px;">
-                                    <div class="teamContainer" style="top: 118px;">
-                                        <div class="team win"  data-teamid="5">
-                                            <div class="label" >Team 5</div>
-                                            <div class="score"  data-resultid="result-11">2</div>
-                                        </div>
-                                        <div class="team lose"  data-teamid="6">
-                                            <div class="label" >Team 6</div>
-                                            <div class="score"  data-resultid="result-12">1</div>
-                                        </div>
-                                        <div class="connector" style="height: 195px;   ">
-                                            <div class="connector" ></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="round" ">
-                                <div class="match" style="height: 780px;">
-                                    <div class="teamContainer" style="position: absolute; top: 313px;">
-                                        <div class="team"  data-teamid="3">
-                                            <div class="label" >Team 4</div>
-                                            <div class="score"  data-resultid="result-13">--</div>
-                                        </div>
-                                        <div class="team"  data-teamid="5">
-                                            <div class="label" >Team 5</div>
-                                            <div class="score"  data-resultid="result-14">--</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    </div>
-                </div>
+                    <?php// endif; ?>
             </div>
             
             <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->
@@ -727,3 +325,24 @@
             </div>
         </div>
     </div>
+
+
+    <div id="myModal2" class="modal fade">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                                    
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 " id='content_get_team'>
+                                               
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    

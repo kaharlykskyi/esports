@@ -230,3 +230,19 @@
     top: 0px;
     
 }
+
+.jQBracket .match .teamContainer{
+    top:50%;
+    transform: translateY(-50%)
+}
+
+.btn-teams{
+    padding: 0px 15px;
+    /*height: 20px;*/
+}
+
+.btn.team_name{
+    padding: 10px 15px;
+    margin-left: 15px;
+    margin-top: 15px;
+}

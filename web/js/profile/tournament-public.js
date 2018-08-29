@@ -231,34 +231,44 @@ $(document).ready( function() {
 
 
 
-  
+$(document).ready( function() {
+
+    let response = $.comandTeams;
+    let label = $('.jQBracket').find('.int1').find('.label');
 
 
+    $('#btn_randomset').on('click',function (e) {
+        label.each(function(index,element){
+            $(element).html(response[index].name);
+        });
+    });
 
 
+    $('#myModal2').on('shown.bs.modal', function (e) {
+        window.data_int = $(e.relatedTarget).attr('data-int');
+        console.log(response);
+        $.each(response,function(index, value){
+            let btn = $(`<button class="btn team_name" data-geme-id="${index}" >${value.name}</button>`);
+            btn.on('click',function(e){
+                let id = $(e.target).attr('data-geme-id');
+                $('#myModal2').modal('toggle');
+                label.eq(window.data_int).html(response[id].name);
+                response.splice(id, 1);
 
+            });
+            $("#content_get_team").append(btn);
 
-// $(document).ready(function(){
-// var doubleElimination = {
-//                 teams: [
-//                     ["Team 1", "Team 2"],
-//                     ["Team 6", "Team 7"]
-//                 ],
-//                 results: [
-//                     [[4, 6], [2, 1]],
-//                     [[2, 1]]
-//                 ]
-//             };
+        });
+       
+    });
 
-// $('#brekets').bracket({
-//                     init: doubleElimination,
-//                     skipConsolationRound: true,
-//                     matchMargin: 150,
-//                     roundMargin: 180,
-//                     teamWidth: 200,
-//                     scoreWidth: 40,
-//                     //centerConnectors: true,
-//                     disableHighlight: true
-//                 });
-// });
+    $('#myModal2').on('hidden.bs.modal',function (e) {
+        $('#content_get_team').empty();
+    });
+//////////////////////////////////////////////////////////
+label.each(function(index,element){
+    $(element).html(`<a href="#myModal2" class="btn btn-teams" data-toggle="modal" data-int="${index}" >+</a>`);
+});
 
+ //$('#modal').modal('toggle');
+});
