@@ -233,20 +233,18 @@ $(document).ready( function() {
 
 $(document).ready( function() {
 
-    let response = $.comandTeams;
+    let response = Object.create($.comandTeams);
     let label = $('.jQBracket').find('.int1').find('.label');
 
 
     $('#btn_randomset').on('click',function (e) {
         label.each(function(index,element){
-            $(element).html(response[index].name);
+            $(element).html($.comandTeams[index].name);
         });
     });
 
-
     $('#myModal2').on('shown.bs.modal', function (e) {
         window.data_int = $(e.relatedTarget).attr('data-int');
-        console.log(response);
         $.each(response,function(index, value){
             let btn = $(`<button class="btn team_name" data-geme-id="${index}" >${value.name}</button>`);
             btn.on('click',function(e){
@@ -266,9 +264,8 @@ $(document).ready( function() {
         $('#content_get_team').empty();
     });
 //////////////////////////////////////////////////////////
-label.each(function(index,element){
-    $(element).html(`<a href="#myModal2" class="btn btn-teams" data-toggle="modal" data-int="${index}" >+</a>`);
-});
+    // label.each(function(index,element){
+    //     $(element).html(`<a href="#myModal2" class="btn btn-teams" data-toggle="modal" data-int="${index}" >+</a>`);
+    // });
 
- //$('#modal').modal('toggle');
 });

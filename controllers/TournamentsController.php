@@ -13,6 +13,7 @@ use app\models\UserTeam;
 use app\models\Stream;
 use app\models\TournamentTeam;
 use app\models\TournamentUser;
+use app\models\TournamentCupTeam;
 use Yii;
 use yii\web\HttpException;
 
@@ -47,15 +48,20 @@ class TournamentsController extends \yii\web\Controller
             }
         }
 
-        $teams = (new \yii\db\Query())->select(['*'])->from('teams')//Teams::find()
+        $teams = (new \yii\db\Query())->select(['*'])->from('teams')
             ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
-            ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $model->id])->all();
-        $users = (new \yii\db\Query())->select(['*'])->from('users')//User::find()
+            ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $model->id])
+            ->all();
+        $users = (new \yii\db\Query())->select(['*'])->from('users')
             ->leftJoin('tournament_user', 'tournament_user.user_id = users.id')
-            ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $model->id])->all();
+            ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $model->id])
+            ->all();
         $players = array_merge($teams,$users);
-
-        return $this->render('index',compact('model','players'));
+        $turs = TournamentCupTeam::getTurs($model->id);
+        // echo "<pre>";
+        // print_r($turs);
+        // echo "</pre>";exit;
+        return $this->render('index',compact('model','players','turs'));
     }
 
     public function actionCreate()

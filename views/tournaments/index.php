@@ -152,18 +152,20 @@
             <div class="tab-item tournament-tab tab-pane" id="tournamentgrid">
 
 
-
-                    <?php// if (in_array(count($players),[4,8,16,32,64])): ?>
-
-                        
-
-                        <div class="container">
-                            <div class="row">
-                                <button class="btn btn-primary" id="btn_randomset" >Schedule tournament automatically</button>
-                            </div>
-                            <?=Bracket::widget(['teams' => $players])?>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php if (in_array(count($players),[4,8,16,32,64])): ?>
+                                    <button class="btn btn-primary" id="btn_randomset" >Schedule tournament automatically</button>
+                                    
+                                    <?=Bracket::widget(['teams' => $players,'turs' => $turs])?>
+                                
+                            <?php else: ?>
+                                <p style="color:red;">The number of teams in the tournament must be 4,8,16,32</p>
+                            <?php endif; ?>
                         </div>
-                    <?php// endif; ?>
+                    </div>
+                </div>
             </div>
             
             <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->

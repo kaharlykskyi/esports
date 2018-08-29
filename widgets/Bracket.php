@@ -7,16 +7,18 @@ use yii\base\Widget;
 class Bracket extends Widget
 {
 	private $heightBlock = 195;
-
 	public $teams;
-
-	private $couttteam = 4;
+	public $elumination = 1;
+	public $turs = [];
+	private $couttteam;
+	private $position = 0;
 
 	public function run()
     {
-    	
+
+    	$this->couttteam = count($this->teams);
     	$couttteampar = $this->couttteam/2;
-    	// echo count($this->teams);
+    	
         echo '<div class="cup-body " style="overflow-x: scroll;" >';
         echo '<div class="jQBracket" >';
         echo '<div class="bracket" style="height: '.($this->heightBlock*$couttteampar).'px;width:'.(310*sqrt($this->couttteam)).'px;">';
@@ -31,15 +33,27 @@ class Bracket extends Widget
 
     private function round($hedit,$count)
     {
-    	
-    	echo '<div class="round int'.($this->couttteam/($count*2)).'" ">';
+    	$tur_int = $this->couttteam/($count*2);
+    	echo '<div class="round int'.$tur_int.'" ">';
     	$heditConector = $hedit/2;
     		for ($i=0; $i < $count; $i++) { 
-    			
+    			$this->position++;
 		        echo '<div class="match" style="height: '.$hedit.'px;">';
 		        echo '<div class="teamContainer" >';
 		        echo '<div class="team win"  data-teamid="0">';
-		        echo '<div class="label" >------</div>';
+		        if (array_key_exists($tur_int,$this->turs)) {
+		        	$team='';
+		        	foreach ($this->turs[$tur_int] as $value) {
+		        		if($value['position'] == $this->position){
+		        			$team = $value['team_id'];
+		        		}
+		        	}
+		        	echo '<div class="label" >'.$team.'</div>';
+		        } else {
+		        	echo '<div class="label" >------</div>';
+		        }
+		        
+		        $this->position++;
 		        echo '<div class="score"  data-resultid="result-1">3</div>';
 		        echo '</div>';
 		        echo '<div class="team lose"  data-teamid="1">';
@@ -51,7 +65,6 @@ class Bracket extends Widget
 		        	echo '<div class="connector" > </div>';
 		        	echo '</div>';
 		        }
-		        
 		        
 		        echo '</div>';
 		        echo '</div>';
