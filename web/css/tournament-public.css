@@ -187,65 +187,7 @@
     border-radius: 50%;
 }
 /*/////////////////////////////////////////////////////////////////////////////////////*/
-/*.jQBracket .round{
-    width: 220px; 
-    margin-right: 90px;
-}
 
-.jQBracket .team{
-    width: 220px;
-}
-.jQBracket .label{
-    width: 400px;
-}
-.jQBracket .score{
-    width: 40px;
-}
-.jQBracket .connector .connector{
-    width: 50px;
-    right: -50px; 
-}
-
-.jQBracket .connector{
-    width: 50px; 
-    right: -50px;
-}
-
-.jQBracket .match:nth-child(odd) .teamContainer>.connector{
-    border-bottom: none;
-    top: 76px;
-}
-
-.jQBracket .match:nth-child(even) .teamContainer>.connector{
-    border-top: none;
-    bottom: 76px;
-}
-
-.jQBracket .match:nth-child(odd) .connector .connector{
-    bottom: 0px;
-    
-}
-
-.jQBracket .match:nth-child(even) .connector .connector{
-    top: 0px;
-    
-}
-
-.jQBracket .match .teamContainer{
-    top:50%;
-    transform: translateY(-50%)
-}
-
-.btn-teams{
-    padding: 0px 15px;
-    height: 20px;
-}
-
-.btn.team_name{
-    padding: 10px 15px;
-    margin-left: 15px;
-    margin-top: 15px;
-}*/
 
 .jQBracket div{
     line-height: normal;
@@ -260,4 +202,8 @@
 #minimal {
     overflow: hidden;
     padding-bottom: 70px;
+}
+
+#minimal .tools{
+    display: none;
 }

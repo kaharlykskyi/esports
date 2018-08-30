@@ -35,7 +35,7 @@ class TournamentCupTeam extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tournament_id', 'team_p', 'team_v', 'tur', 'position', 'result'], 'integer'],
+            [['tournament_id', 'team_p', 'team_v', 'tur', 'position','result_p','result_v'], 'integer'],
             [['team_p'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team_p' => 'id']],
             [['team_v'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team_v' => 'id']],
             [['tournament_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tournaments::className(), 'targetAttribute' => ['tournament_id' => 'id']],
@@ -105,7 +105,7 @@ class TournamentCupTeam extends \yii\db\ActiveRecord
         $arry_tur = [];
 
         foreach ($tur as $value) {
-           $arry_tur['teams'][] = [$value['p_name'],$value['v_name']];
+           $arry_tur['teams'][] = [['name'=>$value['p_name'],'id'=>$value['team_p']],['name'=>$value['v_name'],'id'=>$value['team_v']]];
         }
         return $arry_tur;
     }

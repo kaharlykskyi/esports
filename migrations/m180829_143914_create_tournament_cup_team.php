@@ -19,7 +19,8 @@ class m180829_143914_create_tournament_cup_team extends Migration
             'team_v' => $this->integer(),
             'tur' => $this->integer(),
             'position' => $this->integer(),
-            'result' => $this->integer(3),
+            'result_p' => $this->integer(3),
+            'result_v' => $this->integer(3),
         ]);
 
         $this->createIndex (

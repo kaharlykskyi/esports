@@ -147,14 +147,14 @@
             <!--CHAMPIONSHIP MATCH WRAP END -->
 
 
-            <div class="tab-item part-wrap tab-pane active" id="tournamentgrid">
+            <div class="tab-item part-wrap tab-pane " id="tournamentgrid">
 
                 
                 <div class="container">
                     
                     <div class="row">
                         <div class="col-md-12">
-                            <div id="minimal"></div>
+                            <div id="minimal" data-tournament-id ='<?=$model->id?>'  ></div>
                             
                             <?php //if (in_array(count($players),[5])): ?>
                                     <!-- <button class="btn btn-primary" id="btn_randomset" >Schedule tournament automatically</button> -->
@@ -178,7 +178,7 @@
                                 <div class="col-md-7">
                                     <ul class="tab-filters">
                                         <li class="active"><a href="#games_settings">Game settings</a></li>
-                                        <li><a href="#main">Main</a></li>
+                                        <li><a href="#main" >Main</a></li>
                                     </ul>
                                 </div>  
                             </div>
@@ -329,23 +329,4 @@
         </div>
     </div>
 
-
-    <div id="myModal2" class="modal fade">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                                    
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12 " id='content_get_team'>
-                                               
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     

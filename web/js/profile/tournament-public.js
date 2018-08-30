@@ -8,7 +8,6 @@ $(document).ready(function(){
 
         let arr = document.location.href.split('/');
         arr = arr[arr.length-1];
-        //console.log(arr.split('#')[0]);
         window.history.pushState(null, null, arr.split('#')[0]);
     });
 
@@ -231,74 +230,55 @@ $(document).ready( function() {
 
 
 
-//$(document).ready( function() {
-
-//     let response = Object.create($.comandTeams);
-//     let label = $('.jQBracket').find('.int1').find('.label');
-
-
-//     $('#btn_randomset').on('click',function (e) {
-//         label.each(function(index,element){
-//             $(element).html($.comandTeams[index].name);
-//         });
-//     });
-
-//     $('#myModal2').on('shown.bs.modal', function (e) {
-//         window.data_int = $(e.relatedTarget).attr('data-int');
-//         $.each(response,function(index, value){
-//             let btn = $(`<button class="btn team_name" data-geme-id="${index}" >${value.name}</button>`);
-//             btn.on('click',function(e){
-//                 let id = $(e.target).attr('data-geme-id');
-//                 $('#myModal2').modal('toggle');
-//                 label.eq(window.data_int).html(response[id].name);
-//                 response.splice(id, 1);
-
-//             });
-//             $("#content_get_team").append(btn);
-
-//         });
-       
-//     });
-
-//     $('#myModal2').on('hidden.bs.modal',function (e) {
-//         $('#content_get_team').empty();
-//     });
-// //////////////////////////////////////////////////////////
-//     label.each(function(index,element){
-//         $(element).html(`<a href="#myModal2" class="btn btn-teams" data-toggle="modal" data-int="${index}" >+</a>`);
-//     });
-
 
  
 $(document).ready( function() {
+    $('#tournamentgrid').addClass('active');
+
+    function searchMix (data) {
+            const fdata = new FormData();
+            const csrfParam = $('meta[name="csrf-param"]').attr("content");
+            const csrfToken = $('meta[name="csrf-token"]').attr("content");
+            fdata.append(csrfParam,csrfToken);
+            fdata.append('data',data);
+            const xml = new XMLHttpRequest();
+            xml.open('POST','/ajax/set-cup',true);
+            xml.send(fdata); 
+    }
 
 
-
-
-
-
-var doubleEliminationData = {
+let doubleEliminationData = {
     teams : $.comandTeams,
       // ["Team 1", "Team 2"],  first matchup 
       // ["Team 3", "Team 4"]  /* second matchup */
     
     results : [
-      //[[1,2], [3,4]],       /* first round */
+      [[1,2], [3,4]],       /* first round */
       //[[4,6], [2,1]]        /* second round */
    ],
   };
  
+    function saveFn (data){
+        console.log(data);
+        let id = $('#minimal').attr('data-tournament-id');
+        data.toutrament = id;
+        let json = JSON.stringify(data);
+        searchMix(json);
+       console.log(json);
+    }
 
+    function render_fn(container, data, score, state) {
+          container.append(data.name);
+    }
 
-var acData = ["kr:MC", "ca:HuK", "se:Naniwa", "pe:Fenix",
-              "us:IdrA", "tw:Sen", "fi:Naama"];
-$(function() {
-    $('#minimal').bracket({
-      init: doubleEliminationData,
-      save: function(e){console.log(e);},
-      //decorator: { edit: acEditFn,render: acRenderFn}
-  });
-});
+    $(function() {
+        $('#minimal').bracket({
+          init: doubleEliminationData,
+          save: saveFn,
+          decorator: {edit: function edit_fn(){} , render: render_fn}
+        });
+        $('#tournamentgrid').removeClass('active');
+    });
 
 
 

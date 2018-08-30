@@ -14,6 +14,7 @@ use yii\helpers\Html;
 use app\models\Tournaments;
 use app\models\TournamentUser;
 use app\models\TournamentTeam;
+use app\models\TournamentCupTeam;
 
 class AjaxController extends \yii\web\Controller
 {
@@ -38,7 +39,7 @@ class AjaxController extends \yii\web\Controller
     }
     public function beforeAction($action)
     {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        //Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         return parent::beforeAction($action);// && Yii::$app->request->isPost;
     }
@@ -188,9 +189,7 @@ class AjaxController extends \yii\web\Controller
         if (empty($teams_sort)) {
             $teams_sort = ['not'=> true];
         }
-        // echo "<pre>";
-        // print_r($teams_sort);
-        //  echo "</pre>";exit;
+        
         return $teams_sort;
     }
 
@@ -347,6 +346,58 @@ class AjaxController extends \yii\web\Controller
             return ['sent' => true];
         }
         return ['sent' => false];
+    }
+
+    public function actionSetCup() 
+    {
+        $post = Yii::$app->request->post();
+        // $json = '{"teams":[[{"name":"Start","id":"1"},{"name":"Stop","id":"2"}],
+        // [{"name":"ыгзук","id":"3"},
+        // {"name":"нпгриотль","id":"4"}]],
+        // "results":[[[[7,2],[3,4]],[[5,9],[null,null]]]],"toutrament":"1"}';
+        $json = json_decode($post['data']);
+       
+        $customer = TournamentCupTeam::deleteAll(['tournament_id' => $json->toutrament]);
+        $arr = $json->teams;
+        $mass = [];
+        foreach ($json->results[0] as $key_r => $value) {
+
+            foreach ($arr as $key_t => $teams) {
+
+                $model = new TournamentCupTeam();
+                $model->tournament_id =(int)$json->toutrament;
+                $model->tur = (int)$key_r + 1;
+                $model->result_p = $value[$key_t][0];
+                $model->result_v = $value[$key_t][1];
+                $model->team_p = $teams[0]->id;
+                $model->team_v = $teams[1]->id;
+                if (!is_null($value[$key_t][0]) && !is_null($value[$key_t][1])) {
+                   $model->save(false);
+                }
+
+                if ($value[$key_t][0] > $value[$key_t][1]) {
+                    if(($key_t == 0) ||($key_t%2==0)){
+                        $mass[$key_t][] = $teams[0];
+                    } else {
+                        $mass[$key_t-1][] = $teams[0];
+                    }
+                } elseif ($value[$key_t][0] < $value[$key_t][1]) {
+                    if(($key_t == 0) ||($key_t%2==0)){
+                        $mass[$key_t][] = $teams[1];
+                    } else {
+                        $mass[$key_t-1][] = $teams[1];
+                    }
+                } 
+            }
+            $arr =  $mass;
+            $mass=[];
+            if (count($mass[0])) {
+                $arr =[];
+            }
+        }
+        // echo "<pre>";
+        // print_r($mass);
+        // echo "</pre>";exit;
     }
 
 }
