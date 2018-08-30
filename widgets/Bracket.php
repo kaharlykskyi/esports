@@ -42,22 +42,21 @@ class Bracket extends Widget
 		        echo '<div class="teamContainer" >';
 		        echo '<div class="team win"  data-teamid="0">';
 		        if (array_key_exists($tur_int,$this->turs)) {
-		        	$team='';
-		        	foreach ($this->turs[$tur_int] as $value) {
-		        		if($value['position'] == $this->position){
-		        			$team = $value['team_id'];
-		        		}
-		        	}
-		        	echo '<div class="label" >'.$team.'</div>';
+		        	echo '<div class="label" >'.$this->turs[$tur_int][$this->position]['p_name'].'</div>';
 		        } else {
 		        	echo '<div class="label" >------</div>';
 		        }
 		        
-		        $this->position++;
+		        
 		        echo '<div class="score"  data-resultid="result-1">3</div>';
 		        echo '</div>';
 		        echo '<div class="team lose"  data-teamid="1">';
-		        echo '<div class="label" >------</div>';
+
+				if (array_key_exists($tur_int,$this->turs)) {
+		        	echo '<div class="label" >'.$this->turs[$tur_int][$this->position]['v_name'].'</div>';
+		        } else {
+		        	echo '<div class="label" >------</div>';
+		        }
 		        echo '<div class="score"  data-resultid="result-2">2</div>';
 		        echo '</div>';
 		        if ($count != 1) {

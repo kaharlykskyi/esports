@@ -57,7 +57,7 @@ class TournamentsController extends \yii\web\Controller
             ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $model->id])
             ->all();
         $players = array_merge($teams,$users);
-        $turs = TournamentCupTeam::getTurs($model->id);
+        $turs = TournamentCupTeam::getTursto($model->id);
         // echo "<pre>";
         // print_r($turs);
         // echo "</pre>";exit;

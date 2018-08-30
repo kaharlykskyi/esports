@@ -17,10 +17,10 @@
 
 
     if(($model->format == 1) || ($model->format == 2)){
-        $playerssort = $players;
-        shuffle ($playerssort);
+        //$playerssort = $players;
+        //shuffle ($playerssort);
         $script = "
-            $.comandTeams = ".json_encode($playerssort).";
+            $.comandTeams = ".json_encode($turs['teams']).";
         ";
         $this->registerJs($script, yii\web\View::POS_END);
     }
@@ -58,8 +58,6 @@
                 <div class="container">
                     <div class="row"> 
                         <div class="col-md-12" style="margin-bottom: 30px;">
-
-                            
                             <?php if($capitan):?>
                                 <?php if(empty($model->flag)):?>
                                     <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
@@ -149,20 +147,23 @@
             <!--CHAMPIONSHIP MATCH WRAP END -->
 
 
-            <div class="tab-item tournament-tab tab-pane" id="tournamentgrid">
+            <div class="tab-item part-wrap tab-pane active" id="tournamentgrid">
 
-
+                
                 <div class="container">
+                    
                     <div class="row">
                         <div class="col-md-12">
-                            <?php if (in_array(count($players),[4,8,16,32,64])): ?>
-                                    <button class="btn btn-primary" id="btn_randomset" >Schedule tournament automatically</button>
+                            <div id="minimal"></div>
+                            
+                            <?php //if (in_array(count($players),[5])): ?>
+                                    <!-- <button class="btn btn-primary" id="btn_randomset" >Schedule tournament automatically</button> -->
                                     
-                                    <?=Bracket::widget(['teams' => $players,'turs' => $turs])?>
+                                   <!--  <?//Bracket::widget(['teams' => $players,'turs' => $turs])?> -->
                                 
-                            <?php else: ?>
-                                <p style="color:red;">The number of teams in the tournament must be 4,8,16,32</p>
-                            <?php endif; ?>
+                            <?php //else: ?>
+                                <!-- <p style="color:red;">The number of teams in the tournament must be 4,8,16,32</p> -->
+                            <?php //endif; ?>
                         </div>
                     </div>
                 </div>

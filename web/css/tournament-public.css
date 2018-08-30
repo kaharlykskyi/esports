@@ -187,7 +187,7 @@
     border-radius: 50%;
 }
 /*/////////////////////////////////////////////////////////////////////////////////////*/
-.jQBracket .round{
+/*.jQBracket .round{
     width: 220px; 
     margin-right: 90px;
 }
@@ -238,11 +238,26 @@
 
 .btn-teams{
     padding: 0px 15px;
-    /*height: 20px;*/
+    height: 20px;
 }
 
 .btn.team_name{
     padding: 10px 15px;
     margin-left: 15px;
     margin-top: 15px;
+}*/
+
+.jQBracket div{
+    line-height: normal;
+}
+.jQBracket div, .jQBracket{
+    box-sizing:content-box;
+}
+#minimal jQBracket div{
+    box-sizing:content-box;
+}
+
+#minimal {
+    overflow: hidden;
+    padding-bottom: 70px;
 }

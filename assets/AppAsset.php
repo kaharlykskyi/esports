@@ -23,17 +23,16 @@ class AppAsset extends AssetBundle
         'css/style.min.css',
         'css/site.css',
         'css/search-bar.css',
+        'bracket/jquery.bracket.min.css',
     ];
     public $js = [
-        //'js/library/jquery.js',
         'js/library/jquery-ui.js',
-        //'js/library/bootstrap.js',
         'js/library/jquery.sticky.js',
         'js/library/jquery.jcarousel.js',
         'js/library/jcarousel.connected-carousels.js',
         'js/library/owl.carousel.js',
         'js/library/progressbar.js',
-        'js/library/jquery.bracket.min.js',
+        'bracket/jquery.bracket.min.js',
         'js/library/chartist.js',
         'js/library/Chart.js',
         'js/library/fancySelect.js',
@@ -73,6 +72,7 @@ class AppAsset extends AssetBundle
         'js/anchor.js',
         'js/landing_carousel.js',
         'js/landing_sport_standings.js',
+
         'js/twitterslider.js',
         'js/champions.js',
         'js/landing_mainnews_slider.js',

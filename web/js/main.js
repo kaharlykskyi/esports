@@ -166,96 +166,96 @@
          * @js: ./js/standings.js
          * @see [http://www.aropupu.fi/bracket/]
          */
-        if ($('#qualification').length > 0) {
+        // if ($('#qualification').length > 0) {
 
-            $('#qualification').teamStandings({
-                teams: [
+        //     $('#qualification').teamStandings({
+        //         teams: [
 
-                    ["Team 1", "Team 2"],
-                    ["Team 3", "Team 4"],
-                    ["Team 8", "Team 5"],
-                    ["Team 6", "Team 7"]
-                ],
-                results: [
-                    [[3, 2], [3, 4], [4, 5], [1, 0]],
-                    [[4, 6], [2, 1]]
-                ]
-            });
-        }
+        //             ["Team 1", "Team 2"],
+        //             ["Team 3", "Team 4"],
+        //             ["Team 8", "Team 5"],
+        //             ["Team 6", "Team 7"]
+        //         ],
+        //         results: [
+        //             [[3, 2], [3, 4], [4, 5], [1, 0]],
+        //             [[4, 6], [2, 1]]
+        //         ]
+        //     });
+        // }
 
-        /**
-         * Init standing brackets
-         * @html: ./html-component/standings.html 
-         * @js: ./js/standings.js
-         * @see [http://www.aropupu.fi/bracket/]
-         */
-        if ($('#quarterfinal').length > 0) {
+        // /**
+        //  * Init standing brackets
+        //  * @html: ./html-component/standings.html 
+        //  * @js: ./js/standings.js
+        //  * @see [http://www.aropupu.fi/bracket/]
+        //  */
+        // if ($('#quarterfinal').length > 0) {
 
-            $('#quarterfinal').teamStandings({
-                teams: [
-                    ["Team 4", "Team 5"],
-                    ["CSA", "NFTA"],
-                    ["Team 2 Pandas", "Heart of Willem"],
-                    ["CSA", "Inverness"]
-                ],
-                results: [
-                    [[3, 5], [2, 4], [8, 3], [2, 1]],
-                    [[4, 6], [7, 3]],
-                    [[2, 1]]
-                ]
-            });
-        }
+        //     $('#quarterfinal').teamStandings({
+        //         teams: [
+        //             ["Team 4", "Team 5"],
+        //             ["CSA", "NFTA"],
+        //             ["Team 2 Pandas", "Heart of Willem"],
+        //             ["CSA", "Inverness"]
+        //         ],
+        //         results: [
+        //             [[3, 5], [2, 4], [8, 3], [2, 1]],
+        //             [[4, 6], [7, 3]],
+        //             [[2, 1]]
+        //         ]
+        //     });
+        // }
 
-        /**
-         * Init standing brackets
-         * @html: ./html-component/standings.html 
-         * @js: ./js/standings.js
-         * @see [http://www.aropupu.fi/bracket/]
-         */
-        if ($('#semifinal').length > 0) {
+        // *
+        //  * Init standing brackets
+        //  * @html: ./html-component/standings.html 
+        //  * @js: ./js/standings.js
+        //  * @see [http://www.aropupu.fi/bracket/]
+         
+        // if ($('#semifinal').length > 0) {
 
-            $('#semifinal').teamStandings({
-                teams: [
-                    ["Team 3", "Team 4"],
-                    ["Team 1", "Team 2"],
-                    ["Team 6", "Team 7"],
-                    ["Team 8", "Team 5"]
-                ],
-                results: [
-                    [[3, 2], [8, 1], [2, 3], [2, 1]],
-                    [[4, 6], [3, 2]]
-                ]
-            });
-        }
+        //     $('#semifinal').teamStandings({
+        //         teams: [
+        //             ["Team 3", "Team 4"],
+        //             ["Team 1", "Team 2"],
+        //             ["Team 6", "Team 7"],
+        //             ["Team 8", "Team 5"]
+        //         ],
+        //         results: [
+        //             [[3, 2], [8, 1], [2, 3], [2, 1]],
+        //             [[4, 6], [3, 2]]
+        //         ]
+        //     });
+        // }
 
-        /**
-         * Init standing brackets
-         * @html: ./html-component/standings.html 
-         * @js: ./js/standings.js
-         * @see [http://www.aropupu.fi/bracket/]
-         */
-        if ($('#final').length > 0) {
+        // /**
+        //  * Init standing brackets
+        //  * @html: ./html-component/standings.html 
+        //  * @js: ./js/standings.js
+        //  * @see [http://www.aropupu.fi/bracket/]
+        //  */
+        // if ($('#final').length > 0) {
 
-            $('#final').teamStandings({
-                teams: [
-                    ["Team 1", "Team 2"],
-                    ["Team 6", "Team 7"]
-                ],
-                results: [
-                    [[4, 6], [2, 1]],
-                    [[2, 1]]
-                ]
-            });
-        }
+        //     $('#final').teamStandings({
+        //         teams: [
+        //             ["Team 1", "Team 2"],
+        //             ["Team 6", "Team 7"]
+        //         ],
+        //         results: [
+        //             [[4, 6], [2, 1]],
+        //             [[2, 1]]
+        //         ]
+        //     });
+        // }
 
-        /**
-         * Init standing brackets
-         * @js: ./js/shop-price-filter.js
-         * @usage: ./store.html
-         */
-        if ($('.filter-slider').length > 0) {
-            $('.filter-slider').teamShopPriceFilter();
-        }
+        // /**
+        //  * Init standing brackets
+        //  * @js: ./js/shop-price-filter.js
+        //  * @usage: ./store.html
+        //  */
+        // if ($('.filter-slider').length > 0) {
+        //     $('.filter-slider').teamShopPriceFilter();
+        // }
 
         /**
          * Init store filters event listener

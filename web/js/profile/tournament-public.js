@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$('.my-tabs').ready(function () {
+    $('.my-tabs').ready(function () {
         ////Javascript to enable link to tab
         let url = document.location.toString();
         if (url.match('#')) {
@@ -231,41 +231,75 @@ $(document).ready( function() {
 
 
 
+//$(document).ready( function() {
+
+//     let response = Object.create($.comandTeams);
+//     let label = $('.jQBracket').find('.int1').find('.label');
+
+
+//     $('#btn_randomset').on('click',function (e) {
+//         label.each(function(index,element){
+//             $(element).html($.comandTeams[index].name);
+//         });
+//     });
+
+//     $('#myModal2').on('shown.bs.modal', function (e) {
+//         window.data_int = $(e.relatedTarget).attr('data-int');
+//         $.each(response,function(index, value){
+//             let btn = $(`<button class="btn team_name" data-geme-id="${index}" >${value.name}</button>`);
+//             btn.on('click',function(e){
+//                 let id = $(e.target).attr('data-geme-id');
+//                 $('#myModal2').modal('toggle');
+//                 label.eq(window.data_int).html(response[id].name);
+//                 response.splice(id, 1);
+
+//             });
+//             $("#content_get_team").append(btn);
+
+//         });
+       
+//     });
+
+//     $('#myModal2').on('hidden.bs.modal',function (e) {
+//         $('#content_get_team').empty();
+//     });
+// //////////////////////////////////////////////////////////
+//     label.each(function(index,element){
+//         $(element).html(`<a href="#myModal2" class="btn btn-teams" data-toggle="modal" data-int="${index}" >+</a>`);
+//     });
+
+
+ 
 $(document).ready( function() {
 
-    let response = Object.create($.comandTeams);
-    let label = $('.jQBracket').find('.int1').find('.label');
 
 
-    $('#btn_randomset').on('click',function (e) {
-        label.each(function(index,element){
-            $(element).html($.comandTeams[index].name);
-        });
-    });
 
-    $('#myModal2').on('shown.bs.modal', function (e) {
-        window.data_int = $(e.relatedTarget).attr('data-int');
-        $.each(response,function(index, value){
-            let btn = $(`<button class="btn team_name" data-geme-id="${index}" >${value.name}</button>`);
-            btn.on('click',function(e){
-                let id = $(e.target).attr('data-geme-id');
-                $('#myModal2').modal('toggle');
-                label.eq(window.data_int).html(response[id].name);
-                response.splice(id, 1);
 
-            });
-            $("#content_get_team").append(btn);
 
-        });
-       
-    });
+var doubleEliminationData = {
+    teams : $.comandTeams,
+      // ["Team 1", "Team 2"],  first matchup 
+      // ["Team 3", "Team 4"]  /* second matchup */
+    
+    results : [
+      //[[1,2], [3,4]],       /* first round */
+      //[[4,6], [2,1]]        /* second round */
+   ],
+  };
+ 
 
-    $('#myModal2').on('hidden.bs.modal',function (e) {
-        $('#content_get_team').empty();
-    });
-//////////////////////////////////////////////////////////
-    // label.each(function(index,element){
-    //     $(element).html(`<a href="#myModal2" class="btn btn-teams" data-toggle="modal" data-int="${index}" >+</a>`);
-    // });
+
+var acData = ["kr:MC", "ca:HuK", "se:Naniwa", "pe:Fenix",
+              "us:IdrA", "tw:Sen", "fi:Naama"];
+$(function() {
+    $('#minimal').bracket({
+      init: doubleEliminationData,
+      save: function(e){console.log(e);},
+      //decorator: { edit: acEditFn,render: acRenderFn}
+  });
+});
+
+
 
 });

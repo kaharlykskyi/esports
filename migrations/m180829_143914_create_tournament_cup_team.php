@@ -15,19 +15,21 @@ class m180829_143914_create_tournament_cup_team extends Migration
         $this->createTable('tournament_cup_team', [
             'id' => $this->primaryKey(),
             'tournament_id' => $this->integer(),
-            'team_id' => $this->integer(),
+            'team_p' => $this->integer(),
+            'team_v' => $this->integer(),
             'tur' => $this->integer(),
             'position' => $this->integer(),
+            'result' => $this->integer(3),
         ]);
 
         $this->createIndex (
-                'idx-tournament_cup_team',
+                'idx-tournament_cup_teams',
                 'tournament_cup_team',
                 'tournament_id'
         );
 
         $this->addForeignKey(
-                'fk-tournament_cup_team',
+                'fk-tournament_cup_teams',
                 'tournament_cup_team',
                 'tournament_id',
                 'tournaments',
@@ -36,15 +38,30 @@ class m180829_143914_create_tournament_cup_team extends Migration
         );
 ///////////////////////////////////////////////
         $this->createIndex (
-                'idx-tournament_cup_team_id',
+                'idx-tournament_cup_team_p',
                 'tournament_cup_team',
-                'team_id'
+                'team_p'
         );
 
         $this->addForeignKey(
-                'fk-tournament_cup_team_id',
+                'fk-tournament_cup_team_p',
                 'tournament_cup_team',
-                'team_id',
+                'team_p',
+                'teams',
+                'id',
+                'CASCADE'
+        );
+///////////////////////////////////////////////
+        $this->createIndex (
+                'idx-tournament_cup_team_v',
+                'tournament_cup_team',
+                'team_v'
+        );
+
+        $this->addForeignKey(
+                'fk-tournament_cup_team_v',
+                'tournament_cup_team',
+                'team_v',
                 'teams',
                 'id',
                 'CASCADE'
