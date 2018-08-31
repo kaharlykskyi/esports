@@ -207,3 +207,8 @@
 #minimal .tools{
     display: none;
 }
+
+#minimal .label{
+    color: #4e4e4e;
+    font-weight: normal;
+}

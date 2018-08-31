@@ -22,9 +22,10 @@ use yii\behaviors\TimestampBehavior;
  */
 class Tournaments extends \yii\db\ActiveRecord
 {
-    const LEAGUE = 1;
-    const SINGLE_E = 2;
-    const DUBLE_E = 3;
+    
+    const SINGLE_E = 1;
+    const DUBLE_E = 2;
+    const LEAGUE = 3;
 
     const USERS = 1;
     const TEAMS = 2;
@@ -52,7 +53,7 @@ class Tournaments extends \yii\db\ActiveRecord
             [['game_id', 'format','flag','time_limit','match_schedule','user_id'], 'integer'],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
             [['rules', 'prizes','name'], 'string'],
-            [['start_date','region','data'], 'safe'],
+            [['start_date','region','data','cup'], 'safe'],
             [['name'], 'unique'],
             [['game_id'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['game_id' => 'id']],
         ];

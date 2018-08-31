@@ -7,6 +7,7 @@
     use yii\helpers\ArrayHelper;
     use kartik\datetime\DateTimePicker;
     use app\widgets\Bracket;
+    use app\models\Tournaments;
 
     $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournament-public.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
@@ -15,12 +16,10 @@
 
     $capitan = $model->user_id == Yii::$app->user->identity->id;
 
+    if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)){
 
-    if(($model->format == 1) || ($model->format == 2)){
-        //$playerssort = $players;
-        //shuffle ($playerssort);
         $script = "
-            $.comandTeams = ".json_encode($turs['teams']).";
+            $.comandTeams = ".$model->cup.";
         ";
         $this->registerJs($script, yii\web\View::POS_END);
     }
@@ -58,13 +57,15 @@
                 <div class="container">
                     <div class="row"> 
                         <div class="col-md-12" style="margin-bottom: 30px;">
-                            <?php if($capitan):?>
-                                <?php if(empty($model->flag)):?>
-                                    <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
-                                <?php else: ?>
-                                    <a href="#myModal1" class="btn btn-secusses" data-toggle="modal" data-flag ="<?=$model->flag ?>"  data-tournament-id="<?=$model->id?>" >Invite participants</a>
+                            <?php if(empty($model->cup)): ?>
+                                <?php if($capitan):?>
+                                    <?php if(empty($model->flag)):?>
+                                        <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
+                                    <?php else: ?>
+                                        <a href="#myModal1" class="btn btn-secusses" data-toggle="modal" data-flag ="<?=$model->flag ?>"  data-tournament-id="<?=$model->id?>" >Invite participants</a>
+                                    <?php endif; ?>
                                 <?php endif; ?>
-                            <?php endif; ?>
+                             <?php endif; ?>   
                         </div>
                     </div>
                     <div class="row">
@@ -93,52 +94,22 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
+                            <div class="col-md-12" >
+                                <a href="/tournaments/add-league?id=<?=$model->id?>" class="btn btn-primary" >Schedule tournament automatically</a>
+                            </div>
                             <div class="main-lates-matches">
-                                <a href="matches.html" class="item">
-                                    <span class="championship">National cup - quarterfinal</span>
-                                    <span class="teams-wrap">
-                                        <span class="team"><span><img src="/images/hockey/team-logo1.png" alt="team-logo"></span><span>Valencia Valencia</span></span>
-                                        <span class="score"><span>3:2</span></span>
-                                        <span class="team1"><span>Internacional Internacional</span><span><img src="/images/hockey/team-logo2.png" alt="team-logo"></span></span>
-                                    </span>
-                                    <span class="game-result">(5-4) penalties</span>
-                                </a>
-                                <a href="matches.html" class="item">
-                                    <span class="championship">National cup - quarterfinal</span>
-                                    <span class="teams-wrap">
-                                        <span class="team"><span><img src="/images/hockey/team-logo3.png" alt="team-logo"></span><span>Valencia Valencia</span></span>
-                                        <span class="score"><span>3:2</span></span>
-                                        <span class="team1"><span>Internacional Internacional</span><span><img src="/images/hockey/team-logo4.png" alt=""></span></span>
-                                    </span>
-                                    <span class="game-result">(5-4) penalties</span>
-                                </a>
-                                <a href="matches.html" class="item">
-                                    <span class="championship">National cup - quarterfinal</span>
-                                    <span class="teams-wrap">
-                                        <span class="team"><span><img src="/images/hockey/team-logo5.png" alt="team-logo"></span><span>Valencia Valencia</span></span>
-                                        <span class="score"><span>3:2</span></span>
-                                        <span class="team1"><span>Internacional Internacional</span><span><img src="/images/hockey/team-logo1.png" alt=""></span></span>
-                                    </span>
-                                    <span class="game-result">(5-4) penalties</span>
-                                </a>
-                                <a href="matches.html" class="item">
-                                    <span class="championship">National cup - quarterfinal</span>
-                                    <span class="teams-wrap">
-                                        <span class="team"><span><img src="/images/hockey/team-logo1.png" alt="team-logo"></span><span>Valencia Valencia</span></span>
-                                        <span class="score"><span>3:2</span></span>
-                                        <span class="team1"><span>Internacional Internacional</span><span><img src="/images/hockey/team-logo2.png" alt="team-logo"></span></span>
-                                    </span>
-                                    <span class="game-result">(5-4) penalties</span>
-                                </a>
-                                <a href="matches.html" class="item">
-                                    <span class="championship">National cup - quarterfinal</span>
-                                    <span class="teams-wrap">
-                                        <span class="team"><span><img src="/images/hockey/team-logo3.png" alt="team-logo"></span><span>Valencia Valencia</span></span>
-                                        <span class="score"><span>3:2</span></span>
-                                        <span class="team1"><span>Internacional Internacional</span><span><img src="/images/hockey/team-logo4.png" alt="team-logo"></span></span>
-                                    </span>
-                                    <span class="game-result">(5-4) penalties</span>
-                                </a>
+                                <div class="col-md-12">
+                                    <h5 style="text-align: center;">TUR 1</h5>
+                                    <p href="matches.html" class="item">
+                                        <span class="championship">National cup - quarterfinal</span>
+                                        <span class="teams-wrap">
+                                            <span class="team"><span><img src="/images/hockey/team-logo1.png" alt="team-logo"></span><span>Valencia Valencia</span></span>
+                                            <span class="score"><span>3:2</span></span>
+                                            <span class="team1"><span>Internacional Internacional</span><span><img src="/images/hockey/team-logo2.png" alt="team-logo"></span></span>
+                                        </span>
+                                        <span class="game-result">(5-4) penalties</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,22 +119,25 @@
 
 
             <div class="tab-item part-wrap tab-pane " id="tournamentgrid">
-
-                
+  
                 <div class="container">
                     
                     <div class="row">
                         <div class="col-md-12">
-                            <div id="minimal" data-tournament-id ='<?=$model->id?>'  ></div>
+                           <?php if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)): ?> 
+                               <?php if(empty($model->cup)): ?>
+                                    <?php if (in_array(count($players),[4,8,16,32,64,128])): ?>
+                                        <div class="c0l-md-12" style="margin-bottom: 100px;">
+                                            <a href="/tournaments/add-schedule?id=<?=$model->id?>" class="btn btn-primary" >Schedule tournament automatically</a>
+                                        </div>
+                                    <?php else: ?>
+                                        <p style="color:red;">The number of teams in the tournament must be 4,8,16,32</p> 
+                                    <?php endif; ?>
+                               <?php else: ?>
+                                    <div id="minimal" data-tournament-id ='<?=$model->id?>'  ></div>
+                               <?php endif; ?>
+                            <?php endif; ?>
                             
-                            <?php //if (in_array(count($players),[5])): ?>
-                                    <!-- <button class="btn btn-primary" id="btn_randomset" >Schedule tournament automatically</button> -->
-                                    
-                                   <!--  <?//Bracket::widget(['teams' => $players,'turs' => $turs])?> -->
-                                
-                            <?php //else: ?>
-                                <!-- <p style="color:red;">The number of teams in the tournament must be 4,8,16,32</p> -->
-                            <?php //endif; ?>
                         </div>
                     </div>
                 </div>

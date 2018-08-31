@@ -57,11 +57,9 @@ class TournamentsController extends \yii\web\Controller
             ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $model->id])
             ->all();
         $players = array_merge($teams,$users);
-        $turs = TournamentCupTeam::getTursto($model->id);
-        // echo "<pre>";
-        // print_r($turs);
-        // echo "</pre>";exit;
-        return $this->render('index',compact('model','players','turs'));
+        //$turs = TournamentCupTeam::getTursto($model->id);
+       
+        return $this->render('index',compact('model','players'));
     }
 
     public function actionCreate()
@@ -139,10 +137,65 @@ class TournamentsController extends \yii\web\Controller
             return $this->redirect('/profile#tournaments');
 
         }
-            // echo "<pre>";
-            // print_r($tournament);
-            // echo "</pre>";exit;
+            
         return $this->render('confirmation',compact('tournament','tokin','team'));
+    }
+
+    public function actionAddSchedule($id)
+    {
+
+        $mass = $this->getUsetTeams($id);
+        list('players' => $players, 'model' => $model) = $mass;
+
+        $a = count($players)/2;
+        $cup["teams"] = [];
+        $mass_temp =[];
+        for ($i=0; $i < $a; $i++) { 
+            $player_1 = array_pop($players);
+            $player_2 = array_pop($players);
+            $cup["teams"][] = [$player_1,$player_2];
+        }
+
+        $cup["results"][] = $mass_temp;
+        if($model->format ==2){
+            $cup["results"] = [[[[]]], [], []];
+        }
+        $model->cup = json_encode($cup);
+        $model->save(false);
+        return $this->redirect('/tournaments/public/'.$model->id.'#tournamentgrid');  
+        
+        // echo "<pre>";
+        // print_r(json_encode($cup));
+        // echo "</pre>";exit;
+    }
+
+    public function actionAddLeague($id)
+    {
+        $mass = $this->getUsetTeams($id);
+        list('players' => $players, 'model' => $model) = $mass;
+
+
+
+    }
+
+    private function getUsetTeams($id)
+    {
+
+        $model = Tournaments::findOne($id);
+        if (!is_object($model)) {
+           throw new HttpException(404 ,'Page not found');
+        }
+        $teams = (new \yii\db\Query())->select(['teams.name','teams.id'])->from('teams')
+            ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
+            ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $id])
+            ->all();
+        $users = (new \yii\db\Query())->select(['users.name','users.id'])->from('users')
+            ->leftJoin('tournament_user', 'tournament_user.user_id = users.id')
+            ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $id])
+            ->all();
+        $players = array_merge($teams,$users);
+        shuffle($players);
+        return compact('players','model');
     }
 
 }

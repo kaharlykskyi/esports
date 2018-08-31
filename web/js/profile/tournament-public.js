@@ -233,8 +233,10 @@ $(document).ready( function() {
 
  
 $(document).ready( function() {
-    $('#tournamentgrid').addClass('active');
-
+    
+   $("#tournamentgrid").attr("style", 'display:block;');
+       
+    let doubleEliminationData;
     function searchMix (data) {
             const fdata = new FormData();
             const csrfParam = $('meta[name="csrf-param"]').attr("content");
@@ -246,29 +248,31 @@ $(document).ready( function() {
             xml.send(fdata); 
     }
 
+    if (typeof $.comandTeams != "undefined") {
+       doubleEliminationData = {
+        teams : $.comandTeams.teams,
+        results : $.comandTeams.results
+      };
+    } else {
+        doubleEliminationData = {};
+    }
 
-let doubleEliminationData = {
-    teams : $.comandTeams,
-      // ["Team 1", "Team 2"],  first matchup 
-      // ["Team 3", "Team 4"]  /* second matchup */
-    
-    results : [
-      [[1,2], [3,4]],       /* first round */
-      //[[4,6], [2,1]]        /* second round */
-   ],
-  };
- 
+
     function saveFn (data){
-        console.log(data);
         let id = $('#minimal').attr('data-tournament-id');
         data.toutrament = id;
         let json = JSON.stringify(data);
         searchMix(json);
-       console.log(json);
     }
 
     function render_fn(container, data, score, state) {
-          container.append(data.name);
+        let name;
+        if(null  != data && data.hasOwnProperty('name')){
+            name = data.name;
+        } else {
+            name = 'BYE';
+        }
+        container.append(name);
     }
 
     $(function() {
@@ -277,9 +281,10 @@ let doubleEliminationData = {
           save: saveFn,
           decorator: {edit: function edit_fn(){} , render: render_fn}
         });
-        $('#tournamentgrid').removeClass('active');
+        
+       $('#tournamentgrid').removeAttr('style');
+        
     });
 
-
-
+  
 });
