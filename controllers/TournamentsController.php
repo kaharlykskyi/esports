@@ -164,17 +164,58 @@ class TournamentsController extends \yii\web\Controller
         $model->save(false);
         return $this->redirect('/tournaments/public/'.$model->id.'#tournamentgrid');  
         
-        // echo "<pre>";
-        // print_r(json_encode($cup));
-        // echo "</pre>";exit;
+        
     }
 
     public function actionAddLeague($id)
     {
         $mass = $this->getUsetTeams($id);
         list('players' => $players, 'model' => $model) = $mass;
+        $ch = $c%2 == 0 ? 1 : 0;
+        if (!$ch) {
+            array_unshift($players, ['name'=>'bolvan']);
+        }
+        $c = count($players);
+        $a =$c/2;
+        $mass_temp = [];
+        for ($int=1; $int <= $c; $int++) { 
+            $mass_temp[] = $int;
+        }
 
+        $b =$c-1;
+        $players_turs = [];
+        for ($c=0; $c < $b; $c++) { 
+            $turs = [];
+            for ($i=0; $i < $a; $i++) { 
+               $turs[] = [
+                    'players1' => $players[$mass_temp[$i]-1],
+                    'players2' => $players[$mass_temp[$i+$a]-1],
+                    'result1'  => 0,
+                    'result2'  => 0,
+                ];
+            }
+            $players_turs[] = $turs;
+            $output1 = array_slice($mass_temp, $a);
+            $output2 = array_slice($mass_temp, 1,$a-1);
+            $output3 = array_merge($output1,$output2);
+            array_unshift($output3, $mass_temp[0]);
+            $mass_temp = $output3;
+        }
+        if(!$ch){
+            foreach ($players_turs as &$value) {
+               unset($value[0]);
+            }
+        } 
+        if ((Yii::$app->user->identity == $model->user_id)&&empty($model->league)) {
+            $model->league = json_encode($players_turs);
+            $model->save(false);
+        }
+        
+        return $this->redirect('/tournaments/public/'.$id.'#matches');
 
+        // echo "<pre>";
+        // print_r($players);
+        // echo "</pre>";exit;
 
     }
 
@@ -185,7 +226,7 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($model)) {
            throw new HttpException(404 ,'Page not found');
         }
-        $teams = (new \yii\db\Query())->select(['teams.name','teams.id'])->from('teams')
+        $teams = (new \yii\db\Query())->select(['teams.name','teams.id','teams.logo'])->from('teams')
             ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
             ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $id])
             ->all();
@@ -197,5 +238,4 @@ class TournamentsController extends \yii\web\Controller
         shuffle($players);
         return compact('players','model');
     }
-
 }

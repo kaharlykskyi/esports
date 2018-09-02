@@ -57,7 +57,10 @@
                 <div class="container">
                     <div class="row"> 
                         <div class="col-md-12" style="margin-bottom: 30px;">
-                            <?php if(empty($model->cup)): ?>
+                            
+                            
+
+                            <?php if(empty($model->cup) && empty($model->league)): ?>
                                 <?php if($capitan):?>
                                     <?php if(empty($model->flag)):?>
                                         <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
@@ -94,23 +97,33 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
+                        <?php if(($model->format == Tournaments::LEAGUE) ): ?>
                             <div class="col-md-12" >
-                                <a href="/tournaments/add-league?id=<?=$model->id?>" class="btn btn-primary" >Schedule tournament automatically</a>
+                                <?php if(empty($model->league) && $capitan): ?>
+                                    <a href="/tournaments/add-league?id=<?=$model->id?>" class="btn btn-primary" >Schedule tournament automatically</a>
+                                <?php endif; ?>
                             </div>
                             <div class="main-lates-matches">
-                                <div class="col-md-12">
-                                    <h5 style="text-align: center;">TUR 1</h5>
-                                    <p href="matches.html" class="item">
-                                        <span class="championship">National cup - quarterfinal</span>
-                                        <span class="teams-wrap">
-                                            <span class="team"><span><img src="/images/hockey/team-logo1.png" alt="team-logo"></span><span>Valencia Valencia</span></span>
-                                            <span class="score"><span>3:2</span></span>
-                                            <span class="team1"><span>Internacional Internacional</span><span><img src="/images/hockey/team-logo2.png" alt="team-logo"></span></span>
-                                        </span>
-                                        <span class="game-result">(5-4) penalties</span>
-                                    </p>
-                                </div>
+                                <?php if(!empty($turs = json_decode($model->league))): ?>
+                                <?php  foreach ($turs as $key => $tur): ?>
+                                    <div class="col-md-12">
+                                        <h5 style="text-align: center;">TUR <?=$key+1?></h5>
+                                        <?php foreach ($tur as $posit_game): ?>
+                                        <p href="matches.html" class="item">
+                                            <span class="championship">National cup - quarterfinal</span>
+                                            <span class="teams-wrap">
+                                                <span class="team"><span><img src="<?= $posit_game->players1->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" ></span><span><?=$posit_game->players1->name?></span></span>
+                                                <span class="score"><span><?=$posit_game->result1 ?>:<?=$posit_game->result2 ?></span></span>
+                                                <span class="team1"><span><?=$posit_game->players2->name?></span><span><img src="<?= $posit_game->players2->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  ></span></span>
+                                            </span>
+                                            <span class="game-result">(5-4) penalties</span>
+                                        </p>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                             </div>
+                        <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -125,7 +138,7 @@
                     <div class="row">
                         <div class="col-md-12">
                            <?php if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)): ?> 
-                               <?php if(empty($model->cup)): ?>
+                               <?php if(empty($model->cup) && $capitan): ?>
                                     <?php if (in_array(count($players),[4,8,16,32,64,128])): ?>
                                         <div class="c0l-md-12" style="margin-bottom: 100px;">
                                             <a href="/tournaments/add-schedule?id=<?=$model->id?>" class="btn btn-primary" >Schedule tournament automatically</a>
