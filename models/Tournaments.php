@@ -26,6 +26,7 @@ class Tournaments extends \yii\db\ActiveRecord
     const SINGLE_E = 1;
     const DUBLE_E = 2;
     const LEAGUE = 3;
+    const LEAGUE_P = 4;
 
     const USERS = 1;
     const TEAMS = 2;
@@ -50,7 +51,7 @@ class Tournaments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['game_id', 'format','flag','time_limit','match_schedule','user_id'], 'integer'],
+            [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p'], 'integer'],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
             [['rules', 'prizes','name'], 'string'],
             [['start_date','region','data','cup','league'], 'safe'],

@@ -274,17 +274,45 @@ $(document).ready( function() {
         }
         container.append(name);
     }
+    if(window.capitan_tournament){
+        let dataObj = {
+              init: doubleEliminationData,
+              save: saveFn,
+              decorator: {edit: function edit_fn(){} , render: render_fn}
+        };
+    }
+    if($("div").is("#minimal")){
 
-    $(function() {
-        $('#minimal').bracket({
-          init: doubleEliminationData,
-          save: saveFn,
-          decorator: {edit: function edit_fn(){} , render: render_fn}
+        $(function() {
+            $('#minimal').bracket({
+              init: doubleEliminationData,
+              save: saveFn,
+              decorator: {edit: function edit_fn(){} , render: render_fn}
+            });
+           $('#tournamentgrid').removeAttr('style');
         });
-        
-       $('#tournamentgrid').removeAttr('style');
-        
-    });
-
+    } else {
+         $('#tournamentgrid').removeAttr('style');
+    }
   
+});
+
+$(document).ready( function() {
+    $("#matches").attr("style", 'display:block;');
+
+    if (typeof $.comandTeams != "undefined") {
+       doubleEliminationData = {
+        teams : $.comandTeams.teams,
+        results : $.comandTeams.results
+      };
+    } else {
+        doubleEliminationData = {};
+    }
+
+    if($("div").is("#league_p")){
+        $('#league_p').bracket({
+            init: $.comandTeams
+        });
+    }
+    $("#matches").removeAttr('style');
 });

@@ -14,6 +14,7 @@ class m180829_143914_add_tournaments_colums extends Migration
     {
         $this->addColumn('tournaments', 'cup', $this->text()->Null());
         $this->addColumn('tournaments', 'league', $this->text()->Null());
+        $this->addColumn('tournaments', 'league_p', $this->integer(3)->Null());
     }
 
     
@@ -21,6 +22,7 @@ class m180829_143914_add_tournaments_colums extends Migration
     {
         $this->dropColumn('tournaments', 'cup');
         $this->dropColumn('tournaments', 'league');
+        $this->dropColumn('tournaments', 'league_p');
     }
 
     /*

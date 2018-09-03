@@ -120,6 +120,9 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($model)) {
             throw new HttpException(404 ,'Page not found');
         }
+        if (!empty($tournament->cup) || !empty($tournament->league)) {
+            throw new HttpException(404 ,'Page not found');
+        }
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
 
@@ -149,14 +152,13 @@ class TournamentsController extends \yii\web\Controller
 
         $a = count($players)/2;
         $cup["teams"] = [];
-        $mass_temp =[];
         for ($i=0; $i < $a; $i++) { 
             $player_1 = array_pop($players);
             $player_2 = array_pop($players);
             $cup["teams"][] = [$player_1,$player_2];
         }
 
-        $cup["results"][] = $mass_temp;
+        $cup["results"][] = [];
         if($model->format ==2){
             $cup["results"] = [[[[]]], [], []];
         }
@@ -164,24 +166,23 @@ class TournamentsController extends \yii\web\Controller
         $model->save(false);
         return $this->redirect('/tournaments/public/'.$model->id.'#tournamentgrid');  
         
-        
     }
 
     public function actionAddLeague($id)
     {
+        $post = Yii::$app->request->post();
         $mass = $this->getUsetTeams($id);
         list('players' => $players, 'model' => $model) = $mass;
+        $c = count($players);
         $ch = $c%2 == 0 ? 1 : 0;
         if (!$ch) {
             array_unshift($players, ['name'=>'bolvan']);
         }
-        $c = count($players);
         $a =$c/2;
         $mass_temp = [];
         for ($int=1; $int <= $c; $int++) { 
             $mass_temp[] = $int;
         }
-
         $b =$c-1;
         $players_turs = [];
         for ($c=0; $c < $b; $c++) { 
@@ -206,17 +207,20 @@ class TournamentsController extends \yii\web\Controller
                unset($value[0]);
             }
         } 
-        if ((Yii::$app->user->identity == $model->user_id)&&empty($model->league)) {
+        if ((Yii::$app->user->identity->id == $model->user_id) && empty($model->league)) {
             $model->league = json_encode($players_turs);
+            if ( isset($post['league_p']) && ($model->format == Tournaments::LEAGUE_P) ) {
+                $model->league_p = (int)$post['league_p'];
+                $cup["teams"] = [];
+                for ($i=0; $i < $model->league_p/2; $i++) { 
+                    $cup["teams"][] = [['BYE'],['BYE']];
+                }
+                $cup["results"][] = [];
+                $model->cup = json_encode($cup);
+            }
             $model->save(false);
         }
-        
         return $this->redirect('/tournaments/public/'.$id.'#matches');
-
-        // echo "<pre>";
-        // print_r($players);
-        // echo "</pre>";exit;
-
     }
 
     private function getUsetTeams($id)

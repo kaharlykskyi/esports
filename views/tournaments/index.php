@@ -16,11 +16,17 @@
 
     $capitan = $model->user_id == Yii::$app->user->identity->id;
 
-    if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)){
+    if((($model->format == Tournaments::SINGLE_E)&&(!empty($model->cup))) 
+        || (($model->format == Tournaments::DUBLE_E)&&(!empty($model->cup))) 
+        ||(($model->format == Tournaments::LEAGUE_P)&&(!empty($model->cup)))){
 
         $script = "
             $.comandTeams = ".$model->cup.";
+
         ";
+        if($capitan ){
+            $script .= " window.capitan_tournament = true;";
+        }
         $this->registerJs($script, yii\web\View::POS_END);
     }
 
@@ -57,8 +63,6 @@
                 <div class="container">
                     <div class="row"> 
                         <div class="col-md-12" style="margin-bottom: 30px;">
-                            
-                            
 
                             <?php if(empty($model->cup) && empty($model->league)): ?>
                                 <?php if($capitan):?>
@@ -72,9 +76,6 @@
                         </div>
                     </div>
                     <div class="row">
-
-
-
 
                         <?php foreach ($players as $player): ?>
 
@@ -97,11 +98,39 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
-                        <?php if(($model->format == Tournaments::LEAGUE) ): ?>
+                        <?php if(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P)): ?>
                             <div class="col-md-12" >
                                 <?php if(empty($model->league) && $capitan): ?>
-                                    <a href="/tournaments/add-league?id=<?=$model->id?>" class="btn btn-primary" >Schedule tournament automatically</a>
+                                    <form action="/tournaments/add-league?id=<?=$model->id?>" method="POST"  >
+                                        <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
+                                         <div class="col-md-8 col-md-offset-2" >
+                                            <?php if($model->format == Tournaments::LEAGUE_P): ?>
+                                            <p style="font-size: 15px;font-weight:bold;" >Teams in playoff</p>
+                                            <div class="item select-show"> 
+                                                <select class="basic" name="league_p" required>
+                                                    <?php $count_playoff =count($players) ?>
+                                                    <?php if($count_playoff > 2): ?>
+                                                        <option  value="2"  >2</option>
+                                                    <?php endif; ?>
+                                                    <?php if($count_playoff > 4): ?>
+                                                        <option  value="4"  >4</option>
+                                                    <?php endif; ?>
+                                                    <?php if($count_playoff > 8): ?>
+                                                        <option  value="8"  >8</option>
+                                                    <?php endif; ?>
+                                                    <?php if($count_playoff > 16): ?>
+                                                        <option  value="16"  >16</option>
+                                                    <?php endif; ?>
+                                                </select>
+                                            </div>
+                                            <?php endif; ?>
+                                            <div style="margin-top: 20px;margin-bottom: 20px;">
+                                                <?= Html::submitButton('Schedule tournament automatically', ['class' => 'btn btn-primary formbtn']) ?>
+                                            </div>
+                                         </div>
+                                    </form>
                                 <?php endif; ?>
+
                             </div>
                             <div class="main-lates-matches">
                                 <?php if(!empty($turs = json_decode($model->league))): ?>
@@ -123,6 +152,12 @@
                                 <?php endforeach; ?>
                             <?php endif; ?>
                             </div>
+                            <?php if(!empty($model->cup) && !empty($model->league) && ($model->format == Tournaments::LEAGUE_P)): ?>
+                            <div class="col-md-12" style="margin-bottom: 30px;">
+                                <p style="font-size: 15px;font-weight:bold;" >Teams in playoff</p>
+                                <div id="league_p"></div>
+                            </div>
+                            <?php endif; ?>
                         <?php endif; ?>
                         </div>
                     </div>
