@@ -113,19 +113,20 @@ $(document).ready( function() {
     }
 
     function contentAddUsers (users) {
+        
         $(users).each(function(indx, element){
             let html = `<div class="col-md-12 plashka_user" >
                             <div class="row">
-                                <div class="col-xs-2" >
-                                    <div class="img_logo_modal">
-                                        <img src="/images/profile/images.png" alt="">
-                                    </div>
+                                <div class="col-sm-2 col-xs-6" style="text-align:center;height:100%;" >
+                                <div class="img_logo_modal">
+                                <img src="/images/profile/images.png" alt="">
                                 </div>
-                                <div class="col-xs-6" >
-                                    <p>${element.name} @${element.username}</p>
                                 </div>
-                                <div class="col-xs-4 box" >
-                                    <button  class="btn invite_btn" onclick="data_game_sendMess(this)" data-id-user="${element.id}">Invite to the tournament</button>
+                                <div class="col-sm-6 col-xs-6" >
+                                <p>${element.name} @${element.username}</p>
+                                </div>
+                                <div class="col-sm-4 col-xs-12 box" >
+                                <button  class="btn invite_btn" onclick="data_game_sendMess(this)" data-id-user="${element.id}">Invite to the tournament</button>
                                 </div>
                             </div>
                         </div>`;
@@ -135,23 +136,19 @@ $(document).ready( function() {
 
     function contentAddTeams (teams) {
         $(teams).each(function(indx, element){
-            let html = `<div class="col-md-12 plashka_user plashka_team" >
-                            <div class="row">
-                                <div class="col-xs-2" >
-                                    <div class="img_logo_modal">
-                                        <img src="${element.logo}" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6" >
-                                    <p style="font-size:15px;font-weight:bold;">${element.name}</p>
-                                    <p>${element.g_name}</p>
-                                    <p>${Number(element.c_user)} member(s)</p>
-                                </div>
-                                <div class="col-xs-4 box" >
-                                    <button  class="btn invite_btn" onclick="data_game_sendMess(this)" data-id-team="${element.id}" data-id-user="${element.capitan}">Invite to the tournament</button>
-                                </div>
-                            </div>
-                        </div>`;
+            let html = `<div class="col-md-12 plashka_user plashka_team" style="text-align:center;height:100%;">
+                        <div class="row">
+                        <div class="col-sm-2 col-xs-6" >
+                        <div class="img_logo_modal">
+                        <img src="${element.logo}" alt=""></div></div>
+                        <div class="col-sm-6 col-xs-6" >
+                        <p style="font-size:15px;font-weight:bold;">${element.name}</p>
+                        <p>${element.g_name}</p>
+                        <p>${Number(element.c_user)} member(s)</p>
+                        </div>
+                        <div class="col-sm-4 col-xs-12 box" >
+                        <button  class="btn invite_btn" onclick="data_game_sendMess(this)" data-id-team="${element.id}" data-id-user="${element.capitan}">Invite to the tournament</button>
+                        </div></div></div>`;
           $('#content_modal').append(html);
         });
     }
@@ -229,8 +226,6 @@ $(document).ready( function() {
 });
 
 
-
-
  
 $(document).ready( function() {
     
@@ -274,21 +269,19 @@ $(document).ready( function() {
         }
         container.append(name);
     }
-    if(window.capitan_tournament){
-        let dataObj = {
+    if($.capitan_tournament){
+        $.dataObj = {
               init: doubleEliminationData,
               save: saveFn,
               decorator: {edit: function edit_fn(){} , render: render_fn}
         };
+    } else {
+        $.dataObj = {init: doubleEliminationData,decorator: {edit: function edit_fn(){} , render: render_fn}}
     }
     if($("div").is("#minimal")){
 
         $(function() {
-            $('#minimal').bracket({
-              init: doubleEliminationData,
-              save: saveFn,
-              decorator: {edit: function edit_fn(){} , render: render_fn}
-            });
+            $('#minimal').bracket($.dataObj);
            $('#tournamentgrid').removeAttr('style');
         });
     } else {

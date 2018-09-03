@@ -25,7 +25,7 @@
 
         ";
         if($capitan ){
-            $script .= " window.capitan_tournament = true;";
+            $script .= " $.capitan_tournament = true;";
         }
         $this->registerJs($script, yii\web\View::POS_END);
     }
@@ -69,7 +69,7 @@
                                     <?php if(empty($model->flag)):?>
                                         <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
                                     <?php else: ?>
-                                        <a href="#myModal1" class="btn btn-secusses" data-toggle="modal" data-flag ="<?=$model->flag ?>"  data-tournament-id="<?=$model->id?>" >Invite participants</a>
+                                        <a href="#myModal1" class="btn btn-secusses btn_mobil" data-toggle="modal" data-flag ="<?=$model->flag ?>"  data-tournament-id="<?=$model->id?>" >Invite participants</a>
                                     <?php endif; ?>
                                 <?php endif; ?>
                              <?php endif; ?>   
@@ -100,7 +100,9 @@
                         <div class="col-sm-12">
                         <?php if(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P)): ?>
                             <div class="col-md-12" >
+                                <?php $count_playoff = count($players) ?>
                                 <?php if(empty($model->league) && $capitan): ?>
+                                    <?php if($count_playoff >= 4): ?>
                                     <form action="/tournaments/add-league?id=<?=$model->id?>" method="POST"  >
                                         <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
                                          <div class="col-md-8 col-md-offset-2" >
@@ -108,7 +110,7 @@
                                             <p style="font-size: 15px;font-weight:bold;" >Teams in playoff</p>
                                             <div class="item select-show"> 
                                                 <select class="basic" name="league_p" required>
-                                                    <?php $count_playoff =count($players) ?>
+                                                   
                                                     <?php if($count_playoff > 2): ?>
                                                         <option  value="2"  >2</option>
                                                     <?php endif; ?>
@@ -124,11 +126,14 @@
                                                 </select>
                                             </div>
                                             <?php endif; ?>
-                                            <div style="margin-top: 20px;margin-bottom: 20px;">
-                                                <?= Html::submitButton('Schedule tournament automatically', ['class' => 'btn btn-primary formbtn']) ?>
-                                            </div>
+                                         </div>
+                                         <div class="col-md-8 col-md-offset-2 " style="margin-top: 20px;margin-bottom: 20px;">
+                                            <?= Html::submitButton('Schedule tournament automatically', ['class' => 'btn btn-primary btn_mobil']) ?>
                                          </div>
                                     </form>
+                                    <?php else: ?>
+                                        <p style="font-size: 18px;font-weight: bold;color:red;">In the league there must be at least 4 participants</p>
+                                    <?php endif; ?>
                                 <?php endif; ?>
 
                             </div>
@@ -176,7 +181,7 @@
                                <?php if(empty($model->cup) && $capitan): ?>
                                     <?php if (in_array(count($players),[4,8,16,32,64,128])): ?>
                                         <div class="c0l-md-12" style="margin-bottom: 100px;">
-                                            <a href="/tournaments/add-schedule?id=<?=$model->id?>" class="btn btn-primary" >Schedule tournament automatically</a>
+                                            <a href="/tournaments/add-schedule?id=<?=$model->id?>" class="btn btn-primary btn_mobil" >Schedule tournament automatically</a>
                                         </div>
                                     <?php else: ?>
                                         <p style="color:red;">The number of teams in the tournament must be 4,8,16,32</p> 
@@ -264,7 +269,7 @@
 
 
                                             <div class="col-md-12">
-                                                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                                                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
                                             </div>
                                         </div>
                                         <?php ActiveForm::end(); ?>
@@ -310,7 +315,7 @@
                                         </div>   
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                                                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
                                             </div>
                                         </div>
                                         <?php ActiveForm::end(); ?>
@@ -334,11 +339,11 @@
                                     
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xs-9">
-                            <input type="text" class="modal_search" placeholder="Search for players" >
+                        <div class="col-md-9 col-sm-9 col-xs-7">
+                            <input type="text" class="modal_search search_mobil" placeholder="Search for players" >
                         </div>
-                        <div class="col-xs-3">
-                            <button class="btn search_btn" id="search_mod">Search</button>
+                        <div class="col-md-3 col-sm-3 col-xs-5">
+                            <button class="btn search_btn btn_mobil" id="search_mod">Search</button>
                         </div>
                     </div>
                     <div class="row">

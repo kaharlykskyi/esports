@@ -39,9 +39,8 @@ class AjaxController extends \yii\web\Controller
     }
     public function beforeAction($action)
     {
-        //Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        return parent::beforeAction($action);// && Yii::$app->request->isPost;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return parent::beforeAction($action);
     }
 
     public function actionGetUsers()
@@ -266,7 +265,7 @@ class AjaxController extends \yii\web\Controller
         $users = [];
 
         if((Tournaments::USERS == $flag) || (Tournaments::MIXED == $flag)) {
-            $users = (new \yii\db\Query())->select(['*'])->from('users')
+            $users = (new \yii\db\Query())->select(['users.id','users.name','users.username'])->from('users')
                 ->leftJoin('tournament_user', '`tournament_user`.`user_id` = `users`.`id`')
                 ->where(['LIKE', 'name', $post['search']])
                 ->andWhere(['!=', 'users.id', $tournament->user_id])
@@ -351,14 +350,13 @@ class AjaxController extends \yii\web\Controller
     public function actionSetCup() 
     {
         $post = Yii::$app->request->post();
-       
+        $user = Yii::$app->user->identity;
         $json = json_decode($post['data']);
         $model = Tournaments::findOne($json->toutrament);
-
         $model->cup = $post['data'];
-        $model->save(false);
-
-        
+        if ($model->user_id == $user->id) {
+           $model->save(false);
+        }
        
         // $customer = TournamentCupTeam::deleteAll(['tournament_id' => $json->toutrament]);
         // $arr = $json->teams;
