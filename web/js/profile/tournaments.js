@@ -9,7 +9,8 @@ $(document).ready(function () {
             $('#elimination').slideDown();
             $('.radiolist_elimination').find('input').prop('checked', false);
             $('.format_campions').removeClass('active_campions');
-
+            $('.playoffs_l').slideUp();
+            $('.grus_l').slideUp();
             return;
         }
 
@@ -20,6 +21,8 @@ $(document).ready(function () {
             $('.format_campions').removeClass('active_campions');
             $('.default').addClass('active_campions');
             $('.radiolist_elimination').find('label').eq(2).click();
+            $('.grus_l').slideUp();
+            $('.playoffs_l').slideUp();
             return;
         }
 
@@ -27,6 +30,19 @@ $(document).ready(function () {
             $('.format_campions').removeClass('active_campions');
             elementJq.addClass('active_campions');
            $('.radiolist_elimination').find('label').eq(id-1).click();
+           if (id == 3) {
+                $('.grus_l').slideUp();
+                $('.playoffs_l').slideUp();
+           }
+           if (id == 4) {
+                $('.grus_l').slideUp();
+                $('.playoffs_l').slideDown();
+           }
+
+           if (id == 5) {
+                $('.playoffs_l').slideDown();
+                $('.grus_l').slideDown();
+           }
         }
     });
 

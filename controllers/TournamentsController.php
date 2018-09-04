@@ -170,49 +170,67 @@ class TournamentsController extends \yii\web\Controller
 
     public function actionAddLeague($id)
     {
-        $post = Yii::$app->request->post();
+        
         $mass = $this->getUsetTeams($id);
         list('players' => $players, 'model' => $model) = $mass;
         $c = count($players);
         $ch = $c%2 == 0 ? 1 : 0;
-        if (!$ch) {
-            array_unshift($players, ['name'=>'bolvan']);
-        }
-        $a =$c/2;
-        $mass_temp = [];
-        for ($int=1; $int <= $c; $int++) { 
-            $mass_temp[] = $int;
-        }
-        $b =$c-1;
         $players_turs = [];
-        for ($c=0; $c < $b; $c++) { 
-            $turs = [];
-            for ($i=0; $i < $a; $i++) { 
-               $turs[] = [
-                    'players1' => $players[$mass_temp[$i]-1],
-                    'players2' => $players[$mass_temp[$i+$a]-1],
-                    'result1'  => 0,
-                    'result2'  => 0,
-                ];
+
+        if ($model->format == Tournaments::LEAGUE_G) {
+            if (!$ch) {
+                return $this->redirect('/tournaments/public/'.$id.'#matches');
             }
-            $players_turs[] = $turs;
-            $output1 = array_slice($mass_temp, $a);
-            $output2 = array_slice($mass_temp, 1,$a-1);
-            $output3 = array_merge($output1,$output2);
-            array_unshift($output3, $mass_temp[0]);
-            $mass_temp = $output3;
+            $c = $c/$model->league_g;
+            for ($d=0; $d < ; $d++) { 
+                # code...
+            }
+
+
+            
         }
-        if(!$ch){
-            foreach ($players_turs as &$value) {
-               unset($value[0]);
+
+        if (($model->format == Tournaments::LEAGUE_P) || ($model->format == Tournaments::LEAGUE)) {
+            if (!$ch) {
+                array_unshift($players, ['name'=>'bolvan']);
             }
-        } 
+            $a =$c/2;
+            $mass_temp = [];
+            for ($int=1; $int <= $c; $int++) { 
+                $mass_temp[] = $int;
+            }
+            $b =$c-1;
+            
+            for ($c=0; $c < $b; $c++) { 
+                $turs = [];
+                for ($i=0; $i < $a; $i++) { 
+                   $turs[] = [
+                        'players1' => $players[$mass_temp[$i]-1],
+                        'players2' => $players[$mass_temp[$i+$a]-1],
+                        'result1'  => 0,
+                        'result2'  => 0,
+                    ];
+                }
+                $players_turs[] = $turs;
+                $output1 = array_slice($mass_temp, $a);
+                $output2 = array_slice($mass_temp, 1,$a-1);
+                $output3 = array_merge($output1,$output2);
+                array_unshift($output3, $mass_temp[0]);
+                $mass_temp = $output3;
+            }
+            if(!$ch){
+                foreach ($players_turs as &$value) {
+                   unset($value[0]);
+                }
+            } 
+        }   
+
         if ((Yii::$app->user->identity->id == $model->user_id) && empty($model->league)) {
             $model->league = json_encode($players_turs);
-            if ( isset($post['league_p']) && ($model->format == Tournaments::LEAGUE_P) ) {
-                $model->league_p = (int)$post['league_p'];
+            if ( isset($model->league_p) && (($model->format == Tournaments::LEAGUE_P) || ($model->format == Tournaments::LEAGUE_G))) {
                 $cup["teams"] = [];
-                for ($i=0; $i < $model->league_p/2; $i++) { 
+                $count_p = $model->league_p/2;
+                for ($i=0; $i < $count_p; $i++) { 
                     $cup["teams"][] = [['BYE'],['BYE']];
                 }
                 $cup["results"][] = [];

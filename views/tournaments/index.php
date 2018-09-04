@@ -98,36 +98,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
-                        <?php if(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P)): ?>
+                        <?php if(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P)||($model->format == Tournaments::LEAGUE_G)): ?>
                             <div class="col-md-12" >
                                 <?php $count_playoff = count($players) ?>
                                 <?php if(empty($model->league) && $capitan): ?>
                                     <?php if($count_playoff >= 4): ?>
                                     <form action="/tournaments/add-league?id=<?=$model->id?>" method="POST"  >
                                         <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
-                                         <div class="col-md-8 col-md-offset-2" >
-                                            <?php if($model->format == Tournaments::LEAGUE_P): ?>
-                                            <p style="font-size: 15px;font-weight:bold;" >Teams in playoff</p>
-                                            <div class="item select-show"> 
-                                                <select class="basic" name="league_p" required>
-                                                   
-                                                    <?php if($count_playoff > 2): ?>
-                                                        <option  value="2"  >2</option>
-                                                    <?php endif; ?>
-                                                    <?php if($count_playoff > 4): ?>
-                                                        <option  value="4"  >4</option>
-                                                    <?php endif; ?>
-                                                    <?php if($count_playoff > 8): ?>
-                                                        <option  value="8"  >8</option>
-                                                    <?php endif; ?>
-                                                    <?php if($count_playoff > 16): ?>
-                                                        <option  value="16"  >16</option>
-                                                    <?php endif; ?>
-                                                </select>
-                                            </div>
-                                            <?php endif; ?>
-                                         </div>
-                                         <div class="col-md-8 col-md-offset-2 " style="margin-top: 20px;margin-bottom: 20px;">
+                                         <div  style="margin-top: 20px;margin-bottom: 20px;">
                                             <?= Html::submitButton('Schedule tournament automatically', ['class' => 'btn btn-primary btn_mobil']) ?>
                                          </div>
                                     </form>
@@ -157,7 +135,7 @@
                                 <?php endforeach; ?>
                             <?php endif; ?>
                             </div>
-                            <?php if(!empty($model->cup) && !empty($model->league) && ($model->format == Tournaments::LEAGUE_P)): ?>
+                            <?php if(!empty($model->cup) && !empty($model->league) && (($model->format == Tournaments::LEAGUE_P)||($model->format == Tournaments::LEAGUE_G))): ?>
                             <div class="col-md-12" style="margin-bottom: 30px;">
                                 <p style="font-size: 15px;font-weight:bold;" >Teams in playoff</p>
                                 <div id="league_p"></div>

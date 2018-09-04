@@ -116,6 +116,29 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         </div>
                         
                         <div class="col-md-12" >
+                            <div class="grus_l" style="display: none;">
+                                <p style="font-size: 15px;font-weight:bold;" >Number of teams in the a group</p>
+                                <div class="item select-show"> 
+                                <select class="basic" name="Tournaments[league_g]" required>
+                                    <option  value="2" >2</option>
+                                    <option  value="4" >4</option>
+                                    <option  value="8" >8</option>
+                                    <option  value="16" >16</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="playoffs_l" style="display: none;" >
+                                <p style="font-size: 15px;font-weight:bold;" >Number of teams that go into the playoffs</p>
+                                <div class="item select-show"> 
+                                    <select class="basic" name="Tournaments[league_p]" required>
+                                        <option  value="2" >2</option>
+                                        <option  value="4" >4</option>
+                                        <option  value="8" >8</option>
+                                        <option  value="16">16</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <label>Match schedule</label>
                             <div class="item select-show">
                                 <select class="basic" name="Tournaments[match_schedule]" required>
