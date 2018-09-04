@@ -30,17 +30,19 @@ class TournamentsController extends \yii\web\Controller
 
             if ($model->load(Yii::$app->request->post())) {
                     $post = Yii::$app->request->post();
-                    $model->data = json_encode($post['Data']);
-
+                    if (!empty($post['Data'])) {
+                        $model->data = json_encode($post['Data']);
+                    }
+                    
                 if($model->save()) {
                    
-                    foreach ($post['Data'] as $key => $value ) {
-                        $tournament_data = new TournamentData();
-                        $tournament_data->tournament_id = $model->id;
-                        $tournament_data->name = $key;
-                        $tournament_data->value = $value;
-                        $tournament_data->save();
-                    }
+                    // foreach ($post['Data'] as $key => $value ) {
+                    //     $tournament_data = new TournamentData();
+                    //     $tournament_data->tournament_id = $model->id;
+                    //     $tournament_data->name = $key;
+                    //     $tournament_data->value = $value;
+                    //     $tournament_data->save();
+                    // }
                     
                     Yii::$app->session->setFlash('success', 'Tournament settings updated');
                     return $this->redirect('/tournaments/public/'.$model->id.'#manage_tournament');
@@ -177,19 +179,24 @@ class TournamentsController extends \yii\web\Controller
         $ch = $c%2 == 0 ? 1 : 0;
         $players_turs = [];
 
-        if ($model->format == Tournaments::LEAGUE_G) {
+        if ( $model->format == Tournaments::LEAGUE_G ) {
             if (!$ch) {
                 return $this->redirect('/tournaments/public/'.$id.'#matches');
             }
-            $c = $c/$model->league_g;
-            for ($d=0; $d < ; $d++) { 
-                # code...
+
+            $group = $c/$model->league_g;
+            for ($d=0; $d < $group; $d++) {
+                $group_mas = []; 
+                for ($dc=0; $dc < $model->league_g; $dc++) { 
+                    $group_mas[] = array_pop($players);
+                }
+                $players_turs[] = $group_mas;
             }
-
-
-            
         }
-
+// echo "<pre>";
+// print_r($players_turs);
+// echo "</pre>";exit;
+        
         if (($model->format == Tournaments::LEAGUE_P) || ($model->format == Tournaments::LEAGUE)) {
             if (!$ch) {
                 array_unshift($players, ['name'=>'bolvan']);

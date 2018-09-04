@@ -225,6 +225,44 @@
     overflow-x:auto;
 }
 
+.group_inline{
+    display: inline-block;
+    width: 23%;
+    padding: 0 8px;
+    text-align: left;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    
+}
+
+.group_inline p{
+    font-size: 14px;
+}
+
+.group_inline_count{
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+   /* padding:0 20px;*/
+}
+
+.group_inline .group_inline_head{
+    padding: 5px;
+    padding-left: 25px;
+    background-color: #207ad3;
+    color: #fff;
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.group_inline_count img{
+    height: 30px;
+    border-radius: 50%;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+
 @media screen and (max-width: 560px) {
     .btn_mobil {
         padding: 11px;
@@ -236,6 +274,16 @@
     }
 }
 
+@media screen and (max-width: 970px) {
+    .group_inline{
+        width: 45%;
+    }
+}
+@media screen and (max-width: 750px) {
+    .group_inline{
+        width: 95%;
+    }
+}
 @media screen and (max-width: 768px) {
 
     .plashka_user ,.plashka_team{

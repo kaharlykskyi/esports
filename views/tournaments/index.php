@@ -16,9 +16,7 @@
 
     $capitan = $model->user_id == Yii::$app->user->identity->id;
 
-    if((($model->format == Tournaments::SINGLE_E)&&(!empty($model->cup))) 
-        || (($model->format == Tournaments::DUBLE_E)&&(!empty($model->cup))) 
-        ||(($model->format == Tournaments::LEAGUE_P)&&(!empty($model->cup)))){
+    if(($model->format != Tournaments::LEAGUE)&&(!empty($model->cup))) {
 
         $script = "
             $.comandTeams = ".$model->cup.";
@@ -113,10 +111,11 @@
                                         <p style="font-size: 18px;font-weight: bold;color:red;">In the league there must be at least 4 participants</p>
                                     <?php endif; ?>
                                 <?php endif; ?>
-
+                        
                             </div>
+                        <?php endif; ?>
                             <div class="main-lates-matches">
-                                <?php if(!empty($turs = json_decode($model->league))): ?>
+                                <?php if(!empty($turs = json_decode($model->league))&&(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P))): ?>
                                 <?php  foreach ($turs as $key => $tur): ?>
                                     <div class="col-md-12">
                                         <h5 style="text-align: center;">TUR <?=$key+1?></h5>
@@ -133,7 +132,30 @@
                                         <?php endforeach; ?>
                                     </div>
                                 <?php endforeach; ?>
-                            <?php endif; ?>
+                                <?php endif; ?>
+                                <?php if(!empty($turs = json_decode($model->league))&&($model->format == Tournaments::LEAGUE_G)): ?>
+                                    <div class="col-md-12" style="text-align: center;" >
+                                    <?php  foreach ($turs as $key => $tur): ?>
+                                        <div class="group_inline">
+                                            <div class="group_inline_count">
+                                                <div class="group_inline_head"><span>Group <?=$key+1?></span></div>
+                                                <?php foreach ($tur as $teamin_group): ?>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-3" >
+                                                                <p><img src="<?= $teamin_group->logo ?? '/images/hockey/team-logo1.png' ?>" onerror="this.src = '/images/hockey/team-logo1.png'"  alt="logo"></p>
+                                                            </div>
+                                                            <div class="col-xs-9" >
+                                                                <p><?=$teamin_group->name ?></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                             <?php if(!empty($model->cup) && !empty($model->league) && (($model->format == Tournaments::LEAGUE_P)||($model->format == Tournaments::LEAGUE_G))): ?>
                             <div class="col-md-12" style="margin-bottom: 30px;">
@@ -141,7 +163,7 @@
                                 <div id="league_p"></div>
                             </div>
                             <?php endif; ?>
-                        <?php endif; ?>
+                        
                         </div>
                     </div>
                 </div>
@@ -273,7 +295,38 @@
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
                                                 <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
-                                           
+                                                <?php if(empty($model->cup)&&empty($model->league)): ?>
+                                                    <?php if($model->format == Tournaments::LEAGUE_G): ?>
+                                                        <div style="margin-bottom:20px;">
+                                                            <label class="col-sm-12 control-label" for="teams-background">Number of teams in the a group</label>
+                                                            <div class="item select-show">
+                                                                <div class="fancy-select ">
+                                                                    <select class="basic" name="Tournaments[league_g]" required>
+                                                                        <option  value="2" <?=$model->league_g == 2 ? 'selected' : '' ?> >2</option> 
+                                                                        <option  value="4" <?=$model->league_g == 4 ? 'selected' : '' ?> >4</option>
+                                                                        <option  value="8" <?=$model->league_g == 8 ? 'selected' : '' ?> >8</option>
+                                                                        <option  value="16" <?=$model->league_g == 16 ? 'selected' : '' ?> >16</option>
+                                                                    </select>
+                                                                </div>    
+                                                            </div>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                    <?php if(($model->format == Tournaments::LEAGUE_G)||($model->format == Tournaments::LEAGUE_P)): ?>
+                                                        <div style="margin-bottom:20px;">
+                                                            <label class="col-sm-12 control-label" for="teams-background">Number of teams that go into the playoffs</label>
+                                                            <div class="item select-show">
+                                                                <div class="fancy-select ">
+                                                                    <select class="basic" name="Tournaments[league_p]" required>
+                                                                        <option  value="2" <?=$model->league_p == 2 ? 'selected' : '' ?> >2</option> 
+                                                                        <option  value="4" <?=$model->league_p == 4 ? 'selected' : '' ?> >4</option>
+                                                                        <option  value="8" <?=$model->league_p == 8 ? 'selected' : '' ?> >8</option>
+                                                                        <option  value="16" <?=$model->league_p == 16 ? 'selected' : '' ?> >16</option>
+                                                                    </select>
+                                                                </div>    
+                                                            </div>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
                                                 <?php  
                                                 echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
                                                     'name' => 'datetime_10',
