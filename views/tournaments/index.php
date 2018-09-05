@@ -96,32 +96,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
-                        <?php if(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P)||($model->format == Tournaments::LEAGUE_G)): ?>
-                            <div class="col-md-12" >
-                                <?php $count_playoff = count($players) ?>
-                                <?php if(empty($model->league) && $capitan): ?>
-                                    <?php if($count_playoff >= 4): ?>
-                                    <form action="/tournaments/add-league?id=<?=$model->id?>" method="POST"  >
-                                        <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
-                                         <div  style="margin-top: 20px;margin-bottom: 20px;">
-                                            <?= Html::submitButton('Schedule tournament automatically', ['class' => 'btn btn-primary btn_mobil']) ?>
-                                         </div>
-                                    </form>
-                                    <?php else: ?>
-                                        <p style="font-size: 18px;font-weight: bold;color:red;">In the league there must be at least 4 participants</p>
-                                    <?php endif; ?>
-                                <?php endif; ?>
-                        
-                            </div>
-                        <?php endif; ?>
                             <div class="main-lates-matches">
                                 <?php if(!empty($turs = json_decode($model->league))&&(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P))): ?>
                                 <?php  foreach ($turs as $key => $tur): ?>
                                     <div class="col-md-12">
-                                        <h5 style="text-align: center;">TUR <?=$key+1?></h5>
+                                        <h5 style="text-align: center;">ROUND <?=$key+1?></h5>
                                         <?php foreach ($tur as $posit_game): ?>
                                         <p href="matches.html" class="item">
-                                            <span class="championship">National cup - quarterfinal</span>
                                             <span class="teams-wrap">
                                                 <span class="team"><span><img src="<?= $posit_game->players1->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" ></span><span><?=$posit_game->players1->name?></span></span>
                                                 <span class="score"><span><?=$posit_game->result1 ?>:<?=$posit_game->result2 ?></span></span>
@@ -135,35 +116,28 @@
                                 <?php endif; ?>
                                 <?php if(!empty($turs = json_decode($model->league))&&($model->format == Tournaments::LEAGUE_G)): ?>
                                     <div class="col-md-12" style="text-align: center;" >
-                                    <?php  foreach ($turs as $key => $tur): ?>
-                                        <div class="group_inline">
-                                            <div class="group_inline_count">
-                                                <div class="group_inline_head"><span>Group <?=$key+1?></span></div>
-                                                <?php foreach ($tur as $teamin_group): ?>
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <div class="col-xs-3" >
-                                                                <p><img src="<?= $teamin_group->logo ?? '/images/hockey/team-logo1.png' ?>" onerror="this.src = '/images/hockey/team-logo1.png'"  alt="logo"></p>
-                                                            </div>
-                                                            <div class="col-xs-9" >
-                                                                <p><?=$teamin_group->name ?></p>
+                                        <?php  foreach ($turs as $key => $tur): ?>
+                                            <div class="group_inline">
+                                                <div class="group_inline_count">
+                                                    <div class="group_inline_head"><span>Group <?=$key+1?></span></div>
+                                                    <?php foreach ($tur as $teamin_group): ?>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="col-xs-3" >
+                                                                    <p><img src="<?= $teamin_group->logo ?? '/images/hockey/team-logo1.png' ?>" onerror="this.src = '/images/hockey/team-logo1.png'"  alt="logo"></p>
+                                                                </div>
+                                                                <div class="col-xs-9" >
+                                                                    <p><?=$teamin_group->name ?></p>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                <?php endforeach; ?>
+                                                    <?php endforeach; ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php endforeach; ?>
+                                        <?php endforeach; ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
-                            <?php if(!empty($model->cup) && !empty($model->league) && (($model->format == Tournaments::LEAGUE_P)||($model->format == Tournaments::LEAGUE_G))): ?>
-                            <div class="col-md-12" style="margin-bottom: 30px;">
-                                <p style="font-size: 15px;font-weight:bold;" >Teams in playoff</p>
-                                <div id="league_p"></div>
-                            </div>
-                            <?php endif; ?>
-                        
                         </div>
                     </div>
                 </div>
@@ -180,19 +154,79 @@
                            <?php if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)): ?> 
                                <?php if(empty($model->cup) && $capitan): ?>
                                     <?php if (in_array(count($players),[4,8,16,32,64,128])): ?>
-                                        <div class="c0l-md-12" style="margin-bottom: 100px;">
-                                            <a href="/tournaments/add-schedule?id=<?=$model->id?>" class="btn btn-primary btn_mobil" >Schedule tournament automatically</a>
-                                        </div>
+                                        <form action="/tournaments/add-schedule?id=<?=$model->id?>" method="POST"  >
+                                            <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
+                                             <div  >
+                                                <?= Html::submitButton('Start tournament', ['class' => 'btn btn-primary btn_mobil']) ?>
+                                             </div>
+                                        </form>
                                     <?php else: ?>
                                         <p style="color:red;">The number of teams in the tournament must be 4,8,16,32</p> 
                                     <?php endif; ?>
-                               <?php else: ?>
-                                    <div id="minimal" data-tournament-id ='<?=$model->id?>'  ></div>
                                <?php endif; ?>
                             <?php endif; ?>
-                            
+                            <?php if(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P)||($model->format == Tournaments::LEAGUE_G)): ?>
+                                <div class="col-md-12" >
+                                    <?php $count_playoff = count($players) ?>
+                                    <?php if(empty($model->league) && $capitan): ?>
+                                        <?php if($count_playoff >= 4): ?>
+                                        <form action="/tournaments/add-league?id=<?=$model->id?>" method="POST"  >
+                                            <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
+                                             <div  >
+                                                <?= Html::submitButton('Start tournament', ['class' => 'btn btn-primary btn_mobil']) ?>
+                                             </div>
+                                        </form>
+                                        <?php else: ?>
+                                            <p style="font-size: 18px;font-weight: bold;color:red;">In the league there must be at least 4 participants</p>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
+                    <?php if(!empty($model->league) && ($model->format != Tournaments::SINGLE_E) && ($model->format != Tournaments::SINGLE_D)): ?>
+                    <div class="row">
+                        <div class="col-md-12 overflow-scroll">
+                            <!-- <h6>Last five matches</h6> -->
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>competitor</th>
+                                        <th>G</th>
+                                        <th>V</th>
+                                        <th>P</th>
+                                        <th>L</th>
+                                    </tr>
+                                    <tr>
+                                        <td>#</td>
+                                        <td>
+                                            <a href="matches.html">
+                                                <span class="team">
+                                                    <img src="images/common/team-logo1.png" width="30" height="30" alt="main-match-icon">
+                                                </span>
+                                                <span>Team 1</span>
+                                            </a>
+                                        </td>
+
+                                        <td>2</td>
+                                        <td>55</td>
+                                        <td>62</td>
+                                        <td>5</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                    <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>
+                        <div class="row">
+                             <div class="col-md-12"><p style="font-size: 15px;font-weight:bold;" >Teams in playoff</p></div>
+                        </div>
+                        <div class="row">
+                            <div id="minimal" data-tournament-id ='<?=$model->id?>'></div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             

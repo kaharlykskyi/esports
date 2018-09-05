@@ -193,9 +193,6 @@ class TournamentsController extends \yii\web\Controller
                 $players_turs[] = $group_mas;
             }
         }
-// echo "<pre>";
-// print_r($players_turs);
-// echo "</pre>";exit;
         
         if (($model->format == Tournaments::LEAGUE_P) || ($model->format == Tournaments::LEAGUE)) {
             if (!$ch) {
@@ -266,5 +263,12 @@ class TournamentsController extends \yii\web\Controller
         $players = array_merge($teams,$users);
         shuffle($players);
         return compact('players','model');
+    }
+
+
+    public function actionQwert($id)
+    {
+        $model = Tournaments::findOne($id);
+        $model->getScheduleCup();
     }
 }

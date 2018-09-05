@@ -357,48 +357,7 @@ class AjaxController extends \yii\web\Controller
         if ($model->user_id == $user->id) {
            $model->save(false);
         }
-       
-        // $customer = TournamentCupTeam::deleteAll(['tournament_id' => $json->toutrament]);
-        // $arr = $json->teams;
-        // $mass = [];
-        // foreach ($json->results[0] as $key_r => $value) {
-
-        //     foreach ($arr as $key_t => $teams) {
-
-        //         $model = new TournamentCupTeam();
-        //         $model->tournament_id =(int)$json->toutrament;
-        //         $model->tur = (int)$key_r + 1;
-        //         $model->result_p = $value[$key_t][0];
-        //         $model->result_v = $value[$key_t][1];
-        //         $model->team_p = $teams[0]->id;
-        //         $model->team_v = $teams[1]->id;
-        //         if (!is_null($value[$key_t][0]) && !is_null($value[$key_t][1])) {
-        //            $model->save(false);
-        //         }
-
-        //         if ($value[$key_t][0] > $value[$key_t][1]) {
-        //             if(($key_t == 0) ||($key_t%2==0)){
-        //                 $mass[$key_t][] = $teams[0];
-        //             } else {
-        //                 $mass[$key_t-1][] = $teams[0];
-        //             }
-        //         } elseif ($value[$key_t][0] < $value[$key_t][1]) {
-        //             if(($key_t == 0) ||($key_t%2==0)){
-        //                 $mass[$key_t][] = $teams[1];
-        //             } else {
-        //                 $mass[$key_t-1][] = $teams[1];
-        //             }
-        //         } 
-        //     }
-        //     $arr =  $mass;
-        //     $mass=[];
-        //     if (count($mass[0])) {
-        //         $arr =[];
-        //     }
-        // }
-        // echo "<pre>";
-        // print_r($mass);
-        // echo "</pre>";exit;
+        
     }
 
 }

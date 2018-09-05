@@ -278,6 +278,8 @@ $(document).ready( function() {
     } else {
         $.dataObj = {init: doubleEliminationData,decorator: {edit: function edit_fn(){} , render: render_fn}}
     }
+
+
     if($("div").is("#minimal")){
 
         $(function() {
@@ -290,22 +292,22 @@ $(document).ready( function() {
   
 });
 
-$(document).ready( function() {
-    $("#matches").attr("style", 'display:block;');
+// $(document).ready( function() {
+//     $('#tournamentgrid').attr("style", 'display:block;');
 
-    if (typeof $.comandTeams != "undefined") {
-       doubleEliminationData = {
-        teams : $.comandTeams.teams,
-        results : $.comandTeams.results
-      };
-    } else {
-        doubleEliminationData = {};
-    }
+//     if (typeof $.comandTeams != "undefined") {
+//        doubleEliminationData = {
+//         teams : $.comandTeams.teams,
+//         results : $.comandTeams.results
+//       };
+//     } else {
+//         doubleEliminationData = {};
+//     }
 
-    if($("div").is("#league_p")){
-        $('#league_p').bracket({
-            init: $.comandTeams
-        });
-    }
-    $("#matches").removeAttr('style');
-});
+//     if($("div").is("#league_p")){
+//         $('#league_p').bracket({
+//             init: doubleEliminationData
+//         });
+//     }
+//     $('#tournamentgrid').removeAttr('style');
+// });

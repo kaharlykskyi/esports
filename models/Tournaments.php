@@ -85,7 +85,8 @@ class Tournaments extends \yii\db\ActiveRecord
         return $this->hasOne(Games::className(), ['id' => 'game_id']);
     }
 
-    public function generateForm(){
+    public function generateForm () 
+    {
 
         if (!empty($this->id)) {
 
@@ -142,5 +143,55 @@ class Tournaments extends \yii\db\ActiveRecord
 
     }
 
+    public function getScheduleCup () 
+    {
+
+        if ($this->cup) {
+            $json = json_decode($this->cup);
+            
+            $arr = $json->teams;
+            $raspisanie = [];
+            foreach ($json->results[0] as $key_r => $value) {
+                $mass = [];
+                $mass_sort =[];
+                $one_match =[];
+                foreach ($arr as $key_t => $teams) {
+
+                    $one_match['player1'] = $teams[0];
+                    $one_match['player2'] = $teams[1];
+                    $one_match['rezult1'] = $value[$key_t][0];
+                    $one_match['rezult2'] = $value[$key_t][1];
+
+
+
+                    if ($value[$key_t][0] > $value[$key_t][1]) {
+                        $mass_sort[] = $teams[0];
+                    }elseif ($value[$key_t][0] < $value[$key_t][1]) {
+                        $mass_sort[] = $teams[1];
+                    }
+                    $raspisanie[] = $one_match;
+                }
+                $count = count($mass_sort)/2;
+                for ($i=0; $i < $count ; $i++) { 
+                    $mass[]=[
+                        array_pop($mass_sort),
+                        array_pop($mass_sort)
+                    ];
+                }
+                $arr =  $mass;
+            }
+           
+        
+            echo "<pre>";
+            print_r($raspisanie);
+            echo "</pre>";exit;
+       }
+    }
+
 }
 //value='1' uncheckValue='0'
+
+
+                    // if (!is_null($value[$key_t][0]) && !is_null($value[$key_t][1])) {
+                    //    $model->save(false);
+                    // }
