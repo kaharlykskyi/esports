@@ -151,25 +151,62 @@ class Tournaments extends \yii\db\ActiveRecord
             
             $arr = $json->teams;
             $raspisanie = [];
+
+            if(empty($json->results[0])) {
+                 foreach ($arr as $key_t => $teams) {
+                    $one_match =[];
+                    $one_match['players1'] = $teams[0];
+                    $one_match['players2'] = $teams[1];
+                    $one_match['rezult1'] = 0;
+                    $one_match['rezult2'] = 0;
+                    $one_match['date'] = $this->start_date;
+                    $raspisanie[] = $one_match;
+                      
+                }
+                $raspisanie = [$raspisanie];
+                  // echo "<pre>";
+                  //   print_r($raspisanie);
+                  //    echo "</pre>";exit;
+                return $raspisanie;
+            }
+
             foreach ($json->results[0] as $key_r => $value) {
                 $mass = [];
                 $mass_sort =[];
                 $one_match =[];
+                $raspisanie_tur = [];
                 foreach ($arr as $key_t => $teams) {
 
-                    $one_match['player1'] = $teams[0];
-                    $one_match['player2'] = $teams[1];
-                    $one_match['rezult1'] = $value[$key_t][0];
-                    $one_match['rezult2'] = $value[$key_t][1];
+                    if($value[$key_t][0] != $value[$key_t][1]) {
 
+                        $one_match['players1'] = $teams[0];
+                        $one_match['players2'] = $teams[1];
+                        $one_match['rezult1'] = $value[$key_t][0]??0;
+                        $one_match['rezult2'] = $value[$key_t][1]??0;
+                        $one_match['date'] = $this->start_date;
 
+                        if ($value[$key_t][0] > $value[$key_t][1]) {
+                            $mass_sort[] = $teams[0];
+                        }elseif ($value[$key_t][0] < $value[$key_t][1]) {
+                            $mass_sort[] = $teams[1];
+                        
+                            
+                            
+                        }                    
+                        $raspisanie_tur[] = $one_match;
 
-                    if ($value[$key_t][0] > $value[$key_t][1]) {
-                        $mass_sort[] = $teams[0];
-                    }elseif ($value[$key_t][0] < $value[$key_t][1]) {
-                        $mass_sort[] = $teams[1];
+                    } else {
+                        $bye = new \stdClass(); 
+                        $bye->name = 'bye';
+                        $mass_sort[] = $bye;
+                        $one_match['players1'] = $teams[0];
+                        $one_match['players2'] = $teams[1];
+                        $one_match['rezult1'] = 0;
+                        $one_match['rezult2'] = 0;
+                        $one_match['date'] = $this->start_date;
+                        $raspisanie_tur[] = $one_match;
+
                     }
-                    $raspisanie[] = $one_match;
                 }
                 $count = count($mass_sort)/2;
                 for ($i=0; $i < $count ; $i++) { 
@@ -179,9 +216,10 @@ class Tournaments extends \yii\db\ActiveRecord
                     ];
                 }
                 $arr =  $mass;
+                $raspisanie[] = $raspisanie_tur;
             }
            
-        
+           return $raspisanie;
             echo "<pre>";
             print_r($raspisanie);
             echo "</pre>";exit;
@@ -189,9 +227,4 @@ class Tournaments extends \yii\db\ActiveRecord
     }
 
 }
-//value='1' uncheckValue='0'
 
-
-                    // if (!is_null($value[$key_t][0]) && !is_null($value[$key_t][1])) {
-                    //    $model->save(false);
-                    // }

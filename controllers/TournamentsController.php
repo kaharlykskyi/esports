@@ -177,6 +177,7 @@ class TournamentsController extends \yii\web\Controller
         list('players' => $players, 'model' => $model) = $mass;
         $c = count($players);
         $ch = $c%2 == 0 ? 1 : 0;
+        $c_block = [];
         $players_turs = [];
 
         if ( $model->format == Tournaments::LEAGUE_G ) {
@@ -190,43 +191,17 @@ class TournamentsController extends \yii\web\Controller
                 for ($dc=0; $dc < $model->league_g; $dc++) { 
                     $group_mas[] = array_pop($players);
                 }
-                $players_turs[] = $group_mas;
+                $c_block[] = $group_mas;
+            }
+            $model->league_table = json_encode($c_block);
+            for ($i=0; $i < $group; $i++) { 
+                $players_turs[] = $this->generateLeague($c_block[$i],$ch);
             }
         }
         
         if (($model->format == Tournaments::LEAGUE_P) || ($model->format == Tournaments::LEAGUE)) {
-            if (!$ch) {
-                array_unshift($players, ['name'=>'bolvan']);
-            }
-            $a =$c/2;
-            $mass_temp = [];
-            for ($int=1; $int <= $c; $int++) { 
-                $mass_temp[] = $int;
-            }
-            $b =$c-1;
-            
-            for ($c=0; $c < $b; $c++) { 
-                $turs = [];
-                for ($i=0; $i < $a; $i++) { 
-                   $turs[] = [
-                        'players1' => $players[$mass_temp[$i]-1],
-                        'players2' => $players[$mass_temp[$i+$a]-1],
-                        'result1'  => 0,
-                        'result2'  => 0,
-                    ];
-                }
-                $players_turs[] = $turs;
-                $output1 = array_slice($mass_temp, $a);
-                $output2 = array_slice($mass_temp, 1,$a-1);
-                $output3 = array_merge($output1,$output2);
-                array_unshift($output3, $mass_temp[0]);
-                $mass_temp = $output3;
-            }
-            if(!$ch){
-                foreach ($players_turs as &$value) {
-                   unset($value[0]);
-                }
-            } 
+            $players_turs = $this->generateLeague($players,$ch);
+            $model->league_table = json_encode($players);
         }   
 
         if ((Yii::$app->user->identity->id == $model->user_id) && empty($model->league)) {
@@ -263,6 +238,45 @@ class TournamentsController extends \yii\web\Controller
         $players = array_merge($teams,$users);
         shuffle($players);
         return compact('players','model');
+    }
+
+    private function generateLeague($players,$ch)
+    {
+            $c = count($players);
+            $players_turs = [];
+            if (!$ch) {
+                array_unshift($players, ['name'=>'bolvan']);
+            }
+            $a =$c/2;
+            $mass_temp = [];
+            for ($int=1; $int <= $c; $int++) { 
+                $mass_temp[] = $int;
+            }
+            $b =$c-1;
+            
+            for ($c=0; $c < $b; $c++) { 
+                $turs = [];
+                for ($i=0; $i < $a; $i++) { 
+                   $turs[] = [
+                        'players1' => $players[$mass_temp[$i]-1],
+                        'players2' => $players[$mass_temp[$i+$a]-1],
+                        'result1'  => 0,
+                        'result2'  => 0,
+                    ];
+                }
+                $players_turs[] = $turs;
+                $output1 = array_slice($mass_temp, $a);
+                $output2 = array_slice($mass_temp, 1,$a-1);
+                $output3 = array_merge($output1,$output2);
+                array_unshift($output3, $mass_temp[0]);
+                $mass_temp = $output3;
+            }
+            if(!$ch){
+                foreach ($players_turs as &$value) {
+                   unset($value[0]);
+                }
+            }
+        return $players_turs;
     }
 
 

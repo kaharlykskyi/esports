@@ -114,27 +114,36 @@
                                     </div>
                                 <?php endforeach; ?>
                                 <?php endif; ?>
-                                <?php if(!empty($turs = json_decode($model->league))&&($model->format == Tournaments::LEAGUE_G)): ?>
-                                    <div class="col-md-12" style="text-align: center;" >
+                                
+                                <?php if(($model->format == Tournaments::SINGLE_E)||($model->format == Tournaments::DUBLE_E)): ?>
+                                    <?php  $turs = $model->getScheduleCup();    ?>
+                                    <div class="col-md-12">
                                         <?php  foreach ($turs as $key => $tur): ?>
-                                            <div class="group_inline">
-                                                <div class="group_inline_count">
-                                                    <div class="group_inline_head"><span>Group <?=$key+1?></span></div>
-                                                    <?php foreach ($tur as $teamin_group): ?>
-                                                        <div class="row">
-                                                            <div class="col-xs-12">
-                                                                <div class="col-xs-3" >
-                                                                    <p><img src="<?= $teamin_group->logo ?? '/images/hockey/team-logo1.png' ?>" onerror="this.src = '/images/hockey/team-logo1.png'"  alt="logo"></p>
-                                                                </div>
-                                                                <div class="col-xs-9" >
-                                                                    <p><?=$teamin_group->name ?></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    <?php endforeach; ?>
-                                                </div>
-                                            </div>
+                                    
+                                        <h5 style="text-align: center;">ROUND <?=$key+1?></h5>
+                                        <?php foreach ($tur as $posit_game): ?>
+                                        <p class="item">
+                                            <span class="teams-wrap">
+                                                <span class="team">
+                                                    <span>
+                                                        <img src="<?= $posit_game['players1']->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
+                                                    </span>
+                                                    <span><?=$posit_game['players1']->name?></span>
+                                                </span>
+                                                <span class="score">
+                                                    <span><?=$posit_game['rezult1'] ?>:<?=$posit_game['rezult2'] ?></span>
+                                                </span>
+                                                <span class="team1"><span><?=$posit_game['players2']->name?></span>
+                                                    <span>
+                                                        <img src="<?= $posit_game['players2']->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span class="game-result"><?=$posit_game['date'] ?></span>
+                                        </p>
                                         <?php endforeach; ?>
+                                    
+                                <?php endforeach; ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -144,11 +153,8 @@
             </div>
             <!--CHAMPIONSHIP MATCH WRAP END -->
 
-
             <div class="tab-item part-wrap tab-pane " id="tournamentgrid">
-  
-                <div class="container">
-                    
+                <div class="container">        
                     <div class="row">
                         <div class="col-md-12">
                            <?php if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)): ?> 
@@ -184,40 +190,59 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                    <?php if(!empty($model->league) && ($model->format != Tournaments::SINGLE_E) && ($model->format != Tournaments::SINGLE_D)): ?>
+                    <?php if(!empty($table_players = json_decode($model->league_table)) && (($model->format == Tournaments::LEAGUE) || ($model->format == Tournaments::LEAGUE_P))): ?>
                     <div class="row">
                         <div class="col-md-12 overflow-scroll">
                             <!-- <h6>Last five matches</h6> -->
+                        
                             <table>
                                 <tbody>
                                     <tr>
                                         <th>#</th>
                                         <th>competitor</th>
-                                        <th>G</th>
-                                        <th>V</th>
-                                        <th>P</th>
-                                        <th>L</th>
+                                        <th>G</th><th>V</th><th>P</th><th>L</th>
                                     </tr>
-                                    <tr>
-                                        <td>#</td>
-                                        <td>
-                                            <a href="matches.html">
-                                                <span class="team">
-                                                    <img src="images/common/team-logo1.png" width="30" height="30" alt="main-match-icon">
-                                                </span>
-                                                <span>Team 1</span>
-                                            </a>
-                                        </td>
-
-                                        <td>2</td>
-                                        <td>55</td>
-                                        <td>62</td>
-                                        <td>5</td>
-                                    </tr>
+                                    <?php foreach($table_players as $players): ?>
+                                        <tr>
+                                            <td>#</td>
+                                            <td>
+                                                <a href="matches.html">
+                                                    <span class="team">
+                                                        <img src="images/common/team-logo1.png" width="30" height="30" alt="main-match-icon">
+                                                    </span>
+                                                    <span>Team 1</span>
+                                                </a>
+                                            </td>
+                                            <td>2</td><td>55</td><td>62</td><td>5</td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    <?php endif; ?>
+                    <?php if(!empty($turs = json_decode($model->league_table))&&($model->format == Tournaments::LEAGUE_G)): ?>
+                        <div class="col-md-12" style="text-align: center;" >
+                            <?php  foreach ($turs as $key => $tur): ?>
+                                <div class="group_inline">
+                                    <div class="group_inline_count">
+                                    <div class="group_inline_head"><span>Group <?=$key+1?></span></div>
+                                        <?php foreach ($tur as $teamin_group): ?>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="col-xs-3" >
+                                                        <p><img src="<?= $teamin_group->logo ?? '/images/hockey/team-logo1.png' ?>" onerror="this.src = '/images/hockey/team-logo1.png'"  alt="logo"></p>
+                                                    </div>
+                                                    <div class="col-xs-9" >
+                                                        <p><?=$teamin_group->name ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     <?php endif; ?>
                     <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>
                         <div class="row">
@@ -229,7 +254,6 @@
                     <?php endif; ?>
                 </div>
             </div>
-            
             <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->
             <?php if($capitan):?>
                 <div class="tab-item news-tab tab-pane" id="manage_tournament">
