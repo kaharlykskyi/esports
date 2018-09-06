@@ -195,12 +195,12 @@ class TournamentsController extends \yii\web\Controller
             }
             $model->league_table = json_encode($c_block);
             for ($i=0; $i < $group; $i++) { 
-                $players_turs[] = $this->generateLeague($c_block[$i],$ch);
+                $players_turs[] = $this->generateLeague($c_block[$i],$ch,$model);
             }
         }
         
         if (($model->format == Tournaments::LEAGUE_P) || ($model->format == Tournaments::LEAGUE)) {
-            $players_turs = $this->generateLeague($players,$ch);
+            $players_turs = $this->generateLeague($players,$ch,$model);
             $model->league_table = json_encode($players);
         }   
 
@@ -240,7 +240,7 @@ class TournamentsController extends \yii\web\Controller
         return compact('players','model');
     }
 
-    private function generateLeague($players,$ch)
+    private function generateLeague($players,$ch,$model)
     {
             $c = count($players);
             $players_turs = [];
@@ -257,12 +257,17 @@ class TournamentsController extends \yii\web\Controller
             for ($c=0; $c < $b; $c++) { 
                 $turs = [];
                 for ($i=0; $i < $a; $i++) { 
+                    $date = new \DateTime($model->start_date);
+                    $date->add(new \DateInterval('P'.($c*$model->match_schedule).'D'));
+                    $date = $date->format('Y-m-d H:i'); 
                    $turs[] = [
                         'players1' => $players[$mass_temp[$i]-1],
                         'players2' => $players[$mass_temp[$i+$a]-1],
                         'result1'  => 0,
                         'result2'  => 0,
+                        'date' => $date,
                     ];
+                    //print_r($date,"");
                 }
                 $players_turs[] = $turs;
                 $output1 = array_slice($mass_temp, $a);

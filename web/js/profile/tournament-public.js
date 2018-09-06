@@ -271,7 +271,7 @@ $(document).ready( function() {
     }
     if($.capitan_tournament){
         $.dataObj = {
-              teamWidth: 140,
+              teamWidth: 110,
               init: doubleEliminationData,
               save: saveFn,
               skipConsolationRound: true,

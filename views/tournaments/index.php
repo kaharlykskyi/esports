@@ -108,15 +108,18 @@
                                                 <span class="score"><span><?=$posit_game->result1 ?>:<?=$posit_game->result2 ?></span></span>
                                                 <span class="team1"><span><?=$posit_game->players2->name?></span><span><img src="<?= $posit_game->players2->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  ></span></span>
                                             </span>
-                                            <span class="game-result">(5-4) penalties</span>
+                                            <span class="game-result"><?=$posit_game->date ?></span>
                                         </p>
                                         <?php endforeach; ?>
                                     </div>
                                 <?php endforeach; ?>
                                 <?php endif; ?>
                                 
-                                <?php if(($model->format == Tournaments::SINGLE_E)||($model->format == Tournaments::DUBLE_E)): ?>
+                                <?php if(!empty($model->cup)&&(($model->format == Tournaments::SINGLE_E)||($model->format == Tournaments::DUBLE_E))): ?>
                                     <?php  $turs = $model->getScheduleCup()??[];    ?>
+                                    <?php if($model->format == Tournaments::DUBLE_E):?>
+                                    <div class="col-md-12"><h3 style="margin: 20px 0 0;text-align: center;">Winner</h3></div>
+                                    <?php endif;?>
                                     <div class="col-md-12">
                                         <?php  foreach ($turs as $key => $tur): ?>
                                     
@@ -143,8 +146,45 @@
                                         </p>
                                         <?php endforeach; ?>
                                     
-                                <?php endforeach; ?>
+                                        <?php endforeach; ?>
                                     </div>
+                                <?php endif; ?>
+
+                                <?php if(!empty($model->cup)&&($model->format == Tournaments::DUBLE_E)): ?>
+                                    <?php  $turs = $model->getScheduleCupDuble ()??[];    ?>
+                                            
+                                        <div class="col-md-12"><h3 style="margin: 20px 0 0;text-align: center;">Loser</h3></div>
+                                        <div class="col-md-12">
+                                        <?php  foreach ($turs as $key => $tur): ?>
+                                    
+                                        <h5 style="text-align: center;">ROUND <?=$key+1?></h5>
+                                        <?php foreach ($tur as $posit_game): ?>
+                                        <p class="item">
+                                            <span class="teams-wrap">
+                                                <span class="team">
+                                                    <span>
+                                                        <img src="<?= $posit_game['players1']->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
+                                                    </span>
+                                                    <span><?=$posit_game['players1']->name?></span>
+                                                </span>
+                                                <span class="score">
+                                                    <span><?=$posit_game['rezult1'] ?>:<?=$posit_game['rezult2'] ?></span>
+                                                </span>
+                                                <span class="team1"><span><?=$posit_game['players2']->name?></span>
+                                                    <span>
+                                                        <img src="<?= $posit_game['players2']->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span class="game-result"><?=$posit_game['date'] ?></span>
+                                        </p>
+                                        <?php endforeach; ?>
+                                    
+                                        <?php endforeach; ?>
+                                    </div>
+
+
+
                                 <?php endif; ?>
 
                                 <?php if(!empty($groups = json_decode($model->league))&&($model->format == Tournaments::LEAGUE_G)): ?>
@@ -170,7 +210,7 @@
                                                     </span>
                                                 </span>
                                             </span>
-                                            <span class="game-result"><?//$tur->date ?></span>
+                                            <span class="game-result"><?=$tur->date ?></span>
                                         </p>
                                             <?php endforeach; ?>
                                         <?php endforeach; ?>
@@ -226,7 +266,7 @@
                     <?php if(!empty($table_players = json_decode($model->league_table)) && (($model->format == Tournaments::LEAGUE) || ($model->format == Tournaments::LEAGUE_P))): ?>
                     <div class="row">
                         <div class="col-md-12 overflow-scroll">
-                            <!-- <h6>Last five matches</h6> -->
+                            <h6>League table</h6>
                             <table>
                                 <tbody>
                                     <tr>
@@ -275,10 +315,12 @@
                         </div>
                     <?php endif; ?>
                     <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>
+                        <?php if($model->format > 2): ?>
                         <div class="row">
-                             <div class="col-md-12"><p style="font-size: 15px;font-weight:bold;" >Teams in playoff</p></div>
+                             <div class="col-md-12"><h6 style="text-align: center;" >Teams in playoff</h6></div>
                         </div>
-                        <div class="row">
+                        <?php endif; ?>
+                        <div class="row ">
                             <div id="minimal" data-tournament-id ='<?=$model->id?>'></div>
                         </div>
                     <?php endif; ?>

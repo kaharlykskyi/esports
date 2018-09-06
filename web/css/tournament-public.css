@@ -308,3 +308,21 @@
     }
 
 }
+
+table tr td:last-child {
+    font-weight:normal;
+}
+
+
+.jQBracket {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+   
+}
+
+#minimal{
+    position: relative;
+    /*height: 500px;*/
+    
+}
