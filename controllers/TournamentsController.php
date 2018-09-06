@@ -283,6 +283,6 @@ class TournamentsController extends \yii\web\Controller
     public function actionQwert($id)
     {
         $model = Tournaments::findOne($id);
-        $model->getScheduleCup();
+        $model->getScheduleCupDuble();
     }
 }

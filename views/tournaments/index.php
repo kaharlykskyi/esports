@@ -116,7 +116,7 @@
                                 <?php endif; ?>
                                 
                                 <?php if(($model->format == Tournaments::SINGLE_E)||($model->format == Tournaments::DUBLE_E)): ?>
-                                    <?php  $turs = $model->getScheduleCup();    ?>
+                                    <?php  $turs = $model->getScheduleCup()??[];    ?>
                                     <div class="col-md-12">
                                         <?php  foreach ($turs as $key => $tur): ?>
                                     
@@ -146,6 +146,39 @@
                                 <?php endforeach; ?>
                                     </div>
                                 <?php endif; ?>
+
+                                <?php if(!empty($groups = json_decode($model->league))&&($model->format == Tournaments::LEAGUE_G)): ?>
+                                    <?php foreach ($groups as $keys => $group): ?>
+                                        <h3 style="text-align: center;">GROUP <?=$keys+1?></h3>
+                                        <?php  foreach ($group as $key => $turs): ?>
+                                            <h5 style="text-align: center;">ROUND <?=$key+1?></h5>
+                                            <?php  foreach ($turs as $tur): ?>
+                                            <p class="item">
+                                            <span class="teams-wrap">
+                                                <span class="team">
+                                                    <span>
+                                                        <img src="<?= $tur->players1->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
+                                                    </span>
+                                                    <span><?=$tur->players1->name?></span>
+                                                </span>
+                                                <span class="score">
+                                                    <span><?=$tur->result1?>:<?=$tur->result2?></span>
+                                                </span>
+                                                <span class="team1"><span><?=$tur->players2->name?></span>
+                                                    <span>
+                                                        <img src="<?= $tur->players2->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span class="game-result"><?//$tur->date ?></span>
+                                        </p>
+                                            <?php endforeach; ?>
+                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
+
+                                <?php endif; ?>
+
+
                             </div>
                         </div>
                     </div>
@@ -194,26 +227,23 @@
                     <div class="row">
                         <div class="col-md-12 overflow-scroll">
                             <!-- <h6>Last five matches</h6> -->
-                        
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>#</th>
-                                        <th>competitor</th>
+                                        <th>player</th>
                                         <th>G</th><th>V</th><th>P</th><th>L</th>
                                     </tr>
                                     <?php foreach($table_players as $players): ?>
                                         <tr>
-                                            <td>#</td>
                                             <td>
                                                 <a href="matches.html">
                                                     <span class="team">
-                                                        <img src="images/common/team-logo1.png" width="30" height="30" alt="main-match-icon">
+                                                        <img src="<?=$players->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="main-match-icon">
                                                     </span>
-                                                    <span>Team 1</span>
+                                                    <span><?=$players->name?></span>
                                                 </a>
                                             </td>
-                                            <td>2</td><td>55</td><td>62</td><td>5</td>
+                                            <td>0</td><td>0</td><td>0</td><td>0</td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

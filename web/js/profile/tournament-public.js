@@ -271,8 +271,11 @@ $(document).ready( function() {
     }
     if($.capitan_tournament){
         $.dataObj = {
+              teamWidth: 140,
               init: doubleEliminationData,
               save: saveFn,
+              skipConsolationRound: true,
+              centerConnectors: true,
               decorator: {edit: function edit_fn(){} , render: render_fn}
         };
     } else {

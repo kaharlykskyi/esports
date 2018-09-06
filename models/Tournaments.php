@@ -55,7 +55,7 @@ class Tournaments extends \yii\db\ActiveRecord
             [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p','league_g'], 'integer'],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
             [['rules', 'prizes','name'], 'string'],
-            [['start_date','region','data','cup','league'], 'safe'],
+            [['start_date','region','data','cup','league','league_table'], 'safe'],
             [['name'], 'unique'],
             [['game_id'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['game_id' => 'id']],
         ];
@@ -177,6 +177,8 @@ class Tournaments extends \yii\db\ActiveRecord
                 $raspisanie_tur = [];
                 foreach ($arr as $key_t => $teams) {
 
+
+                    if (empty($value[$key_t])) break;
                     if($value[$key_t][0] != $value[$key_t][1]) {
 
                         $one_match['players1'] = $teams[0];
@@ -221,9 +223,179 @@ class Tournaments extends \yii\db\ActiveRecord
            
            return $raspisanie;
             echo "<pre>";
-            print_r($raspisanie);
+            print_r($json);
             echo "</pre>";exit;
        }
+    }
+
+    public function getScheduleCupDuble () 
+    {
+
+           
+        
+            $json = json_decode($this->cup);
+            
+            $arr = $json->teams;
+            $raspisanie = [];
+            $raspisanie_duble = [];
+            $state_duble = [];
+
+            if(count($json->results[0])<=1) {
+                 foreach ($arr as $key_t => $teams) {
+                    $one_match =[];
+                    $one_match['players1'] = $teams[0];
+                    $one_match['players2'] = $teams[1];
+                    $one_match['rezult1'] = 0;
+                    $one_match['rezult2'] = 0;
+                    $one_match['date'] = $this->start_date;
+                    $raspisanie[] = $one_match;
+                      
+                }
+                $raspisanie = [$raspisanie];
+                  // echo "<pre>";
+                  //   print_r($raspisanie);
+                  //    echo "</pre>";exit;
+                return $raspisanie;
+            }
+
+            foreach ($json->results[0] as $key_r => $value) {
+                $mass = [];
+                $mass_sort =[];
+                $mass_sort_duble =[];
+                $one_match =[];
+                $one_match_d =[];
+                $raspisanie_tur = [];
+                $mass_duble = [];
+                foreach ($arr as $key_t => $teams) {
+
+
+                    if (empty($value[$key_t])) break;
+                    if($value[$key_t][0] != $value[$key_t][1]) {
+
+                        $one_match['players1'] = $teams[0];
+                        $one_match['players2'] = $teams[1];
+                        $one_match['rezult1'] = $value[$key_t][0]??0;
+                        $one_match['rezult2'] = $value[$key_t][1]??0;
+                        $one_match['date'] = $this->start_date;
+
+                        if ($value[$key_t][0] > $value[$key_t][1]) {
+                            $mass_sort[] = $teams[0];
+                            $mass_sort_duble[] = $teams[1];
+                        }elseif ($value[$key_t][0] < $value[$key_t][1]) {
+                            $mass_sort[] = $teams[1];
+                            $mass_sort_duble[] = $teams[0];
+                                                    
+                            
+                            
+                        }    
+                        //print_r($teams[0]);
+                        //echo "<br>";                
+                        $raspisanie_tur[] = $one_match;
+
+                    } else {
+                        $bye = new \stdClass(); 
+                        $bye->name = 'bye';
+                        $mass_sort[] = $bye;
+
+                        $one_match['players1'] = $teams[0];
+                        $one_match['players2'] = $teams[1];
+                        $one_match['rezult1'] = 0;
+                        $one_match['rezult2'] = 0;
+                        $one_match['date'] = $this->start_date;
+                        $raspisanie_duble[] = $one_match;
+
+                    }
+                }
+
+                // print_r($mass_sort_duble);
+                // echo "<br>";
+                // echo "<br>";
+
+                
+
+                $count_d = count($mass_sort_duble)/2;
+
+                if(empty($state_duble)){
+                    for ($i=0; $i < $count_d ; $i++) { 
+                        $mass_duble[]=[
+                            array_pop($mass_sort_duble),
+                            array_pop($mass_sort_duble)
+                        ];
+                    }
+
+                }else{
+                    for ($i=0; $i < $count_d ; $i++) { 
+                        $mass_duble[]=[
+                            array_pop($mass_sort_duble),
+                            array_pop($state_duble)
+                        ];
+                    }   
+                }
+                
+
+                $arr_d = $mass_duble;
+                foreach ($arr_d as $key_t => $teams) {
+                    $mass_sort_d = [];
+                    if($value[$key_t][0] != $value[$key_t][1]) {
+
+                        $one_match_d['players1'] = $teams[0];
+                        $one_match_d['players2'] = $teams[1];
+                        $one_match_d['rezult1'] = $value[$key_t][0]??0;
+                        $one_match_d['rezult2'] = $value[$key_t][1]??0;
+                        $one_match_d['date'] = $this->start_date;
+
+
+                        if ($value[$key_t][0] > $value[$key_t][1]) {
+                            $mass_sort_d[] = $teams[0];
+                            
+                        }elseif ($value[$key_t][0] < $value[$key_t][1]) {
+                            $mass_sort_d[] = $teams[1];
+                        }
+                           
+                    } else {
+                        $bye = new \stdClass(); 
+                        $bye->name = 'bye';
+                        $mass_sort_d[] = $bye;
+
+                        $one_match_d['players1'] = $teams[0];
+                        $one_match_d['players2'] = $teams[1];
+                        $one_match_d['rezult1'] = 0;
+                        $one_match_d['rezult2'] = 0;
+                        $one_match_d['date'] = $this->start_date;
+                        
+
+                    }
+                    $state_duble[] = $mass_sort_d;
+                    $raspisanie_duble[] = $one_match_d;
+                }
+                //break;
+
+
+
+
+
+
+
+
+
+                $count = count($mass_sort)/2;
+                for ($i=0; $i < $count ; $i++) { 
+                    $mass[]=[
+                        array_pop($mass_sort),
+                        array_pop($mass_sort)
+                    ];
+                }
+                $arr =  $mass;
+                $raspisanie[] = $raspisanie_tur;
+            }
+
+            //return $raspisanie;
+            echo "<pre>";
+           //print_r($json);
+            print_r($raspisanie_duble);
+            echo "</pre>";exit;
+        
+    
     }
 
 }
