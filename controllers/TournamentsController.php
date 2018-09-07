@@ -19,6 +19,7 @@ use yii\web\HttpException;
 
 class TournamentsController extends \yii\web\Controller
 {
+    use \app\models\traits\UserTournament;
 
     public function actionPublic($id)
     {
@@ -59,9 +60,9 @@ class TournamentsController extends \yii\web\Controller
             ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $model->id])
             ->all();
         $players = array_merge($teams,$users);
-        //$turs = TournamentCupTeam::getTursto($model->id);
+        $users_id = self::gerUsers($model);
        
-        return $this->render('index',compact('model','players'));
+        return $this->render('index',compact('model','players','users_id'));
     }
 
     public function actionCreate()
@@ -69,7 +70,6 @@ class TournamentsController extends \yii\web\Controller
     	$games = Games::find()->all();
     	$model = new Tournaments();
     	if (Yii::$app->request->isPost) {
-
 
     		if ($model->load(Yii::$app->request->post())) {
                 $model->user_id = Yii::$app->user->identity->id;

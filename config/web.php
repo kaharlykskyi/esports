@@ -12,6 +12,12 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
 
+    'modules' => [
+            'forum' => [
+                'class' => 'app\modules\forum\ForumModule',
+            ],
+    ],
+
     'components' => [
         'image' => [
             'class' => 'yii\image\ImageDriver',
@@ -63,6 +69,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<module:forum>/<id:\d+>' => '<module>/default/index',
                 '<controller:(profile|teams|tournaments)>' => '<controller>/index',
                 '<action:[A-Z,a-z,-]+>' => 'site/<action>',
                 '<controller>/<action:(public)>/<id:\d+>' => '<controller>/<action>', //for public pages

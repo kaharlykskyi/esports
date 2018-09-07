@@ -91,14 +91,11 @@ class Tournaments extends \yii\db\ActiveRecord
         if (!empty($this->id)) {
 
             $fileds = json_decode($this->game->filed);
-
             $data = $this->data !== '' ? json_decode($this->data) : [];
-
             if(!is_null($this->game->filed)){
                 $result="";
 
                 foreach ($fileds as $filed) {
-
                     $class = "";
                     if (!empty($filed->class)){
                         $class = $filed->class;
@@ -138,9 +135,7 @@ class Tournaments extends \yii\db\ActiveRecord
                 }
                 return $result;
             }
-            
         }
-
     }
 
     public function getScheduleCup () 
@@ -152,7 +147,7 @@ class Tournaments extends \yii\db\ActiveRecord
             $arr = $json->teams;
             $raspisanie = [];
 
-            if(count($json->results[0])<=1) {//empty($json->results[0]
+            if(count($json->results[0])<=1) {
                  foreach ($arr as $key_t => $teams) {
                     $one_match =[];
                     $one_match['players1'] = $teams[0];
@@ -164,9 +159,6 @@ class Tournaments extends \yii\db\ActiveRecord
                       
                 }
                 $raspisanie = [$raspisanie];
-                  // echo "<pre>";
-                  //   print_r($raspisanie);
-                  //    echo "</pre>";exit;
                 return $raspisanie;
             }
 
@@ -222,9 +214,6 @@ class Tournaments extends \yii\db\ActiveRecord
             }
            
            return $raspisanie;
-            // echo "<pre>";
-            // print_r($json);
-            // echo "</pre>";exit;
        }
     }
 
@@ -240,7 +229,7 @@ class Tournaments extends \yii\db\ActiveRecord
             $d=0;
 
             if(count($json->results[0])<=1) {
-                //return[];
+                
                  foreach ($arr as $key => $teams) {
                     $one_match =[];
                     $one_match['players1'] = $teams[0];
@@ -366,62 +355,27 @@ class Tournaments extends \yii\db\ActiveRecord
                 
                 $raspisanie[] = $raspisanie_tur;
             }
-                    // echo "<pre>";
-                    // print_r($raspisanie_duble);
-                    // echo "</pre>";exit;
             return $raspisanie_duble;
-    
     }
 
+    // public function ScheduleCup () 
+    // {
+    //     $raspisanie = [];
+    //     $json = json_decode($this->cup);
+    //     $teams = $json->teams;
 
-
-
-
-    public function ScheduleCup () 
-    {
-        $raspisanie = [];
-        $json = json_decode($this->cup);
-        $teams = $json->teams;
-
-        foreach ($json->results[0] as $tur => $znachenie) {
+    //     foreach ($json->results[0] as $tur => $znachenie) {
 
             
-            $this->kley($teams,$znachenie);
-        }
+    //         $this->kley($teams,$znachenie);
+    //     }
 
 
-    }
+    // }
 
-    public function kley($teams,$znachenie){
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // public function kley($teams,$znachenie){
+    //     $g;
+    // }
 
 
 }

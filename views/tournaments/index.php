@@ -46,6 +46,9 @@
                             <?php if($capitan):?>
                                 <li><a href="#manage_tournament">Manage Tournament</a></li>
                             <?php endif; ?>
+                            <?php if( in_array(['id' => Yii::$app->user->identity->id],$users_id)): ?>
+                                <span><a href="/forum/">Tournament thread</a></span>
+                            <?php endif; ?>
                         </ul>       
                     </div>
                 </div>
@@ -292,26 +295,33 @@
                     </div>
                     <?php endif; ?>
                     <?php if(!empty($turs = json_decode($model->league_table))&&($model->format == Tournaments::LEAGUE_G)): ?>
-                        <div class="col-md-12" style="text-align: center;" >
-                            <?php  foreach ($turs as $key => $tur): ?>
-                                <div class="group_inline">
-                                    <div class="group_inline_count">
-                                    <div class="group_inline_head"><span>Group <?=$key+1?></span></div>
-                                        <?php foreach ($tur as $teamin_group): ?>
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <div class="col-xs-3" >
-                                                        <p><img src="<?= $teamin_group->logo ?? '/images/hockey/team-logo1.png' ?>" onerror="this.src = '/images/hockey/team-logo1.png'"  alt="logo"></p>
-                                                    </div>
-                                                    <div class="col-xs-9" >
-                                                        <p><?=$teamin_group->name ?></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
+                        <div class="row">
+                        <?php  foreach ($turs as $key => $tur): ?>
+                            <div class="col-md-6"> 
+                                <h6>GROUP <?=($key+1)?></h6>
+                                <table>
+                                    <tbody>
+                                                    <tr>
+                                                        <th>player</th>
+                                                        <th>G</th><th>V</th><th>P</th><th>L</th>
+                                                    </tr>
+                                                    <?php foreach ($tur as $teamin_group): ?>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="matches.html">
+                                                                    <span class="team">
+                                                                        <img src="<?=$teamin_group->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="main-match-icon">
+                                                                    </span>
+                                                                    <span><?=$teamin_group->name?></span>
+                                                                </a>
+                                                            </td>
+                                                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>       
+                            </div>
+                        <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
                     <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>

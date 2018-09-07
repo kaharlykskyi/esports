@@ -1,0 +1,80 @@
+table tr:hover td i {
+    color: #000;
+}
+
+table tr td i {
+   font-size: 21px;
+   margin-left: 15px;
+}
+.content_detals li{
+    margin-bottom: 8px;
+}
+
+
+.img_content img{
+    height: 120px;
+}
+.detail{
+    background-color: #fff;
+}
+.detail{
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+.detail h6 {
+    padding: 0;
+    margin-top: 0;
+}
+.btn{
+    text-transform:none;
+    padding: 7px 30px;
+    font-size: 14px;
+}
+
+.content_detals {
+    position: relative;
+}
+
+.content_detals .btn{
+    position: absolute;
+    right: 5px;
+
+}
+
+.author-box{
+    position: relative;
+}
+
+.author-box .top .info {
+    padding-right: 90px;
+}
+
+.author-box .message_info{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    right: 30px;
+}
+
+.author-box .message_info i{
+    position: relative;
+    top:5px;
+    font-size: 21px;
+}
+
+.author-box .top .info p {
+    line-height: 30px;
+    margin:0;
+}
+
+.author-box .top .avatar {
+    float: none;
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+}
+
+.info .name{
+    margin-bottom: 7px;
+}
+
