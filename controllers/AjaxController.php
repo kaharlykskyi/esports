@@ -355,7 +355,15 @@ class AjaxController extends \yii\web\Controller
         $model = Tournaments::findOne($json->toutrament);
         $model->cup = $post['data'];
         if ($model->user_id == $user->id) {
-           $model->save(false);
+           if ($model->save(false)) {
+                if ($model->format == Tournaments::SINGLE_E) {
+                $model->getScheduleCupSingle();
+                }
+                if ($model->format == Tournaments::DUBLE_E) {
+                    $model->getScheduleCupDuble();
+                }
+                $model->save(false);
+           }
         }
         
     }

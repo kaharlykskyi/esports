@@ -274,12 +274,22 @@ $(document).ready( function() {
               teamWidth: 110,
               init: doubleEliminationData,
               save: saveFn,
+              skipSecondaryFinal: true,
               skipConsolationRound: true,
               centerConnectors: true,
               decorator: {edit: function edit_fn(){} , render: render_fn}
         };
     } else {
-        $.dataObj = {init: doubleEliminationData,decorator: {edit: function edit_fn(){} , render: render_fn}}
+        $.dataObj = {
+                init: doubleEliminationData,
+                teamWidth: 110,
+                skipSecondaryFinal: true,
+                skipConsolationRound: true,
+                decorator: {
+                edit: function edit_fn(){} ,
+                render: render_fn
+            }
+        }
     }
 
 

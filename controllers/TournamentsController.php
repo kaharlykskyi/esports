@@ -165,7 +165,15 @@ class TournamentsController extends \yii\web\Controller
             $cup["results"] = [[[[]]], [], []];
         }
         $model->cup = json_encode($cup);
-        $model->save(false);
+        if($model->save(false)){
+            if ($model->format == Tournaments::SINGLE_E) {
+                $model->getScheduleCupSingle();
+            }
+            if ($model->format == Tournaments::DUBLE_E) {
+                $model->getScheduleCupDuble();
+            }
+            $model->save(false);
+        }
         return $this->redirect('/tournaments/public/'.$model->id.'#tournamentgrid');  
         
     }
@@ -267,7 +275,6 @@ class TournamentsController extends \yii\web\Controller
                         'result2'  => 0,
                         'date' => $date,
                     ];
-                    //print_r($date,"");
                 }
                 $players_turs[] = $turs;
                 $output1 = array_slice($mass_temp, $a);
@@ -288,6 +295,6 @@ class TournamentsController extends \yii\web\Controller
     public function actionQwert($id)
     {
         $model = Tournaments::findOne($id);
-        $model->getScheduleCupDuble();
+        $model->getScheduleCupDudle();
     }
 }
