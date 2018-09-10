@@ -129,20 +129,20 @@
                                             <span class="teams-wrap">
                                                 <span class="team">
                                                     <span>
-                                                        <img src="<?= $posit_game[0]->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
+                                                        <img src="<?= $posit_game->{0}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
                                                     </span>
-                                                    <span><?=$posit_game[0]->name?></span>
+                                                    <span><?=$posit_game->{0}->name?></span>
                                                 </span>
                                                 <span class="score">
-                                                    <span><?=$posit_game['rezult1'] ?>:<?=$posit_game['rezult2'] ?></span>
+                                                    <span><?=$posit_game->rezult1 ?>:<?=$posit_game->rezult2 ?></span>
                                                 </span>
-                                                <span class="team1"><span><?=$posit_game[1]->name?></span>
+                                                <span class="team1"><span><?=$posit_game->{1}->name?></span>
                                                     <span>
-                                                        <img src="<?= $posit_game[1]->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                        <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
                                                     </span>
                                                 </span>
                                             </span>
-                                            <span class="game-result"><?=$posit_game['date'] ?></span>
+                                            <span class="game-result"><?=$posit_game->date ?></span>
                                         </p>
                                         <?php endforeach; ?>
                                     

@@ -72,18 +72,19 @@
             </div>
 
             <div >
-                <button class="btn" style="float:right;" >Create new topic</button>
+                <a  href="/forum/create-topic/<?=$model->id?>" class="btn" style="float:right;" >Create new topic</a>
             </div>
         </div>
         
     </div>
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1" style="margin-bottom: 35px;">
+    <div class="row" style="margin-top:30px;">
+        <?php foreach ($topics as $topic):?>
+        <div class="col-md-10 col-md-offset-1" >
             <div class="author-box">
                 <div class="top">
-                    <div class="avatar"><img src="/images/common/author-avatar.jpg" alt="author-avatar"></div>
+                    <div class="avatar"><a href="/forum/topic/<?=$topic->id?>"><img src="/images/common/author-avatar.jpg" alt="author-avatar"></a></div>
                     <div class="info">
-                        <div class="name">Name of the topic</div>
+                        <div class="name"><a href="/forum/topic/<?=$topic->id?>"><?=$topic->name ?></a></div>
                         <p>Created 10:45, 10 of September </p>
                         <p>Status: Opened</p>
                     </div>
@@ -93,6 +94,7 @@
                 </div>
             </div>
         </div>
+        <?php endforeach; ?>
     </div>
 
 

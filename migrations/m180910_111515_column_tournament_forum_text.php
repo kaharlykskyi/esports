@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Class m180905_160634_add_colums_tournaments
+ * Class m180910_111515_column_tournament_forum_text
  */
-class m180905_160634_add_colums_tournaments extends Migration
+class m180910_111515_column_tournament_forum_text extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->addColumn('tournaments', 'league_table', $this->text()->Null());
+        $this->addColumn('tournaments', 'forum_text', $this->text()->Null());
     }
 
     /**
@@ -20,7 +20,7 @@ class m180905_160634_add_colums_tournaments extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('tournaments', 'league_table');
+        $this->dropColumn('tournaments', 'forum_text');
     }
 
     /*
@@ -32,7 +32,7 @@ class m180905_160634_add_colums_tournaments extends Migration
 
     public function down()
     {
-        echo "m180905_160634_add_colums_tournaments cannot be reverted.\n";
+        echo "m180910_111515_column_tournament_forum_text cannot be reverted.\n";
 
         return false;
     }

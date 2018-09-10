@@ -161,7 +161,7 @@ class TournamentsController extends \yii\web\Controller
         }
 
         $cup["results"][] = [];
-        if($model->format ==2){
+        if($model->format == Tournaments::DUBLE_E){
             $cup["results"] = [[[[]]], [], []];
         }
         $model->cup = json_encode($cup);
@@ -295,6 +295,6 @@ class TournamentsController extends \yii\web\Controller
     public function actionQwert($id)
     {
         $model = Tournaments::findOne($id);
-        $model->getScheduleCupDudle();
+        $model->getScheduleCupSingle();
     }
 }

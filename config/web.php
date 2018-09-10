@@ -70,9 +70,10 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '<module:forum>/<id:\d+>' => '<module>/default/index',
+                '<module:forum>/<action:[A-Z,a-z,-]+>/<id:\d+>' => '<module>/default/<action>',
                 '<controller:(profile|teams|tournaments)>' => '<controller>/index',
                 '<action:[A-Z,a-z,-]+>' => 'site/<action>',
-                '<controller>/<action:(public)>/<id:\d+>' => '<controller>/<action>', //for public pages
+                '<controller>/<action:(public)>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
     ],

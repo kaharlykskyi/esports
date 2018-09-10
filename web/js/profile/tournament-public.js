@@ -274,7 +274,7 @@ $(document).ready( function() {
               teamWidth: 110,
               init: doubleEliminationData,
               save: saveFn,
-              skipSecondaryFinal: true,
+              //skipSecondaryFinal: true,
               skipConsolationRound: true,
               centerConnectors: true,
               decorator: {edit: function edit_fn(){} , render: render_fn}
@@ -283,7 +283,7 @@ $(document).ready( function() {
         $.dataObj = {
                 init: doubleEliminationData,
                 teamWidth: 110,
-                skipSecondaryFinal: true,
+                //skipSecondaryFinal: true,
                 skipConsolationRound: true,
                 decorator: {
                 edit: function edit_fn(){} ,
@@ -291,8 +291,6 @@ $(document).ready( function() {
             }
         }
     }
-
-
     if($("div").is("#minimal")){
 
         $(function() {

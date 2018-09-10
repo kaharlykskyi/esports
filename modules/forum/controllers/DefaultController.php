@@ -15,6 +15,8 @@ use app\models\TournamentUser;
 use app\models\TournamentCupTeam;
 use Yii;
 use yii\web\HttpException;
+use app\modules\forum\models\ForumTopic;
+use app\modules\forum\models\ForumTopicSchedule;
 /**
  * Default controller for the `forum` module
  */
@@ -35,13 +37,22 @@ class DefaultController extends Controller
 		if (!in_array(['id'=>Yii::$app->user->identity->id], $users)){
 			throw new HttpException(404 ,'Page not found');
 		}
-       
 
-        
-        // echo "<pre>";
-        // var_dump(in_array(['id'=>1], $users));
-        // echo "</pre>";exit;
+		$topics = ForumTopic::find()->where(['tournament_id'=>$model->id])->all();
+		$topic_s = ForumTopicSchedule::find()->where(['tournament_id'=>$model->id])->all();
+      
+        return $this->render('index',compact('model','topics','topics_s'));
+    }
 
-        return $this->render('index');
+    public function actionTopic($id) 
+    {
+    	echo "string";
+    }
+
+
+    public function actionCreateTopic($id) 
+    {
+    	$model = new ForumTopic();
+    	return $this->render('create-topic',compact('model'));
     }
 }

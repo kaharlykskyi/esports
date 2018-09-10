@@ -56,7 +56,7 @@ class Tournaments extends \yii\db\ActiveRecord
             [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p','league_g'], 'integer'],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
             [['rules', 'prizes','name'], 'string'],
-            [['start_date','region','data','cup','league','league_table'], 'safe'],
+            [['start_date','region','data','cup','league','league_table','forum_text'], 'safe'],
             [['name'], 'unique'],
             [['game_id'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['game_id' => 'id']],
         ];

@@ -13,14 +13,18 @@ trait ScheduleCup {
         $raspisanie = [];
         $json = json_decode($this->cup);
         $teams = $json->teams;
-        $raspisanie = [];
+        $results = $json->results[0];
+        if (empty($json->results[0])) {
+            $results = [[null]];
+        }
+        foreach ($results as $tur => $znachenie) {
 
-        foreach ($json->results[0] as $tur => $znachenie) {
             $raspisanie[] = $this->kley($teams,$znachenie,$tur);
             if(!$this->is_result_null($znachenie)){
                 break;
             }
             $teams = $this->delete_luser($teams,$znachenie);
+          
         }
         if ($this->format == self::DUBLE_E) {
             return $raspisanie;
@@ -128,6 +132,9 @@ trait ScheduleCup {
             return false;
         }
         foreach ($result as $match) {
+            if (empty($match)) {
+                return false;
+            }
             if(($match[0] === null)||($match[1] === null)){ 
                 return false;
             }
