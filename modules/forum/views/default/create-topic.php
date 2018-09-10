@@ -1,16 +1,15 @@
 <?php
 
-    use app\widgets\Alert;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
-    use kartik\datetime\DateTimePicker;
     use app\models\Tournaments;
 ?>
 
 
 <?php $form = ActiveForm::begin([ 
+    'method' => 'post',
     'validateOnBlur'=>false,  
     'options' => ['enctype' => 'multipart/form-data'],
     'fieldConfig' => [
@@ -21,19 +20,14 @@
 $form->errorCssClass = false;
 $form->successCssClass = false;
 ?>
-<div class="row">
-    <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
-    <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
-
-    <div class="col-md-12">
-        <?= $form->field($model, 'name')->textarea(['rows' => 12, 'class' => false]) ?>
-        
+<div class="container">
+<div class="row" style="margin-bottom: 35px;">
+    <h4 style="text-align: center;"  >CREATE TOPIC</h4>
+    <div class="col-md-8 col-md-offset-2">
+        <?= $form->field($model, 'name')->textInput(['class' => false]) ?> 
+        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
     </div>
+</div>   
 
-        </div>   
-        <div class="row">
-            <div class="col-md-12">
-                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
-            </div>
-        </div>
-        <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
+</div>

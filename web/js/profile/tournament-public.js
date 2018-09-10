@@ -303,22 +303,3 @@ $(document).ready( function() {
   
 });
 
-// $(document).ready( function() {
-//     $('#tournamentgrid').attr("style", 'display:block;');
-
-//     if (typeof $.comandTeams != "undefined") {
-//        doubleEliminationData = {
-//         teams : $.comandTeams.teams,
-//         results : $.comandTeams.results
-//       };
-//     } else {
-//         doubleEliminationData = {};
-//     }
-
-//     if($("div").is("#league_p")){
-//         $('#league_p').bracket({
-//             init: doubleEliminationData
-//         });
-//     }
-//     $('#tournamentgrid').removeAttr('style');
-// });

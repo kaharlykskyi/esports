@@ -42,26 +42,26 @@ class ForumTopic extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'tournament_id' => 'Tournament ID',
-            'name' => 'Name',
+            'name' => 'Name Topic',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+ 
     public function getForumPosts()
     {
         return $this->hasMany(ForumPost::className(), ['forum_topic_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTournament()
     {
         return $this->hasOne(Tournaments::className(), ['id' => 'tournament_id']);
+    }
+
+    public function countPost()
+    {
+        return ForumPost::find()->where(['forum_topic_id' => $this->id])->count();
     }
 }

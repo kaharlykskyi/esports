@@ -81,4 +81,35 @@ table tr td i {
 .author-box .top {
     margin-top: 0; 
 }
+.post-element{
+    border-top: 2px dashed #207ad3;
+    background-color: #fff;
+    padding: 25px;
+}
+
+.author-avatar{
+    position: relative;
+    padding-top: 110px;
+}
+
+.author-avatar a{
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+}
+
+.author-avatar img{
+    height: 80px;
+}
+
+.author-avatar .name{
+    text-align: center;
+    font-size: 16px;
+    font-weight:bold;
+}
+
+table tr td {
+ font-size: 15px;
+}
 
