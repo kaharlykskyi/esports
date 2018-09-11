@@ -29,7 +29,8 @@ trait ScheduleCup {
         if ($this->format == self::DUBLE_E) {
             return $raspisanie;
         }
-        $this->league = json_encode($raspisanie);
+        $this->addSchedule($raspisanie);
+        //$this->league = json_encode($raspisanie);
        
     }
            
@@ -118,8 +119,8 @@ trait ScheduleCup {
             $date = new \DateTime($this->start_date);
             $date->add(new \DateInterval('P'.$time.'D'));
             $date = $date->format('Y-m-d H:i');
-            $team['rezult1'] = $znachenie[$key][0]??' -- ';
-            $team['rezult2'] = $znachenie[$key][1]??' -- ';
+            $team['results1'] = $znachenie[$key][0]??null;
+            $team['results2'] = $znachenie[$key][1]??null;
             $team['date'] = $date;
             $tur[] = $team;
         }

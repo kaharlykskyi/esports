@@ -107,9 +107,17 @@
                                         <?php foreach ($tur as $posit_game): ?>
                                         <p href="matches.html" class="item">
                                             <span class="teams-wrap">
-                                                <span class="team"><span><img src="<?= $posit_game->players1->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" ></span><span><?=$posit_game->players1->name?></span></span>
+                                                <span class="team">
+                                                    <a href="/teams/public/<?=$posit_game->players1->id?>">
+                                                        <span><img src="<?= $posit_game->players1->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" ></span><span><?=$posit_game->players1->name?></span>
+                                                    </a>
+                                                </span>
                                                 <span class="score"><span><?=$posit_game->result1 ?>:<?=$posit_game->result2 ?></span></span>
-                                                <span class="team1"><span><?=$posit_game->players2->name?></span><span><img src="<?= $posit_game->players2->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  ></span></span>
+                                                <span class="team1">
+                                                    <a href="/teams/public/<?=$posit_game->players2->id?>">
+                                                        <span><?=$posit_game->players2->name?></span><span><img src="<?= $posit_game->players2->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  ></span>
+                                                    </a>
+                                                </span>
                                             </span>
                                             <span class="game-result"><?=$posit_game->date ?></span>
                                         </p>
@@ -128,19 +136,24 @@
                                         <p class="item">
                                             <span class="teams-wrap">
                                                 <span class="team">
-                                                    <span>
-                                                        <img src="<?= $posit_game->{0}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
-                                                    </span>
-                                                    <span><?=$posit_game->{0}->name?></span>
+                                                    <a href="/teams/public/<?=$posit_game->{0}->id?>">
+                                                        <span>
+                                                            <img src="<?= $posit_game->{0}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
+                                                        </span>
+                                                        <span><?=$posit_game->{0}->name?></span>
+                                                    </a>
                                                 </span>
                                                 <span class="score">
                                                     <span><?=$posit_game->rezult1 ?>:<?=$posit_game->rezult2 ?></span>
                                                 </span>
-                                                <span class="team1"><span><?=$posit_game->{1}->name?></span>
-                                                    <span>
-                                                        <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                    <span class="team1">
+                                                        <a href="/teams/public/<?=$posit_game->{1}->id?>">
+                                                            <span><?=$posit_game->{1}->name?></span>
+                                                            <span>
+                                                                <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                            </span>
+                                                        </a>
                                                     </span>
-                                                </span>
                                             </span>
                                             <span class="game-result"><?=$posit_game->date ?></span>
                                         </p>
@@ -162,20 +175,25 @@
                                                 <p class="item">
                                                     <span class="teams-wrap">
                                                         <span class="team">
-                                                            <span>
+                                                            <a href="/teams/public/<?=$posit_game->{0}->id?>">
+                                                                <span>
                                                                 <img src="<?= $posit_game->{0}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
-                                                            </span>
-                                                            <span><?=$posit_game->{0}->name?></span>
+                                                                </span>
+                                                                <span><?=$posit_game->{0}->name?></span>
+                                                            </a>
                                                         </span>
                                                         <span class="score">
                                                             <span><?=$posit_game->rezult1 ?>:<?=$posit_game->rezult2 ?></span>
                                                         </span>
-                                                        <span class="team1"><span><?=$posit_game->{1}->name?></span>
-                                                        <span>
-                                                            <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                        <span class="team1">
+                                                            <a href="/teams/public/<?=$posit_game->{1}->id?>">
+                                                                <span><?=$posit_game->{1}->name?></span>
+                                                                <span>
+                                                                    <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                                </span>
+                                                            </a>
                                                         </span>
                                                     </span>
-                                                </span>
                                                 <span class="game-result"><?=$posit_game->date ?></span>
                                             </p>
                                         <?php endforeach; ?>
@@ -195,20 +213,25 @@
                                             <p class="item">
                                                 <span class="teams-wrap">
                                                     <span class="team">
-                                                        <span>
-                                                            <img src="<?= $posit_game->{0}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
-                                                        </span>
-                                                        <span><?=$posit_game->{0}->name?></span>
+                                                        <a href="/teams/public/<?=$posit_game->{0}->id?>">
+                                                            <span>
+                                                                <img src="<?= $posit_game->{0}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
+                                                            </span>
+                                                            <span><?=$posit_game->{0}->name?></span>
+                                                        </a>
                                                     </span>
                                                     <span class="score">
                                                         <span><?=$posit_game->rezult1 ?>:<?=$posit_game->rezult2 ?></span>
                                                     </span>
-                                                    <span class="team1"><span><?=$posit_game->{1}->name?></span>
-                                                    <span>
-                                                        <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                    <span class="team1">
+                                                        <a href="/teams/public/<?=$posit_game->{1}->id?>">
+                                                            <span><?=$posit_game->{1}->name?></span>
+                                                            <span>
+                                                                <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                            </span>
+                                                        </a>
                                                     </span>
                                                 </span>
-                                            </span>
                                             <span class="game-result"><?=$posit_game->date ?></span>
                                         </p>
                                     <?php endforeach; ?>
@@ -229,18 +252,23 @@
                                             <p class="item">
                                             <span class="teams-wrap">
                                                 <span class="team">
-                                                    <span>
-                                                        <img src="<?= $tur->players1->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
-                                                    </span>
-                                                    <span><?=$tur->players1->name?></span>
+                                                    <a href="/teams/public/<?=$tur->players1->id?>">
+                                                        <span>
+                                                            <img src="<?= $tur->players1->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
+                                                        </span>
+                                                        <span><?=$tur->players1->name?></span>
+                                                    </a>
                                                 </span>
                                                 <span class="score">
                                                     <span><?=$tur->result1?>:<?=$tur->result2?></span>
                                                 </span>
-                                                <span class="team1"><span><?=$tur->players2->name?></span>
-                                                    <span>
-                                                        <img src="<?= $tur->players2->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
-                                                    </span>
+                                                <span class="team1">
+                                                    <a href="/teams/public/<?=$tur->players2->id?>">
+                                                        <span><?=$tur->players2->name?></span>
+                                                        <span>
+                                                            <img src="<?= $tur->players2->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                                                        </span>
+                                                    </a>
                                                 </span>
                                             </span>
                                             <span class="game-result"><?=$tur->date ?></span>

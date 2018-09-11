@@ -23,7 +23,7 @@ use yii\behaviors\TimestampBehavior;
 class Tournaments extends \yii\db\ActiveRecord
 {
     use \app\models\traits\ScheduleCup;
-    use \app\models\traits\ForumTopic;
+    use \app\models\traits\Schedule;
     
     const SINGLE_E = 1;
     const DUBLE_E = 2;
@@ -87,6 +87,7 @@ class Tournaments extends \yii\db\ActiveRecord
         return $this->hasOne(Games::className(), ['id' => 'game_id']);
     }
 
+
     public function generateForm () 
     {
 
@@ -138,6 +139,20 @@ class Tournaments extends \yii\db\ActiveRecord
                 return $result;
             }
         }
+    }
+
+    public function getPlayers()
+    {
+        $teams = (new \yii\db\Query())->select(['teams.*'])->from('teams')
+            ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
+            ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $this->id])
+            ->all();
+        // $users = (new \yii\db\Query())->select(['users.*'])->from('users')
+        //     ->leftJoin('tournament_user', 'tournament_user.user_id = users.id')
+        //     ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $this->id])
+        //     ->all();
+        //$players = array_merge($teams,$users);
+        return $teams;
     }
 
 }

@@ -51,15 +51,8 @@ class TournamentsController extends \yii\web\Controller
             }
         }
 
-        $teams = (new \yii\db\Query())->select(['*'])->from('teams')
-            ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
-            ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $model->id])
-            ->all();
-        $users = (new \yii\db\Query())->select(['*'])->from('users')
-            ->leftJoin('tournament_user', 'tournament_user.user_id = users.id')
-            ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $model->id])
-            ->all();
-        $players = array_merge($teams,$users);
+ 
+        $players = $model->getPlayers();
         $users_id = self::gerUsers($model);
        
         return $this->render('index',compact('model','players','users_id'));
@@ -149,7 +142,7 @@ class TournamentsController extends \yii\web\Controller
     public function actionAddSchedule($id)
     {
 
-        $mass = $this->getUsetTeams($id);
+        $mass = $this->getTeams($id);
         list('players' => $players, 'model' => $model) = $mass;
 
         $a = count($players)/2;
@@ -168,7 +161,6 @@ class TournamentsController extends \yii\web\Controller
         if($model->save(false)){
             if ($model->format == Tournaments::SINGLE_E) {
                 $model->getScheduleCupSingle();
-                $model->addForumTopic();
             }
             if ($model->format == Tournaments::DUBLE_E) {
                 $model->getScheduleCupDuble();
@@ -184,7 +176,7 @@ class TournamentsController extends \yii\web\Controller
     public function actionAddLeague($id)
     {
         
-        $mass = $this->getUsetTeams($id);
+        $mass = $this->getTeams($id);
         list('players' => $players, 'model' => $model) = $mass;
         $c = count($players);
         $ch = $c%2 == 0 ? 1 : 0;
@@ -232,7 +224,7 @@ class TournamentsController extends \yii\web\Controller
         return $this->redirect('/tournaments/public/'.$id.'#matches');
     }
 
-    private function getUsetTeams($id)
+    private function getTeams($id)
     {
 
         $model = Tournaments::findOne($id);
@@ -243,11 +235,7 @@ class TournamentsController extends \yii\web\Controller
             ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
             ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $id])
             ->all();
-        $users = (new \yii\db\Query())->select(['users.name','users.id'])->from('users')
-            ->leftJoin('tournament_user', 'tournament_user.user_id = users.id')
-            ->where(['tournament_user.status' => TournamentUser::ACCEPTED,'tournament_user.tournament_id' => $id])
-            ->all();
-        $players = array_merge($teams,$users);
+        $players = $teams;
         shuffle($players);
         return compact('players','model');
     }
@@ -299,6 +287,6 @@ class TournamentsController extends \yii\web\Controller
     public function actionQwert($id)
     {
         $model = Tournaments::findOne($id);
-        $model->addForumTopic();
+        $model->getScheduleCupSingle();
     }
 }

@@ -219,7 +219,7 @@ class AjaxController extends \yii\web\Controller
             ->all();
 
         $tournaments = (new \yii\db\Query())->select(['tournaments.*','games.name as g_name',
-            '(select count(*) from tournament_team where team_id = tournaments.id  ) as c_teams'])
+            '(select count(*) from tournament_team where tournament_id = tournaments.id and status ="2" ) as c_teams'])
             ->from('tournaments')
             ->leftJoin('tournament_user', '`tournament_user`.`tournament_id` = `tournaments`.`id`')
             ->leftJoin('games', '`games`.`id` = `tournaments`.`game_id`')

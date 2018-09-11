@@ -12,7 +12,7 @@ class m180910_111515_column_tournament_forum_text extends Migration
      */
     public function safeUp()
     {
-        //$this->addColumn('tournaments', 'forum_text', $this->text()->Null());
+        $this->addColumn('tournaments', 'forum_text', $this->text()->Null());
         
         $this->update('games', 
             ['filed' => '[{"name":"system","class":"system_select","title":"Game mode","type":"select","options":["Bo1","Bo3","Bo5"]},{"name":"validate","title":"Require a Capture at the end of each game to validate the result?","type":"checkbox","options":["1"]},{"name":"game_mode","title":"Game mode select","type":"select","options":[" Conquist","Last hero standing"]}]'], 

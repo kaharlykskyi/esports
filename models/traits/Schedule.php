@@ -1,23 +1,21 @@
 <?php
 
 namespace app\models\traits;
-use app\modules\forum\models\ForumTopic as Topic;
+//use app\modules\forum\models\ForumTopic as Topic;
+use app\models\ScheduleTeams;
 
-trait ForumTopic {
+trait Schedule {
 
 
-    public function addForumTopic ()
+    public function addSchedule ($league)
     {
         $forum_text = '';
-
-        $league = json_decode($this->league);
-        if (($this->format == self::SINGLE_E)&&(!empty($this->league))) {
+        if ($this->format == self::SINGLE_E) {
             foreach($league as $tur => $tur_game) {
                 foreach ($tur_game as $position => $game) {
-                    $num_text = (int)((string)($tur+1).(string)($position+1)); 
-                    $text = $game->{0}->name." vs ".$game->{0}->name;
+                    $text = $game[0]->name." vs ".$game[1]->name;
                     $forum_text .= '<p>'.$text.'</p>'; 
-                    $this->seveForum($game,$num_text,$text);
+                    $this->seveSchedule($game,($tur+1));
                 }
             }    
         }
@@ -36,7 +34,6 @@ trait ForumTopic {
         }
 
         if ((($this->format == self::LEAGUE)||($this->format == self::LEAGUE_P))&&(!empty($this->league))) {
-            
                 foreach($league as $tur => $tur_game) {
                     foreach ($tur_game as $position => $game) {
                         $num_text = (int)((string)($tur+1).(string)($position+1)); 
@@ -65,13 +62,24 @@ trait ForumTopic {
         $this->save(false);
     }
 
-    private function seveForum($game,$num_text,$text) 
+    private function seveSchedule($game,$tur,$group = null) 
     {
-        $newtop = new Topic();
-        $newtop->name = $text;
-        $newtop->num_schedule = $num_text;
-        $newtop->tournament_id = $this->id;
-        $newtop->save(false);
+        $schedule = new ScheduleTeams();
+        $schedule->team1 = $game[0]->id;
+        $schedule->team2 = $game[1]->id;
+        $schedule->date = $game['date'];
+        $schedule->group = $group;
+        $schedule->tur = $tur;
+        $schedule->results1 = $game['results1'];
+        $schedule->results2 = $game['results2'];
+        $schedule->tournament_id = $this->id;
+        $schedule->save(false);
+    }
+
+
+    public function getSchedule()
+    {
+        //SELECT `schedule_teams`.`id`, t.name as tn ,a.name as an FROM `schedule_teams` INNER JOIN `teams` t ON t.`id` = `schedule_teams`.`team1` INNER JOIN `teams` a ON a.`id` = `schedule_teams`.`team2`
     }
 
 }

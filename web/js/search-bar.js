@@ -1,10 +1,8 @@
 $(document).ready(function(){
     $.myVarContainer = {};
 
-
     $('#search-bar').on('click',function(){
 
-        //$('.s_layouts_snapWrapper').show();
         $('.s_layouts_snapWrapper').addClass('visible-search');
         $('body').attr('style','overflow: hidden;');
         $('.wrap_search_fon').addClass('wrap_blur');
@@ -12,14 +10,9 @@ $(document).ready(function(){
 
     $('.s_layouts_snapClose').on('click',function(){
 
-
         $('.s_layouts_snapWrapper').removeClass('visible-search');
-        //$('.s_layouts_snapWrapper').hide();
         $('body').attr('style','overflow: auto;');
         $('.wrap_search_fon').removeClass('wrap_blur');
-
-
-
 
         menuSerchHide();
         contentClear();
@@ -167,20 +160,37 @@ $(document).ready(function(){
     }
 
     function addContentTturnaments (tournaments) {
+        //console.log(tournaments);
         $(tournaments).each( function (indx, element) {
-          
-            
+            let format ="";
+            switch (element.format) {
+                case '1':
+                format = "Cup (Single elimination)";
+                break;
+                case '2':
+                format = "Cup (Duble elimination)";
+                break;
+                case '3':
+                format = "League (Regular)";
+                break;
+                case '4':
+                format = "League (Regular + Playoff)";
+                break;
+                case '5':
+                format = "League (Group + Playoff)";
+                break;           
+            }
             let content = `<div class="col-sm-6 col-md-4">
                                         <div class="blok_search_teams tournaments_block">
                                             <div class="col-xs-4 img_cont_search clearfix">
                                                 <a href="/toutnaments/public/${element.id}"><img src="/images/profile/images.png" alt=""></a>
                                             </div>
                                             <div class="col-xs-8">
-                                                <p class="tournaments"><a href="/tournaments/public/${element.id}">${element.name}</a></p>
-                                                <p>Start date: ${element.start_date.substr(0, 10)}</p>
-                                                <p>Game: ${element.g_name}</p>
-                                                <p>Teams: ${element.c_teams}</p>
-                                                <p>Stage </p>
+                                            <p class="tournaments"><a href="/tournaments/public/${element.id}">${element.name}</a></p>
+                                            <p>Game: ${element.g_name}</p>
+                                            <p>Start date: ${element.start_date.substr(0, 10)}</p>
+                                            <p>Teams: ${element.c_teams}</p>
+                                            <p>Format: ${format}</p>
                                             </div>
                                         </div>
                                     </div>`;

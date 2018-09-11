@@ -50,7 +50,7 @@
                 <li id="activity-personal-li" class="current selected active is-selected" aria-selected="true" ><a id="user-activity" data-toggle="tab" href="#profile">Profile</a></li>
                 <li id="xprofile-personal-li" aria-selected="false" ><a id="user-xprofile" data-toggle="tab" href="#activity">Activity</a></li>
                 <li id="blogs-personal-li" aria-selected="false" ><a id="user-blogs" data-toggle="tab" href="#teams">My teams <span class="badge mnb-1"><?=$teams['count_teams']?></span></a></li>
-                <li id="seting-personal-li" aria-selected="false" ><a id="user-seting" data-toggle="tab" href="#tournaments">My tournaments</a></li>  
+                <li id="seting-personal-li" aria-selected="false" ><a id="user-seting" data-toggle="tab" href="#tournaments">My tournaments <span class="badge mnb-1"><?=count($tournaments)?></span></a></li>  
                 <li id="friends-personal-li" aria-selected="false" ><a id="user-friends" data-toggle="tab" href="#panel4">Friends<span class="badge mnb-1 sr-only">0</span></a></li> 
                 <li id="seting-personal-li" aria-selected="false" ><a id="user-seting" data-toggle="tab" href="#settings">Settings<span class="badge mnb-1 sr-only">0</span></a></li> 
                   
@@ -230,22 +230,6 @@
                         </div>
                         <div class="col-md-5" style="margin-bottom:30px;">
                             <div class="row">
-                            <!-- <div class="col-md-3 no-pading">
-                                <div  ><span>Order By:</span></div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="item select-show">
-                                    <div class="fancy-select ">
-                                        <select class="basic" name="RegisterForm[country]" required>
-                                            <option value="active">Last Active</option>
-                                            <option value="popular">Most Members</option>
-                                            <option value="newest">Newly Created</option>
-                                            <option value="alphabetical">Alphabetical</option> 
-
-                                        </select>
-                                    </div>    
-                                </div>
-                            </div> -->
                             </div>   
                         </div>
                     </div>
@@ -392,41 +376,51 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-
-                        <table class="table" >
-                                <tbody>
-                                    <?php foreach ($tournaments as $tournament):?>
-                                        <tr>
-                                            <td style="vertical-align: middle; padding-left: 20px;"" >
-                                                <div class="item-title">
-                                                    <p>
-                                                        <a href="/tournaments/public/<?=$tournament->id?>">
-                                                            <?=$tournament->name?>    
-                                                        </a>
-                                                    </p>
-                                                    <p><?=$tournament->game->name?></p>
-                                                </div>
-                                            </td>
-                                            <td style="vertical-align: middle; padding-left: 20px;">
-                                                
-                                            </td>
-                                            <td class="text-right" style="vertical-align: middle">
-                                                <div class="meta">
-                                                    <a class="btn edit-team" 
-                                                    href="/tournaments/public/<?=$tournament->id?>#manage_tournament">
-                                                    Edit tournament
-                                                </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                        </table>
-
-                        </div>
+                        <?php foreach ($tournaments as $tournament):?>
+                            <div class="col-md-12 tournament_list">
+                                <div class="col-sm-5">
+                                    <p class="name"> <a href="/tournaments/public/<?=$tournament->id?>"><?=$tournament->name?></a></p>
+                                    <p>Participants: <span><?=count($tournament->getPlayers())?></span></p>
+                                    <p>Game: <span><?=$tournament->game->name?></span></p>
+                                    <p>Format:
+                                        <span>
+                                            <?php
+                                                switch ($tournament->format) {
+                                                    case 1:
+                                                        echo "Cup (Single elimination)";
+                                                        break;
+                                                    case 2:
+                                                        echo "Cup (Duble elimination)";
+                                                        break;
+                                                    case 3:
+                                                        echo "League (Regular)";
+                                                        break;
+                                                    case 4:
+                                                        echo "League (Regular + Playoff)";
+                                                        break;
+                                                    case 5:
+                                                        echo "League (Group + Playoff)";
+                                                        break;           
+                                                }
+                                            ?>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-sm-7 content_btn">
+                                    <p>
+                                        <a class="btn edit-team" href="/tournaments/public/<?=$tournament->id?>#manage_tournament">
+                                            Manage
+                                        </a>
+                                    </p>
+                                    <p>
+                                        <a class="btn edit-team" href="/tournaments/public/<?=$tournament->id?>">
+                                            View
+                                        </a>
+                                    </p>
+                                </div>            
+                            </div>  
+                        <?php endforeach; ?>
                     </div>
-
                 </div>
                 <div id="panel4" class="tab-pane fade">
                     <div class="row">

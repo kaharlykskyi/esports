@@ -597,6 +597,38 @@ input[type=date] {
 }
 
 
+.tournament_list{
+    border-radius: 5px;
+    border:1px solid #ccc;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.tournament_list p{
+    margin: 5px 0 ;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.content_btn{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.content_btn p{
+    text-align: right;
+}
+
+.tournament_list .name{
+    font-size: 18px;
+}
+
+.tournament_list .edit-team{
+    font-size: 12px;
+}
+
 @media screen and (max-width: 660px) {
     .youplay-user-navigation ul li>a {
        padding-left: 5px; 
