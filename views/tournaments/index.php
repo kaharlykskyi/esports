@@ -81,7 +81,7 @@
                         <?php foreach ($players as $player): ?>
 
                             <div class="col-md-3">
-                                <a href="club-stats.html" class="item">
+                                <a href="/teams/public/<?=$player['id']?>" class="item">
                                     <span class="logo"><img src="<?= $player['logo'] ?? "/images/profile/images.png" ?>" width="80" height="80" alt="team-logo"></span>
                                     <span class="name"><?=$player['name']?></span>
                                 </a>
@@ -262,7 +262,7 @@
             <div class="tab-item part-wrap tab-pane " id="tournamentgrid">
                 <div class="container">        
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="margin-bottom: 35px;">
                            <?php if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)): ?> 
                                <?php if(empty($model->cup) && $capitan): ?>
                                     <?php if (in_array(count($players),[4,8,16,32,64,128])): ?>
@@ -331,23 +331,23 @@
                                 <h6>GROUP <?=($key+1)?></h6>
                                 <table>
                                     <tbody>
-                                                    <tr>
-                                                        <th>player</th>
-                                                        <th>G</th><th>V</th><th>P</th><th>L</th>
-                                                    </tr>
-                                                    <?php foreach ($tur as $teamin_group): ?>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="matches.html">
-                                                                    <span class="team">
-                                                                        <img src="<?=$teamin_group->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="main-match-icon">
-                                                                    </span>
-                                                                    <span><?=$teamin_group->name?></span>
-                                                                </a>
-                                                            </td>
-                                                        <td>0</td><td>0</td><td>0</td><td>0</td>
-                                                        </tr>
-                                                    <?php endforeach; ?>
+                                        <tr>
+                                            <th>player</th>
+                                            <th>G</th><th>V</th><th>P</th><th>L</th>
+                                        </tr>
+                                        <?php foreach ($tur as $teamin_group): ?>
+                                            <tr>
+                                                <td>
+                                                    <a href="matches.html">
+                                                        <span class="team">
+                                                            <img src="<?=$teamin_group->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="main-match-icon">
+                                                        </span>
+                                                        <span><?=$teamin_group->name?></span>
+                                                    </a>
+                                                </td>
+                                                <td>0</td><td>0</td><td>0</td><td>0</td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>       
                             </div>

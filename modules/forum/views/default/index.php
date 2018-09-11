@@ -60,38 +60,18 @@
                     <h6 style="text-align: center;" >Match topic</h6>
                     <table class="table-standings">
                         <tbody>
-                            <tr>
-                                <td class="up">
-                                    <span class="team"><a href="#">Team1 vs Team2</a></span> 
-                                </td>
-                                <td>Round</td>
-                                <td>2<i class="glyphicon glyphicon-comment"></i></td>
-                                
-                            </tr>
-                            <tr>
-                                <td class="down">
-                                    <span class="team"><a href="#">Team1 vs Team2</a></span> 
-                                </td>
-                                <td>Round</td>
-                                <td>2<i class="glyphicon glyphicon-comment"></i></td>
-                               
-                            </tr>
-                            <tr>
-                                <td class="none">
-                                    <span class="team"><a href="#">Team1 vs Team2</a></span> 
-                                </td>
-                                <td>Round</td>
-                                <td>2<i class="glyphicon glyphicon-comment"></i></td>
-                                
-                            </tr>
-                            <tr>
-                                <td class="down">
-                                    <span class="team"><a href="#">Team1 vs Team2</a></span> 
-                                </td>
-                                <td>Round</td>
-                                <td>2<i class="glyphicon glyphicon-comment"></i></td>
-                                
-                            </tr>
+                            <?php foreach ($topics as $topic):?>
+                                <?php if(!is_null($topic->num_schedule)): ?>
+                                    <tr>
+                                        <td class="up">
+                                            <span class="team"><a href="/forum/topic/<?=$topic->id?>"><?=$topic->name ?></a></span> 
+                                        </td>
+                                        <td>Round</td>
+                                        <td><?= $topic->countPost() ?><i class="glyphicon glyphicon-comment"></i></td>
+                                        
+                                    </tr>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                        </tbody>
                 </table>
             </div>
@@ -104,21 +84,23 @@
     </div>
     <div class="row" style="margin-top:30px;">
         <?php foreach ($topics as $topic):?>
-        <div class="col-md-10 col-md-offset-1" >
-            <div class="author-box">
-                <div class="top">
-                    <div class="avatar"><a href="/forum/topic/<?=$topic->id?>"><img src="/images/common/author-avatar.jpg" alt="author-avatar"></a></div>
-                    <div class="info">
-                        <div class="name"><a href="/forum/topic/<?=$topic->id?>"><?=$topic->name ?></a></div>
-                        <p>Created: <?=date(' h:i, m \of F, ',$topic->created_at)?> </p>
-                        <p>Status: <?=$topic->status==0 ? 'Open': 'Close'?></p>
-                    </div>
-                    <div class="message_info">
-                        <span><?= $topic->countPost() ?> </span><i class="glyphicon glyphicon-comment"></i>
+            <?php if(is_null($topic->num_schedule)): ?>
+            <div class="col-md-10 col-md-offset-1" >
+                <div class="author-box">
+                    <div class="top">
+                        <div class="avatar"><a href="/forum/topic/<?=$topic->id?>"><img src="/images/common/author-avatar.jpg" alt="author-avatar"></a></div>
+                        <div class="info">
+                            <div class="name"><a href="/forum/topic/<?=$topic->id?>"><?=$topic->name ?></a></div>
+                            <p>Created: <?=date(' h:i, m \of F, ',$topic->created_at)?> </p>
+                            <p>Status: <?=$topic->status==0 ? 'Open': 'Close'?></p>
+                        </div>
+                        <div class="message_info">
+                            <span><?= $topic->countPost() ?> </span><i class="glyphicon glyphicon-comment"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <?php endif; ?>
         <?php endforeach; ?>
     </div>
 

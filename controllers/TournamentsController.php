@@ -168,11 +168,14 @@ class TournamentsController extends \yii\web\Controller
         if($model->save(false)){
             if ($model->format == Tournaments::SINGLE_E) {
                 $model->getScheduleCupSingle();
+                $model->addForumTopic();
             }
             if ($model->format == Tournaments::DUBLE_E) {
                 $model->getScheduleCupDuble();
+                $model->addForumTopic();
             }
             $model->save(false);
+
         }
         return $this->redirect('/tournaments/public/'.$model->id.'#tournamentgrid');  
         
@@ -224,6 +227,7 @@ class TournamentsController extends \yii\web\Controller
                 $model->cup = json_encode($cup);
             }
             $model->save(false);
+            $model->addForumTopic();
         }
         return $this->redirect('/tournaments/public/'.$id.'#matches');
     }
@@ -295,6 +299,6 @@ class TournamentsController extends \yii\web\Controller
     public function actionQwert($id)
     {
         $model = Tournaments::findOne($id);
-        $model->getScheduleCupSingle();
+        $model->addForumTopic();
     }
 }

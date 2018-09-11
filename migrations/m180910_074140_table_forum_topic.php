@@ -16,6 +16,7 @@ class m180910_074140_table_forum_topic extends Migration
             'id' => $this->primaryKey(),
             'tournament_id' => $this->integer(),
             'name' => $this->string(200)->notNull(),
+            'num_schedule' => $this->integer()->null(),
             'user_id' => $this->integer(),
             'status' => $this->integer(3)->defaultValue(0),
             'created_at' => $this->integer()->notNull(),

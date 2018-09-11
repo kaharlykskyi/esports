@@ -14,7 +14,6 @@ use app\models\TournamentCupTeam;
 use Yii;
 use yii\web\HttpException;
 use app\modules\forum\models\ForumTopic;
-use app\modules\forum\models\ForumTopicSchedule;
 use app\modules\forum\models\ForumPost;
 
 class DefaultController extends Controller
@@ -33,7 +32,6 @@ class DefaultController extends Controller
 		}
 
 		$topics = ForumTopic::find()->where(['tournament_id'=>$model->id])->all();
-		$topic_s = ForumTopicSchedule::find()->where(['tournament_id'=>$model->id])->all();
       
         return $this->render('index',compact('model','topics','topics_s'));
     }

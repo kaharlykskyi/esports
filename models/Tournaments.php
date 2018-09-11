@@ -23,6 +23,7 @@ use yii\behaviors\TimestampBehavior;
 class Tournaments extends \yii\db\ActiveRecord
 {
     use \app\models\traits\ScheduleCup;
+    use \app\models\traits\ForumTopic;
     
     const SINGLE_E = 1;
     const DUBLE_E = 2;
