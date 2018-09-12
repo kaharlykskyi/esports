@@ -10,7 +10,6 @@ trait ScheduleLeague {
     public function createLeague()
     {
 
-
         $players = $this->getPlayers();
         shuffle($players);
         $c = count($players);
@@ -33,7 +32,7 @@ trait ScheduleLeague {
             }
             $this->league_table = json_encode($c_block);
             for ($i=0; $i < $group; $i++) { 
-                array_merge($players_turs ,$this->generateLeague($c_block[$i],$ch,($i+1)));
+                $players_turs = array_merge($players_turs ,$this->generateLeague($c_block[$i],$ch,($i+1)));
             }
         }
         
@@ -101,10 +100,8 @@ trait ScheduleLeague {
                 foreach ($players_turs as &$value) {
                    unset($value[0]);
                 }
-            }
-            
+            } 
         return $players_turs;
     }
 
-    
 }

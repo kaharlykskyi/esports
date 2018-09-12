@@ -1,5 +1,8 @@
 <div class="col-md-12">
-    <?php $i = 0; foreach ($turs as $posit_game): ?>
+    <?php $i = 0; $g = 0; foreach ($turs as $posit_game): ?>
+    <?php if(($g != $posit_game['group'])&& !is_null($posit_game['group'])): ?>
+        <h4 style="text-align: center;">GROUP <?php echo $posit_game['group']; $g= $posit_game['group'];?></h4>
+    <?php endif; ?>
     <?php if($i != $posit_game['tur']): ?>
         <h5 style="text-align: center;">ROUND <?php echo $posit_game['tur']; $i= $posit_game['tur'];?></h5>
     <?php endif; ?>

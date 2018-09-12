@@ -7,9 +7,7 @@ use yii\db\Migration;
  */
 class m180910_111515_column_tournament_forum_text extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
+   
     public function safeUp()
     {
         $this->addColumn('tournaments', 'forum_text', $this->text()->Null());
@@ -26,14 +24,14 @@ class m180910_111515_column_tournament_forum_text extends Migration
             ['filed' => '[{"name":"*","title":"Format","class":"select_format","type":"select","options":["PvP","PvE"]},{"name":"pvp","title":"PvP","class":"nidden_select","type":"select","options":["2vs2","3vs3"]},{"name":"mythical","class":"hidden_num","title":"Mythical","type":"number","options":""},{"name":"system","title":"System","type":"select","options":["Bo1","Bo3","Bo5"]}]'], 
             ['id' => 3]
         );
+        $this->addColumn('tournaments', 'state', $this->integer(3)->null());
     }
 
-    /**
-     * {@inheritdoc}
-     */
+        
     public function safeDown()
     {
         $this->dropColumn('tournaments', 'forum_text');
+        $this->dropColumn('tournaments', 'state');
     }
 
     /*

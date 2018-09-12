@@ -37,7 +37,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tournament_id', 'team1', 'team2', 'results1', 'results2', 'tur', 'group'], 'integer'],
+            [['tournament_id', 'team1', 'team2', 'results1', 'results2', 'tur', 'group','format'], 'integer'],
             [['date'], 'safe'],
             [['team1'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team1' => 'id']],
             [['team2'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team2' => 'id']],

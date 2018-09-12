@@ -152,16 +152,17 @@ class TournamentsController extends \yii\web\Controller
             $player_2 = array_pop($players);
             $cup["teams"][] = [$player_1,$player_2];
         }
-
-        $cup["results"][] = [];
+        $result = $model->createSchedule($cup["teams"]);
+        $cup["results"][] = $result;
         if($model->format == Tournaments::DUBLE_E){
             $cup["results"] = [[[[]]], [], []];
         }
-        $model->cup = json_encode($cup);
 
-        if($model->save(false)){
-            $model->createSchedule($cup["teams"]);
-        }
+        $model->cup = json_encode($cup);
+        $model->state = 1;
+        $model->save(false);
+            
+        
         return $this->redirect('/tournaments/public/'.$model->id.'#tournamentgrid');  
         
     }
@@ -173,6 +174,7 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($model)) {
            throw new HttpException(404 ,'Page not found');
         }
+        $model->state = 1;
         $model->createLeague();
         return $this->redirect('/tournaments/public/'.$id.'#matches');
     }

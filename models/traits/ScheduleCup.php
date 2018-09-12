@@ -3,10 +3,21 @@
 namespace app\models\traits;
 
 
-
 trait ScheduleCup {
 
     private $lusers = [];
+
+    public function ScheduleCupTur($tur)
+    {
+        $raspisanie = $this->getScheduleCupSingle();
+        if(!empty($raspisanie[$tur])) {
+
+        }
+        echo "<pre>";
+        print_r($raspisanie[0]);
+        echo "</pre>";
+        
+    }
 
     public function getScheduleCupSingle () 
     {
@@ -18,20 +29,15 @@ trait ScheduleCup {
             $results = [[null]];
         }
         foreach ($results as $tur => $znachenie) {
-
             $raspisanie[] = $this->kley($teams,$znachenie,$tur);
             if(!$this->is_result_null($znachenie)){
                 break;
             }
             $teams = $this->delete_luser($teams,$znachenie);
-          
         }
-        if ($this->format == self::DUBLE_E) {
-            return $raspisanie;
-        }
-        $this->addSchedule($raspisanie);
-        //$this->league = json_encode($raspisanie);
-       
+        
+        return $raspisanie;
+        
     }
            
     public function getScheduleCupDuble () 
@@ -145,5 +151,11 @@ trait ScheduleCup {
         }
         return true;
     }
+
+    public function writeResult($result,$max) {
+       if ( $this->is_result_null($result)) {
+            return true;
+       }
+   }
 
 }

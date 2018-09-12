@@ -6,20 +6,7 @@ use yii\helpers\Html;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
-/**
- * This is the model class for table "tournaments".
- *
- * @property int $id
- * @property int $game_id
- * @property int $format
- * @property string $rules
- * @property string $prizes
- * @property string $start_date
- * @property int $created_at
- * @property int $updated_at
- *
- * @property Games $game
- */
+
 class Tournaments extends \yii\db\ActiveRecord
 {
     use \app\models\traits\ScheduleCup;
@@ -55,10 +42,10 @@ class Tournaments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p','league_g'], 'integer'],
+            [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p','league_g','state'], 'integer'],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
             [['rules', 'prizes','name'], 'string'],
-            [['start_date','region','data','cup','league','league_table','forum_text'], 'safe'],
+            [['start_date','region','data','cup','league_table','forum_text'], 'safe'],
             [['name'], 'unique'],
             [['game_id'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['game_id' => 'id']],
         ];

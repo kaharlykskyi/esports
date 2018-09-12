@@ -7,9 +7,7 @@ use yii\db\Migration;
  */
 class m180911_171240_table_schedule_teams extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
+   
     public function safeUp()
     {
          $this->createTable('schedule_teams', [
@@ -20,6 +18,7 @@ class m180911_171240_table_schedule_teams extends Migration
             'results1'=> $this->integer()->null(),
             'results2'=> $this->integer()->null(),
             'tur' => $this->integer()->null(),
+            'format' => $this->integer(3)->null(),
             'group' => $this->integer()->null(),
             'date' => $this->dateTime()->null(),
         ]);

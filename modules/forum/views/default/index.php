@@ -60,27 +60,23 @@
                     <h6 style="text-align: center;" >Match topic</h6>
                     <table class="table-standings">
                         <tbody>
-                            <?php foreach ($topics as $topic):?>
-                                <?php if(!is_null($topic->num_schedule)): ?>
+                           <?php $topicsa = $model->getSchedule(); ?>
+                            <?php foreach ($topicsa as $topic):?>
                                     <tr>
                                         <td class="up">
-                                            <span class="team"><a href="/forum/topic/<?=$topic->id?>"><?=$topic->name ?></a></span> 
+                                            <span class="team"><a href="/forum/topic/<?=$topic->id?>"><?=$topic['f_name'].' vs '.$topic['s_name'] ?></a></span> 
                                         </td>
-                                        <td>Round</td>
-                                        <td><?= $topic->countPost() ?><i class="glyphicon glyphicon-comment"></i></td>
-                                        
+                                        <td><?=$topic['tur']?> Round</td>
+                                        <td><?//$topic->countPost() ?><i class="glyphicon glyphicon-comment"></i></td>
                                     </tr>
-                                <?php endif; ?>
                             <?php endforeach; ?>
                        </tbody>
                 </table>
             </div>
-
             <div >
                 <a  href="/forum/create-topic/<?=$model->id?>" class="btn" style="float:right;" >Create new topic</a>
             </div>
         </div>
-        
     </div>
     <div class="row" style="margin-top:30px;">
         <?php foreach ($topics as $topic):?>

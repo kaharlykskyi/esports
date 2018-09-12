@@ -112,7 +112,7 @@
                                     <?=Schedule::widget(['model'=>$model])?>
                                 <?php endif; ?>
 
-                                <?php if(!empty($groups = json_decode($model->league))&&($model->format == Tournaments::LEAGUE_G)): ?>
+                                <?php if($model->format == Tournaments::LEAGUE_G): ?>
                                     <?=Schedule::widget(['model'=>$model])?>
                                 <?php endif; ?>
                             </div>
@@ -127,7 +127,7 @@
                     <div class="row">
                         <div class="col-md-12" style="margin-bottom: 35px;">
                            <?php if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)): ?> 
-                               <?php if(empty($model->cup) && $capitan): ?>
+                               <?php if(empty($model->state) && $capitan): ?>
                                     <?php if (in_array(count($players),[4,8,16,32,64,128])): ?>
                                         <form action="/tournaments/add-schedule?id=<?=$model->id?>" method="POST"  >
                                             <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
@@ -143,7 +143,7 @@
                             <?php if(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P)||($model->format == Tournaments::LEAGUE_G)): ?>
                                 <div class="col-md-12" >
                                     <?php $count_playoff = count($players) ?>
-                                    <?php if(empty($model->league) && $capitan): ?>
+                                    <?php if(empty($model->state) && $capitan): ?>
                                         <?php if($count_playoff >= 4): ?>
                                         <form action="/tournaments/add-league?id=<?=$model->id?>" method="POST"  >
                                             <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
