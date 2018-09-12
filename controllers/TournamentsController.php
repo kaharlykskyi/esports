@@ -158,16 +158,9 @@ class TournamentsController extends \yii\web\Controller
             $cup["results"] = [[[[]]], [], []];
         }
         $model->cup = json_encode($cup);
-        if($model->save(false)){
-            if ($model->format == Tournaments::SINGLE_E) {
-                $model->getScheduleCupSingle();
-            }
-            if ($model->format == Tournaments::DUBLE_E) {
-                $model->getScheduleCupDuble();
-                $model->addForumTopic();
-            }
-            $model->save(false);
 
+        if($model->save(false)){
+            $model->createSchedule($cup["teams"]);
         }
         return $this->redirect('/tournaments/public/'.$model->id.'#tournamentgrid');  
         
@@ -175,52 +168,12 @@ class TournamentsController extends \yii\web\Controller
 
     public function actionAddLeague($id)
     {
-        
-        $mass = $this->getTeams($id);
-        list('players' => $players, 'model' => $model) = $mass;
-        $c = count($players);
-        $ch = $c%2 == 0 ? 1 : 0;
-        $c_block = [];
-        $players_turs = [];
 
-        if ( $model->format == Tournaments::LEAGUE_G ) {
-            if (!$ch) {
-                return $this->redirect('/tournaments/public/'.$id.'#matches');
-            }
-
-            $group = $c/$model->league_g;
-            for ($d=0; $d < $group; $d++) {
-                $group_mas = []; 
-                for ($dc=0; $dc < $model->league_g; $dc++) { 
-                    $group_mas[] = array_pop($players);
-                }
-                $c_block[] = $group_mas;
-            }
-            $model->league_table = json_encode($c_block);
-            for ($i=0; $i < $group; $i++) { 
-                $players_turs[] = $this->generateLeague($c_block[$i],$ch,$model);
-            }
+        $model = Tournaments::findOne($id);
+        if (!is_object($model)) {
+           throw new HttpException(404 ,'Page not found');
         }
-        
-        if (($model->format == Tournaments::LEAGUE_P) || ($model->format == Tournaments::LEAGUE)) {
-            $players_turs = $this->generateLeague($players,$ch,$model);
-            $model->league_table = json_encode($players);
-        }   
-
-        if ((Yii::$app->user->identity->id == $model->user_id) && empty($model->league)) {
-            $model->league = json_encode($players_turs);
-            if ( isset($model->league_p) && (($model->format == Tournaments::LEAGUE_P) || ($model->format == Tournaments::LEAGUE_G))) {
-                $cup["teams"] = [];
-                $count_p = $model->league_p/2;
-                for ($i=0; $i < $count_p; $i++) { 
-                    $cup["teams"][] = [['BYE'],['BYE']];
-                }
-                $cup["results"][] = [];
-                $model->cup = json_encode($cup);
-            }
-            $model->save(false);
-            $model->addForumTopic();
-        }
+        $model->createLeague();
         return $this->redirect('/tournaments/public/'.$id.'#matches');
     }
 
@@ -240,53 +193,10 @@ class TournamentsController extends \yii\web\Controller
         return compact('players','model');
     }
 
-    private function generateLeague($players,$ch,$model)
-    {
-            $c = count($players);
-            $players_turs = [];
-            if (!$ch) {
-                array_unshift($players, ['name'=>'bolvan']);
-            }
-            $a =$c/2;
-            $mass_temp = [];
-            for ($int=1; $int <= $c; $int++) { 
-                $mass_temp[] = $int;
-            }
-            $b =$c-1;
-            
-            for ($c=0; $c < $b; $c++) { 
-                $turs = [];
-                for ($i=0; $i < $a; $i++) { 
-                    $date = new \DateTime($model->start_date);
-                    $date->add(new \DateInterval('P'.($c*$model->match_schedule).'D'));
-                    $date = $date->format('Y-m-d H:i'); 
-                   $turs[] = [
-                        'players1' => $players[$mass_temp[$i]-1],
-                        'players2' => $players[$mass_temp[$i+$a]-1],
-                        'result1'  => 0,
-                        'result2'  => 0,
-                        'date' => $date,
-                    ];
-                }
-                $players_turs[] = $turs;
-                $output1 = array_slice($mass_temp, $a);
-                $output2 = array_slice($mass_temp, 1,$a-1);
-                $output3 = array_merge($output1,$output2);
-                array_unshift($output3, $mass_temp[0]);
-                $mass_temp = $output3;
-            }
-            if(!$ch){
-                foreach ($players_turs as &$value) {
-                   unset($value[0]);
-                }
-            }
-        return $players_turs;
-    }
-
 
     public function actionQwert($id)
     {
         $model = Tournaments::findOne($id);
-        $model->getScheduleCupSingle();
+        $model->createLeague();
     }
 }

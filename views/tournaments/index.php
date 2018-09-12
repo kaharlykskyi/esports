@@ -6,7 +6,7 @@
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
     use kartik\datetime\DateTimePicker;
-    use app\widgets\Bracket;
+    use app\widgets\Schedule;
     use app\models\Tournaments;
 
     $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
@@ -100,186 +100,21 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="main-lates-matches">
-                                <?php if(!empty($turs = json_decode($model->league))&&(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P))): ?>
-                                <?php  foreach ($turs as $key => $tur): ?>
-                                    <div class="col-md-12">
-                                        <h5 style="text-align: center;">ROUND <?=$key+1?></h5>
-                                        <?php foreach ($tur as $posit_game): ?>
-                                        <p href="matches.html" class="item">
-                                            <span class="teams-wrap">
-                                                <span class="team">
-                                                    <a href="/teams/public/<?=$posit_game->players1->id?>">
-                                                        <span><img src="<?= $posit_game->players1->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" ></span><span><?=$posit_game->players1->name?></span>
-                                                    </a>
-                                                </span>
-                                                <span class="score"><span><?=$posit_game->result1 ?>:<?=$posit_game->result2 ?></span></span>
-                                                <span class="team1">
-                                                    <a href="/teams/public/<?=$posit_game->players2->id?>">
-                                                        <span><?=$posit_game->players2->name?></span><span><img src="<?= $posit_game->players2->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  ></span>
-                                                    </a>
-                                                </span>
-                                            </span>
-                                            <span class="game-result"><?=$posit_game->date ?></span>
-                                        </p>
-                                        <?php endforeach; ?>
-                                    </div>
-                                <?php endforeach; ?>
+                                <?php if($model->format == Tournaments::LEAGUE||$model->format == Tournaments::LEAGUE_P): ?>
+                                    <?=Schedule::widget(['model'=>$model])?>
                                 <?php endif; ?>
                                 
                                 <?php if(!empty($model->cup)&&(($model->format == Tournaments::SINGLE_E))): ?>
-                                    <?php  $turs = json_decode($model->league)??[];    ?>
-                                    <div class="col-md-12">
-                                        <?php  foreach ($turs as $key => $tur): ?>
-                                    
-                                        <h5 style="text-align: center;">ROUND <?=$key+1?></h5>
-                                        <?php foreach ($tur as $posit_game): ?>
-                                        <p class="item">
-                                            <span class="teams-wrap">
-                                                <span class="team">
-                                                    <a href="/teams/public/<?=$posit_game->{0}->id?>">
-                                                        <span>
-                                                            <img src="<?= $posit_game->{0}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
-                                                        </span>
-                                                        <span><?=$posit_game->{0}->name?></span>
-                                                    </a>
-                                                </span>
-                                                <span class="score">
-                                                    <span><?=$posit_game->rezult1 ?>:<?=$posit_game->rezult2 ?></span>
-                                                </span>
-                                                    <span class="team1">
-                                                        <a href="/teams/public/<?=$posit_game->{1}->id?>">
-                                                            <span><?=$posit_game->{1}->name?></span>
-                                                            <span>
-                                                                <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
-                                                            </span>
-                                                        </a>
-                                                    </span>
-                                            </span>
-                                            <span class="game-result"><?=$posit_game->date ?></span>
-                                        </p>
-                                        <?php endforeach; ?>
-                                    
-                                        <?php endforeach; ?>
-                                    </div>
+                                    <?=Schedule::widget(['model'=>$model])?>
                                 <?php endif; ?>
 
                                 <?php if(!empty($model->cup)&&($model->format == Tournaments::DUBLE_E)): ?>
-                                    <?php  $turs = json_decode($model->league)??[];    ?>
-                                    
-                                    <div class="col-md-12"><h3 style="margin: 20px 0 0;text-align: center;">Winner</h3></div> 
-                                    <div class="col-md-12">
-                                        <?php  foreach ($turs[0] as $key => $tur): ?>
-
-                                            <h5 style="text-align: center;">ROUND <?=$key+1?></h5>
-                                            <?php foreach ($tur as $posit_game): ?>
-                                                <p class="item">
-                                                    <span class="teams-wrap">
-                                                        <span class="team">
-                                                            <a href="/teams/public/<?=$posit_game->{0}->id?>">
-                                                                <span>
-                                                                <img src="<?= $posit_game->{0}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
-                                                                </span>
-                                                                <span><?=$posit_game->{0}->name?></span>
-                                                            </a>
-                                                        </span>
-                                                        <span class="score">
-                                                            <span><?=$posit_game->rezult1 ?>:<?=$posit_game->rezult2 ?></span>
-                                                        </span>
-                                                        <span class="team1">
-                                                            <a href="/teams/public/<?=$posit_game->{1}->id?>">
-                                                                <span><?=$posit_game->{1}->name?></span>
-                                                                <span>
-                                                                    <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
-                                                                </span>
-                                                            </a>
-                                                        </span>
-                                                    </span>
-                                                <span class="game-result"><?=$posit_game->date ?></span>
-                                            </p>
-                                        <?php endforeach; ?>
-
-                                    <?php endforeach; ?>
-
-                                </div>
-
-                                <div class="col-md-12">
-                                    <?php if(!empty($turs[1])) ?>
-                                         <div class="col-md-12"><h3 style="margin: 20px 0 0;text-align: center;">Loser</h3></div>
-                                    <?php ?>
-                                   
-                                    <?php  foreach ($turs[1] as $key => $tur): ?>
-                                        <h5 style="text-align: center;">ROUND <?=$key+1?></h5>
-                                        <?php foreach ($tur as $posit_game): ?>
-                                            <p class="item">
-                                                <span class="teams-wrap">
-                                                    <span class="team">
-                                                        <a href="/teams/public/<?=$posit_game->{0}->id?>">
-                                                            <span>
-                                                                <img src="<?= $posit_game->{0}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
-                                                            </span>
-                                                            <span><?=$posit_game->{0}->name?></span>
-                                                        </a>
-                                                    </span>
-                                                    <span class="score">
-                                                        <span><?=$posit_game->rezult1 ?>:<?=$posit_game->rezult2 ?></span>
-                                                    </span>
-                                                    <span class="team1">
-                                                        <a href="/teams/public/<?=$posit_game->{1}->id?>">
-                                                            <span><?=$posit_game->{1}->name?></span>
-                                                            <span>
-                                                                <img src="<?= $posit_game->{1}->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
-                                                            </span>
-                                                        </a>
-                                                    </span>
-                                                </span>
-                                            <span class="game-result"><?=$posit_game->date ?></span>
-                                        </p>
-                                    <?php endforeach; ?>
-
-                                <?php endforeach; ?>
-                            </div>
-
-
-
+                                    <?=Schedule::widget(['model'=>$model])?>
                                 <?php endif; ?>
 
                                 <?php if(!empty($groups = json_decode($model->league))&&($model->format == Tournaments::LEAGUE_G)): ?>
-                                    <?php foreach ($groups as $keys => $group): ?>
-                                        <h3 style="text-align: center;">GROUP <?=$keys+1?></h3>
-                                        <?php  foreach ($group as $key => $turs): ?>
-                                            <h5 style="text-align: center;">ROUND <?=$key+1?></h5>
-                                            <?php  foreach ($turs as $tur): ?>
-                                            <p class="item">
-                                            <span class="teams-wrap">
-                                                <span class="team">
-                                                    <a href="/teams/public/<?=$tur->players1->id?>">
-                                                        <span>
-                                                            <img src="<?= $tur->players1->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
-                                                        </span>
-                                                        <span><?=$tur->players1->name?></span>
-                                                    </a>
-                                                </span>
-                                                <span class="score">
-                                                    <span><?=$tur->result1?>:<?=$tur->result2?></span>
-                                                </span>
-                                                <span class="team1">
-                                                    <a href="/teams/public/<?=$tur->players2->id?>">
-                                                        <span><?=$tur->players2->name?></span>
-                                                        <span>
-                                                            <img src="<?= $tur->players2->logo ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
-                                                        </span>
-                                                    </a>
-                                                </span>
-                                            </span>
-                                            <span class="game-result"><?=$tur->date ?></span>
-                                        </p>
-                                            <?php endforeach; ?>
-                                        <?php endforeach; ?>
-                                    <?php endforeach; ?>
-
+                                    <?=Schedule::widget(['model'=>$model])?>
                                 <?php endif; ?>
-
-
                             </div>
                         </div>
                     </div>
