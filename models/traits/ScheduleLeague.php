@@ -21,7 +21,6 @@ trait ScheduleLeague {
             if (!$ch) {
                 return false;
             }
-
             $group = $c/$this->league_g;
             for ($d=0; $d < $group; $d++) {
                 $group_mas = []; 
@@ -44,7 +43,7 @@ trait ScheduleLeague {
 
         if ((\Yii::$app->user->identity->id == $this->user_id)) {
             
-            $this->createSchedule($players_turs);
+            $this->createSchedule($players_turs,2);
 
             if ( isset($this->league_p) && (($this->format == self::LEAGUE_P) || ($this->format == self::LEAGUE_G))) {
                 $cup["teams"] = [];

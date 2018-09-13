@@ -60,11 +60,21 @@
                     <h6 style="text-align: center;" >Match topic</h6>
                     <table class="table-standings">
                         <tbody>
-                           <?php $topicsa = $model->getSchedule(); ?>
+                            <?php $topicsa = $model->getScheduleLeague(); ?>
                             <?php foreach ($topicsa as $topic):?>
                                     <tr>
                                         <td class="up">
-                                            <span class="team"><a href="/forum/topic/<?=$topic->id?>"><?=$topic['f_name'].' vs '.$topic['s_name'] ?></a></span> 
+                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name'].' vs '.$topic['s_name'] ?></a></span> 
+                                        </td>
+                                        <td><?=$topic['tur']?> Round</td>
+                                        <td><?//$topic->countPost() ?><i class="glyphicon glyphicon-comment"></i></td>
+                                    </tr>
+                            <?php endforeach; ?>
+                            <?php $topicsa = $model->getScheduleCup(); ?>
+                            <?php foreach ($topicsa as $topic):?>
+                                    <tr>
+                                        <td class="up">
+                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name'].' vs '.$topic['s_name'] ?></a></span> 
                                         </td>
                                         <td><?=$topic['tur']?> Round</td>
                                         <td><?//$topic->countPost() ?><i class="glyphicon glyphicon-comment"></i></td>

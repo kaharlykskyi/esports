@@ -4,23 +4,7 @@ namespace app\models;
 
 use Yii;
 
-/**
- * This is the model class for table "schedule_teams".
- *
- * @property int $id
- * @property int $tournament_id
- * @property int $team1
- * @property int $team2
- * @property int $results1
- * @property int $results2
- * @property int $tur
- * @property int $group
- * @property string $date
- *
- * @property Teams $team10
- * @property Teams $team20
- * @property Tournaments $tournament
- */
+
 class ScheduleTeams extends \yii\db\ActiveRecord
 {
     /**
@@ -66,7 +50,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTeam10()
+    public function getTeamF()
     {
         return $this->hasOne(Teams::className(), ['id' => 'team1']);
     }
@@ -74,7 +58,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTeam20()
+    public function getTeamS()
     {
         return $this->hasOne(Teams::className(), ['id' => 'team2']);
     }

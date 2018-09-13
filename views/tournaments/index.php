@@ -46,7 +46,7 @@
                             <?php if($capitan):?>
                                 <li><a href="#manage_tournament">Manage Tournament</a></li>
                             <?php endif; ?>
-                            <?php if( in_array(['id' => Yii::$app->user->identity->id],$users_id)): ?>
+                            <?php if( in_array(['id' => Yii::$app->user->identity->id],$users_id)&&!empty($model->state)): ?>
                                 <span><a href="/forum/<?=$model->id?>">Tournament thread</a></span>
                             <?php endif; ?>
                         </ul>       
@@ -100,21 +100,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="main-lates-matches">
-                                <?php if($model->format == Tournaments::LEAGUE||$model->format == Tournaments::LEAGUE_P): ?>
-                                    <?=Schedule::widget(['model'=>$model])?>
-                                <?php endif; ?>
-                                
-                                <?php if(!empty($model->cup)&&(($model->format == Tournaments::SINGLE_E))): ?>
-                                    <?=Schedule::widget(['model'=>$model])?>
-                                <?php endif; ?>
-
-                                <?php if(!empty($model->cup)&&($model->format == Tournaments::DUBLE_E)): ?>
-                                    <?=Schedule::widget(['model'=>$model])?>
-                                <?php endif; ?>
-
-                                <?php if($model->format == Tournaments::LEAGUE_G): ?>
-                                    <?=Schedule::widget(['model'=>$model])?>
-                                <?php endif; ?>
+                                <?=Schedule::widget(['turs'=> $model->getScheduleCup()])?>
+                                <?=Schedule::widget(['turs'=> $model->getScheduleLeague()])?>
                             </div>
                         </div>
                     </div>

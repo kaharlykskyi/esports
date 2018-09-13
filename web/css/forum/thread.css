@@ -113,3 +113,64 @@ table tr td {
  font-size: 15px;
 }
 
+
+.tems_vs img{
+    height: 100px;
+    border-radius: 50%;
+    padding-top: 20px
+}
+
+.tems_vs{
+    border:1px solid #ccc;
+    border-radius: 10px;
+    padding:35px;
+    margin-top: 35px;
+    -webkit-box-shadow: -1px 2px 21px 1px rgba(0,0,0,0.43);
+    -moz-box-shadow: -1px 2px 21px 1px rgba(0,0,0,0.43);
+    box-shadow: -1px 2px 21px 1px rgba(0,0,0,0.43);
+    background-color: #fff;
+}
+
+.tems_vs h6 ,.tems_vs p{
+    text-align: center;
+}
+.tems_vs h6{
+    padding: 0;
+}
+
+.tems_vs input{
+    border:1px solid #ccc;
+    border-radius: 10px;
+}
+
+/*//////////////////////////////datapicer////////////////////////////*/
+
+.datetimepicker td,  .datetimepicker th {
+    text-align: center;
+    width: 15px;
+    height: 15px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: none;
+    padding-left: 5px;
+    padding-right:5px;
+    font-size: 12px;
+}
+
+.datetimepicker table tr td:first-child {
+    text-transform: uppercase;
+    font-family: Montserrat,sans-serif;
+    text-align: center;
+}
+
+.datetimepicker table tr th{
+    background-color: transparent;
+    color: #000;
+}
+
+
+.datetimepicker table tr td span{
+    background-color: transparent;
+    color: #000;
+}

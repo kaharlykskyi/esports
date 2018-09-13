@@ -152,7 +152,7 @@ class TournamentsController extends \yii\web\Controller
             $player_2 = array_pop($players);
             $cup["teams"][] = [$player_1,$player_2];
         }
-        $result = $model->createSchedule($cup["teams"]);
+        $result = $model->createSchedule($cup["teams"],1);
         $cup["results"][] = $result;
         if($model->format == Tournaments::DUBLE_E){
             $cup["results"] = [[[[]]], [], []];

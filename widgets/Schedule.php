@@ -6,13 +6,12 @@ use yii\base\Widget;
 
 class Schedule extends Widget
 {
-    public $model;
+    public $turs;
 
     public function run()
     {
-        $turs = $this->model->getSchedule(); 
-
-        return $this->render('schedule',compact('turs'));
+    	$turs = $this->turs;
+    	return $this->render('schedule',compact('turs'));
         
     }
 }

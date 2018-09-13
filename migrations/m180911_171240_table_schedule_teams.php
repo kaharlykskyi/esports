@@ -19,6 +19,7 @@ class m180911_171240_table_schedule_teams extends Migration
             'results2'=> $this->integer()->null(),
             'tur' => $this->integer()->null(),
             'format' => $this->integer(3)->null(),
+            'status' => $this->integer(3)->null(),
             'group' => $this->integer()->null(),
             'date' => $this->dateTime()->null(),
         ]);
