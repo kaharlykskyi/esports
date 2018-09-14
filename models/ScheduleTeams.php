@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\modules\forum\models\SchedulePost;
 
 
 class ScheduleTeams extends \yii\db\ActiveRecord
@@ -70,4 +71,6 @@ class ScheduleTeams extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Tournaments::className(), ['id' => 'tournament_id']);
     }
+
+    
 }

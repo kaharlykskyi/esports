@@ -7,6 +7,7 @@
     use app\models\Tournaments;
     use dosamigos\ckeditor\CKEditor;
     use kartik\datetime\DateTimePicker;
+    use yii\widgets\Breadcrumbs;
 
     $this->title = 'Topic-Schedule';
     $this->registerCssFile('css/forum/thread.css', ['depends' => ['app\assets\AppAsset']]);
@@ -14,28 +15,49 @@
 
 $team1 = $topic->teamS;
 $team2 = $topic->teamF;
+
+
+$time_match = time();
+$time_do_match = strtotime('-30 minute',strtotime($topic->date));
+
+$time_do_start = strtotime('-2 day',strtotime($topic->date));
+
+if ($time_do_start < time()) {
+    $time_do_start = time();
+}
+
+$this->params['breadcrumbs'][] = ['label' => 'Tournament', 'url' => ['/tournaments/public/'.$topic->tournament->id] ];
+$this->params['breadcrumbs'][] = ['label' => 'Forum', 'url' => ['/forum/'.$topic->tournament->id] ];
+$this->params['breadcrumbs'][] = ['label' => $team1->name.' vs '.$team2->name];
+
+
 ?>
 
 
 <div class="container">
-    
+    <?=  Breadcrumbs::widget(['links' => $this->params['breadcrumbs']?? [], ]) ?>
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 tems_vs">
-           <div class="col-sm-3 ">
+           <div class="col-sm-2 ">
             <p><img src="<?=$team1->logo?>" alt=""></p>
             </div>
-            <div class="col-sm-6 ">
-                <p style="text-transform: uppercase;font-weight: bold; "><a href="/tournaments/public/<?=$topic->tournament_id?>"><?=$topic->tournament->name?></a>&nbsp;&nbsp;<span>ROUND  <?=$topic->tur?></span></p>
-                <h6><a href="/teams/public/<?=$topic->team1?>"> <?=$team1->name?></a>&nbsp;&nbsp;<span style="color:red;font-size: 25px;" >VS</span>&nbsp;&nbsp;<a href="/teams/public/<?=$topic->team2?>"><?=$team2->name?></a></h6>
-                <p style="margin-bottom: 0;" ><?=date(' m \of F, Y ',strtotime($topic->date))?></p>
-                <p style="margin-bottom: 0;" ><?=date('h:i',strtotime($topic->date))?></p>
+            <div class="col-sm-8 ">
+                <p style="text-transform: uppercase;font-weight: bold;margin: 0; "><a href="/tournaments/public/<?=$topic->tournament_id?>"><?=$topic->tournament->name?></a></p>
+                <p style="font-weight: bold;text-align: center;margin: 0;"><span>ROUND  <?=$topic->tur?></span></p>
+                    <div class="row" style="font-weight: bold;font-size:13px;">
+                        <div class="col-sm-5" style="text-align:right;padding: 0;" ><a href="/teams/public/<?=$topic->team1?>"> <?=$team1->name?></a></div>
+                        <div class="col-sm-2" style="text-align:center;font-size: 25px;padding: 0;" ><span>VS</span></div>
+                        <div class="col-sm-5" style="padding: 0;"><a href="/teams/public/<?=$topic->team2?>"><?=$team2->name?></a></div>
+                    </div>
+                <p style="margin-bottom: 0;font-size:13px;" ><?=date(' m \of F, Y ',strtotime($topic->date))?></p>
+                <p style="margin-bottom: 0;font-size:13px;" ><?=date('h:i',strtotime($topic->date))?></p>
             </div>
-            <div class="col-sm-3 ">
+            <div class="col-sm-2 ">
                 <p><img src="<?=$team2->logo?>" alt=""></p>
             </div>
         </div>
     </div>
-
+<?php if(($topic->status != 1)&&($time_match < $time_do_match)&&((\Yii::$app->user->identity->id==$team1->capitan)||(\Yii::$app->user->identity->id==$team2->capitan)||(\Yii::$app->user->identity->id == $topic->tournament->user_id))): ?>
     <div class="row" style="margin-top: 35px;" >
         <p style="text-align: center;">
             <span style="font-size: 18px;font-weight: bold;" >Satge:</span>
@@ -47,6 +69,7 @@ $team2 = $topic->teamF;
     <div class="row">
         <?php $form = ActiveForm::begin([ 
             'method' => 'post',
+            'action' => '/forum/data-update/'.$topic->id,
             'validateOnBlur'=>false,  
             'options' => ['enctype' => 'multipart/form-data'],
             'fieldConfig' => [
@@ -58,11 +81,11 @@ $team2 = $topic->teamF;
         $form->successCssClass = false;
 
         ?>
-        <div class="col-sm-10 col-sm-offset-1 tems_vs cahenge_date_panel">
+        <div class="col-sm-10 col-sm-offset-1 tems_vs cahenge_date_panel" style="display: none;">
            <div class="col-md-12 ">
                 <div class="col-md-6 ">
                     <label class="col-sm-12 control-label" for="scheduleteams-date">Curent date:</label>
-                    <input type="text" class="form-control" value=" <?=date('Y-m-d H:i') ?>"  readonly>
+                    <input type="text" class="form-control" value=" <?=date('Y-m-d H:i',strtotime($topic->date))?>"  readonly>
                 </div>
                 <div id="datechenge" class="col-md-6 ">
                         <?php  
@@ -75,32 +98,37 @@ $team2 = $topic->teamF;
                             'convertFormat' => true,
                             'pluginOptions' => [
                                 'format' => 'yyyy-MM-dd hh:i',
-                                'startDate' => date("Y-m-d H:i"),
+                                'startDate' => date("Y-m-d H:i",$time_do_start),
+                                'endDate'  => date("Y-m-d H:i",strtotime('+2 day',strtotime($topic->date))),
                                 'todayHighlight' => true
                             ]])->label('Chenge date:'); 
                         ?>
+                </div>
+                <div class="col-sm-12" style="text-align: center;margin-top: 15px;">
+                    <input type="submit" class = 'btn btn-primary' value="Save" style = 'width: 160px;'>
                 </div>
             </div>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
-
-<div class="row">
-   
-
-
-    
-        <?php foreach ($posts as $post):?>
+<?php endif; ?>
+<div class="row" style="margin-top: 25px;">
+    <?php foreach ($posts as $post):?>
         <div class="col-sm-10 col-sm-offset-1 post-element">
-            <div class="col-sm-3 author-avatar">
+            <div class="col-sm-2 author-avatar">
                <a href="#"><img src="/images/common/author-avatar.jpg" alt="author-avatar"></a>
-               <p class='name' ><?=$post->user->name?></p>
            </div>
-            <div class="col-sm-9"><?=$post->text?></div>
-
+            <div class="col-sm-10">
+                <p>
+                    <span style="font-weight:bold;" ><?=$post->user->name?></span>
+                    <span style="float: right;color:#afacac;" >
+                        <?= date(' m \of F, Y ',$post->created_at)?>
+                    </span>
+                </p>
+                <div class="content_text"> <?=$post->text?></div>
+            </div>
         </div>
-        
-        <?php endforeach; ?>
+    <?php endforeach; ?>
 
 <?php $form = ActiveForm::begin([ 
     'method' => 'post',
@@ -116,8 +144,8 @@ $form->successCssClass = false;
 
 ?>
     
-<?php if(!$topic->status): ?>
-    <div class="col-md-8 col-md-offset-2" style="margin-top: 25px;margin-bottom: 25px;"> 
+<?php if($topic->status !=2): ?>
+    <div class="col-xs-10 col-xs-offset-1 " style="margin-top: 35px;margin-bottom: 25px;padding: 0;"> 
         <?= $form->field($new_post, 'text')->widget(CKEditor::className(), [
             'options' => ['rows' => 6],
             'preset' => 'basic'
@@ -129,3 +157,5 @@ $form->successCssClass = false;
 
 <?php ActiveForm::end(); ?>
 </div>
+
+

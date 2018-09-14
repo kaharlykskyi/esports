@@ -3,13 +3,16 @@
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
     use dosamigos\ckeditor\CKEditor;
-
+    use yii\widgets\Breadcrumbs;
     $this->registerCssFile('css/forum/thread.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/forum/index.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Forum';
+    
+    $this->params['breadcrumbs'][] = ['label' => 'Tournament', 'url' => ['/tournaments/public/'.$topic->tournament->id] ];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container">
+     <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']?? [], ]) ?>
     <div class="row">
         <h2 style="text-align:center; " >Tournament thread </h2>
         <div class="col-md-10 col-md-offset-1" style="margin-bottom: 35px;">
@@ -26,6 +29,7 @@
                     <h6>Tournament schelude</h6>
                     <div><?=$model->forum_text?></div>
                 </div>
+                <span id='down-text' class="glyphicon glyphicon-chevron-down "></span>
             </div>
         </div>
     </div>
@@ -61,23 +65,35 @@
                     <table class="table-standings">
                         <tbody>
                             <?php $topicsa = $model->getScheduleLeague(); ?>
-                            <?php foreach ($topicsa as $topic):?>
+                            <?php $i=0;foreach ($topicsa as $topic):?>
+                                    <?php if($i<(int)$topic['tur']): ?>
+                                        <?php $i = (int)$topic['tur']?>
+                                        <tr >
+                                            <td colspan="3" height="100%" style="text-align: center;" >Round <?=$i?></td>
+                                        </tr>
+                                   <?php endif; ?>
                                     <tr>
                                         <td class="up">
                                             <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name'].' vs '.$topic['s_name'] ?></a></span> 
                                         </td>
                                         <td><?=$topic['tur']?> Round</td>
-                                        <td><?//$topic->countPost() ?><i class="glyphicon glyphicon-comment"></i></td>
+                                        <td><?= $topic['count_post'] ?><i class="glyphicon glyphicon-comment"></i></td>
                                     </tr>
                             <?php endforeach; ?>
                             <?php $topicsa = $model->getScheduleCup(); ?>
-                            <?php foreach ($topicsa as $topic):?>
+                            <?php $a=0; foreach ($topicsa as $topic):?>
+                                    <?php if($a<(int)$topic['tur']): ?>
+                                        <?php $a = (int)$topic['tur']?>
+                                        <tr>
+                                            <td colspan="3" height="100%" style="text-align: center;" >Round <?=$a?></td>
+                                        </tr>
+                                    <?php endif; ?>
                                     <tr>
                                         <td class="up">
                                             <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name'].' vs '.$topic['s_name'] ?></a></span> 
                                         </td>
                                         <td><?=$topic['tur']?> Round</td>
-                                        <td><?//$topic->countPost() ?><i class="glyphicon glyphicon-comment"></i></td>
+                                        <td><?= $topic['count_post'] ?><i class="glyphicon glyphicon-comment"></i></td>
                                     </tr>
                             <?php endforeach; ?>
                        </tbody>
@@ -109,6 +125,4 @@
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
-
-
 </div>

@@ -5,24 +5,17 @@ namespace app\modules\forum\models;
 use Yii;
 use app\models\ScheduleTeams;
 use app\models\User;
-/**
- * This is the model class for table "schedule_post".
- *
- * @property int $id
- * @property int $schedule_teams_id
- * @property int $user_id
- * @property string $text
- * @property int $created_at
- * @property int $updated_at
- *
- * @property ScheduleTeams $scheduleTeams
- * @property Users $user
- */
+use yii\behaviors\TimestampBehavior;
+
 class SchedulePost extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            TimeStampBehavior::className(),
+        ];
+    }
+
     public static function tableName()
     {
         return 'schedule_post';

@@ -87,7 +87,7 @@ class DefaultController extends Controller
         if (Yii::$app->request->isPost) {
             if ($new_post->load(Yii::$app->request->post())) {
                 $new_post->user_id = Yii::$app->user->identity->id;
-                $new_post->forum_topic_id = $topic->id;
+                $new_post->schedule_teams_id = $topic->id;
                 $new_post->save(false);
             }
             return $this->refresh();
@@ -118,11 +118,8 @@ class DefaultController extends Controller
             }
         }
         
-        return $this->render('create-topic',compact('model'));
+        return $this->render('create-topic',compact('model','tour'));
     }
-
-
-
 
     public function actionUpdateForumText($id) 
     {
@@ -138,5 +135,15 @@ class DefaultController extends Controller
             }
         }
         return $this->redirect(['index','id' => $id]);
+    }
+
+    public function actionDataUpdate($id) 
+    {
+        $model = ScheduleTeams::findOne($id);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->status = 1;
+            $model->save(false);
+        }
+        return $this->redirect(['topic-schedule','id'=>$id]);
     }
 }
