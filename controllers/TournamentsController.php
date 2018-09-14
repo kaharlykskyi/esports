@@ -115,13 +115,14 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($model)) {
             throw new HttpException(404 ,'Page not found');
         }
-        if (!empty($tournament->cup) || !empty($tournament->league)) {
+        if (!is_null($tournament->state)) {
             throw new HttpException(404 ,'Page not found');
         }
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
 
             if (isset($post['ACCEPT'])) {
+                
                 $model->status = 2;
                 $model->tokin = 'ok';
                 $model->save();
@@ -133,9 +134,7 @@ class TournamentsController extends \yii\web\Controller
                 $model->save();
             }
             return $this->redirect('/profile#tournaments');
-
-        }
-            
+        }  
         return $this->render('confirmation',compact('tournament','tokin','team'));
     }
 
@@ -162,14 +161,12 @@ class TournamentsController extends \yii\web\Controller
         $model->state = 1;
         $model->save(false);
             
-        
         return $this->redirect('/tournaments/public/'.$model->id.'#tournamentgrid');  
         
     }
 
     public function actionAddLeague($id)
     {
-
         $model = Tournaments::findOne($id);
         if (!is_object($model)) {
            throw new HttpException(404 ,'Page not found');
@@ -196,9 +193,9 @@ class TournamentsController extends \yii\web\Controller
     }
 
 
-    public function actionQwert($id)
-    {
-        $model = Tournaments::findOne($id);
-        $model->createLeague();
-    }
+    // public function actionQwert($id)
+    // {
+    //     $model = Tournaments::findOne($id);
+    //     $model->createLeague();
+    // }
 }

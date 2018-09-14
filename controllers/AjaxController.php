@@ -360,32 +360,4 @@ class AjaxController extends \yii\web\Controller
         
     }
 
-    // public function actionSetCups() 
-    // {
-  
-    //     $model = Tournaments::findOne(1);
-        
-    //         $json = json_decode($model->cup);
-    //             if ($model->format == Tournaments::SINGLE_E) {
-    //                 $max = ScheduleTeams::find()->where(['tournament_id' => $model->id,'results1'=>null,'results2'=>null])->max('tur');
-    //                 // if ($max) {
-    //                 //     $result = $json->results[0][$max-1];
-    //                 //     if ($model->writeResult($result,$max)) {
-    //                 //         $seludes = ScheduleTeams::find()->where(['tournament_id' => $model->id,'tur'=>$max])->all();
-    //                 //         foreach ($seludes as $key => $selude) {
-    //                 //            $selude->results1 = $result[$key][0];
-    //                 //            $selude->results2 = $result[$key][1];
-    //                 //            $selude->save();
-    //                 //         }
-    //                 //         $this->ScheduleCupTur($max);
-    //                 //     }
-    //                 // }
-    //                 $model->ScheduleCupTur($max);
-    //                 print_r($res);exit;
-    //             }
-    //             if ($model->format == Tournaments::DUBLE_E) {
-    //                 //$model->getScheduleCupDuble();
-    //             }
-    // }
-
 }

@@ -8,7 +8,7 @@
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/forum/index.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Forum';
     
-    $this->params['breadcrumbs'][] = ['label' => 'Tournament', 'url' => ['/tournaments/public/'.$topic->tournament->id] ];
+    $this->params['breadcrumbs'][] = ['label' => 'Tournament', 'url' => ['/tournaments/public/'.$model->id] ];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container">
@@ -65,16 +65,22 @@
                     <table class="table-standings">
                         <tbody>
                             <?php $topicsa = $model->getScheduleLeague(); ?>
-                            <?php $i=0;foreach ($topicsa as $topic):?>
-                                    <?php if($i<(int)$topic['tur']): ?>
+                            <?php $g=0; $i=0; foreach ($topicsa as $topic):?>
+                                    <?php if($g!=(int)$topic['group']&&!is_null($topic['group'])): ?>
+                                        <?php $g = (int)$topic['group']?>
+                                        <tr >
+                                            <td colspan="3" style="font-weight: bold; text-align: center;font-size: 20px;" >GROUP <?=$g?></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                    <?php if($i!=(int)$topic['tur']): ?>
                                         <?php $i = (int)$topic['tur']?>
                                         <tr >
-                                            <td colspan="3" height="100%" style="text-align: center;" >Round <?=$i?></td>
+                                            <td colspan="3"  style="text-align: center;" >Round <?=$i?></td>
                                         </tr>
-                                   <?php endif; ?>
+                                    <?php endif; ?>
                                     <tr>
                                         <td class="up">
-                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name'].' vs '.$topic['s_name'] ?></a></span> 
+                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name']?>  <span style="font-weight: bold;font-size: 18px;">vs</span>  <?=$topic['s_name'] ?></a></span> 
                                         </td>
                                         <td><?=$topic['tur']?> Round</td>
                                         <td><?= $topic['count_post'] ?><i class="glyphicon glyphicon-comment"></i></td>
@@ -82,7 +88,7 @@
                             <?php endforeach; ?>
                             <?php $topicsa = $model->getScheduleCup(); ?>
                             <?php $a=0; foreach ($topicsa as $topic):?>
-                                    <?php if($a<(int)$topic['tur']): ?>
+                                    <?php if($a!=(int)$topic['tur']): ?>
                                         <?php $a = (int)$topic['tur']?>
                                         <tr>
                                             <td colspan="3" height="100%" style="text-align: center;" >Round <?=$a?></td>
@@ -90,7 +96,7 @@
                                     <?php endif; ?>
                                     <tr>
                                         <td class="up">
-                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name'].' vs '.$topic['s_name'] ?></a></span> 
+                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name']?>  <span style="font-weight: bold;font-size: 18px;">vs</span>  <?=$topic['s_name'] ?></a></span>
                                         </td>
                                         <td><?=$topic['tur']?> Round</td>
                                         <td><?= $topic['count_post'] ?><i class="glyphicon glyphicon-comment"></i></td>
