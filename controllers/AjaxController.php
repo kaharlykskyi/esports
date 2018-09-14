@@ -198,6 +198,10 @@ class AjaxController extends \yii\web\Controller
         $post = Yii::$app->request->post();
         $users = (new \yii\db\Query())->select(['id'])->from('users')
             ->where(['LIKE', 'name', $post['input']]);
+
+        $userst = (new \yii\db\Query())->select(['users.id'])->from('users')
+            ->leftJoin('user_team', 'user_team.id_user = users.id')
+            ->where(['LIKE', 'users.name', $post['input']])->andWhere(['user_team.status' => UserTeam::ACCEPTED]);
        
         $teams = (new \yii\db\Query())
             ->select(['teams.name','teams.logo','teams.id','teams.created_at', 'games.name as g_name',
@@ -205,7 +209,8 @@ class AjaxController extends \yii\web\Controller
             ->from('teams')->leftJoin('games','games.id = teams.game_id')
             ->leftJoin('user_team', '`user_team`.`id_team` = `teams`.`id`')
             ->where(['LIKE', 'teams.name', $post['input']])
-            ->orWhere(['in', 'user_team.id_user', $users])
+            ->orWhere(['in', 'user_team.id_user', $userst])
+            //->andWhere(['user_team.status' => 2])
             ->groupBy(['teams.name'])
             ->limit(18)
             ->all();
