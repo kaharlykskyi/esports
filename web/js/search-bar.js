@@ -113,7 +113,6 @@ $(document).ready(function(){
             $(element.teams).each(function (indx, element) {
                 teamsl +=` <a href="/teams/public/${element.id}">${element.name}</a>`;
             });
-
             let content = `<div class="col-sm-6 col-md-4">
                                         <div class="blok_search_username">
                                             <div class="col-xs-4 img_cont_search clearfix">

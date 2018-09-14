@@ -21,6 +21,27 @@ class TournamentsController extends \yii\web\Controller
 {
     use \app\models\traits\UserTournament;
 
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['public'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionPublic($id)
     {
         $model = Tournaments::findOne($id);
@@ -121,8 +142,13 @@ class TournamentsController extends \yii\web\Controller
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
 
+            if(!$team && isset($post['ACCEPT'])){
+                $team_one_usr = new Teams();
+               // $team_one_usr->name = 
+            }
+
             if (isset($post['ACCEPT'])) {
-                
+
                 $model->status = 2;
                 $model->tokin = 'ok';
                 $model->save();
@@ -172,6 +198,7 @@ class TournamentsController extends \yii\web\Controller
            throw new HttpException(404 ,'Page not found');
         }
         $model->state = 1;
+
         $model->createLeague();
         return $this->redirect('/tournaments/public/'.$id.'#matches');
     }

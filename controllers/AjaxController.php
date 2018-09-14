@@ -211,7 +211,7 @@ class AjaxController extends \yii\web\Controller
             ->all();
 
         $users_m = (new \yii\db\Query())
-            ->select(['users.id','users.name','users.created_at','teams.name as t_name','teams.id as t_id'])
+            ->select(['users.id','users.name','users.created_at','teams.name as t_name','teams.id as t_id','user_team.status as t_status'])
             ->from('users')
             ->leftJoin('user_team', '`user_team`.`id_user` = `users`.`id`')
             ->leftJoin('teams', '`teams`.`id` = `user_team`.`id_team`')
@@ -235,12 +235,12 @@ class AjaxController extends \yii\web\Controller
         $user_mass = [];
         foreach ($users_m as $user) {
             if (array_key_exists($user['id'], $user_mass)) {
-                if (isset($user['t_id'])) {
+                if (isset($user['t_id'])&&$user['t_status'] == UserTeam::ACCEPTED) {
                     $user_mass[$user['id']]['teams'][] = ['name'=>$user['t_name'],'id'=>$user['t_id'],];
                 }
             } else {
                 $user_mass[$user['id']] = ['name'=>$user['name'],'id'=>$user['id'],'created_at'=>substr($user['created_at'],0,10),];
-                if (isset($user['t_id'])) {
+                if (isset($user['t_id'])&&$user['t_status'] == UserTeam::ACCEPTED) {
                     $user_mass[$user['id']]['teams'][] = ['name'=>$user['t_name'],'id'=>$user['t_id'],];
                 } 
             } 

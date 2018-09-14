@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = ['label' => $team1->name.' vs '.$team2->name];
                         <div class="col-sm-2" style="text-align:center;font-size: 25px;padding: 0;" ><span>VS</span></div>
                         <div class="col-sm-5" style="padding: 0;"><a href="/teams/public/<?=$topic->team2?>"><?=$team2->name?></a></div>
                     </div>
-                <p style="margin-bottom: 0;font-size:13px;" ><?=date(' m \of F, Y ',strtotime($topic->date))?></p>
+                <p style="margin-bottom: 0;font-size:13px;" ><?=date(' d \of F, Y ',strtotime($topic->date))?></p>
                 <p style="margin-bottom: 0;font-size:13px;" ><?=date('h:i',strtotime($topic->date))?></p>
             </div>
             <div class="col-sm-2 ">
@@ -110,6 +110,13 @@ $this->params['breadcrumbs'][] = ['label' => $team1->name.' vs '.$team2->name];
             </div>
         </div>
         <?php ActiveForm::end(); ?>
+    </div>
+<?php else: ?>
+    <div class="row" style="margin-top: 35px;" >
+        <p style="text-align: center;">
+            <span style="font-size: 18px;font-weight: bold;" >Satge:</span>
+            <span>Prepare the game</span>
+        </p>
     </div>
 <?php endif; ?>
 <div class="row" style="margin-top: 25px;">

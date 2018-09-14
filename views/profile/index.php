@@ -106,7 +106,7 @@
                                     <td>Favorite game</td>
                                     <td>
                                         <?php if ($game_favorite = app\models\Games::findOne($user->favorite_game)) :?>
-                                            <?=$game_favorite->name;?>
+                                            <img  style="height: 25px;" src="/images/game/<?=$game_favorite->logo?>" alt="<?=$game_favorite->name;?>">  &#160;&#160;<?=$game_favorite->name;?>
                                         <?php endif; ?>
                                     </td>
                                 </tr>        

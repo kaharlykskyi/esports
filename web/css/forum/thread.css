@@ -191,7 +191,9 @@ table tr td {
 .content_text p {
     margin:0;
 }
-
+.author-avatar img {
+    border-radius: 50%;
+}
 .detail {
     position: relative;
     max-height: 250px;

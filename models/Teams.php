@@ -6,20 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 
-/**
- * This is the model class for table "teams".
- *
- * @property int $id
- * @property string $name
- * @property string $logo
- * @property string $background
- * @property int $game_id
- * @property string $website
- * @property string $captain
- *
- * @property Games $game
- * @property UserTeam[] $userTeams
- */
+
 class Teams extends \yii\db\ActiveRecord
 {
     /**

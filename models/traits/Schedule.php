@@ -29,7 +29,6 @@ trait Schedule {
         $schedule->tournament_id = $this->id;
         $schedule->format = $format;
         $schedule->save(false);
-        return [$schedule->results1,$schedule->results2,$schedule->id];
     }
 
 
