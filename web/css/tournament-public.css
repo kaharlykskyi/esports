@@ -48,7 +48,6 @@
    
 }
 
-
 .system_select_message{
     margin-top: 10px;
     font-size: 14px;
@@ -323,8 +322,6 @@ table tr td:last-child {
 
 #minimal{
     position: relative;
-    /*height: 500px;*/
-    
 }
 
 .champ-nav-list span {
@@ -347,4 +344,20 @@ table tr td:last-child {
 .champ-nav-list span a:hover {
     background: #00aeff;
     color: #141414;
+}
+/*///////////////////////////////////////////////////////*/
+
+.upcoming-match-info .team {
+    width: 35%;
+}
+
+.upcoming-match-info .counter {
+    width: 30%;
+    text-align: center;
+}
+
+.upcoming-match-info .team .avatar img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
 }

@@ -15,13 +15,8 @@
     $this->params['breadcrumbs'][] = $this->title;
 
     $capitan = $model->user_id == Yii::$app->user->identity->id;
-
     if(($model->format != Tournaments::LEAGUE)&&(!empty($model->cup))) {
-
-        $script = "
-            $.comandTeams = ".$model->cup.";
-
-        ";
+        $script = "$.comandTeams = ".$model->cup.";";
         if($capitan ){
             $script .= " $.capitan_tournament = true;";
         }

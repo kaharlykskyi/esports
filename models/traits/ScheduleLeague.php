@@ -89,12 +89,16 @@ trait ScheduleLeague {
                     $players_turs[] = $turs;
                 }
                
-                $output1 = array_slice($mass_temp, $a);
-                $output2 = array_slice($mass_temp, 1,$a-1);
+                $output1 = array_slice($mass_temp, 1,$a-1);
+                $output2 = array_slice($mass_temp, $a);
+                array_unshift($output1, array_shift($output2));
+                $output2[] = array_pop($output1);
+
                 $output3 = array_merge($output1,$output2);
                 array_unshift($output3, $mass_temp[0]);
                 $mass_temp = $output3;
-            }
+                
+            } 
             if(!$ch){
                 foreach ($players_turs as &$value) {
                    unset($value[0]);

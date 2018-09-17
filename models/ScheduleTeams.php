@@ -8,17 +8,13 @@ use app\modules\forum\models\SchedulePost;
 
 class ScheduleTeams extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+    
     public static function tableName()
     {
         return 'schedule_teams';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    
     public function rules()
     {
         return [
@@ -30,9 +26,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+   
     public function attributeLabels()
     {
         return [
@@ -48,28 +42,64 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+   
     public function getTeamF()
     {
         return $this->hasOne(Teams::className(), ['id' => 'team1']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTeamS()
     {
         return $this->hasOne(Teams::className(), ['id' => 'team2']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+   
     public function getTournament()
     {
         return $this->hasOne(Tournaments::className(), ['id' => 'tournament_id']);
+    }
+
+    public function getFiveResult()
+    {
+        $result1 = self::find()
+            ->where(['team1'=>$this->team1])
+            ->orWhere(['team2'=>$this->team1])
+            ->andWhere(['<','id',$this->id])
+            ->andWhere(['not',['results1'=> null]])->andWhere(['not',['results2'=>null]])
+            ->orderBy('id DESC')->limit(5)->all();
+        $result2 = self::find()
+            ->where(['team1'=>$this->team2])
+            ->orWhere(['team2'=>$this->team2])
+            ->andWhere(['<','id',$this->id])
+            ->andWhere(['not',['results1'=> null]])->andWhere(['not',['results2'=>null]])
+            ->orderBy('id DESC')->limit(5)->all();
+
+        return ['result1'=>$this->sortResult($result1,$this->team1),'result2'=>$this->sortResult($result2,$this->team2)];
+    }
+
+    private function sortResult($result,$team_id)
+    {
+        $arry_result = [];
+        foreach ($result as $match) {
+            if ($match->team1 == $team_id) {
+                if ($match->results1>$match->results2) {
+                    $arry_result[] = 1;
+                } elseif ($match->results1<$match->results2) {
+                    $arry_result[] = 2;
+                } elseif ($match->results1 == $match->results2){
+                    $arry_result[] = 3;
+                }
+            } elseif ($match->team2 == $team_id) {
+                if ($match->results2>$match->results1) {
+                    $arry_result[] = 1;
+                } elseif ($match->results2<$match->results1) {
+                    $arry_result[] = 2;
+                } elseif ($match->results1 == $match->results2){
+                    $arry_result[] = 3;
+                }
+            }
+        }
+        return $arry_result;
     }
 
     
