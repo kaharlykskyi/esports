@@ -65,7 +65,6 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
-            
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
@@ -73,7 +72,7 @@ $config = [
                 '<module:forum>/<action:[A-Z,a-z,-]+>/<id:\d+>' => '<module>/default/<action>',
                 '<controller:(profile|teams|tournaments)>' => '<controller>/index',
                 '<action:[A-Z,a-z,-]+>' => 'site/<action>',
-                '<controller>/<action:(public)>/<id:\d+>' => '<controller>/<action>',
+                '<controller>/<action:[A-Z,a-z,-]+>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
     ],

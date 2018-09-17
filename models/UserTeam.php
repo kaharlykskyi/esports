@@ -11,15 +11,13 @@ class UserTeam extends \yii\db\ActiveRecord
     const SENT = 1;
     const ACCEPTED = 2;
     const DECLINED = 3;
+    const DUMMY = 4;
 
     public static function tableName()
     {
         return 'user_team';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -29,9 +27,6 @@ class UserTeam extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -40,17 +35,11 @@ class UserTeam extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTeam()
     {
         return $this->hasOne(Teams::className(), ['id' => 'id_team']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getUser()
     {
         return $this->hasOne(Users::className(), ['id' => 'id_user']);

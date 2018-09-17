@@ -91,6 +91,8 @@ $this->params['breadcrumbs'][] = ['label' => $team1->name.' vs '.$team2->name];
                         <?php  
                             echo $form->field($topic, 'date')->widget(DateTimePicker::className(),[
                             'name' => 'datetime_10',
+                            'readonly' => true ,
+                            'removeButton' => false ,
                             'options' => [  
                                 'placeholder' => 'Select operating time ...',
                                 'autocomplete'=>"off",'class'=>'datainput',

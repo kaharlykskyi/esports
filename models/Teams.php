@@ -27,9 +27,6 @@ class Teams extends \yii\db\ActiveRecord
         return 'teams';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -47,9 +44,6 @@ class Teams extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -63,9 +57,6 @@ class Teams extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getGame()
     {
         return $this->hasOne(Games::className(), ['id' => 'game_id']);
@@ -76,9 +67,6 @@ class Teams extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'capitan']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getUserTeams()
     {
         return $this->hasMany(UserTeam::className(), ['id_team' => 'id']);
@@ -130,5 +118,11 @@ class Teams extends \yii\db\ActiveRecord
     {
         $ids = ArrayHelper::getColumn(UserTeam::find()->where(['id_team' => $this->id, 'status' => UserTeam::ACCEPTED])->asArray()->all(), 'id_user');
         return User::find()->where(['in', 'id', $ids])->all();
+    }
+
+    public function dummyTeam($tournament,$user)
+    {
+        //$this->name = 
+        //$this->capitan = 
     }
 }

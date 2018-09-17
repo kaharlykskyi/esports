@@ -16,6 +16,7 @@ use app\models\TournamentUser;
 use app\models\TournamentCupTeam;
 use Yii;
 use yii\web\HttpException;
+use app\models\ScheduleTeams;
 
 class TournamentsController extends \yii\web\Controller
 {
@@ -144,11 +145,9 @@ class TournamentsController extends \yii\web\Controller
 
             if(!$team && isset($post['ACCEPT'])){
                 $team_one_usr = new Teams();
-               // $team_one_usr->name = 
-            }
+                $team_one_usr->dummyTeam($tournaments,$user);
 
-            if (isset($post['ACCEPT'])) {
-
+            } elseif (isset($post['ACCEPT'])) {
                 $model->status = 2;
                 $model->tokin = 'ok';
                 $model->save();
@@ -220,9 +219,13 @@ class TournamentsController extends \yii\web\Controller
     }
 
 
-    // public function actionQwert($id)
-    // {
-    //     $model = Tournaments::findOne($id);
-    //     $model->createLeague();
-    // }
+    public function actionUpcomingMatch($id)
+    {
+        $model = ScheduleTeams::findOne($id);
+        if(is_null($model)){
+            throw new HttpException(404 ,'Page not found');
+        }
+
+        return $this->render('match',compact('model'));
+    }
 }

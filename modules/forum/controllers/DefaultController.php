@@ -27,6 +27,9 @@ class DefaultController extends Controller
         if (!is_object($model)) {
            throw new HttpException(404 ,'Page not found');
         }
+        if (is_null($model->state)) {
+           throw new HttpException(404 ,'Page not found');
+        }
         $users = self::gerUsers($model);
         if (!in_array(['id'=>Yii::$app->user->identity->id], $users)){
             throw new HttpException(404 ,'Page not found');

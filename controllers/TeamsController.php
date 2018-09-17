@@ -28,9 +28,6 @@ class TeamsController extends \yii\web\Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
@@ -90,8 +87,6 @@ class TeamsController extends \yii\web\Controller
             throw new HttpException(404 ,'Page not found');
         }
         throw new HttpException(404 ,'Page not found');
-
-        
     }
 
 

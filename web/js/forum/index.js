@@ -18,19 +18,23 @@ $(document).ready( function() {
 
 $(document).ready( function() {
     if($("span").is("#down-text")) {
-        $.toggleState_icon = 0;
-        $("#down-text").on('click',function(){
+        if($('#content_text_forum').height()>170){
+            let span = $("#down-text");
+            span.show();
+            $.toggleState_icon = 0;
+            $("#down-text").on('click',function(){
             $('.detail').toggleClass('detail_down');
-            if ($.toggleState_icon) {
-                $("#down-text").removeClass('glyphicon-chevron-up');
-                $("#down-text").addClass('glyphicon-chevron-down');
-                $.toggleState_icon =0;
-            } else {
-                $("#down-text").addClass('glyphicon-chevron-up');
-                $("#down-text").removeClass('glyphicon-chevron-down');
-                $.toggleState_icon =1;
-            }  
-        });
+                if ($.toggleState_icon) {
+                    span.removeClass('glyphicon-chevron-up');
+                    span.addClass('glyphicon-chevron-down');
+                    $.toggleState_icon =0;
+                } else {
+                    span.addClass('glyphicon-chevron-up');
+                    span.removeClass('glyphicon-chevron-down');
+                    $.toggleState_icon =1;
+                }  
+            });
+        }
     }
 
 });

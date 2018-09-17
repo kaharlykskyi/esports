@@ -24,12 +24,14 @@
                 </div>
                 <div class="col-sm-9 content_detals">
                     <?php if($model->user_id == \Yii::$app->user->identity->id):  ?>
-                        <button  id="text_forum" class="btn">Edit</button>
+                        <button  id="text_forum" class="btn"  >Edit</button>
                     <?php endif; ?>
                     <h6>Tournament schelude</h6>
-                    <div><?=$model->forum_text?></div>
+                    <div id="content_text_forum" >
+                      <?=$model->forum_text?>        
+                    </div>
                 </div>
-                <span id='down-text' class="glyphicon glyphicon-chevron-down "></span>
+                <span id='down-text' class="glyphicon glyphicon-chevron-down" style="display:none;"  ></span>
             </div>
         </div>
     </div>
@@ -80,7 +82,7 @@
                                     <?php endif; ?>
                                     <tr>
                                         <td class="up">
-                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name']?>  <span style="font-weight: bold;font-size: 18px;">vs</span>  <?=$topic['s_name'] ?></a></span> 
+                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><img src="<?=$topic['f_logo']?>" alt="">&#160;&#160;&#160;<?=$topic['f_name']?> <span style="font-weight: bold;font-size: 14px;">vs</span>  <?=$topic['s_name'] ?>&#160;&#160;&#160;<img src="<?=$topic['s_logo']?>" alt=""></a></span> 
                                         </td>
                                         <td><?=$topic['tur']?> Round</td>
                                         <td><?= $topic['count_post'] ?><i class="glyphicon glyphicon-comment"></i></td>
@@ -96,7 +98,7 @@
                                     <?php endif; ?>
                                     <tr>
                                         <td class="up">
-                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><?=$topic['f_name']?>  <span style="font-weight: bold;font-size: 18px;">vs</span>  <?=$topic['s_name'] ?></a></span>
+                                            <span class="team"><a href="/forum/topic-schedule/<?=$topic['id']?>"><img src="<?=$topic['f_logo']?>" alt="">&#160;&#160;&#160;<?=$topic['f_name']?> <span style="font-weight: bold;font-size: 14px;">vs</span>  <?=$topic['s_name'] ?>&#160;&#160;&#160;<img src="<?=$topic['s_logo']?>" alt=""></a></span> 
                                         </td>
                                         <td><?=$topic['tur']?> Round</td>
                                         <td><?= $topic['count_post'] ?><i class="glyphicon glyphicon-comment"></i></td>

@@ -43,7 +43,7 @@
                             <li class="active"><a href="#participants">participants</a></li>
                             <li><a href="#matches">Matches</a></li>
                             <li><a href="#tournamentgrid">Tournament grid</a></li>
-                            <?php if($capitan):?>
+                            <?php if($capitan&&is_null($model->state)):?>
                                 <li><a href="#manage_tournament">Manage Tournament</a></li>
                             <?php endif; ?>
                             <?php if( in_array(['id' => Yii::$app->user->identity->id],$users_id)&&!empty($model->state)): ?>
@@ -217,7 +217,7 @@
                 </div>
             </div>
             <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->
-            <?php if($capitan):?>
+            <?php if($capitan&&is_null($model->state)):?>
                 <div class="tab-item news-tab tab-pane" id="manage_tournament">
 
                         <div class="container">
