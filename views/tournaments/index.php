@@ -145,26 +145,41 @@
                     <div class="row">
                         <div class="col-md-12 overflow-scroll">
                             <h6>League table</h6>
-                            <table>
-                                <tbody>
+                            <table class="standing-full">
                                     <tr>
-                                        <th>player</th>
-                                        <th>G</th><th>V</th><th>P</th><th>L</th>
+                                        <th>club</th>
+                                        <th>played</th>
+                                        <th>won</th>
+                                        <th>drawn</th>
+                                        <th>lost</th>
+                                        <th>gd</th>
+                                        <th>points</th>
+                                        <th>form</th>
                                     </tr>
                                     <?php foreach($table_players as $players): ?>
                                         <tr>
-                                            <td>
-                                                <a href="matches.html">
-                                                    <span class="team">
-                                                        <img src="<?=$players->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="main-match-icon">
-                                                    </span>
-                                                    <span><?=$players->name?></span>
-                                                </a>
+                                            <td class="up">
+                                                <i class="fa fa-caret-up" aria-hidden="true"></i> 1 
+                                                <span class="team">
+                                                    <img src="<?=$players->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="main-match-icon">
+                                                </span>
+                                                <span><?=$players->name?></span>
                                             </td>
-                                            <td>0</td><td>0</td><td>0</td><td>0</td>
+                                            <td>11</td>
+                                            <td>8</td>
+                                            <td>2</td>
+                                            <td>1</td>
+                                            <td>+16</td>
+                                            <td class="points"><span>26</span></td>
+                                            <td class="form">
+                                                <span class="win">w</span>
+                                                <span class="drawn">d</span>
+                                                <span class="lose">l</span>
+                                                <span class="win">w</span>
+                                                <span class="win">w</span>
+                                            </td>  
                                         </tr>
                                     <?php endforeach; ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -172,153 +187,49 @@
                     <?php if(!empty($turs = json_decode($model->league_table))&&($model->format == Tournaments::LEAGUE_G)): ?>
                         <div class="row">
                         <?php  foreach ($turs as $key => $tur): ?>
-                            <div class="col-md-6"> 
-                                <h6>GROUP <?=($key+1)?></h6>
-                                <table>
-                                    <tbody>
+                            <div class="col-md-12"> 
+                                <h6 style="text-align: center;">GROUP <?=($key+1)?></h6>
+                                <table class="standing-full">
+                                    <tr>
+                                        <th>club</th>
+                                        <th>played</th>
+                                        <th>won</th>
+                                        <th>drawn</th>
+                                        <th>lost</th>
+                                        <th>gd</th>
+                                        <th>points</th>
+                                        <th>form</th>
+                                    </tr>
+                                    <?php foreach ($tur as $teamin_group): ?>
                                         <tr>
-                                            <th>player</th>
-                                            <th>G</th><th>V</th><th>P</th><th>L</th>
+                                            <td class="up">
+                                                <i class="fa fa-caret-up" aria-hidden="true"></i> 1 
+                                                <span class="team">
+                                                    <img src="<?=$teamin_group->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="team-logo"> 
+                                                </span>
+                                                <span><?=$teamin_group->name?></span>
+                                            </td>
+                                            <td>11</td>
+                                            <td>8</td>
+                                            <td>2</td>
+                                            <td>1</td>
+                                            <td>+16</td>
+                                            <td class="points"><span>26</span></td>
+                                            <td class="form">
+                                                <span class="win">w</span>
+                                                <span class="drawn">d</span>
+                                                <span class="lose">l</span>
+                                                <span class="win">w</span>
+                                                <span class="win">w</span>
+                                            </td>  
                                         </tr>
-                                        <?php foreach ($tur as $teamin_group): ?>
-                                            <tr>
-                                                <td>
-                                                    <a href="matches.html">
-                                                        <span class="team">
-                                                            <img src="<?=$teamin_group->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="main-match-icon">
-                                                        </span>
-                                                        <span><?=$teamin_group->name?></span>
-                                                    </a>
-                                                </td>
-                                                <td>0</td><td>0</td><td>0</td><td>0</td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
+                                    <?php endforeach; ?>
+
                                 </table>       
                             </div>
                         <?php endforeach; ?>
-                        </div>
+                    </div>
                     <?php endif; ?>
-
-
-
-
-
-
-
-                            <table class="standing-full">
-                                <tr>
-                                    <th>club</th>
-                                    <th>played</th>
-                                    <th>won</th>
-                                    <th>drawn</th>
-                                    <th>lost</th>
-                                    <th>gd</th>
-                                    <th>points</th>
-                                    <th>form</th>
-                                    
-                                </tr>
-                                <tr>
-                                    <td class="up">
-                                        <i class="fa fa-caret-up" aria-hidden="true"></i> 1 <span class="team"><img src="images/hockey/team-logo1.png" width="30" height="30" alt="team-logo"> </span>Team 1
-                                    </td>
-                                    <td>11</td>
-                                    <td>8</td>
-                                    <td>2</td>
-                                    <td>1</td>
-                                    <td>+16</td>
-                                    <td class="points"><span>26</span></td>
-                                    <td class="form">
-                                        <span class="win">w</span>
-                                        <span class="drawn">d</span>
-                                        <span class="lose">l</span>
-                                        <span class="win">w</span>
-                                        <span class="win">w</span>
-                                    </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td class="down">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i> 2 <span class="team"><img src="images/hockey/team-logo2.png" width="30" height="30" alt="team-logo"> </span>Team 2
-                                    </td>
-                                    <td>11</td>
-                                    <td>8</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>+14</td>
-                                    <td class="points"><span>23</span></td>
-                                    <td class="form">
-                                        <span class="win">w</span>
-                                        <span class="drawn">d</span>
-                                        <span class="lose">l</span>
-                                        <span class="win">w</span>
-                                        <span class="lose">l</span>
-                                    </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td class="down">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i> 2 <span class="team"><img src="images/hockey/team-logo3.png" width="30" height="30" alt="team-logo"> </span>Team 3
-                                    </td>
-                                    <td>11</td>
-                                    <td>8</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>+13</td>
-                                    <td class="points"><span>23</span></td>
-                                    <td class="form">
-                                        <span class="win">w</span>
-                                        <span class="lose">l</span>
-                                        <span class="lose">l</span>
-                                        <span class="win">w</span>
-                                        <span class="drawn">d</span>
-                                    </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td class="down">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i> 2 <span class="team"><img src="images/hockey/team-logo4.png" width="30" height="30" alt="team-logo"> </span>Team 4
-                                    </td>
-                                    <td>11</td>
-                                    <td>8</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>+10</td>
-                                    <td class="points"><span>23</span></td>
-                                    <td class="form">
-                                        <span class="lose">l</span>
-                                        <span class="drawn">d</span>
-                                        <span class="win">w</span>
-                                        <span class="win">w</span>
-                                        <span class="win">w</span>
-                                    </td>
-                                   
-                                </tr>
-                                <tr>
-                                    <td class="none">
-                                        <i class="fa fa-circle" aria-hidden="true"></i> 3 <span class="team"><img src="images/hockey/team-logo5.png" width="30" height="30" alt="team-logo"> </span>Team 5
-                                    </td>
-                                    <td>11</td>
-                                    <td>8</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>+16</td>
-                                    <td class="points"><span>20</span></td>
-                                    <td class="form">
-                                        <span class="win">w</span>
-                                        <span class="drawn">d</span>
-                                        <span class="lose">l</span>
-                                        <span class="win">w</span>
-                                        <span class="win">w</span>
-                                    </td>
-                                    
-                                </tr>
-                            </table>
-        
-
-
-
-
 
 
                     <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>

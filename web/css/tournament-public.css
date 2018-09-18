@@ -396,3 +396,13 @@ div.jQBracket .team.na {
     background-color: #dadcdc;
     color: #ccc;
 }
+
+.standing-full tr th {
+     height: 30px; 
+}
+
+.standing-full tr td {
+    height: 50px;
+    padding: 0 5px;
+}
+
