@@ -13,9 +13,9 @@ trait ScheduleCup {
         if(!empty($raspisanie[$tur])) {
 
         }
-        echo "<pre>";
-        print_r($raspisanie[0]);
-        echo "</pre>";
+        // echo "<pre>";
+        // print_r($raspisanie[0]);
+        // echo "</pre>";
         
     }
 

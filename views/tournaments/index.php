@@ -15,11 +15,12 @@
     $this->params['breadcrumbs'][] = $this->title;
 
     $capitan = $model->user_id == Yii::$app->user->identity->id;
+
     if(($model->format != Tournaments::LEAGUE)&&(!empty($model->cup))) {
         $script = "$.comandTeams = ".$model->cup.";";
-        if($capitan ){
-            $script .= " $.capitan_tournament = true;";
-        }
+       
+        $script .= " $.format_tournament = true;";
+       
         $this->registerJs($script, yii\web\View::POS_END);
     }
 
@@ -27,7 +28,6 @@
 ?>
 <!--CHAMPIONSHIP WRAP BEGIN-->
     <div class="championship-wrap">
-
         <h1 style="text-align: center;"><?=$model->name?></h1>
         <!--CHAMPIONSHIP NAVIGATION BEGIN -->
         <div class="champ-navigation">
@@ -199,6 +199,128 @@
                         <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
+
+
+
+
+
+
+
+                            <table class="standing-full">
+                                <tr>
+                                    <th>club</th>
+                                    <th>played</th>
+                                    <th>won</th>
+                                    <th>drawn</th>
+                                    <th>lost</th>
+                                    <th>gd</th>
+                                    <th>points</th>
+                                    <th>form</th>
+                                    
+                                </tr>
+                                <tr>
+                                    <td class="up">
+                                        <i class="fa fa-caret-up" aria-hidden="true"></i> 1 <span class="team"><img src="images/hockey/team-logo1.png" width="30" height="30" alt="team-logo"> </span>Team 1
+                                    </td>
+                                    <td>11</td>
+                                    <td>8</td>
+                                    <td>2</td>
+                                    <td>1</td>
+                                    <td>+16</td>
+                                    <td class="points"><span>26</span></td>
+                                    <td class="form">
+                                        <span class="win">w</span>
+                                        <span class="drawn">d</span>
+                                        <span class="lose">l</span>
+                                        <span class="win">w</span>
+                                        <span class="win">w</span>
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td class="down">
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i> 2 <span class="team"><img src="images/hockey/team-logo2.png" width="30" height="30" alt="team-logo"> </span>Team 2
+                                    </td>
+                                    <td>11</td>
+                                    <td>8</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>+14</td>
+                                    <td class="points"><span>23</span></td>
+                                    <td class="form">
+                                        <span class="win">w</span>
+                                        <span class="drawn">d</span>
+                                        <span class="lose">l</span>
+                                        <span class="win">w</span>
+                                        <span class="lose">l</span>
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td class="down">
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i> 2 <span class="team"><img src="images/hockey/team-logo3.png" width="30" height="30" alt="team-logo"> </span>Team 3
+                                    </td>
+                                    <td>11</td>
+                                    <td>8</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>+13</td>
+                                    <td class="points"><span>23</span></td>
+                                    <td class="form">
+                                        <span class="win">w</span>
+                                        <span class="lose">l</span>
+                                        <span class="lose">l</span>
+                                        <span class="win">w</span>
+                                        <span class="drawn">d</span>
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td class="down">
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i> 2 <span class="team"><img src="images/hockey/team-logo4.png" width="30" height="30" alt="team-logo"> </span>Team 4
+                                    </td>
+                                    <td>11</td>
+                                    <td>8</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>+10</td>
+                                    <td class="points"><span>23</span></td>
+                                    <td class="form">
+                                        <span class="lose">l</span>
+                                        <span class="drawn">d</span>
+                                        <span class="win">w</span>
+                                        <span class="win">w</span>
+                                        <span class="win">w</span>
+                                    </td>
+                                   
+                                </tr>
+                                <tr>
+                                    <td class="none">
+                                        <i class="fa fa-circle" aria-hidden="true"></i> 3 <span class="team"><img src="images/hockey/team-logo5.png" width="30" height="30" alt="team-logo"> </span>Team 5
+                                    </td>
+                                    <td>11</td>
+                                    <td>8</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>+16</td>
+                                    <td class="points"><span>20</span></td>
+                                    <td class="form">
+                                        <span class="win">w</span>
+                                        <span class="drawn">d</span>
+                                        <span class="lose">l</span>
+                                        <span class="win">w</span>
+                                        <span class="win">w</span>
+                                    </td>
+                                    
+                                </tr>
+                            </table>
+        
+
+
+
+
+
+
                     <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>
                         <?php if($model->format > 2): ?>
                         <div class="row">

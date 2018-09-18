@@ -8,9 +8,7 @@ $script = "$.matchDate = ".(strtotime($model->date)-time()).";";
 $this->registerJs($script, yii\web\View::POS_END);
 $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
 $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/match.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
-
-
-       
+     
 
 $team1 = $model->teamF;
 $team2 = $model->teamS;

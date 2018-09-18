@@ -6,22 +6,26 @@ use app\models\ScheduleTeams;
 
 trait Schedule {
 
-    public function createSchedule($teams,$format)
+    public function createSchedule($teams,$format,$date = false)
     {
         $result = [];
         foreach ($teams as $key => $match) {
-           $result[] = $this->seveSchedule($match,$format);
+           $result[] = $this->seveSchedule($match,$format,$date);
         }
-        $this->forumText($teams);
-        return $result;
+        $this->forumText($result);
+        return $teams;
     }
 
-    private function seveSchedule($game,$format) 
+    private function seveSchedule($game,$format,$date) 
     {
         $schedule = new ScheduleTeams();
         $schedule->team1 = $game[0]['id'];
         $schedule->team2 = $game[1]['id'];
-        $schedule->date = $game['date']??date("Y-m-d H:i");
+        if (!$date) {
+            $schedule->date = $game['date']??date("Y-m-d H:i");
+        } else {
+            $schedule->date = $date;
+        }
         $schedule->group = $game['group']?? null;
         $schedule->tur = $game['tur']??1;
         $schedule->results1 = $game['results1']??null;
@@ -29,16 +33,17 @@ trait Schedule {
         $schedule->tournament_id = $this->id;
         $schedule->format = $format;
         $schedule->save(false);
+        return $schedule;
     }
 
 
-    private function forumText($teams)
+    private function forumText($result)
     {
-        $forum_text = "";
-        $forum_text .= $this->forum_text;
-        foreach ($teams as $key => $team) {
-            $text = $team[0]['name']." vs ".$team[1]['name'];
-            $forum_text .= '<p>'.$text.'</p>';
+        $forum_text = $this->forum_text;
+        foreach ($result as $match) {
+
+            $text = $match->teamS->name." vs ".$match->teamF->name;
+            $forum_text .= '<p><a href="/tournaments/upcoming-match/'.$match->id.'" >'.$text.'</a></p>';
         }
         $this->forum_text = $forum_text;
         $this->save(false);

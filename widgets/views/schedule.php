@@ -17,7 +17,7 @@
                 </a>
             </span>
             <span class="score">
-                <span><?=$posit_game['results1']??' -- ' ?>:<?=$posit_game['results2']??' -- ' ?></span>
+               <a href="/tournaments/upcoming-match/<?=$posit_game['id']?>"><span><?=$posit_game['results1']??' -- ' ?>:<?=$posit_game['results2']??' -- ' ?></span></a> 
             </span>
             <span class="team1">
                 <a href="/teams/public/<?=$posit_game['team2']?>">

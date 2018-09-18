@@ -34,7 +34,6 @@ trait ScheduleLeague {
                 $players_turs = array_merge($players_turs ,$this->generateLeague($c_block[$i],$ch,($i+1)));
             }
         }
-        
         if (($this->format == self::LEAGUE_P) || ($this->format == self::LEAGUE)) {
             $players_turs = $this->generateLeague($players,$ch);
 

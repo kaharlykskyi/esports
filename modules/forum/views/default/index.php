@@ -2,15 +2,30 @@
     
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
-    use dosamigos\ckeditor\CKEditor;
+    use dosamigos\tinymce\TinyMce;
     use yii\widgets\Breadcrumbs;
     $this->registerCssFile('css/forum/thread.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/forum/index.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Forum';
     
-    $this->params['breadcrumbs'][] = ['label' => 'Tournament', 'url' => ['/tournaments/public/'.$model->id] ];
+    $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/tournaments/public/'.$model->id] ];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<div class="champ-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="champ-nav-list">
+                    <span ><a href="/tournaments/public/<?=$model->id?>#participants">participants</a></span>
+                    <span><a href="/tournaments/public/<?=$model->id?>#matches">Matches</a></span>
+                    <span><a href="/tournaments/public/<?=$model->id?>#tournamentgrid">Tournament grid</a></span>
+                    <li class="active" ><a href="#">Tournament thread</a><li>
+                </ul>       
+            </div>
+        </div>
+    </div>              
+</div>
 <div class="container">
      <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']?? [], ]) ?>
     <div class="row">
@@ -19,7 +34,7 @@
             <div class="col-md-12 detail" >
                 <div class="col-sm-3 img_content"  >
                     <a href="championship.html" title="The Greatest League">
-                        <img src="/images/hockey/championship-ico.jpg" alt="champ-img">
+                        <img src="/images/game/<?=$model->game->logo?>" alt="champ-img">
                     </a>
                 </div>
                 <div class="col-sm-9 content_detals">
@@ -51,9 +66,17 @@
         $form->successCssClass = false;
         ?>
         <div class="col-md-8 col-md-offset-2" style="margin-top: 25px;margin-bottom: 25px;"> 
-            <?= $form->field($model, 'forum_text')->widget(CKEditor::className(), [
+            <?= $form->field($model, 'forum_text')->widget(TinyMce::className(), [
                 'options' => ['rows' => 6],
-                'preset' => 'basic'
+                'language' => 'en',
+                'clientOptions' => [
+                    'plugins' => [
+                        'advlist autolink lists link charmap  print hr preview pagebreak',
+                        'searchreplace wordcount textcolor visualblocks visualchars code fullscreen nonbreaking',
+                        'save insertdatetime media table contextmenu template paste image'
+                    ],
+                    'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+                ]
                 ])->label(false); ?>
             <?= Html::submitButton('Save', ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
         </div>

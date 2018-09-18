@@ -9,7 +9,7 @@
 
     $this->title = 'Create Topic';
     $this->registerCssFile('css/forum/thread.css', ['depends' => ['app\assets\AppAsset']]);
-    $this->params['breadcrumbs'][] = ['label' => 'Tournament', 'url' => ['/tournaments/public/'.$tour->id] ];
+    $this->params['breadcrumbs'][] = ['label' => $tour->name, 'url' => ['/tournaments/public/'.$tour->id] ];
     $this->params['breadcrumbs'][] = ['label' => 'Forum', 'url' => ['/forum/'.$tour->id] ];
     $this->params['breadcrumbs'][] = ['label' => $this->title];
 ?>

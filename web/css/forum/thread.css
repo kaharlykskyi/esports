@@ -226,3 +226,29 @@ table tr td {
     height: 25px;
     border-radius: 50%;
 }
+
+blockquote:before {
+    display: none;
+}
+
+.champ-nav-list span {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    line-height: normal;
+    text-align: -webkit-match-parent;
+}
+
+.champ-nav-list span a {
+    padding: 27px 30px 26px 30px;
+    display: inline-block;
+    font-size: 12px;
+    color: #141414;
+    text-transform: uppercase;
+    font-family: Montserrat,sans-serif;
+}
+
+.champ-nav-list span a:hover {
+    background: #00aeff;
+    color: #141414;
+}

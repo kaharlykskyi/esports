@@ -361,3 +361,38 @@ table tr td:last-child {
     width: 80px;
     border-radius: 50%;
 }
+
+/*///////////////////////////////////////////////////////////*/
+.grid_logo{
+    height: 15px;
+}
+
+#minimal .label {
+    text-align: left;
+    padding-left: 10px;
+}
+
+div.jQBracket .team  {
+    
+    background-color: #fff;
+    
+}
+
+div.jQBracket .team:first-child {
+    border-bottom: 1px solid #1f7ad361;
+    border-radius: 5px 5px 0 0;
+}
+
+div.jQBracket .team:nth-child(2) {
+    border-radius: 0 0 5px 5px ;
+}
+
+div.jQBracket .teamContainer {
+    border: 1px solid #1f7ad361;
+    border-radius: 5px;
+}
+
+div.jQBracket .team.na {
+    background-color: #dadcdc;
+    color: #ccc;
+}

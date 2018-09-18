@@ -5,13 +5,13 @@
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
     use app\models\Tournaments;
-    use dosamigos\ckeditor\CKEditor;
+    use dosamigos\tinymce\TinyMce;
     use yii\widgets\Breadcrumbs;
 
     $this->title = 'Topic';
     $this->registerCssFile('css/forum/thread.css', ['depends' => ['app\assets\AppAsset']]);
+    $this->params['breadcrumbs'][] = ['label' => $topic->tournament->name,  'url' => ['/tournaments/public/'.$topic->tournament->id] ];
     $this->params['breadcrumbs'][] = ['label' => 'Forum', 'url' => ['/forum/'.$topic->tournament->id] ];
-    $this->params['breadcrumbs'][] = ['label' => 'Tournament', 'url' => ['/tournaments/public/'.$topic->tournament->id] ];
     $this->params['breadcrumbs'][] = ['label' => $topic->name];
 ?>
 
@@ -31,9 +31,6 @@ $form->successCssClass = false;
     <?=  Breadcrumbs::widget(['links' => $this->params['breadcrumbs']?? [], ]) ?>
 <div class="row">
     <h6 style="text-align: center;"><?=$topic->name?></h6>
-
-
-    
     <?php foreach ($posts as $post):?>
         <div class="col-sm-10 col-sm-offset-1 post-element">
             <div class="col-sm-2 author-avatar">
@@ -50,9 +47,17 @@ $form->successCssClass = false;
     
 <?php if(!$topic->status): ?>
     <div class="col-md-10 col-md-offset-1 " style="margin-top: 35px;margin-bottom: 25px;padding: 0;"> 
-        <?= $form->field($new_post, 'text')->widget(CKEditor::className(), [
+        <?= $form->field($new_post, 'text')->widget(TinyMce::className(), [
             'options' => ['rows' => 6],
-            'preset' => 'basic'
+            'language' => 'en',
+            'clientOptions' => [
+                'plugins' => [
+                    'advlist autolink lists link charmap  print hr preview pagebreak',
+                    'searchreplace wordcount textcolor visualblocks visualchars code fullscreen nonbreaking',
+                    'save insertdatetime media table contextmenu template paste image'
+                ],
+                'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+            ]
         ])->label(false); ?>
         <?= Html::submitButton('Save', ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
     </div>

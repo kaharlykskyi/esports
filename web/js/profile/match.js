@@ -1,14 +1,16 @@
 $(document).ready(function(){
     if ($.matchDate) {
         let date = $.matchDate;
-        let timerId = setInterval(function() { 
-            date--;
-            if (date<0) {
-                clearInterval(timerId);
-            }
-            showdate(date);
-        }, 1000);
+        if (date>0) {
 
+            let timerId = setInterval(function() { 
+                date--;
+                if (date<1) {
+                    clearInterval(timerId);
+                }
+                showdate(date);
+            }, 1000);
+        }
     }
 
     function showdate (date) {

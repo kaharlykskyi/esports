@@ -232,16 +232,16 @@ $(document).ready( function() {
    $("#tournamentgrid").attr("style", 'display:block;');
        
     let doubleEliminationData;
-    function searchMix (data) {
-            const fdata = new FormData();
-            const csrfParam = $('meta[name="csrf-param"]').attr("content");
-            const csrfToken = $('meta[name="csrf-token"]').attr("content");
-            fdata.append(csrfParam,csrfToken);
-            fdata.append('data',data);
-            const xml = new XMLHttpRequest();
-            xml.open('POST','/ajax/set-cup',true);
-            xml.send(fdata); 
-    }
+    // function searchMix (data) {
+    //         const fdata = new FormData();
+    //         const csrfParam = $('meta[name="csrf-param"]').attr("content");
+    //         const csrfToken = $('meta[name="csrf-token"]').attr("content");
+    //         fdata.append(csrfParam,csrfToken);
+    //         fdata.append('data',data);
+    //         const xml = new XMLHttpRequest();
+    //         xml.open('POST','/ajax/set-cup',true);
+    //         xml.send(fdata); 
+    // }
 
     if (typeof $.comandTeams != "undefined") {
        doubleEliminationData = {
@@ -251,7 +251,6 @@ $(document).ready( function() {
     } else {
         doubleEliminationData = {};
     }
-
 
     function saveFn (data){
         let id = $('#minimal').attr('data-tournament-id');
@@ -263,36 +262,41 @@ $(document).ready( function() {
     function render_fn(container, data, score, state) {
         let name;
         if(null  != data && data.hasOwnProperty('name')){
-            name = data.name;
+           // name = data.name;
+            name = '<img class="grid_logo" src="'+data.logo+'" /> ';
+            name +=  data.name;
+
         } else {
             name = 'BYE';
         }
         container.append(name);
     }
-    if($.capitan_tournament){
+
+
+    //if($.capitan_tournament){
         $.dataObj = {
-            teamWidth: 110,
-            init: doubleEliminationData,
+            teamWidth: 120,
+            init:doubleEliminationData,
               //skipSecondaryFinal: true,
             skipConsolationRound: true,
             centerConnectors: true,
             decorator: {
-            edit: function edit_fn(){} , 
-            render: render_fn
-            }
-        };
-    } else {
-        $.dataObj = {
-                init: doubleEliminationData,
-                teamWidth: 110,
-                //skipSecondaryFinal: true,
-                skipConsolationRound: true,
-                decorator: {
-                edit: function edit_fn(){} ,
+                edit: function edit_fn(){} , 
                 render: render_fn
             }
-        }
-    }
+        };
+   
+        // $.dataObj = {
+        //         init: doubleEliminationData,
+        //         teamWidth: 110,
+        //         //skipSecondaryFinal: true,
+        //         skipConsolationRound: true,
+        //         decorator: {
+        //         edit: function edit_fn(){} ,
+        //         render: render_fn
+        //     }
+        // }
+    //}
     if($("div").is("#minimal")){
 
         $(function() {

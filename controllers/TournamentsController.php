@@ -170,14 +170,20 @@ class TournamentsController extends \yii\web\Controller
         list('players' => $players, 'model' => $model) = $mass;
 
         $a = count($players)/2;
+        if(strtotime($model->start_date) < strtotime('+50 minute',time())){
+            $date = date("Y-m-d H:i",strtotime('+50 minute',time()));
+        } else {
+            $date = $model->start_date;
+        }
+
         $cup["teams"] = [];
         for ($i=0; $i < $a; $i++) { 
             $player_1 = array_pop($players);
             $player_2 = array_pop($players);
             $cup["teams"][] = [$player_1,$player_2];
         }
-        $result = $model->createSchedule($cup["teams"],1);
-        $cup["results"][] = $result;
+        $result = $model->createSchedule($cup["teams"],1,$date);
+        $cup["results"][] = [];
         if($model->format == Tournaments::DUBLE_E){
             $cup["results"] = [[[[]]], [], []];
         }
@@ -197,6 +203,9 @@ class TournamentsController extends \yii\web\Controller
            throw new HttpException(404 ,'Page not found');
         }
         $model->state = 1;
+        if(strtotime($model->start_date) < strtotime('+30 minute',time())){
+            $model->start_date = date("Y-m-d H:i",strtotime('+30 minute',time()));
+        }
 
         $model->createLeague();
         return $this->redirect('/tournaments/public/'.$id.'#matches');
