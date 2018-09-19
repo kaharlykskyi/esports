@@ -237,13 +237,13 @@ class TournamentsController extends \yii\web\Controller
         return $this->render('match',compact('model'));
     }
 
-    // public function actionQwerty(){
-    //     $model = Tournaments::findOne(3);
-    //     if (!is_object($model)) {
-    //        throw new HttpException(404 ,'Page not found');
-    //     }
-    //     $model->createLeague();
+    public function actionCup($id) {
+        $model = Tournaments::findOne($id);
+        $this->layout = 'cup.php';
+        if (!is_object($model)) {
+           throw new HttpException(404 ,'Page not found');
+        }
 
-
-    // }
+        return $this->render('cup',compact('model'));
+    }
 }

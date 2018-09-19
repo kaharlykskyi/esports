@@ -200,7 +200,6 @@
 }
 
 #minimal {
-    overflow: hidden;
     overflow-x:auto;
     padding-bottom: 70px;
 }
@@ -404,5 +403,55 @@ div.jQBracket .team.na {
 .standing-full tr td {
     height: 50px;
     padding: 0 5px;
+}
+
+.standing-full tr td.points span {
+    width: 30px;
+}
+
+.container_iframes{
+    position: relative;
+}
+
+#ifrem_cup{
+
+    display:block;
+    width:100%;
+    border:none;
+    height: 600px;
+}
+
+.container_iframes{
+    position: relative;
+
+}
+
+.container_iframes .buttons{
+    position: absolute;
+    top: 20px;
+    right: 20px; 
+    padding: 10px 15px;
+    background-color:#14141491;
+    border-radius: 50%;
+}
+
+.container_iframes .buttons span{
+    cursor:pointer;
+    font-size: 25px;
+    color: #6d7373;
+    line-height: 35px;
+    color: #f7f7f7;
+}
+
+.container_iframes.full-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000000;
+    height: 100%;
+    widows: 100%;
+    background-color: #f7f7f7;
 }
 

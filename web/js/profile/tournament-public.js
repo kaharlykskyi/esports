@@ -225,87 +225,28 @@ $(document).ready( function() {
     });
 });
 
+$(document).ready( function() {
+    $('.tournamentgrid').on('click',function(){
+        let content_feme = $('#container_iframe');
+        let frame =` <iframe src="/tournaments/cup/${content_feme.attr('data-id-tournament')}" id="ifrem_cup" ></iframe>`;
+        content_feme.html(frame);
+    });
+
+    $('.glyphicon-fullscreen').on('click',function(){
+        $('.container_iframes').addClass('full-screen');
+        $('.glyphicon-resize-small').show();
+        $('.glyphicon-fullscreen').hide();
+    });
+    $('.glyphicon-resize-small').on('click',function(){
+        $('.container_iframes').removeClass('full-screen');
+        $('.glyphicon-resize-small').hide();
+        $('.glyphicon-fullscreen').show();
+    });
+
+
+});
+
 
  
-$(document).ready( function() {
-    
-   $("#tournamentgrid").attr("style", 'display:block;');
-       
-    let doubleEliminationData;
-    // function searchMix (data) {
-    //         const fdata = new FormData();
-    //         const csrfParam = $('meta[name="csrf-param"]').attr("content");
-    //         const csrfToken = $('meta[name="csrf-token"]').attr("content");
-    //         fdata.append(csrfParam,csrfToken);
-    //         fdata.append('data',data);
-    //         const xml = new XMLHttpRequest();
-    //         xml.open('POST','/ajax/set-cup',true);
-    //         xml.send(fdata); 
-    // }
 
-    if (typeof $.comandTeams != "undefined") {
-       doubleEliminationData = {
-        teams : $.comandTeams.teams,
-        results : $.comandTeams.results
-      };
-    } else {
-        doubleEliminationData = {};
-    }
-
-    function saveFn (data){
-        let id = $('#minimal').attr('data-tournament-id');
-        data.toutrament = id;
-        let json = JSON.stringify(data);
-        searchMix(json);
-    }
-
-    function render_fn(container, data, score, state) {
-        let name;
-        if(null  != data && data.hasOwnProperty('name')){
-           // name = data.name;
-            name = '<img class="grid_logo" src="'+data.logo+'" /> ';
-            name +=  data.name;
-
-        } else {
-            name = 'BYE';
-        }
-        container.append(name);
-    }
-
-
-    //if($.capitan_tournament){
-        $.dataObj = {
-            teamWidth: 120,
-            init:doubleEliminationData,
-              //skipSecondaryFinal: true,
-            skipConsolationRound: true,
-            centerConnectors: true,
-            decorator: {
-                edit: function edit_fn(){} , 
-                render: render_fn
-            }
-        };
-   
-        // $.dataObj = {
-        //         init: doubleEliminationData,
-        //         teamWidth: 110,
-        //         //skipSecondaryFinal: true,
-        //         skipConsolationRound: true,
-        //         decorator: {
-        //         edit: function edit_fn(){} ,
-        //         render: render_fn
-        //     }
-        // }
-    //}
-    if($("div").is("#minimal")){
-
-        $(function() {
-            $('#minimal').bracket($.dataObj);
-           $('#tournamentgrid').removeAttr('style');
-        });
-    } else {
-         $('#tournamentgrid').removeAttr('style');
-    }
-  
-});
 

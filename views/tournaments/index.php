@@ -16,14 +16,7 @@
 
     $capitan = $model->user_id == Yii::$app->user->identity->id;
 
-    if(($model->format != Tournaments::LEAGUE)&&(!empty($model->cup))) {
-        $script = "$.comandTeams = ".$model->cup.";";
-       
-        $script .= " $.format_tournament = true;";
-       
-        $this->registerJs($script, yii\web\View::POS_END);
-    }
-
+   
 
 ?>
 <!--CHAMPIONSHIP WRAP BEGIN-->
@@ -37,7 +30,7 @@
                         <ul class="champ-nav-list">
                             <li class="active"><a href="#participants">participants</a></li>
                             <li><a href="#matches">Matches</a></li>
-                            <li><a href="#tournamentgrid">Tournament grid</a></li>
+                            <li><a href="#tournamentgrid" class="tournamentgrid" >Tournament grid</a></li>
                             <?php if($capitan&&is_null($model->state)):?>
                                 <li><a href="#manage_tournament">Manage Tournament</a></li>
                             <?php endif; ?>
@@ -51,7 +44,6 @@
         </div>
         <!--CHAMPIONSHIP NAVIGATION END -->
         <div class="champ-tab-wrap tab-content">
-
             <!--CHAMPIONSHIP PART WRAP BEGIN -->
             <div class="tab-item part-wrap tab-pane active" id="participants">
                
@@ -59,7 +51,6 @@
                 <div class="container">
                     <div class="row"> 
                         <div class="col-md-12" style="margin-bottom: 30px;">
-
                             <?php if(empty($model->cup) && empty($model->league)): ?>
                                 <?php if($capitan):?>
                                     <?php if(empty($model->flag)):?>
@@ -72,9 +63,7 @@
                         </div>
                     </div>
                     <div class="row">
-
                         <?php foreach ($players as $player): ?>
-
                             <div class="col-md-3">
                                 <a href="/teams/public/<?=$player['id']?>" class="item">
                                     <span class="logo"><img src="<?= $player['logo'] ?? "/images/profile/images.png" ?>" width="80" height="80" alt="team-logo"></span>
@@ -82,13 +71,11 @@
                                 </a>
                             </div>
                         <?php endforeach ;?>
-
                     </div>
                 </div>
                 </div>
             </div>
             <!--CHAMPIONSHIP PART WRAP END -->
-
             <!--CHAMPIONSHIP MATCH WRAP BEGIN -->
             <div class="tab-item match-wrap tab-pane" id="matches">
                 <div class="container">
@@ -103,7 +90,6 @@
                 </div>
             </div>
             <!--CHAMPIONSHIP MATCH WRAP END -->
-
             <div class="tab-item part-wrap tab-pane " id="tournamentgrid">
                 <div class="container">        
                     <div class="row">
@@ -152,7 +138,6 @@
                                         <th>won</th>
                                         <th>drawn</th>
                                         <th>lost</th>
-                                        <th>gd</th>
                                         <th>points</th>
                                         <th>form</th>
                                     </tr>
@@ -169,7 +154,6 @@
                                             <td>8</td>
                                             <td>2</td>
                                             <td>1</td>
-                                            <td>+16</td>
                                             <td class="points"><span>26</span></td>
                                             <td class="form">
                                                 <span class="win">w</span>
@@ -238,8 +222,13 @@
                              <div class="col-md-12"><h6 style="text-align: center;" >Teams in playoff</h6></div>
                         </div>
                         <?php endif; ?>
-                        <div class="row ">
-                            <div id="minimal" data-tournament-id ='<?=$model->id?>'></div>
+                        <div class="row container_iframes"  > 
+                            <div id="container_iframe" data-id-tournament="<?=$model->id?>" ></div> 
+                            <div class="buttons">
+                                <span class="glyphicon glyphicon-fullscreen"></span>
+                                <span class="glyphicon glyphicon-resize-small"  style="display: none;" ></span>
+                            </div>
+                            
                         </div>
                     <?php endif; ?>
                 </div>
