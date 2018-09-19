@@ -72,7 +72,6 @@ class AppAsset extends AssetBundle
         'js/anchor.js',
         'js/landing_carousel.js',
         'js/landing_sport_standings.js',
-
         'js/twitterslider.js',
         'js/champions.js',
         'js/landing_mainnews_slider.js',

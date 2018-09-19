@@ -35,7 +35,7 @@ class TournamentsController extends \yii\web\Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['public'],
+                        'actions' => ['public','cup'],
                         'roles' => ['?'],
                     ],
                 ],
@@ -206,7 +206,6 @@ class TournamentsController extends \yii\web\Controller
         if(strtotime($model->start_date) < strtotime('+30 minute',time())){
             $model->start_date = date("Y-m-d H:i",strtotime('+30 minute',time()));
         }
-
         $model->createLeague();
         return $this->redirect('/tournaments/public/'.$id.'#matches');
     }
@@ -243,7 +242,6 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($model)) {
            throw new HttpException(404 ,'Page not found');
         }
-
         return $this->render('cup',compact('model'));
     }
 }

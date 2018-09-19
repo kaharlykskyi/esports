@@ -50,14 +50,15 @@ class AjaxController extends \yii\web\Controller
          if (!empty($post['search'])) {
             $game = Teams::findOne($post['team'])->game->id;
             $team = UserTeam::find()->select(['id_user'])
-            ->leftJoin('teams', '`teams`.`id` = `user_team`.`id_team`')
-            ->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
-            ->where(['games.id'=> $game])
-            ->asArray()->all();
+                ->leftJoin('teams', '`teams`.`id` = `user_team`.`id_team`')
+                ->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
+                ->where(['games.id'=> $game])
+                ->asArray()->all();
             $not_users = [];
                 foreach($team as $value){
                 $not_users[] = $value['id_user'];
             }
+
             $user = User::find()->select(['id','name', 'username'])
             ->where(['not in', 'id', $not_users])
             ->andWhere(['LIKE', 'name', $post['search']])
@@ -185,7 +186,6 @@ class AjaxController extends \yii\web\Controller
             } 
         }
         
-
         if (empty($teams_sort)) {
             $teams_sort = ['not'=> true];
         }
@@ -286,6 +286,7 @@ class AjaxController extends \yii\web\Controller
             ->from('teams')->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
             ->leftJoin('tournament_team', '`tournament_team`.`team_id` = `teams`.`id`')
             ->where(['games.id'=> $id_game])
+            ->andWhere(['!=','teams.capitan',Yii::$app->user->identity->id])
             ->andWhere(['LIKE', 'teams.name', $post['search']])
             ->andWhere(['tournament_team.status' => null])
             ->limit(50)->all();

@@ -13,10 +13,11 @@
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournament-public.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Tournament';
     $this->params['breadcrumbs'][] = $this->title;
-
-    $capitan = $model->user_id == Yii::$app->user->identity->id;
-
-   
+    if (is_object(Yii::$app->user->identity)) {
+        $capitan = $model->user_id == Yii::$app->user->identity->id;
+    } else {
+        $capitan = false;
+    }
 
 ?>
 <!--CHAMPIONSHIP WRAP BEGIN-->
@@ -330,6 +331,18 @@
                                             <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
                                             
                                             <div class="col-md-12">
+                                                <div  style="margin-bottom:35px;" >
+                                                    <label style="padding-left: 20px;" >Max team players </label>
+                                                    <div class="item select-show">
+                                                        <select class="basic" name="Tournaments[max_players]" required>
+                                                            <option value="1" <?=$model->max_players == 1 ? 'selected' : '' ?> >One player</option>
+                                                            <option value="2" <?=$model->max_players == 2 ? 'selected' : '' ?> >Two players</option>
+                                                            <option value="3" <?=$model->max_players == 3 ? 'selected' : '' ?> >Three players</option>
+                                                            <option value="4" <?=$model->max_players == 4 ? 'selected' : '' ?> >Four players</option>
+                                                            <option value="5" <?=$model->max_players == 5 ? 'selected' : '' ?> >Five players</option>
+                                                        </select>
+                                                    </div>      
+                                                </div>
                                                 <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
                                                 <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
                                                 <?php if(empty($model->cup)&&empty($model->league)): ?>

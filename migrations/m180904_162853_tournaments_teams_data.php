@@ -21,6 +21,7 @@ class m180904_162853_tournaments_teams_data extends Migration
             'prizes' => 'United States',
             'start_date' => date('Y-m-d H:i:s', strtotime('-2 day')),
             'match_schedule' => 7,
+            'max_players' => 4,
             'created_at' => 1534947950,
             'updated_at' => 1534947950,
         ]);
@@ -34,6 +35,7 @@ class m180904_162853_tournaments_teams_data extends Migration
             'prizes' => 'United States',
             'start_date' => date('Y-m-d H:i:s', strtotime('+2 day')),
             'match_schedule' => 7,
+            'max_players' => 4,
             'created_at' => 1534947950,
             'updated_at' => 1534947950,
         ]);
@@ -47,6 +49,7 @@ class m180904_162853_tournaments_teams_data extends Migration
             'prizes' => 'United States',
             'start_date' => date('Y-m-d H:i:s', strtotime('+2 day')),
             'match_schedule' => 7,
+            'max_players' => 4,
             'created_at' => 1534947950,
             'updated_at' => 1534947950,
         ]);
@@ -60,6 +63,7 @@ class m180904_162853_tournaments_teams_data extends Migration
             'prizes' => 'United States',
             'start_date' => date('Y-m-d H:i:s', strtotime('+2 day')),
             'match_schedule' => 7,
+            'max_players' => 4,
             'created_at' => 1534947950,
             'updated_at' => 1534947950,
             'league_p' => 4,
@@ -74,6 +78,7 @@ class m180904_162853_tournaments_teams_data extends Migration
             'prizes' => 'United States',
             'start_date' => date('Y-m-d H:i:s', strtotime('+2 day')),
             'match_schedule' => 7,
+            'max_players' => 4,
             'created_at' => 1534947950,
             'updated_at' => 1534947950,
             'league_p' => 2,

@@ -23,6 +23,7 @@ class m180817_074620_create_table_tournaments extends Migration
             'flag' =>  $this->integer(3)->Null(),
             'region' => $this->string(200),
             'time_limit' => $this->integer()->Null(),
+            'max_players'=> $this->integer()->notNull(),
             'start_date' => $this->dateTime()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),

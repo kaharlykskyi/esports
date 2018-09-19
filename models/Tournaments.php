@@ -42,7 +42,7 @@ class Tournaments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p','league_g','state'], 'integer'],
+            [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p','league_g','state','max_players'], 'integer'],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
             [['rules', 'prizes','name'], 'string'],
             [['start_date','region','data','cup','league_table','forum_text'], 'safe'],

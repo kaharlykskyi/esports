@@ -130,7 +130,7 @@ $this->params['breadcrumbs'][] = ['label' => $team1->name.' vs '.$team2->name];
                 <p>
                     <span style="font-weight:bold;" ><?=$post->user->name?></span>
                     <span style="float: right;color:#afacac;" >
-                        <?= date(' m \of F, Y ',$post->created_at)?>
+                        <?= date(' d \of F, Y ',$post->created_at)?>
                     </span>
                 </p>
                 <div class="content_text"> <?=$post->text?></div>
