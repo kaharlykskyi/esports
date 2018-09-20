@@ -6,21 +6,6 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\Url;
 
-/**
- * This is the model class for table "uset_team_tournament".
- *
- * @property int $id
- * @property int $tournament_id
- * @property int $team_id
- * @property int $user_id
- * @property string $text
- * @property int $created_at
- * @property int $updated_at
- *
- * @property Tournaments $tournament
- * @property Teams $team
- * @property Users $user
- */
 class UsetTeamTournament extends \yii\db\ActiveRecord
 {
 
@@ -63,25 +48,16 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTournament()
     {
         return $this->hasOne(Tournaments::className(), ['id' => 'tournament_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTeam()
     {
         return $this->hasOne(Teams::className(), ['id' => 'team_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getUser()
     {
         return $this->hasOne(Users::className(), ['id' => 'user_id']);
@@ -104,10 +80,10 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
     {
         $users = self::find()->select('user_id')->where(['tournament_id' => $tournament->id,'team_id' => $team->id]);//->asArray()->all();
         $members = User::find()->where(['in','id',$users])->all();
-        $url = Url::toRoute(['toutnaments/public','id' => $tournament->id], true);
+        $url = Url::toRoute(['tournaments/public','id' => $tournament->id], true);
         foreach ($members as $member) {
-            $text_meesage = '<p><b>'.$team->capitans->name.'</b></a> chose you to participate in tournament
-            <a href="'.$url.'" >'.$tournament->name.'</a><p>';
+            $text_meesage = '<p><b>'.$team->capitans->name.'</b></a> chose you to participate in tournament 
+            <a href="'.$url.'" >'.$tournament->name.'</a></p>';
             Yii::$app->mailer->compose()
                 ->setFrom([Yii::$app->params['adminEmail'] => 'Participation in the tournament '.$tournament->name])
                 ->setTo([$member->email])
@@ -115,6 +91,7 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
                 ->setTextBody("Participation in the tournament")
                 ->setHtmlBody($text_meesage)
                 ->send();
+            (new MessageUser())->writeMessage($team->capitans->id,$member->id,$text_meesage);   
         }   
     }
 

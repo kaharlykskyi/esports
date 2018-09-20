@@ -4,7 +4,6 @@ $(document).ready(function () {
         if (data.trim() == '') return;
         contentClear();
         searchuser(data);
-        //$('.modal_search').val('');
     });
 
     function FSsrf () {
@@ -58,19 +57,15 @@ $(document).ready(function () {
                 }
             }
             let html = `<div class="col-md-12 plashka_user" >
-                            <div class="row">
-                                <div class="col-xs-2" >
-                                    <div class="img_logo_modal">
-                                        <img src="/images/profile/images.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6" >
-                                    <p>${element.name} @${element.username}</p>
-                                </div>
-                                <div class="col-xs-4 box" >
-                                    ${box}
-                                </div>
-                            </div>
+                        <div class="row">
+                        <div class="col-xs-2" >
+                        <div class="img_logo_modal">
+                        <img src="/images/profile/images.png" alt="">
+                        </div>
+                        </div>
+                        <div class="col-xs-6" ><p>${element.name} @${element.username}</p></div>
+                        <div class="col-xs-4 box" >${box}</div>
+                        </div>
                         </div>`;
           $('#content_modal').append(html);
         });
@@ -143,8 +138,6 @@ $(document).ready(function () {
         if (search.trim() == '') return;
         contentClear();
         searcTeams(search,game,qualit);
-        //$('.modal_search_team').val('');
-
     });
 
     function FSsrf () {
@@ -200,21 +193,21 @@ $(document).ready(function () {
         contentClear();
         $.each(e,function(indx, element){
             let html = `<div class="col-xs-12 col-md-10 col-md-offset-1 plashka_teams clearfix " >
-                                <div class="col-xs-3 block_logo" >
-                                    <div class="img_logo_modal_team">
-                                        <a href="/teams/public/${element.id}"><img src="${element.logo}" alt=""></a>
-                                    </div>
-                                </div>
-                                <div class="col-xs-5 col-md-6" >
-                                    <p class="p_name" ><a href="/teams/public/${element.id}">${element.name}<a/></p>
-                                    <p class="p_gname" >${element.g_name}</p>
-                                    <p class="p_user" >${element.c_user} member(s)</p>
-                                </div>
-                                <div class="col-xs-4 col-md-3 box" >
-                                    <p>Participtes in</p>
-                                    <p><a href="/tournaments/public/${element.turid}">${element.turname}</a></p>
-                                    <p>Position: 3</p>
-                                </div>
+                        <div class="col-xs-3 block_logo" >
+                        <div class="img_logo_modal_team">
+                        <a href="/teams/public/${element.id}"><img src="${element.logo}" alt=""></a>
+                        </div>
+                        </div>
+                        <div class="col-xs-5 col-md-6" >
+                        <p class="p_name" ><a href="/teams/public/${element.id}">${element.name}<a/></p>
+                        <p class="p_gname" >${element.g_name}</p>
+                        <p class="p_user" >${element.c_user} member(s)</p>
+                        </div>
+                        <div class="col-xs-4 col-md-3 box" >
+                        <p>Participtes in</p>
+                        <p><a href="/tournaments/public/${element.turid}">${element.turname}</a></p>
+                        <p>Position: 3</p>
+                        </div>
                         </div>`;
           $('#content_teams_modal_team').append(html);
         });
@@ -223,5 +216,13 @@ $(document).ready(function () {
         contentClear();
         $('.modal_search_team').val('');
     });
+});
+
+$(document).ready(function () {
+
+    $('.closes').on('click',function(){
+        alert('f');
+    });
+
 });
 

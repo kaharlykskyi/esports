@@ -29,9 +29,7 @@ class ProfileController extends \yii\web\Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function actions()
     {
         return [

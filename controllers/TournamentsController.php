@@ -58,16 +58,14 @@ class TournamentsController extends \yii\web\Controller
                         $model->data = json_encode($post['Data']);
                     }
                     
-                if($model->save()) {
-                   
+                if($model->save()) {       
                     // foreach ($post['Data'] as $key => $value ) {
                     //     $tournament_data = new TournamentData();
                     //     $tournament_data->tournament_id = $model->id;
                     //     $tournament_data->name = $key;
                     //     $tournament_data->value = $value;
                     //     $tournament_data->save();
-                    // }
-                    
+                    // }             
                     Yii::$app->session->setFlash('success', 'Tournament settings updated');
                     return $this->redirect('/tournaments/public/'.$model->id.'#manage_tournament');
                 }
@@ -109,7 +107,6 @@ class TournamentsController extends \yii\web\Controller
         return $this->render('create-tournament',compact('model','games'));
     }
 
-
     public function actionInvitation ($tokin,$tournament,$team = false)
     {
         $team_model = false;
@@ -128,7 +125,6 @@ class TournamentsController extends \yii\web\Controller
             if (!is_object($team_model)) {
                 throw new HttpException(404 ,'Page not found');
             }
-            
         } else {
             $model = TournamentUser::find()
                 ->where(['tournament_id'=> $tournament->id])
@@ -151,13 +147,16 @@ class TournamentsController extends \yii\web\Controller
                 $team_one_usr->dummyTeam($tournaments,$user);
 
             } elseif (isset($post['ACCEPT'])) {
-                //$model->status = 2;
-                //$model->tokin = 'ok';
-                //if ($model->save()) {
-                   $uset_tournament = new UsetTeamTournament();
-                   $uset_tournament->seveMembersTournament($post['uset_team_tournament'],$tournament,$team_model);    
-                //}
-                
+                $count = count($post['uset_team_tournament']);
+                if (($count<=$tournament->max_players)&&$count>0) {
+                    $model->status = 2;
+                    $model->tokin = 'ok';
+                    if ($model->save()) {
+                        $uset_tournament = new UsetTeamTournament();
+                        $uset_tournament
+                        ->seveMembersTournament($post['uset_team_tournament'],$tournament,$team_model);    
+                    }
+                }
             }
 
             if (isset($post['DECLINE'])) {

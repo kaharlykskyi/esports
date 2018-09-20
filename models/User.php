@@ -150,4 +150,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(Teams::className(), ['capitan' => 'id']);
     }
+
+    
+    public function getMessages()
+    {
+        return $this->hasMany(MessageUser::className(), ['recipient' => 'id']);
+    }
 }

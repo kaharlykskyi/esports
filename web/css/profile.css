@@ -629,6 +629,68 @@ input[type=date] {
     font-size: 12px;
 }
 
+.activity-inner p{
+    height: auto;
+    line-height: 22px;
+}
+
+.activity-header{
+    padding-bottom: 15px;
+}
+
+
+.lists{
+    position: relative;
+}
+
+.lists .closes{
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 4px;
+}
+.lists .closes:hover{
+    background: #edebeb;
+}
+.lists .closes:after,.lists .closes:before{
+    position: absolute;
+    content: '';
+    height: 20px;
+    width: 2px;
+    left: 14px;
+    border-radius: 2px;
+    background-color: #bfbcbc;
+}
+
+.lists .closes:after{
+    transform: rotate(45deg);
+}
+
+.lists .closes:before{
+    transform: rotate(-45deg);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media screen and (max-width: 660px) {
     .youplay-user-navigation ul li>a {
        padding-left: 5px; 

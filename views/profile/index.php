@@ -122,33 +122,6 @@
                                 <li><a href="#notifications">Notifications</a></li>
                             </ul>
                         </div>
-                        <div class="col-md-5">
-                            <div class="row">
-                            <!-- <div class="col-md-2 no-pading">
-                                <div  ><span>Show:</span></div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="item select-show">
-                                    <div class="fancy-select ">
-                                        <select class="basic" name="RegisterForm[country]" required>
-                                            <option value="-1">— Everything —</option>
-                                            <option value="activity_update">Updates</option>
-                                            <option value="new_blog">New Sites</option>
-                                            <option value="new_blog_post">Posts</option>
-                                            <option value="new_blog_comment">Comments</option>
-                                            <option value="friendship_accepted,friendship_created">Friendships</option>
-                                            <option value="created_group">New Groups</option>
-                                            <option value="joined_group">Group Memberships</option>
-                                            <option value="group_details_updated">Group Updates</option>
-                                            <option value="bbp_topic_create">Topics</option>
-                                            <option value="bbp_reply_create">Replies</option> 
-
-                                        </select>
-                                    </div>    
-                                </div>
-                            </div> -->
-                            </div>   
-                        </div>
                     </div>
                     <div class="tab-content">
                         <div id="personal" class="tab-pane fade in active">
@@ -184,32 +157,62 @@
                         <div id="notifications" class="tab-pane fade in">
                             <div class="wrap-lists"> 
                                 <?php foreach($teams_m as $team) : ?>  
-                            <div class="lists">
-                                <div class="youplay-timeline-icon "> 
-                                    <a href="/teams/public/<?=$team['id']?>">
-                                        <img src="<?=$team['logo']?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
-                                    </a>
-                                </div>
-                                    
-                                    <div class="wrap">     
-                                        <h3 class="activity-header">
-                                            <p>
-                                                The <a href="/teams/public/<?=$team['id']?>"><?=$team['name']?></a> team invites you to become part of its players.
-                                            </p>
-                                        </h3>
-                                        <div class="clearfix"></div>
-                                        <div class="activity-inner">
-                                            <p>
-                                                To accept or decline the invitation click the link below:</br>
-                                                <a href="<?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>">
-                                                   <?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>
-                                                </a></br>
-                                                Finally, if you want more information, contact <?=$team['name']?> 
-                                                through their website, or through their captain, by email <a href="<?= $team['u_email']?>"><?= $team['u_email']?></a>.
-                                            </p>
+                                    <div class="lists">
+                                        <div class="youplay-timeline-icon "> 
+                                            <a href="/teams/public/<?=$team['id']?>">
+                                                <img src="<?=$team['logo']?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
+                                            </a>
+                                        </div>
+
+                                        <div class="wrap">     
+                                            <h3 class="activity-header">
+                                                <p>
+                                                    The <a href="/teams/public/<?=$team['id']?>"><?=$team['name']?></a> team invites you to become part of its players.
+                                                </p>
+                                            </h3>
+                                            <div class="clearfix"></div>
+                                            <div class="activity-inner">
+                                                <p>
+                                                    To accept or decline the invitation click the link below:</br>
+                                                    <a href="<?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>">
+                                                     <?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>
+                                                    </a></br>
+                                                     Finally, if you want more information, contact <?=$team['name']?> 
+                                                     through their website, or through their captain, by email <a href="<?= $team['u_email']?>"><?= $team['u_email']?>
+                                                    </a>.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php endforeach; ?>
+                                <?php foreach($user->messages as $message) : ?>
+                                    
+                                    <div class="lists">
+                                        <div class="closes" data-delete="<?=$message->id?>" ></div>
+                                        <div class="youplay-timeline-icon "> 
+                                            <a href="#">
+                                                <img src="https://cdn-wp.nkdev.info/youplay/wp-content/uploads/avatars/1/3e326e4e6643db89fc3bf1447d9474e3-bpthumb.jpg" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
+                                            </a>
+                                        </div>
+
+                                        <div class="wrap">     
+                                            <h3 class="activity-header">
+                                                <p>
+                                                    Message from <?=$message->senders->name?>
+                                                    <p class="view youplay-timeline-date pt-5 bp-tooltip"  style="color: ">
+                                                        <span class="time-since" style="color: #1976d2;" >
+                                                            created <?=  date(' d \of F, Y ',$message->created_at) ?>
+                                                        </span>
+                                                    </p>
+                                                </p>
+                                            </h3>
+                                            <div class="activity-inner">
+                                                <div>
+                                                    <?=$message->text?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php endforeach; ?>
                                     
                             </div>
