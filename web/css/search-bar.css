@@ -7,10 +7,6 @@
 .s_layouts_snapWrapper {
     visibility: hidden;
     opacity:0;
-	-webkit-transition: opacity 1s, visibility 0s linear 2s;
-    -moz-transition: opacity 1s , visibility 0s linear 2s;
-    -o-transition: opacity 1s , visibility 0s linear 2s;
-    transition: opacity 1s , visibility 0s linear 2s;
 	background-color: rgba(22,22,22,0.95);
     position: fixed;
     top: 0;
@@ -26,9 +22,13 @@
 
 }
 
-/*body {
-	overflow: hidden;
-}*/
+.s_layouts_snapWrapper_add{
+
+    -webkit-transition: opacity 1s, visibility 0s linear 2s;
+    -moz-transition: opacity 1s , visibility 0s linear 2s;
+    -o-transition: opacity 1s , visibility 0s linear 2s;
+    transition: opacity 1s , visibility 0s linear 2s;
+}
 
 .wrap_blur{
 	-webkit-filter: url(filters_clean.svg#blur);

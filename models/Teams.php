@@ -62,7 +62,7 @@ class Teams extends \yii\db\ActiveRecord
         return $this->hasOne(Games::className(), ['id' => 'game_id']);
     }
 
-    public function getCapitan()
+    public function getCapitans()
     {
         return $this->hasOne(User::className(), ['id' => 'capitan']);
     }
@@ -119,6 +119,8 @@ class Teams extends \yii\db\ActiveRecord
         $ids = ArrayHelper::getColumn(UserTeam::find()->where(['id_team' => $this->id, 'status' => UserTeam::ACCEPTED])->asArray()->all(), 'id_user');
         return User::find()->where(['in', 'id', $ids])->all();
     }
+
+
 
     public function dummyTeam($tournament,$user)
     {

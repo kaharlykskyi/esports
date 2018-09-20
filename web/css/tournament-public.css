@@ -460,3 +460,10 @@ div.jQBracket .team.na {
     margin-right: 20px;
 }
 
+.invitation_input_submit{
+    text-align: center;
+}
+
+.invitation_input_submit input{
+    padding: 10px 35px;
+}

@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+    $('.s_layouts_snapWrapper').addClass('s_layouts_snapWrapper_add');
     $.myVarContainer = {};
 
     $('#search-bar').on('click',function(){

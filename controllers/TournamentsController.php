@@ -17,6 +17,7 @@ use app\models\TournamentCupTeam;
 use Yii;
 use yii\web\HttpException;
 use app\models\ScheduleTeams;
+use app\models\UsetTeamTournament;
 
 class TournamentsController extends \yii\web\Controller
 {
@@ -111,7 +112,7 @@ class TournamentsController extends \yii\web\Controller
 
     public function actionInvitation ($tokin,$tournament,$team = false)
     {
-
+        $team_model = false;
         $tournament = Tournaments::findOne($tournament);
         $user = Yii::$app->user->identity;
         if (!is_object($tournament)) {
@@ -121,10 +122,12 @@ class TournamentsController extends \yii\web\Controller
         if ($team) {
             $model = TournamentTeam::find()
                 ->where(['tournament_id'=> $tournament->id])
-                ->andWhere(['tokin' => $tokin])
-                ->andWhere(['team_id' => $team])
-                ->andWhere(['status' => TournamentTeam::SENT])
+                ->andWhere(['tokin' => $tokin,'team_id' => $team,'status' => TournamentTeam::SENT])
                 ->one();
+            $team_model = Teams::find()->where(['id'=> $model->team_id])->one();
+            if (!is_object($team_model)) {
+                throw new HttpException(404 ,'Page not found');
+            }
             
         } else {
             $model = TournamentUser::find()
@@ -148,9 +151,13 @@ class TournamentsController extends \yii\web\Controller
                 $team_one_usr->dummyTeam($tournaments,$user);
 
             } elseif (isset($post['ACCEPT'])) {
-                $model->status = 2;
-                $model->tokin = 'ok';
-                $model->save();
+                //$model->status = 2;
+                //$model->tokin = 'ok';
+                //if ($model->save()) {
+                   $uset_tournament = new UsetTeamTournament();
+                   $uset_tournament->seveMembersTournament($post['uset_team_tournament'],$tournament,$team_model);    
+                //}
+                
             }
 
             if (isset($post['DECLINE'])) {
@@ -160,7 +167,7 @@ class TournamentsController extends \yii\web\Controller
             }
             return $this->redirect('/profile#tournaments');
         }  
-        return $this->render('confirmation',compact('tournament','tokin','team'));
+        return $this->render('confirmation',compact('tournament','tokin','team','team_model'));
     }
 
     public function actionAddSchedule($id)

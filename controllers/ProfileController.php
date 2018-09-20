@@ -209,7 +209,6 @@ class ProfileController extends \yii\web\Controller
                 $user_team->save();
                 return $this->redirect('/profile');
             }
-            //$team = Teams::findOne($user_team->id_team);
             return $this->render('confirmation-team',compact('confirmation_tokin','team'));
         }
         return $this->redirect('/profile');    
