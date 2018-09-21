@@ -168,7 +168,6 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                             <option value="2">Two players</option>
                             <option value="3">Three players</option>
                             <option value="4">Four players</option>
-                            <option value="5">Five players</option>
                         </select>
                     </div>      
                 </div>

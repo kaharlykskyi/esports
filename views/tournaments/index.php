@@ -341,7 +341,6 @@
                                                             <option value="2" <?=$model->max_players == 2 ? 'selected' : '' ?> >Two players</option>
                                                             <option value="3" <?=$model->max_players == 3 ? 'selected' : '' ?> >Three players</option>
                                                             <option value="4" <?=$model->max_players == 4 ? 'selected' : '' ?> >Four players</option>
-                                                            <option value="5" <?=$model->max_players == 5 ? 'selected' : '' ?> >Five players</option>
                                                         </select>
                                                     </div>      
                                                 </div>

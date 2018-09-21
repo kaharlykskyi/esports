@@ -250,4 +250,18 @@ class TournamentsController extends \yii\web\Controller
         }
         return $this->render('cup',compact('model'));
     }
+
+    public function actionApiString($id) {
+        $model = Tournaments::findOne($id);
+        $this->layout = 'cup.php';
+        if (!is_object($model)) {
+           throw new HttpException(404 ,'Page not found');
+        }
+
+        $user_config = UsetTeamTournament::find()->where(['user_id'=>Yii::$app->user->identity->id,'tournament_id'=>$id])->one();
+        if (!is_object($user_config)) {
+             throw new HttpException(404 ,'Page not found');
+        }
+        return $this->render('api_string');
+    }
 }
