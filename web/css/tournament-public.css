@@ -430,14 +430,14 @@ div.jQBracket .team.na {
     position: absolute;
     top: 20px;
     right: 20px; 
-    padding: 10px 15px;
+    padding: 8px 15px;
     background-color:#14141491;
     border-radius: 50%;
 }
 
 .container_iframes .buttons span{
     cursor:pointer;
-    font-size: 25px;
+    font-size: 20px;
     color: #6d7373;
     line-height: 35px;
     color: #f7f7f7;

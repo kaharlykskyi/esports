@@ -142,7 +142,7 @@
     float: left;
     left: 0;
     width: 100%;
-    padding: 1.5em 0;
+   
     font-size: 1rem;
     opacity: .7;
 }
@@ -645,7 +645,7 @@ input[type=date] {
 
 .lists .closes{
     position: absolute;
-    right: 50px;
+    right: 20px;
     top: 10px;
     height: 30px;
     width: 30px;

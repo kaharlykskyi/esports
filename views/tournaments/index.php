@@ -35,8 +35,10 @@
                             <?php if($capitan&&is_null($model->state)):?>
                                 <li><a href="#manage_tournament">Manage Tournament</a></li>
                             <?php endif; ?>
-                            <?php if( in_array(['id' => Yii::$app->user->identity->id],$users_id)&&!empty($model->state)): ?>
-                                <span><a href="/forum/<?=$model->id?>">Tournament thread</a></span>
+                            <?php if(is_object(Yii::$app->user->identity)): ?>
+                                <?php if( in_array(['id' => Yii::$app->user->identity->id],$users_id)&&!empty($model->state)): ?>
+                                    <span><a href="/forum/<?=$model->id?>">Tournament thread</a></span>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </ul>       
                     </div>

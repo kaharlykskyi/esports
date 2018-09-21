@@ -218,11 +218,39 @@ $(document).ready(function () {
     });
 });
 
+
 $(document).ready(function () {
 
     $('.closes').on('click',function(){
-        alert('f');
+       let id_message = $(this).attr('data-delete');
+       deleteMessage(id_message,$(this));
     });
+
+    function FSsrf () {
+        const fdata = new FormData();
+        const csrfParam = $('meta[name="csrf-param"]').attr("content");
+        const csrfToken = $('meta[name="csrf-token"]').attr("content");
+        fdata.append(csrfParam,csrfToken); 
+        return fdata;
+    }
+
+    function deleteMessage(data,content) {
+
+        const fdata = FSsrf();
+        fdata.append('id_message',data);
+        let statechange = function() {
+            if(this.readyState == 4) {
+                let e = JSON.parse(this.responseText);
+                if (e.sent) {
+                    content.parent(".lists").slideUp();
+                }
+            }
+        };
+        const xml = new XMLHttpRequest();
+        xml.onreadystatechange = statechange;
+        xml.open('POST','/ajax/delete-message',true);
+        xml.send(fdata); 
+    }
 
 });
 

@@ -16,6 +16,7 @@ use app\models\TournamentUser;
 use app\models\TournamentTeam;
 use app\models\TournamentCupTeam;
 use app\models\ScheduleTeams;
+use app\models\MessageUser;
 
 class AjaxController extends \yii\web\Controller
 {
@@ -364,6 +365,21 @@ class AjaxController extends \yii\web\Controller
            $model->save(false);
         }
         
+    }
+
+    public function actionDeleteMessage() 
+    {
+        $post = Yii::$app->request->post();
+        $message = MessageUser::find()
+            ->where(['id'=>$post['id_message'],'recipient'=>Yii::$app->user->identity->id])->one();
+
+        if (!is_object($message)) {
+            return ['sent' => false];
+        }
+        if ($message->delete()) {
+            return ['sent' => true];
+        }
+        return ['sent' => false];
     }
 
 }

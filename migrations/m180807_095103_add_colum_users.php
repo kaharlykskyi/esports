@@ -12,7 +12,7 @@ class m180807_095103_add_colum_users extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('users', 'visible', $this->integer(1)->defaultValue(0)); 
+        
         $this->insert('users', [
             'name' => 'Vasa',
             'username' => 'vasa',
@@ -20,6 +20,7 @@ class m180807_095103_add_colum_users extends Migration
             'password' => Yii::$app->security->generatePasswordHash('vasa'),
             'role' => 0,
             'country' => 'United States',
+            'visible' =>1,
         ]);
 
         $this->insert('users', [
@@ -29,6 +30,7 @@ class m180807_095103_add_colum_users extends Migration
             'password' => Yii::$app->security->generatePasswordHash('peta'),
             'role' => 0,
             'country' => 'United States',
+            'visible' =>1,
         ]);
 
         $this->insert('users', [
@@ -38,6 +40,7 @@ class m180807_095103_add_colum_users extends Migration
             'password' => Yii::$app->security->generatePasswordHash('feda'),
             'role' => 0,
             'country' => 'United States',
+            'visible' =>1,
         ]);
 
     }
@@ -47,7 +50,7 @@ class m180807_095103_add_colum_users extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('users', 'visible');
+       return;
     }
 
     /*
