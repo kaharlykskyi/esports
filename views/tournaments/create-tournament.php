@@ -11,7 +11,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/create-team.css');
 $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/tournaments.css');
-//$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/create-team.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
 $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
 
 ?>

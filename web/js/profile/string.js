@@ -280,10 +280,21 @@ function decode$2(deckstring) {
     };
 }
 
-//console.log(decode$2('AAECAf0EBMABobcC3s0Cps4CDXHDAbsClQOrBJYF7AWjtgLXtgLpugKHvQLBwQKYxAIA'));
-let carts = decode$2('AAECAf0EBMABobcC3s0Cps4CDXHDAbsClQOrBJYF7AWjtgLXtgLpugKHvQLBwQKYxAIA');
-searchMix();
-let oject = [];
+
+let myCardClass = [];
+let carts;
+
+$('.btn-cards').on('click',function(event){
+    myCardClass = [];
+    let decstring = $('.string-input').val();
+    carts = decode$2(decstring);
+    //console.log(carts);
+    searchMix();
+});
+
+
+let arryClassCardsn = ['MAGE','PRIEST','WARLOCK','ROGUE','DRUID','SHAMAN','HUNTER','WARRIOR','PALADIN'];
+
 function searchMix () {
     let statechange = function() {
         if(this.readyState == 4) {
@@ -309,14 +320,48 @@ function ojectSort (respons){
     let c =carts.cards;
     for (let a = c.length - 1; a >= 0; a--) {
         for (let i = respons.length - 1; i >= 0; i--) {
-            if(respons[i].dbfId == c[a][0] ){
-                oject.push(respons[i]);
+            if(respons[i].dbfId == c[a][0] ) {
+                //console.log(respons[i]);
+                if (!myCardClass.includes(respons[i].cardClass) && arryClassCardsn.includes(respons[i].cardClass)) {
+                    myCardClass.push(respons[i].cardClass);
+                }
                 break;
             }
         }
     }
-    console.log(oject);
+    contentWrite(myCardClass);
 }
+
+
+function contentWrite (oject){
+    let content = $('.container_cards');
+    content.html('');
+    $.map(oject,function(element,index){
+        let p =`<div class="block_card_class" ><img src="/images/game/hearthstone/${element}.png" ><p class="text_card_class" >${element}</p></div>`;
+        let block_card = $(p).on('click',clickCards);
+        content.append(block_card);  
+    });
+}
+
+function clickCards(){
+    $(this).toggleClass('block_card_active');
+    if( $('.block_card_active').length) {
+        $('.block_form').slideDown();
+    } else {
+        $('.block_form').slideUp();
+    }
+}
+
+$('.btn-save').on('click',function(event){
+    event.preventDefault();
+    let arryCards = [];
+     $('.block_card_active').map(function(indx, element){
+        arryCards.push($(element).find('.text_card_class').text());
+     });
+    
+    console.log(arryCards);
+
+});
 
 
 
