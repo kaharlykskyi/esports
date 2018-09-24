@@ -10,6 +10,7 @@ use app\models\UserTeam;
 use yii\web\HttpException;
 use Yii;
 use app\models\User;
+use app\models\UsetTeamTournament;
 
 class TeamsController extends \yii\web\Controller
 {
@@ -88,6 +89,9 @@ class TeamsController extends \yii\web\Controller
         }
         throw new HttpException(404 ,'Page not found');
     }
+
+
+
 
 
 }

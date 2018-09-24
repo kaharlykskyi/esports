@@ -18,6 +18,7 @@ use Yii;
 use yii\web\HttpException;
 use app\models\ScheduleTeams;
 use app\models\UsetTeamTournament;
+use app\models\servises\ApiString;
 
 class TournamentsController extends \yii\web\Controller
 {
@@ -262,6 +263,14 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($user_config)) {
              throw new HttpException(404 ,'Page not found');
         }
-        return $this->render('api_string');
+
+
+        $string = new ApiString('AAECAf0EEnGKAasEtATFBOMFvAiXwQKswgKYxAKb0wKG1AL77AKM7wKQ7wLP8gLF8wKTgAMGTbsCywSWBewHuf8CAA==');
+
+        //$string->
+
+
+        //return $this->render('api_string');
     }
+
 }
