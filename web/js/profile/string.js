@@ -288,8 +288,8 @@ $('.btn-cards').on('click',function(event){
     myCardClass = [];
     let decstring = $('.string-input').val();
     carts = decode$2(decstring);
-    //console.log(carts);
     searchMix();
+    $('.block_form').slideUp();
 });
 
 
@@ -353,13 +353,14 @@ function clickCards(){
 }
 
 $('.btn-save').on('click',function(event){
-    event.preventDefault();
-    let arryCards = [];
-     $('.block_card_active').map(function(indx, element){
+    //event.preventDefault();
+    let arryCards = [],json;
+    $('.block_card_active').map(function(indx, element){
         arryCards.push($(element).find('.text_card_class').text());
-     });
+    });
     
-    console.log(arryCards);
+    json = JSON.stringify(arryCards);
+    $('.input_class_cards').val(json);
 
 });
 

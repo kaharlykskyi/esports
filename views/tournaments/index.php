@@ -381,13 +381,15 @@
                                                 <?php  
                                                 echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
                                                     'name' => 'datetime_10',
+                                                    'readonly' => true ,
+                                                    'removeButton' => false ,
                                                     'options' => [  
                                                         'placeholder' => 'Select operating time ...',
                                                         'autocomplete'=>"off",'class'=>'datainput',
                                                     ],
                                                     'convertFormat' => true,
                                                     'pluginOptions' => [
-                                                        'format' => 'yyyy-MM-dd hh:i',
+                                                        'format' => 'yyyy-MM-dd H:i',
                                                         'startDate' => date("Y-m-d H:i"),
                                                         'todayHighlight' => true
                                                 ]]); ?>

@@ -140,7 +140,7 @@ class TournamentsController extends \yii\web\Controller
         if (!is_null($tournament->state)) {
             throw new HttpException(404 ,'Page not found');
         }
-        if(Yii::$app->request->isPost){
+        if(Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
 
             if(!$team && isset($post['ACCEPT'])){
@@ -243,7 +243,8 @@ class TournamentsController extends \yii\web\Controller
         return $this->render('match',compact('model'));
     }
 
-    public function actionCup($id) {
+    public function actionCup($id) 
+    {
         $model = Tournaments::findOne($id);
         $this->layout = 'cup.php';
         if (!is_object($model)) {
@@ -252,7 +253,8 @@ class TournamentsController extends \yii\web\Controller
         return $this->render('cup',compact('model'));
     }
 
-    public function actionApiString($id) {
+    public function actionApiString($id) 
+    {
         $model = Tournaments::findOne($id);
         if (!is_object($model)) {
            throw new HttpException(404 ,'Page not found');
@@ -262,7 +264,27 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($user_config)) {
              throw new HttpException(404 ,'Page not found');
         }
-        return $this->render('api_string');
+
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+
+            if (!empty($post['decstring'])) {
+                $user_config->text = $post['decstring']; 
+                $user_config->save();  
+                return $this->redirect('/tournaments/public/'.$model->id);
+            }         
+        }
+        
+        if ($model->game_id == 2) {
+            return $this->render('api_pokemon',compact('user_config'));
+        }
+
+        if ($model->game_id == 1) {
+            return $this->render('api_hearthstone',compact('user_config'));
+        }
+        
     }
+
+    
 
 }
