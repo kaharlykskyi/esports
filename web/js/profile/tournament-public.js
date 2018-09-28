@@ -226,11 +226,21 @@ $(document).ready( function() {
 });
 
 $(document).ready( function() {
-    $('.tournamentgrid').on('click',function(){
-        let content_feme = $('#container_iframe');
-        let frame =` <iframe src="/tournaments/cup/${content_feme.attr('data-id-tournament')}" id="ifrem_cup" ></iframe>`;
-        content_feme.html(frame);
-    });
+    // $('.tournamentgrid').on('click',function(){
+    //     let content_feme = $('#container_iframe');
+    //     let frame =` <iframe src="/tournaments/cup/${content_feme.attr('data-id-tournament')}" id="ifrem_cup" ></iframe>`;
+    //     content_feme.html(frame);
+    // });
+
+    if (!$('#tournamentgrid').hasClass('active')) {
+
+        $('#tournamentgrid').addClass('active');
+        $('#tournamentgrid').attr('style','opacity: 0;');
+        setTimeout(function(){
+            $('#tournamentgrid').removeClass('active');
+            $('#tournamentgrid').attr('style','opacity: 1;');
+        }, 4000);
+    }
 
     $('.glyphicon-fullscreen').on('click',function(){
         $('.container_iframes').addClass('full-screen');
@@ -242,7 +252,6 @@ $(document).ready( function() {
         $('.glyphicon-resize-small').hide();
         $('.glyphicon-fullscreen').show();
     });
-
 
 });
 

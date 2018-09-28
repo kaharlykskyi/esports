@@ -13,9 +13,15 @@ $config = [
     ],
 
     'modules' => [
+
             'forum' => [
                 'class' => 'app\modules\forum\ForumModule',
             ],
+
+            'admin' => [
+                'class' => 'app\modules\admin\AdminModule',
+            ],
+    
     ],
 
     'components' => [
@@ -35,6 +41,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -70,6 +77,8 @@ $config = [
             'rules' => [
                 '<module:forum>/<id:\d+>' => '<module>/default/index',
                 '<module:forum>/<action:[A-Z,a-z,-]+>/<id:\d+>' => '<module>/default/<action>',
+                '<module:admin>' => '<module>/site/index',
+                '<module:admin>/<action:[A-Z,a-z,-]+>' => '<module>/site/<action>',
                 '<controller:(profile|teams|tournaments)>' => '<controller>/index',
                 '<action:[A-Z,a-z,-]+>' => 'site/<action>',
                 '<controller>/<action:[A-Z,a-z,-]+>/<id:\d+>' => '<controller>/<action>',
@@ -94,6 +103,9 @@ if (YII_ENV_DEV) {
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
+
+    //$config['components']['assetManager']['forceCopy'] = true;
+
 }
 
 return $config;

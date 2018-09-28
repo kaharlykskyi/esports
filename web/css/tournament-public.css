@@ -497,3 +497,18 @@ div.jQBracket .team.na {
     background-color: transparent;
     color: #000;
 }
+
+.block_card_class,.block_pokemon{
+    display: inline-block;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 15px;
+    border: 1px solid #207ad54a;
+    padding: 5px 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.block_card_class img{
+    height: 80px;
+}

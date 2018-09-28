@@ -157,15 +157,12 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                 <div ><!-- style="display: none; -->
                     <?= $form->field($model, 'format')->radioList([1 => 'a', 2 => 'b', 3 => 'c',4 => 'd', 5 => 'e'],['class' =>'radiolist_elimination'])->label(false) ?>
                 </div>
-
-
                 <div>
                     <label style="padding-left: 20px;" >Max team players </label>
                     <div class="item select-show">
                         <select class="basic" name="Tournaments[max_players]" required>
                             <option value="1">One player</option>
                             <option value="2">Two players</option>
-                            <option value="3">Three players</option>
                             <option value="4">Four players</option>
                         </select>
                     </div>      

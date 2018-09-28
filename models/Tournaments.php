@@ -22,7 +22,7 @@ class Tournaments extends \yii\db\ActiveRecord
     const USERS = 1;
     const TEAMS = 2;
     const MIXED = 3;
-
+    
 
     public function behaviors()
     {
@@ -67,14 +67,15 @@ class Tournaments extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getGame()
     {
         return $this->hasOne(Games::className(), ['id' => 'game_id']);
     }
 
+    public function getTournamentTeam()
+    {
+        return $this->hasMany(TournamentTeam::className(), ['tournament_id' => 'id']);
+    }
 
     public function generateForm () 
     {
@@ -136,6 +137,53 @@ class Tournaments extends \yii\db\ActiveRecord
             ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $this->id])
             ->all();
         return $teams;
+    }
+
+    public function isCapitanTeam($id)
+    {
+        $models = $this->getTournamentTeam()->select('team_id')->where(['status' => TournamentTeam::ACCEPTED]);
+        $team = Teams::find()->where(['in','id',$models])->andWhere(['capitan' => $id])->all();
+        if (is_null($team)) {
+            return false;
+        }
+        return true;
+    }
+
+    public function isPlayerTeam($id)
+    {
+        $models = UsetTeamTournament::find()
+            ->where(['user_id' => $id,'tournament_id' => $this->id])->one();
+        if (is_null($models)) {
+            return false;
+        }
+        return true;
+    }
+
+    public function getPlayersTeams () 
+    {
+        return UsetTeamTournament::find()
+            ->with('team','user')
+            ->where(['tournament_id' => $this->id])->orderBy('team_id')->all();
+    }
+
+    public function getPlayersTeam ($id) 
+    {
+        $models = $this->getTournamentTeam()->select('team_id')->where(['status' => TournamentTeam::ACCEPTED]);
+        $team = Teams::find()->where(['in','id',$models])->andWhere(['capitan' => $id])->one();
+        if (is_object($team)) {
+            return UsetTeamTournament::find()->with('team','user')
+                ->where(['team_id'=>$team->id,'tournament_id' => $this->id])->all();
+        }
+        return [];
+        
+    }
+
+    public function getPlayer ($id) 
+    {
+        $ttt = UsetTeamTournament::find()->with('team','user')
+            ->where(['user_id'=>$team->id,'tournament_id' => $this->id])->one();
+            print_r($ttt);exit;
+
     }
 
 }

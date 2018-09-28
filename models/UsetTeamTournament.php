@@ -22,7 +22,6 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
         ];
     }
 
-
     public function rules()
     {
         return [
@@ -60,7 +59,7 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
 

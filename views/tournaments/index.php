@@ -8,16 +8,24 @@
     use kartik\datetime\DateTimePicker;
     use app\widgets\Schedule;
     use app\models\Tournaments;
+    use app\widgets\ParticipantsData;
 
     $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournament-public.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Tournament';
     $this->params['breadcrumbs'][] = $this->title;
+
+    $access = false;
+
     if (is_object(Yii::$app->user->identity)) {
-        $capitan = $model->user_id == Yii::$app->user->identity->id;
-    } else {
-        $capitan = false;
-    }
+        if ($model->user_id == Yii::$app->user->identity->id) {
+            $access = 1;
+        } elseif ($model->isCapitanTeam(Yii::$app->user->identity->id)) {
+            $access = 2;
+        } elseif ($model->isPlayerTeam(Yii::$app->user->identity->id)) {
+            $access = 3;
+        }
+    } 
 
 ?>
 <!--CHAMPIONSHIP WRAP BEGIN-->
@@ -30,9 +38,12 @@
                     <div class="col-md-12">
                         <ul class="champ-nav-list">
                             <li class="active"><a href="#participants">participants</a></li>
+                            <?php if ($access): ?>
+                                <li ><a href="#participants_data">Partisipation data</a></li>
+                            <?php endif; ?>
                             <li><a href="#matches">Matches</a></li>
                             <li><a href="#tournamentgrid" class="tournamentgrid" >Tournament grid</a></li>
-                            <?php if($capitan&&is_null($model->state)):?>
+                            <?php if(($access==1)&&is_null($model->state)):?>
                                 <li><a href="#manage_tournament">Manage Tournament</a></li>
                             <?php endif; ?>
                             <?php if(is_object(Yii::$app->user->identity)): ?>
@@ -55,7 +66,7 @@
                     <div class="row"> 
                         <div class="col-md-12" style="margin-bottom: 30px;">
                             <?php if(empty($model->cup) && empty($model->league)): ?>
-                                <?php if($capitan):?>
+                                <?php if($access==1):?>
                                     <?php if(empty($model->flag)):?>
                                         <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
                                     <?php else: ?>
@@ -79,6 +90,11 @@
                 </div>
             </div>
             <!--CHAMPIONSHIP PART WRAP END -->
+            <?php if ($access): ?>
+                <div class="tab-item part-wrap tab-pane" id="participants_data">
+                    <?=ParticipantsData::widget(['model' => $model,'access' => $access])?>
+                </div>   
+            <?php endif; ?>
             <!--CHAMPIONSHIP MATCH WRAP BEGIN -->
             <div class="tab-item match-wrap tab-pane" id="matches">
                 <div class="container">
@@ -98,7 +114,7 @@
                     <div class="row">
                         <div class="col-md-12" style="margin-bottom: 35px;">
                            <?php if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)): ?> 
-                               <?php if(empty($model->state) && $capitan): ?>
+                               <?php if(empty($model->state) && ($access==1)): ?>
                                     <?php if (in_array(count($players),[4,8,16,32,64,128])): ?>
                                         <form action="/tournaments/add-schedule?id=<?=$model->id?>" method="POST"  >
                                             <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
@@ -114,7 +130,7 @@
                             <?php if(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P)||($model->format == Tournaments::LEAGUE_G)): ?>
                                 <div class="col-md-12" >
                                     <?php $count_playoff = count($players) ?>
-                                    <?php if(empty($model->state) && $capitan): ?>
+                                    <?php if(empty($model->state) && ($access==1)): ?>
                                         <?php if($count_playoff >= 4): ?>
                                         <form action="/tournaments/add-league?id=<?=$model->id?>" method="POST"  >
                                             <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
@@ -211,14 +227,11 @@
                                             </td>  
                                         </tr>
                                     <?php endforeach; ?>
-
                                 </table>       
                             </div>
                         <?php endforeach; ?>
-                    </div>
+                        </div>
                     <?php endif; ?>
-
-
                     <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>
                         <?php if($model->format > 2): ?>
                         <div class="row">
@@ -226,18 +239,19 @@
                         </div>
                         <?php endif; ?>
                         <div class="row container_iframes"  > 
-                            <div id="container_iframe" data-id-tournament="<?=$model->id?>" ></div> 
+                            <div id="container_iframe" ><!-- //data-id-tournament="<?=$model->id?>" -->
+                                <iframe src="/tournaments/cup/<?=$model->id?>" id="ifrem_cup" ></iframe>
+                            </div> 
                             <div class="buttons">
                                 <span class="glyphicon glyphicon-fullscreen"></span>
                                 <span class="glyphicon glyphicon-resize-small"  style="display: none;" ></span>
                             </div>
-                            
                         </div>
                     <?php endif; ?>
                 </div>
             </div>
             <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->
-            <?php if($capitan&&is_null($model->state)):?>
+            <?php if(($access==1)&&is_null($model->state)):?>
                 <div class="tab-item news-tab tab-pane" id="manage_tournament">
 
                         <div class="container">
@@ -339,7 +353,6 @@
                                                         <select class="basic" name="Tournaments[max_players]" required>
                                                             <option value="1" <?=$model->max_players == 1 ? 'selected' : '' ?> >One player</option>
                                                             <option value="2" <?=$model->max_players == 2 ? 'selected' : '' ?> >Two players</option>
-                                                            <option value="3" <?=$model->max_players == 3 ? 'selected' : '' ?> >Three players</option>
                                                             <option value="4" <?=$model->max_players == 4 ? 'selected' : '' ?> >Four players</option>
                                                         </select>
                                                     </div>      
@@ -393,9 +406,7 @@
                                                         'startDate' => date("Y-m-d H:i"),
                                                         'todayHighlight' => true
                                                 ]]); ?>
-
                                             </div>
-                                            
                                         </div>   
                                         <div class="row">
                                             <div class="col-md-12">

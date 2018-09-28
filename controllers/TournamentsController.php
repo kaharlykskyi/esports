@@ -285,6 +285,5 @@ class TournamentsController extends \yii\web\Controller
         
     }
 
-    
 
 }

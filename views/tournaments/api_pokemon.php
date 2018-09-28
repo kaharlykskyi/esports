@@ -18,7 +18,7 @@
         </div> 
     </div>
     <div class="row" style="margin:40px 0; ">
-        <div class="col-md-8 col-md-offset-2 container_cards" ></div> 
+        <div class="col-md-8 col-md-offset-2 container_pokemons" ></div> 
     </div>
     <div class="row block_form" style="margin:40px 0;display:none;"  >
         <form  method="POST">

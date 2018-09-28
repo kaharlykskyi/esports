@@ -724,13 +724,60 @@ let massPokemons = [
 
 $(document).ready(function(){
 
-	$('.find-pokemon').on('click',function (){
-		alert('g');
-		$('.pokemon-input').val();
-	});
+    $('.find-pokemon').on('click',function () {
+        $('.container_pokemons').html('');
+        const data = $('.pokemon-input').val();
+        if (data.trim() == '') return;
+        searchMass(data);
+    });
 
+    function searchMass (data) {
+        data = data.toLowerCase();
+        let arryPokemons = [];
+        for ( var i = massPokemons.length - 1; i >= 0; i-- ) {
+            if(massPokemons[i].toLowerCase().indexOf(data) + 1) {
+                arryPokemons.push(massPokemons[i]);
+            }
+        }
+        contentWrite(arryPokemons);
+    }
 
-	if(str.indexOf('yandex.ru') + 1){
+    function contentWrite (data) {
+        
+        let container = $('.container_pokemons');
+        let i = data.length - 1;
+        if (i > 20) {
+            i = 20;
+        }
+        for ( i ;i >= 0; i--) {
+            let block = `<div class="block_pokemon">${data[i]}</div>`;
+            block = $(block).on('click',clickBlock);
+            container.append(block);
+        }
+    }
 
-	}
+    function clickBlock() {
+        if ($('.block_card_active').length >=2) {
+            if ($(this).hasClass('block_card_active')) {
+                $(this).toggleClass('block_card_active');
+            } 
+            return;
+        }
+        $(this).toggleClass('block_card_active');
+        if( $('.block_card_active').length ) {
+            $('.block_form').slideDown();
+        } else {
+            $('.block_form').slideUp();
+        }
+    }
+
+    $('.btn-save').on('click',function(event){
+        let arryCards = [],json;
+        $('.block_card_active').map(function(indx, element){
+            arryCards.push($(element).text());
+        });
+        json = JSON.stringify(arryCards);
+        $('.input_class_cards').val(json);
+    });
+    
 });

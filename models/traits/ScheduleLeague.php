@@ -59,7 +59,6 @@ trait ScheduleLeague {
 
     private function generateLeague($players,$ch,$group = null)
     {
-
             $c = count($players);
             $players_turs = [];
             if (!$ch) {
@@ -96,11 +95,14 @@ trait ScheduleLeague {
                 $output3 = array_merge($output1,$output2);
                 array_unshift($output3, $mass_temp[0]);
                 $mass_temp = $output3;
-                
             } 
             if(!$ch){
+                $ci = 0;
                 foreach ($players_turs as &$value) {
-                   unset($value[0]);
+                    if ($value['tur'] != $ci) {
+                        $ci=$value['tur'];
+                        unset($value);
+                    }
                 }
             } 
         return $players_turs;

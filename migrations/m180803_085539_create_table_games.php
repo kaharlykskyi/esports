@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-
+use yii\db\Schema;
 /**
  * Class m180803_085541_create_table_games
  */

@@ -10,8 +10,8 @@ class Schedule extends Widget
 
     public function run()
     {
-    	$turs = $this->turs;
-    	return $this->render('schedule',compact('turs'));
+        $turs = $this->turs;
+        return $this->render('schedule',compact('turs'));
         
     }
 }
