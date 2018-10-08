@@ -229,7 +229,7 @@
                                                 <a href="/teams/public/<?=$match->teamF->id?>"><?=$match->teamF->name?></a> 
                                                 <p class="view youplay-timeline-date pt-5 bp-tooltip"  style="color: ">
                                                     <span class="time-since" style="color: #1976d2;" >
-                                                        date of the match <?=  date(' d \of F, Y ',$match->date) ?>
+                                                        date of the match <?=  date(' d \of F, Y ',strtotime($match->date)) ?>
                                                     </span>
                                                 </p>
                                             </p>
