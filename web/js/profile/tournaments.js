@@ -68,8 +68,6 @@ $(document).ready(function () {
                 event.preventDefault();
             }
         });
-            
-        
     }); 
 
     $('.game' ).on('click',function(){

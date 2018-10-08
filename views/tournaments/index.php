@@ -60,7 +60,6 @@
         <div class="champ-tab-wrap tab-content">
             <!--CHAMPIONSHIP PART WRAP BEGIN -->
             <div class="tab-item part-wrap tab-pane active" id="participants">
-               
                 <div class="part-list">
                 <div class="container">
                     <div class="row"> 
@@ -253,7 +252,6 @@
             <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->
             <?php if(($access==1)&&is_null($model->state)):?>
                 <div class="tab-item news-tab tab-pane" id="manage_tournament">
-
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-7">
@@ -280,8 +278,6 @@
                                         <div class="row">
                                             <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
                                             <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
-                                            
-                                            
                                             <div class="col-md-12">
                                                 <label class="col-sm-12 control-label" >Format</label>
                                                 <div class="center-align field-tournaments-flag"> 
@@ -290,18 +286,17 @@
                                                       
                                                     <input type="radio" name="Tournaments[flag]" id="size_2" value="2" <?= $model->flag==2 ? 'checked' : ''?> />
                                                     <label for="size_2">Only teams</label>
-                                                      
-                                                    <input type="radio" name="Tournaments[flag]" id="size_3" value="3" <?= $model->flag==3 ? 'checked' : ''?> />
-                                                    <label for="size_3">Mixed</label>
-                                                </div>
-
-                                               
+                                                    <?php if($model->game_id != 1): ?>
+                                                        <input type="radio" name="Tournaments[flag]" id="size_3" value="3" <?= $model->flag==3 ? 'checked' : ''?> />
+                                                        <label for="size_3">Mixed</label>
+                                                    <?php endif; ?>
+                                                </div>    
                                             </div>
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'time_limit')
-                                                ->textInput(['type' => 'number','class' => 'input_numeric','min' => '15','step' => '5', 'value'=>$model->time_limit])->label('Time limit')?>
+                                                     ->textInput(['type' => 'number','class' => 'input_numeric','min' => '15','step' => '5', 'value'=>$model->time_limit])
+                                                     ->label('Time limit')?>
                                             </div>
-                                            
                                             <div class="col-md-12">
                                                 <label class="col-sm-12 control-label" for="teams-background">Region</label>
                                                 <div class="item select-show">
@@ -317,11 +312,8 @@
                                             <div class="col-md-12 castom_seting" style="margin-top: 5px;">
                                                 <?=$model->generateForm()?>
                                             </div>
-
                                         </div>   
                                         <div class="row">
-
-
                                             <div class="col-md-12">
                                                 <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
                                             </div>

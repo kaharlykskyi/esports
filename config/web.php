@@ -41,7 +41,16 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'identityCookie' => [
+                'name' => '_identity-site', 
+                'httpOnly' => true,
+                'path' => '/',
+            ],
 
+        ],
+        'session' => [
+                'class' => 'yii\web\Session',
+                'name' => 'esports',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

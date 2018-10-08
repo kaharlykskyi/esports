@@ -146,6 +146,11 @@ table tr td:first-child {
     cursor: pointer;
     border-radius: 15px;
     border: 1px solid #207ad54a;
+    margin:10px;
+}
+
+.block_card_class img{
+    width: 140px;
 }
 
 .block_pokemon{
@@ -172,5 +177,52 @@ table tr td:first-child {
 }
 
 .btn-save{
-    width: 100%;
+    width: 100% ;
+}
+
+.datetimepicker td,  .datetimepicker th {
+    text-align: center !important;
+    width: 15px !important;
+    height: 15px !important;
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    border-radius: 4px !important;
+    border: none !important;
+    padding:8px !important;
+    font-size: 12px !important;
+}
+
+.datetimepicker table tr td:first-child {
+    text-transform: uppercase !important;
+    font-family: Montserrat,sans-serif !important;
+    text-align: center !important;
+}
+
+.datetimepicker table tr th{
+    background-color: transparent !important;
+    color: #000 !important;
+}
+
+
+.datetimepicker table tr td span{
+    background-color: transparent !important;
+    color: #000 !important;
+}
+
+.datetimepicker table tr td.old, .datetimepicker table tr td.new {
+    color: #000 !important;
+}
+
+.input_descstring {
+    margin-top: 20px;
+}
+
+.input_descstring input[type=text]{
+    border: 1px solid #999;
+    border-radius: 5px;
+}
+
+.btn-cards{
+    width: 180px;
+    padding: 10px 20px !important;
 }

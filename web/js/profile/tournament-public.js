@@ -116,19 +116,19 @@ $(document).ready( function() {
         
         $(users).each(function(indx, element){
             let html = `<div class="col-md-12 plashka_user" >
-                            <div class="row">
-                                <div class="col-sm-2 col-xs-6" style="text-align:center;height:100%;" >
-                                <div class="img_logo_modal">
-                                <img src="/images/profile/images.png" alt="">
-                                </div>
-                                </div>
-                                <div class="col-sm-6 col-xs-6" >
-                                <p>${element.name} @${element.username}</p>
-                                </div>
-                                <div class="col-sm-4 col-xs-12 box" >
-                                <button  class="btn invite_btn" onclick="data_game_sendMess(this)" data-id-user="${element.id}">Invite to the tournament</button>
-                                </div>
-                            </div>
+                        <div class="row">
+                        <div class="col-sm-2 col-xs-6" style="text-align:center;height:100%;" >
+                        <div class="img_logo_modal">
+                        <img src="/images/profile/images.png" alt="">
+                        </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6" >
+                        <p>${element.name} @${element.username}</p>
+                        </div>
+                        <div class="col-sm-4 col-xs-12 box" >
+                        <button  class="btn invite_btn" onclick="data_game_sendMess(this)" data-id-user="${element.id}">Invite to the tournament</button>
+                        </div>
+                        </div>
                         </div>`;
           $('#content_modal').append(html);
         });
@@ -225,13 +225,8 @@ $(document).ready( function() {
     });
 });
 
-$(document).ready( function() {
-    // $('.tournamentgrid').on('click',function(){
-    //     let content_feme = $('#container_iframe');
-    //     let frame =` <iframe src="/tournaments/cup/${content_feme.attr('data-id-tournament')}" id="ifrem_cup" ></iframe>`;
-    //     content_feme.html(frame);
-    // });
 
+$(document).ready( function() {                                                                                                                                                                         
     if (!$('#tournamentgrid').hasClass('active')) {
 
         $('#tournamentgrid').addClass('active');
@@ -252,8 +247,8 @@ $(document).ready( function() {
         $('.glyphicon-resize-small').hide();
         $('.glyphicon-fullscreen').show();
     });
-
 });
+
 
 
  

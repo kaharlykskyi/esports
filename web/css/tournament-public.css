@@ -512,3 +512,100 @@ div.jQBracket .team.na {
 .block_card_class img{
     height: 80px;
 }
+.time-match{
+    text-align: center;
+    color:#999;  
+}
+.time-match h3{
+    text-align: center;
+    color:#999;
+    padding-bottom: 0;
+}
+
+.write-result-match input{
+    border: 2px solid #999;
+    border-radius: 10px;
+    display: inline-block;
+    width: 50px;
+    font-size: 18px;
+    padding: 8px;
+    text-align:center;
+}
+
+.write-result-match span {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.broadcast-item .lineup-list .number {
+    min-width: 130px;
+    text-align: center;
+    display: inline-block;
+}
+
+.broadcast-item .lineup-list .number img{
+    height: 30px;
+    width: 30px;
+    position: inherit;
+    z-index: 100;
+    left: 0 !important;
+    margin-top: 5px;
+}
+
+.broadcast-item .name{
+    display: inline-block;
+}
+
+.input_round_match input{
+    display: inline;
+    width: 35px;
+    padding: 0 5px;
+    height: 38px;
+    border-radius: 5px;
+    border: 1px solid #999;
+    text-align: center;
+}
+
+.input_round_match{
+    position: relative;
+}
+
+.broadcast-item .item-body .btn {
+    margin-top: 0;
+}
+
+.seve_tur_btn{
+    font-size: 12px;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.broadcast-item .name{
+    position: relative;
+    top: 8px;
+}
+
+.item .img_data{
+    height: 80px;
+    display: inline;
+    cursor: pointer;
+    border-radius: 50%;
+    margin: 0 10px;
+
+}
+
+.message_to_ban{
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.activiti_ban{
+    background-color: red;
+    border: 1px solid rgba(250,5,5,1);
+    -webkit-box-shadow: 0px 1px 7px 4px rgba(250, 5, 5, 0.55);
+    -moz-box-shadow: 0px 1px 7px 4px rgba(250, 5, 5, 0.55);
+    box-shadow: 0px 1px 7px 4px rgba(250, 5, 5, 0.55);
+    }

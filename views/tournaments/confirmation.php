@@ -40,7 +40,6 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/invitation.js'
 			</div>
 			<div class="col-md-6">
 				<input type="submit" name="DECLINE" class="btn btn-red" value="DECLINE" >
-				
 			</div>
 			</form>
 		</div>
@@ -57,15 +56,18 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/invitation.js'
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12" id='content_modal' style="margin-bottom:25px;"  >
-                        <h6 style="text-align: center;padding-top:0;margin-top: 0;" >select players for the tournament</h6>
+                        <h6 style="text-align: center;padding:0;margin-top: 0;" >select players for the tournament</h6>
+                        <p style="text-align: center;color:red;" >The number of participants must be equal <?=$tournament->max_players?></p>
+                        <div class="col-sm-offset-1 col-sm-10" style="height: 230px;overflow-y: auto;">
                         <?php foreach ($members as $key => $member): ?>
-                            <div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 10px;">
+                            <div class="col-sm-12" style="margin-bottom: 10px;">
                                 <input  form="invitation_form" type="checkbox" name="uset_team_tournament[]" value="<?=$member->id?>" uncheckvalue="0" class="filter-check" id="check<?=$key?>" >
                                 <label for="check<?=$key?>"  class="input_checkbox" >
                                     <span style="font-size: 18px;position: relative;bottom: 5px;"><?=$member->name?></span>
                                 </label>
                             </div>
                         <?php endforeach; ?> 
+                        </div>
                         <div class="col-sm-12 invitation_input_submit" style="display: none;">
                             <input type="submit" form="invitation_form" id="sub_accet" class="btn" name="ACCEPT" value="ACCEPT" >
                         </div>            

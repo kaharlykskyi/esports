@@ -14,9 +14,9 @@
                 <p style="text-align:center;" ><b>User:</b> <?=$users_tournament->user->name?></p>
                 <div>
                     <?php $json = json_decode($users_tournament->text) ?>
-                    <?php if(is_array($json)): ?>
+                    <?php if(is_array($json[1])): ?>
                      <div style="text-align:center;" >
-                        <?php foreach ($json as $data):?>
+                        <?php foreach ($json[1] as $data):?>
                            <?=$wget->getPers($data)?>
                         <?php endforeach; ?>
                     </div>
@@ -37,9 +37,11 @@
                 <div>
                     <?php $json = json_decode($users_tournament->text) ?>
                      <div style="text-align:center;" >
-                        <?php foreach ($json as $data):?>
+                        <?php if(is_array($json[1])): ?>
+                        <?php foreach ($json[1] as $data):?>
                            <?=$wget->getPers($data)?>
                         <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
         <?php endforeach; ?>
@@ -55,9 +57,11 @@
                 <div>
                     <?php $json = json_decode($users_tournament->text) ?>
                      <div style="text-align:center;" >
-                        <?php foreach ($json as $data):?>
+                        <?php if(is_array($json[1])): ?>
+                        <?php foreach ($json[1] as $data):?>
                            <?=$wget->getPers($data)?>
                         <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
     <?php endif; ?>

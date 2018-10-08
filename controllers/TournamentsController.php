@@ -73,7 +73,6 @@ class TournamentsController extends \yii\web\Controller
             }
         }
 
- 
         $players = $model->getPlayers();
         $users_id = self::gerUsers($model);
        
@@ -144,12 +143,16 @@ class TournamentsController extends \yii\web\Controller
             $post = Yii::$app->request->post();
 
             if(!$team && isset($post['ACCEPT'])){
-                $team_one_usr = new Teams();
-                $team_one_usr->dummyTeam($tournaments,$user);
+                $model->status = 2;
+                $model->tokin = 'ok';
+                if ($model->save()) {
+                    $team_one_usr = new Teams();
+                    $team_one_usr->dummyTeam($tournaments,$user);
+                }
 
             } elseif (isset($post['ACCEPT'])) {
                 $count = count($post['uset_team_tournament']);
-                if (($count<=$tournament->max_players)&&$count>0) {
+                if ( $count==$tournament->max_players ) {
                     $model->status = 2;
                     $model->tokin = 'ok';
                     if ($model->save()) {
@@ -233,16 +236,6 @@ class TournamentsController extends \yii\web\Controller
         return compact('players','model');
     }
 
-
-    public function actionUpcomingMatch($id)
-    {
-        $model = ScheduleTeams::findOne($id);
-        if(is_null($model)){
-            throw new HttpException(404 ,'Page not found');
-        }
-        return $this->render('match',compact('model'));
-    }
-
     public function actionCup($id) 
     {
         $model = Tournaments::findOne($id);
@@ -267,7 +260,6 @@ class TournamentsController extends \yii\web\Controller
 
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-
             if (!empty($post['decstring'])) {
                 $user_config->text = $post['decstring']; 
                 $user_config->save();  
@@ -276,14 +268,17 @@ class TournamentsController extends \yii\web\Controller
         }
         
         if ($model->game_id == 2) {
-            return $this->render('api_pokemon',compact('user_config'));
+            return $this->render('api_pokemon',compact('user_config','model'));
         }
 
         if ($model->game_id == 1) {
-            return $this->render('api_hearthstone',compact('user_config'));
+            return $this->render('api_hearthstone',compact('user_config','model'));
+        }
+
+        if ($model->game_id == 3) {
+            return $this->render('api_wow',compact('user_config','model'));
         }
         
     }
-
 
 }

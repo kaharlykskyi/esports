@@ -3,14 +3,18 @@
 namespace app\models\traits;
 
 use app\models\ScheduleTeams;
-
+use app\models\servises\HearthstoneServis;
 trait Schedule {
 
     public function createSchedule($teams,$format,$date = false)
     {
         $result = [];
         foreach ($teams as $key => $match) {
-           $result[] = $this->seveSchedule($match,$format,$date);
+           $match = $this->seveSchedule($match,$format,$date);
+           if ($this->game_id = 1) {
+               $hearthstone = new HearthstoneServis();
+               $hearthstone->scheduleUsers($match,$this);
+           }
         }
         $this->forumText($result);
         return $teams;

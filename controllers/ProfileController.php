@@ -54,8 +54,7 @@ class ProfileController extends \yii\web\Controller
 
     public function actionIndex()
     {   
-
-        $tournaments = Tournaments::findAll(['user_id' => Yii::$app->user->identity->id]);
+        $tournaments = Tournaments::find(['user_id' => Yii::$app->user->identity->id])->all();
 
         $teams = Teams::getTeamsThisUser();
         $games = Games::find()->all();

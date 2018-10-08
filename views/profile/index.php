@@ -3,6 +3,7 @@
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
     use yii\helpers\Url;
+    use kartik\datetime\DateTimePicker;
 
     $this->registerCssFile('css/profile.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/profile.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
@@ -13,7 +14,6 @@
     $teams_m = $user->getMessageTeams();
 ?>
 
-   
 
 <section class="image-header img-url" style="margin-bottom:70px">
     <div class="container">
@@ -53,13 +53,10 @@
                 <li id="seting-personal-li" aria-selected="false" ><a id="user-seting" data-toggle="tab" href="#tournaments">My tournaments <span class="badge mnb-1"><?=count($tournaments)?></span></a></li>  
                 <li id="friends-personal-li" aria-selected="false" ><a id="user-friends" data-toggle="tab" href="#panel4">Friends<span class="badge mnb-1 sr-only">0</span></a></li> 
                 <li id="seting-personal-li" aria-selected="false" ><a id="user-seting" data-toggle="tab" href="#settings">Settings<span class="badge mnb-1 sr-only">0</span></a></li> 
-                  
             </ul>
         </div>
     </div>
 </section>
-
- 
 <div class="container"  >
     <?=Alert::widget()?>
     <div class="row">
@@ -120,19 +117,19 @@
                             <ul class="tab-filters">
                                 <li class="active"><a href="#personal">Personal</a></li>
                                 <li><a href="#notifications">Notifications</a></li>
+                                <li><a href="#matches">Matches</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="tab-content">
                         <div id="personal" class="tab-pane fade in active">
                             <div class="wrap-lists">
-                                 <div class="lists">
+                                <div class="lists">
                                     <div class="youplay-timeline-icon "> 
-                                    <a href="https://wp.nkdev.info/youplay/members/craager/"> 
-                                        <img src="https://cdn-wp.nkdev.info/youplay/wp-content/uploads/avatars/1/3e326e4e6643db89fc3bf1447d9474e3-bpthumb.jpg" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Profile picture of nK"> 
-                                    </a>
-                                    </div>
-                                    
+                                        <a href="https://wp.nkdev.info/youplay/members/craager/"> 
+                                            <img src="https://cdn-wp.nkdev.info/youplay/wp-content/uploads/avatars/1/3e326e4e6643db89fc3bf1447d9474e3-bpthumb.jpg" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Profile picture of nK"> 
+                                        </a>
+                                    </div>  
                                     <div class="wrap">     
                                         <h3 class="activity-header">
                                             <p>
@@ -174,11 +171,12 @@
                                             <div class="activity-inner">
                                                 <p>
                                                     To accept or decline the invitation click the link below:</br>
-                                                    <a href="<?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>">
+                                                    <a href="<?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>" >
                                                      <?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>
                                                     </a></br>
                                                      Finally, if you want more information, contact <?=$team['name']?> 
-                                                     through their website, or through their captain, by email <a href="<?= $team['u_email']?>"><?= $team['u_email']?>
+                                                     through their website, or through their captain, by email 
+                                                     <a href="<?= $team['u_email']?>"><?= $team['u_email']?>
                                                     </a>.
                                                 </p>
                                             </div>
@@ -198,7 +196,7 @@
                                         <div class="wrap">     
                                             <h3 class="activity-header">
                                                 <p>
-                                                    Message from <?=$message->senders->name?>
+                                                    <?=$message->title?>
                                                     <p class="view youplay-timeline-date pt-5 bp-tooltip"  style="color: ">
                                                         <span class="time-since" style="color: #1976d2;" >
                                                             created <?=  date(' d \of F, Y ',$message->created_at) ?>
@@ -216,6 +214,38 @@
                                 <?php endforeach; ?>
                                     
                             </div>
+                        </div>
+                        <div id="matches" class="tab-pane fade in">
+                            <?php foreach ($tournaments as $tournament): ?>
+                                <?php if($tournament->user_id == $user->id): ?>
+                                <?php $matches = $tournament->getMatchesResult(); ?>
+                                <?php foreach ($matches as $match): ?>
+                                    <div class="lists" style="margin-bottom: 25px;">   
+                                        <h3 class="activity-header">
+                                                <p>
+                                                    match between teams 
+                                                <a href="/teams/public/<?=$match->teamS->id?>"><?=$match->teamS->name?></a>
+                                                    and
+                                                <a href="/teams/public/<?=$match->teamF->id?>"><?=$match->teamF->name?></a> 
+                                                <p class="view youplay-timeline-date pt-5 bp-tooltip"  style="color: ">
+                                                    <span class="time-since" style="color: #1976d2;" >
+                                                        date of the match <?=  date(' d \of F, Y ',$match->date) ?>
+                                                    </span>
+                                                </p>
+                                            </p>
+                                        </h3>
+                                        <div class="activity-inner">
+                                            <div>
+                                                To set the match results follow the link
+                                                <a href="/matches/public/<?=$match->id?>">
+                                                    /matches/public/<?=$match->id?>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
@@ -421,7 +451,7 @@
                                         </a>
                                     </p>
                                 </div>            
-                            </div>  
+                            </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -429,22 +459,6 @@
                     <div class="row">
                         <div class="col-md-5 col-md-offset-7" style="margin-bottom:30px;">
                             <div class="row">
-                            <!-- <div class="col-md-3 no-pading">
-                                <div  ><span>Order By:</span></div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="item select-show">
-                                    <div class="fancy-select ">
-                                        <select class="basic" name="RegisterForm[country]" required>
-                                            <option value="active">Last Active</option>
-                                            <option value="popular">Most Members</option>
-                                            <option value="newest">Newly Created</option>
-                                            <option value="alphabetical">Alphabetical</option> 
-
-                                        </select>
-                                    </div>    
-                                </div>
-                            </div> -->
                             </div>   
                         </div>
                     </div> 
@@ -511,9 +525,18 @@
                                 </div>
                 
                                 <div style="margin-bottom: 40px;">   
-                                    <?= $form->field($user, 'birthday')->widget(yii\jui\DatePicker::class, [
-                                        'dateFormat' => 'yyyy-MM-dd',
-                                    ])->label('Birthday', ['class' => false]) ?>
+                                    <?= $form->field($user, 'birthday')->widget(DateTimePicker::className(),[
+
+                                    'options' => [  
+                                        'placeholder' => 'Select operating time ...',
+                                        'autocomplete'=>"off",'class'=>'datainput',
+                                    ],
+                                    'convertFormat' => true,
+                                    'pluginOptions' => [
+                                        'format' => 'yyyy-MM-dd hh:i',
+                                        //'startDate' => date("Y-m-d H:i"),//'2018-08-22 02:55'
+                                        'todayHighlight' => true
+                                ]]) ?>
                                         
                                 </div>
                                

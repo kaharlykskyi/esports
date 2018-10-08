@@ -151,14 +151,12 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         </div>
 
                     </div>
-                    
-                    
                 </div>
-                <div ><!-- style="display: none; -->
+                <div >
                     <?= $form->field($model, 'format')->radioList([1 => 'a', 2 => 'b', 3 => 'c',4 => 'd', 5 => 'e'],['class' =>'radiolist_elimination'])->label(false) ?>
                 </div>
                 <div>
-                    <label style="padding-left: 20px;" >Max team players </label>
+                    <label style="padding-left: 20px;" >Number of players per team</label>
                     <div class="item select-show">
                         <select class="basic" name="Tournaments[max_players]" required>
                             <option value="1">One player</option>
@@ -169,13 +167,12 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                 </div>
                 <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
                 <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
-               
-
                 <?php  
                 echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
                     //'name' => 'datetime_10',
                     //'value' => '01-Jan-2017 10:00',
                     'options' => [  
+                        'readonly' => true ,
                         'placeholder' => 'Select operating time ...',
                         'autocomplete'=>"off",'class'=>'datainput',
                     ],

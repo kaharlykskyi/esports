@@ -121,10 +121,29 @@ class Teams extends \yii\db\ActiveRecord
     }
 
 
-
     public function dummyTeam($tournament,$user)
     {
-        //$this->name = 
-        //$this->capitan = 
+        $model = self::findOne(['capitan'=>$user->id,'game_id'=>$tournament->game_id,'single_user' => 1]);
+        if (!is_object($model)) {
+            $this->name = $user->name;
+            $this->capitan = $user->id;
+            $this->logo = '-----';
+            $this->background = '-----';
+            $this->game_id = $tournament->game_id;
+            $this->single_user = 1;
+            if (!$this->save()) {
+                return false;
+            }
+            $user_team = new UserTeam();
+            $user_team->id_user = $user->id;
+            $user_team->id_team = $this->id;
+            $user_team->status = UserTeam::DUMMY;
+            $user_team->save(false);
+            $model = $this;
+            
+        }
+        $tournament_team = new TournamentTeam();
+        $tournament_team;
+        $model;
     }
 }

@@ -36,9 +36,6 @@ class Tournaments extends \yii\db\ActiveRecord
         return 'tournaments';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -51,9 +48,6 @@ class Tournaments extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -75,6 +69,11 @@ class Tournaments extends \yii\db\ActiveRecord
     public function getTournamentTeam()
     {
         return $this->hasMany(TournamentTeam::className(), ['tournament_id' => 'id']);
+    }
+
+    public function getMatches()
+    {
+        return $this->hasMany(ScheduleTeams::className(), ['tournament_id' => 'id']);
     }
 
     public function generateForm () 
@@ -175,15 +174,20 @@ class Tournaments extends \yii\db\ActiveRecord
                 ->where(['team_id'=>$team->id,'tournament_id' => $this->id])->all();
         }
         return [];
-        
     }
 
     public function getPlayer ($id) 
     {
-        $ttt = UsetTeamTournament::find()->with('team','user')
+        return UsetTeamTournament::find()->with('team','user')
             ->where(['user_id'=>$team->id,'tournament_id' => $this->id])->one();
-            print_r($ttt);exit;
+    }
 
+    public function getMatchesResult()
+    {
+        return $this->getMatches()->with('teamS','teamF')
+            ->where('UNIX_TIMESTAMP(date)<UNIX_TIMESTAMP()')
+            ->andWhere(['active_result' => null])
+            ->all();
     }
 
 }

@@ -280,26 +280,19 @@ function decode$2(deckstring) {
     };
 }
 
+//==================================================================================================//
 
 let myCardClass = [];
-let carts;
-
-$('.btn-cards').on('click',function(event){
-    myCardClass = [];
-    let decstring = $('.string-input').val();
-    carts = decode$2(decstring);
-    searchMix();
-    $('.block_form').slideUp();
-});
-
-
+let carts = [];
+let responsBase;
+let decstring = [];
 let arryClassCardsn = ['MAGE','PRIEST','WARLOCK','ROGUE','DRUID','SHAMAN','HUNTER','WARRIOR','PALADIN'];
+searchMix();
 
 function searchMix () {
     let statechange = function() {
         if(this.readyState == 4) {
-            let respons = JSON.parse(this.responseText);
-            ojectSort(respons);
+            responsBase = JSON.parse(this.responseText);
         }
     };
     const xml = new XMLHttpRequest();
@@ -316,55 +309,57 @@ function FSsrf () {
     return fdata;
 }
 
-function ojectSort (respons){
-    let c =carts.cards;
-    for (let a = c.length - 1; a >= 0; a--) {
-        for (let i = respons.length - 1; i >= 0; i--) {
-            if(respons[i].dbfId == c[a][0] ) {
-                //console.log(respons[i]);
-                if (!myCardClass.includes(respons[i].cardClass) && arryClassCardsn.includes(respons[i].cardClass)) {
-                    myCardClass.push(respons[i].cardClass);
+$('.btn-cards').on('click',function(event){
+    myCardClass = [];
+    carts = [];
+    decstring = [];
+    $('.block_form').slideUp();
+    $('.container_cards').html('');
+    let input_string = $('.string-input');
+    input_string.each(function(index,element){
+        decstring.push($(element).val());
+    });
+    decstring.forEach(function(element){
+        carts.push(decode$2(element));
+    });
+    ojectSort(responsBase);
+    contentWrite(myCardClass);
+    if (input_string.length == myCardClass.length) {
+        $('.block_form').slideDown();
+    }
+});
+
+function ojectSort (respons) {
+    carts.forEach(function(element){
+        let c = element.cards;
+        for (let a = c.length - 1; a >= 0; a--) {
+            for (let i = respons.length - 1; i >= 0; i--) {
+                if(respons[i].dbfId == c[a][0] ) {
+                    //console.log(respons[i]);
+                    if (!myCardClass.includes(respons[i].cardClass) && arryClassCardsn.includes(respons[i].cardClass)) {
+                        myCardClass.push(respons[i].cardClass);
+                    }
+                    break;
                 }
-                break;
             }
         }
-    }
-    contentWrite(myCardClass);
+    });
 }
-
 
 function contentWrite (oject){
     let content = $('.container_cards');
-    content.html('');
     $.map(oject,function(element,index){
         let p =`<div class="block_card_class" ><img src="/images/game/hearthstone/${element}.png" ><p class="text_card_class" >${element}</p></div>`;
-        let block_card = $(p).on('click',clickCards);
-        content.append(block_card);  
+        content.append(p);  
     });
 }
 
-function clickCards(){
-    $(this).toggleClass('block_card_active');
-    if( $('.block_card_active').length) {
-        $('.block_form').slideDown();
-    } else {
-        $('.block_form').slideUp();
-    }
-}
 
-$('.btn-save').on('click',function(event){
-    //event.preventDefault();
-    let arryCards = [],json;
-    $('.block_card_active').map(function(indx, element){
-        arryCards.push($(element).find('.text_card_class').text());
-    });
-    
-    json = JSON.stringify(arryCards);
+$('.btn-save').on('click',function(event) {
+    let json;
+    json = JSON.stringify([decstring,myCardClass]);
     $('.input_class_cards').val(json);
-
 });
-
-
 
 });
 

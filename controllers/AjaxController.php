@@ -364,7 +364,6 @@ class AjaxController extends \yii\web\Controller
         if ($model->user_id == $user->id) {
            $model->save(false);
         }
-        
     }
 
     public function actionDeleteMessage() 

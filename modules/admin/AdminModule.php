@@ -18,7 +18,12 @@ class AdminModule extends \yii\base\Module
                 'class' => 'yii\web\User',
                 'identityClass' => 'app\modules\admin\models\Admin',
                 'enableAutoLogin' => true,
-                'identityCookie' => ['name' => '_tidentity-admin', 'httpOnly' => true],
+                'idParam' => '_admin_id',
+                'identityCookie' => [
+                    'name' => '_tidentity-admin', 
+                    'httpOnly' => true,
+                    'path' => '/admin',
+                ],
                 'loginUrl' => ['admin/site/login'],
             ],
             'session' => [

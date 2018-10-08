@@ -77,7 +77,8 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
 
     public function getMembersTournament($tournament,$team)
     {
-        $users = self::find()->select('user_id')->where(['tournament_id' => $tournament->id,'team_id' => $team->id]);//->asArray()->all();
+        $users = self::find()->select('user_id')
+            ->where(['tournament_id' => $tournament->id,'team_id' => $team->id]);
         $members = User::find()->where(['in','id',$users])->all();
         $url = Url::toRoute(['tournaments/public','id' => $tournament->id], true);
         $a_api_hearstone = '';
@@ -95,7 +96,9 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
                 ->setTextBody("Participation in the tournament")
                 ->setHtmlBody($text_meesage)
                 ->send();
-            (new MessageUser())->writeMessage($team->capitans->id,$member->id,$text_meesage.$a_api_hearstone);   
+            (new MessageUser())
+                ->writeTitle('You have been chosen to participate in the tournament')
+                ->writeMessage($team->capitans->id,$member->id,$text_meesage.$a_api_hearstone);   
         }   
     }
 

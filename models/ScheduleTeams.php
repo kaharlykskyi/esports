@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use app\modules\forum\models\SchedulePost;
 
-
 class ScheduleTeams extends \yii\db\ActiveRecord
 {
     
@@ -14,19 +13,18 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         return 'schedule_teams';
     }
 
-    
     public function rules()
     {
         return [
-            [['tournament_id', 'team1', 'team2', 'results1', 'results2', 'tur', 'group','format'], 'integer'],
+            [['tournament_id', 'team1', 'team2', 'results1', 'results2', 'tur', 'group','format','active_result'], 'integer'],
             [['date'], 'safe'],
+            [['results1', 'results2'], 'number'],
             [['team1'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team1' => 'id']],
             [['team2'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team2' => 'id']],
             [['tournament_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tournaments::className(), 'targetAttribute' => ['tournament_id' => 'id']],
         ];
     }
 
-   
     public function attributeLabels()
     {
         return [
@@ -41,8 +39,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             'date' => 'Date',
         ];
     }
-
-   
+  
     public function getTeamF()
     {
         return $this->hasOne(Teams::className(), ['id' => 'team1']);
@@ -53,7 +50,11 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         return $this->hasOne(Teams::className(), ['id' => 'team2']);
     }
 
-   
+    public function getUserMatch()
+    {
+        return $this->hasMany(UsersMatch::className(), ['match' => 'id']);
+    }
+
     public function getTournament()
     {
         return $this->hasOne(Tournaments::className(), ['id' => 'tournament_id']);
@@ -102,5 +103,9 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         return $arry_result;
     }
 
-    
+    // public function getFiveResult()
+    // {
+
+    // }
+
 }

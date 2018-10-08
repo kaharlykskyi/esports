@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$.max_players;
+	//$.max_players;
 
 	$('.input_checkbox').on('click',function(event){
 		
@@ -10,7 +10,7 @@ $(document).ready(function(){
 				$("input:checkbox:not(:checked)").attr('disabled',false);
 			}
 
-			if ($('input:checkbox:checked').length) {
+			if ($.max_players == $('input:checkbox:checked').length) {
 				$('.invitation_input_submit').slideDown();
 			} else {
 				$('.invitation_input_submit').slideUp();

@@ -28,7 +28,7 @@ class MessageUser extends \yii\db\ActiveRecord
     {
         return [
             [['sender', 'recipient', 'created_at', 'updated_at'], 'integer'],
-            [['text'], 'string'],
+            [['text','title'], 'string'],
             [['sender', 'recipient'], 'required'],
             [['recipient'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['recipient' => 'id']],
             [['sender'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['sender' => 'id']],
@@ -60,6 +60,12 @@ class MessageUser extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'sender']);
     }
 
+    public function writeTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+    
     public function writeMessage($sender,$recipient,$text)
     {
         $this->sender = $sender;
