@@ -92,7 +92,7 @@ class MatchesController extends \yii\web\Controller
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $id_user = Yii::$app->user->identity->id;
-        //$id_user =16;
+        //$id_user =12;
         $post = Yii::$app->request->post();
         $user_match = UsersMatch::findOne($post['user_match']);
         if (!is_object($user_match)) {

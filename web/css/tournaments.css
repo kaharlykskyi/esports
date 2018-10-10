@@ -213,16 +213,48 @@ table tr td:first-child {
     color: #000 !important;
 }
 
-.input_descstring {
+.input_descstring,.input_details{
     margin-top: 20px;
 }
 
-.input_descstring input[type=text]{
+.input_descstring input[type=text],.input_details input[type=text]{
     border: 1px solid #999;
     border-radius: 5px;
 }
 
-.btn-cards{
+.btn-cards,.btn-detals{
     width: 180px;
     padding: 10px 20px !important;
+}
+
+.input_details div.fancy-select div.trigger{
+    border: 1px solid #999;
+    border-radius: 5px;
+}
+
+.input_details div.fancy-select div.trigger.open{
+    border: 1px solid #999;
+    border-radius: 5px;
+}
+
+.content_profile .avatar{
+    text-align: center;
+}
+
+.content_profile .avatar{
+    text-align: center;
+}
+
+.content_profile .avatar img{
+    box-shadow: 0 0 10px #e02929;
+    border: 2px solid #000;
+    border-radius: 2px;
+}
+
+.block_pokemon{
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }

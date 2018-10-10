@@ -4,9 +4,13 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
+use yii\web\UploadedFile;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $file_logo;
+    public $file_background;
+
     public static function tableName()
     {
         return 'users';
@@ -20,27 +24,47 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             ['email','email'],
             [['sex','favorite_game'],'number'],
             ['visible', 'boolean',],
-            [['username','name',  'birthday','activities','interests'], 'string'],
+            [['username','name',  'birthday','activities','interests','logo','background'], 'string'],
         ];
     }
 
-    /**
-     * Finds an identity by the given ID.
-     *
-     * @param string|int $id the ID to be looked for
-     * @return IdentityInterface|null the identity object that matches the given ID.
-     */
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $this->file_logo = UploadedFile::getInstance($this,'file_logo');
+        if (is_object($this->file_logo)) {
+            $now_name = time();
+            $path = \Yii::getAlias('@webroot').'/images/users/'.$this->id.'/'; 
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }    
+            $this->file_logo->saveAs($path.$now_name.'.'.$this->file_logo->extension);
+            $this->resizeImg($path.$now_name.'.'.$this->file_logo->extension);
+            $this->logo = '/images/users/'.$this->id.'/'.$now_name.'.'.$this->file_logo->extension;
+        }
+
+        $this->file_background = UploadedFile::getInstance($this,'file_background');
+        if (is_object($this->file_background)) {
+            $now_name = time();
+            $path = \Yii::getAlias('@webroot').'/images/users/'.$this->id.'/'; 
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }  
+            $this->file_background->saveAs($path.$now_name.'.'.$this->file_background->extension);
+            $this->background = '/images/users/'.$this->id.'/'.$now_name.'.'.$this->file_background->extension;
+        }
+
+        return true;
+    }
+
     public static function findIdentity($id)
     {
         return static::findOne($id);
     }
 
-    /**
-     * Finds an identity by the given token.
-     *
-     * @param string $token the token to be looked for
-     * @return IdentityInterface|null the identity object that matches the given token.
-     */
     public static function findIdentityByAccessToken($token, $type = null)
     {
         return static::findOne(['access_token' => $token]);
@@ -60,26 +84,16 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return \Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
 
-    /**
-     * @return int|string current user ID
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string current user auth key
-     */
     public function getAuthKey()
     {
 
     }
 
-    /**
-     * @param string $authKey
-     * @return bool if auth key is valid for current user
-     */
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
@@ -131,7 +145,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         }
     }
 
-    public function getMessageTeams(){
+    public function getMessageTeams() {
         $team = (new \yii\db\Query())
         ->select(['teams.*' ,'user_team.status_tokin','users.name as u_name','users.email as u_email'])
         ->from('teams')->leftJoin('user_team', 'user_team.id_team = teams.id')
@@ -155,5 +169,27 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function getMessages()
     {
         return $this->hasMany(MessageUser::className(), ['recipient' => 'id']);
+    }
+
+
+    public function getInvitationUser()
+    {
+        return $this->hasMany(TournamentUser::className(), ['user_id' => 'id'])
+            ->where(['status'=>TournamentUser::SENT])
+            ->orderBy('id');
+    }
+
+    private function resizeImg ($pathFile)
+    {
+        $image = \Yii::$app->image->load($pathFile);
+        $image->background('#fff', 0);
+        $image->resize('200', '200', \yii\image\drivers\Image::INVERSE);
+        $image->crop('200','200');
+        $image->save($pathFile);
+    }
+
+    public function avatar()
+    {
+        return $this->logo ?? '/images/profile/user_man.jpg';
     }
 }

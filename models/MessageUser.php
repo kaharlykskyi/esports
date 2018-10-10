@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-
+use yii\helpers\Url;
 
 
 class MessageUser extends \yii\db\ActiveRecord

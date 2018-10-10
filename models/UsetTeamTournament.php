@@ -63,7 +63,7 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
     }
 
 
-    public function seveMembersTournament($uset_team_tournament,$tournament,$team)
+    public function seveMembersTournament($uset_team_tournament,$tournament,$team ,$message = true)
     {
         foreach ($uset_team_tournament as $value) {
            $model = new self();
@@ -72,7 +72,9 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
            $model->user_id = $value;
            $model->save();
         }
-        $this->getMembersTournament($tournament,$team);
+        if ($message) {
+            $this->getMembersTournament($tournament,$team);
+        }
     }
 
     public function getMembersTournament($tournament,$team)
@@ -82,13 +84,13 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
         $members = User::find()->where(['in','id',$users])->all();
         $url = Url::toRoute(['tournaments/public','id' => $tournament->id], true);
         $a_api_hearstone = '';
-        if ($tournament->game_id == 1) {
+        if ($tournament->game_id > 4) {
            $a_api_hearstone ='<a href="'.Url::toRoute(['api-string','id' => $tournament->id], true).'">'.Url::toRoute(['api-string','id' => $tournament->id], true).'</a>' ;
         }
 
         foreach ($members as $member) {
-            $text_meesage = '<p><b>'.$team->capitans->name.'</b></a> chose you to participate in tournament 
-            <a href="'.$url.'" >'.$tournament->name.'</a></p>';
+            $text_meesage = '<p><b>'.$team->capitans->name.'</b> chose you to participate in tournament 
+                            <a href="'.$url.'" >'.$tournament->name.'</a></p>';
             Yii::$app->mailer->compose()
                 ->setFrom([Yii::$app->params['adminEmail'] => 'Participation in the tournament '.$tournament->name])
                 ->setTo([$member->email])

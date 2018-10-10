@@ -1,7 +1,7 @@
 
 
 <div class="container" style="margin-bottom: 30px;">
-    <?php $access=1; if($access==1): 
+    <?php  if($access==1): 
         $users_tournaments = $model->getPlayersTeams();
     ?>
         <?php $i = 0; foreach ($users_tournaments as $users_tournament):?>
@@ -12,15 +12,8 @@
                 <h6 style="text-align:center;" ><b>Team:</b> <?=$users_tournament->team->name?></h6>
             <?php endif; ?>
                 <p style="text-align:center;" ><b>User:</b> <?=$users_tournament->user->name?></p>
-                <div>
-                    <?php $json = json_decode($users_tournament->text) ?>
-                    <?php if(is_array($json[1])): ?>
-                     <div style="text-align:center;" >
-                        <?php foreach ($json[1] as $data):?>
-                           <?=$wget->getPers($data)?>
-                        <?php endforeach; ?>
-                    </div>
-                    <?php endif; ?>
+                <div style="text-align:center;" >
+                    <?=$wget->getPers($users_tournament->text)?>
                 </div>
         <?php endforeach; ?>
     <?php endif; ?> 
@@ -31,18 +24,13 @@
         <?php $i = 0; foreach ($users_tournaments as $users_tournament):?>
             <?php if ($users_tournament->team->id != $i):?>
                 <?php $i = $users_tournament->team->id; ?>
-                <h6 style="text-align:center;" ><?=$users_tournament->team->name?></h6>
+                <h6 style="text-align:center;" >
+                    <?=$users_tournament->team->single_user?'single player':$users_tournament->team->name?>
+                </h6>
             <?php endif; ?>
                 <p style="text-align:center;" ><b>User: </b> <?=$users_tournament->user->name?></p>
-                <div>
-                    <?php $json = json_decode($users_tournament->text) ?>
-                     <div style="text-align:center;" >
-                        <?php if(is_array($json[1])): ?>
-                        <?php foreach ($json[1] as $data):?>
-                           <?=$wget->getPers($data)?>
-                        <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
+                <div style="text-align:center;" >
+                    <?=$wget->getPers($users_tournament->text)?>
                 </div>
         <?php endforeach; ?>
     <?php endif; ?>
@@ -51,18 +39,13 @@
         $users_tournaments = $model->getPlayer(\Yii::$app->user->identity->id);
     ?>
             <?php if ($users_tournament->team->id != $i):?>
-                <h6 style="text-align:center;" ><?=$users_tournament->team->name?></h6>
+                <h6 style="text-align:center;" >
+                    <?=$users_tournament->team->single_user?'single player':$users_tournament->team->name?>
+                </h6>
             <?php endif; ?>
                 <p style="text-align:center;" ><b>User:</b> <?=$users_tournament->user->name?></p>
-                <div>
-                    <?php $json = json_decode($users_tournament->text) ?>
-                     <div style="text-align:center;" >
-                        <?php if(is_array($json[1])): ?>
-                        <?php foreach ($json[1] as $data):?>
-                           <?=$wget->getPers($data)?>
-                        <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
+                <div style="text-align:center;" >
+                    <?=$wget->getPers($users_tournament->text)?>
                 </div>
     <?php endif; ?>
 

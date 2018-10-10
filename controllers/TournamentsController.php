@@ -54,19 +54,12 @@ class TournamentsController extends \yii\web\Controller
         if(Yii::$app->request->isPost){
 
             if ($model->load(Yii::$app->request->post())) {
-                    $post = Yii::$app->request->post();
-                    if (!empty($post['Data'])) {
-                        $model->data = json_encode($post['Data']);
-                    }
+                $post = Yii::$app->request->post();
+                if (!empty($post['Data'])) {
+                    $model->data = json_encode($post['Data']);
+                }
                     
-                if($model->save()) {       
-                    // foreach ($post['Data'] as $key => $value ) {
-                    //     $tournament_data = new TournamentData();
-                    //     $tournament_data->tournament_id = $model->id;
-                    //     $tournament_data->name = $key;
-                    //     $tournament_data->value = $value;
-                    //     $tournament_data->save();
-                    // }             
+                if($model->save()) {                    
                     Yii::$app->session->setFlash('success', 'Tournament settings updated');
                     return $this->redirect('/tournaments/public/'.$model->id.'#manage_tournament');
                 }
@@ -142,12 +135,12 @@ class TournamentsController extends \yii\web\Controller
         if(Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
 
-            if(!$team && isset($post['ACCEPT'])){
-                $model->status = 2;
-                $model->tokin = 'ok';
-                if ($model->save()) {
-                    $team_one_usr = new Teams();
-                    $team_one_usr->dummyTeam($tournaments,$user);
+            if(!$team && isset($post['ACCEPT'])) {
+                $team_one_usr = new Teams();
+                if ($team_one_usr->dummyTeam($tournament,$user)) {
+                    $model->status = 2;
+                    $model->tokin = 'ok';
+                    $model->save(false);
                 }
 
             } elseif (isset($post['ACCEPT'])) {

@@ -28,46 +28,121 @@ $(document).ready(function(){
         $('.system_select').append(`<div class="system_select_message">With the selected format, each player will have ${i} decks, and will be able to ban a deck of the opponent.</div>`);
     });
 
-    $('.select_format').find('.options').find('li').on('click',function(){
+///////////////////////////////WOW//////////////////////////////////////////
+    $('.select_format').find('.options').find('li').on('click',function() {
         let value = $(this).text();
-        if (value == 'PvP') {
+        firstPVP(value);
+    });
 
-           $('.hidden_num').hide();
-           $('.hidden_num').find('input').attr('name', '');
-
-           $('.nidden_select').show();
-           $('.nidden_select').find('select').attr('name', 'Data[pvp]');
+    function firstPVP(value) {
+       if (value == 'PvP') {
+            $('.hidden_select1').show();
+            $('.terrain').show();
+            $('.select_dungeon').remove();
         }
         if (value == 'PvE') {
+            $('.hidden_select2').hide();
+            $('.hidden_select1').hide();
+            $('.terrain').hide();
+            let val = $('.sistem_wow').find('option:selected').val();
+            if (val == 'Bo1') {
+                andeground(2);
+            }
+            if (val == 'Bo3') {
+                andeground(3);
+            }
+            if (val == 'Bo5') {
+                andeground(4);
+            }
+        } 
+    }
 
-            $('.nidden_select').hide();
-            $('.nidden_select').find('select').attr('name', '');
+    firstPVP($('.select_format').find('option:selected').val());
 
-            $('.hidden_num').show();
-            $('.hidden_num').find('input').attr('name', 'Data[mythical]');
+    $('.terrain').find('.options').find('li').on('click',function() {
+        let value = $(this).text();
+        let hidden_select1 = $('.hidden_select1');
+        let hidden_select2 = $('.hidden_select2');
+        if (value == 'Arena') {
+            hidden_select2.hide();
+            hidden_select2.find('select').prop("disabled", true);
+            hidden_select1.show();
+            hidden_select1.find('select').prop("disabled", false);
+        }
+        if (value == 'Battleground') {
+            hidden_select1.hide();
+            hidden_select1.find('select').prop("disabled", true);
+            hidden_select2.show();
+            hidden_select2.find('select').prop("disabled", false);
         }
     });
 
+    $('.sistem_wow').find('.options').find('li').on('click',function() {
+        let value = $(this).text();
+        let val_format = $('.select_format').find('option:selected').val();
+        if (val_format == 'PvE') {
+            $('.select_dungeon').remove();
+            if (value == 'Bo1') {
+                andeground(2);
+            }
+            if (value == 'Bo3') {
+                andeground(3);
+            }
+            if (value == 'Bo5') {
+                andeground(4);
+            }
+        }
 
-    $('.select_format').find('select').attr('name', '');
 
-    let input_num  = $('.hidden_num').find('input');
-    let select_hidden  = $('.nidden_select').find('select');
+    });
 
-    if(input_num.val() == ''){
-        input_num.attr('name', '');
-        $('.hidden_num').hide();
+    function andeground(int) {
+        let html = $('<div  class="conteiner_filed select_dungeon" ><label >Dungeon</label></div>');
+
+        let select = `<select class="form-control" name="Data[dungeon][]" >
+            <option value="Freehold" >Freehold</option>
+            <option value="Waycrest Manor" >Waycrest Manor</option>
+            <option value="Shrine of the Storm" >Shrine of the Storm</option>
+            <option value="Temple of Sethraliss" >Temple of Sethraliss</option>
+            <option value="Atal'Dazar" >Atal'Dazar</option>
+            <option value="Kings' Rest" >Kings' Rest</option>
+            <option value="Tol Dagor" >Tol Dagor</option>
+            <option value="Siege of Boralus" >Siege of Boralus</option>
+            <option value="The Underrot" >The Underrot</option>
+            </select>`;
+
+        for (var i = 0; i < int; i++) {
+           html.append(select);
+        } 
+        $('.castom_seting').append(html);
     }
 
-    let i = $('.nidden_select option').attr("selected");
-    if (typeof i === typeof undefined || i === false) {
-        select_hidden.attr('name', '');
-        $('.nidden_select').hide();
-    }
 
-    
+
+
+
+
+
+    //$('.select_format').find('select').attr('name', '');
+
+    // let input_num  = $('.hidden_num').find('input');
+    // let select_hidden  = $('.nidden_select').find('select');
+
+    // if(input_num.val() == '') {
+    //     input_num.attr('name', '');
+    //     $('.hidden_num').hide();
+    // }
+
+    // let i = $('.nidden_select option').attr("selected");
+    // if (typeof i === typeof undefined || i === false) {
+    //     select_hidden.attr('name', '');
+    //     $('.nidden_select').hide();
+    // }
+
 
 });
+
+
 $(document).ready( function() {
 
     $('#search_mod').on('click',function(){
@@ -77,7 +152,6 @@ $(document).ready( function() {
         searchMix(data);
         
     });
-
 
     function searchMix (data) {
         const fdata = FSsrf();

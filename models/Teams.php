@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
-
+use yii\helpers\Url;
 
 class Teams extends \yii\db\ActiveRecord
 {
@@ -131,19 +131,41 @@ class Teams extends \yii\db\ActiveRecord
             $this->background = '-----';
             $this->game_id = $tournament->game_id;
             $this->single_user = 1;
-            if (!$this->save()) {
+            if (!$this->save(false)) {
                 return false;
             }
+            $model = $this;
+        }
+
+        $user_team = UserTeam::findOne(['id_user'=>$user->id,'id_team'=>$this->id]);
+        if (!is_object($user_team)) {
             $user_team = new UserTeam();
             $user_team->id_user = $user->id;
             $user_team->id_team = $this->id;
             $user_team->status = UserTeam::DUMMY;
             $user_team->save(false);
-            $model = $this;
-            
         }
+
+
         $tournament_team = new TournamentTeam();
-        $tournament_team;
-        $model;
+        $tournament_team->status = TournamentTeam::ACCEPTED;
+        $tournament_team->tournament_id = $tournament->id;
+        $tournament_team->team_id = $model->id;
+        if ($tournament_team->save()) {
+            if(($tournament->game_id==1)||($tournament->game_id==2)) {
+                (new UsetTeamTournament)->seveMembersTournament([$user->id],$tournament,$model,false);
+                $url ='<a href="'.Url::toRoute(['api-string','id' => $tournament->id], true).'">'.Url::toRoute(['api-string','id' => $tournament->id], true).'</a>' ;
+                $text_meesage = "<p> To participate in the tournament, enter the data $url </p>";
+            } else {
+                $text_meesage = "<p> You took part in the tournament <a  href='/tournaments/public/$tournament->id' >$tournament->name</a> </p>";
+            }
+
+            $message_config = new MessageUser();
+            $message_config->writeTitle('You are participating in a tournament.')
+                ->writeMessage($tournament->user_id,$user->id,$text_meesage);
+        } else {
+            return false;
+        }
+        return true;
     }
 }

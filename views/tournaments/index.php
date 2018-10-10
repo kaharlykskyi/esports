@@ -286,7 +286,7 @@
                                                       
                                                     <input type="radio" name="Tournaments[flag]" id="size_2" value="2" <?= $model->flag==2 ? 'checked' : ''?> />
                                                     <label for="size_2">Only teams</label>
-                                                    <?php if($model->game_id != 1): ?>
+                                                    <?php if($model->game_id > 2): ?>
                                                         <input type="radio" name="Tournaments[flag]" id="size_3" value="3" <?= $model->flag==3 ? 'checked' : ''?> />
                                                         <label for="size_3">Mixed</label>
                                                     <?php endif; ?>
@@ -412,8 +412,7 @@
                         </div>
                 </div>
             <?php endif; ?>
-            <!--CHAMPIONSHIP manage_tournament TAB END -->
-            
+            <!--CHAMPIONSHIP manage_tournament TAB END -->   
         </div>
     </div>
     <!--CHAMPIONSHIP WRAP END-->
@@ -442,5 +441,6 @@
             </div>
         </div>
     </div>
+
 
     

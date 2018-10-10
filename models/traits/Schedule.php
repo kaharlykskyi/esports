@@ -11,8 +11,8 @@ trait Schedule {
         $result = [];
         foreach ($teams as $key => $match) {
            $match = $this->seveSchedule($match,$format,$date);
-           if ($this->game_id = 1) {
-               $hearthstone = new HearthstoneServis();
+           if (($this->game_id == 1)||($this->game_id == 2)) {
+               $hearthstone = new UserServis();
                $hearthstone->scheduleUsers($match,$this);
            }
         }

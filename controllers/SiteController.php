@@ -83,7 +83,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
             if($model->login()) {
-                return $this->goBack('profile');
+                return $this->goBack(['profile/index']);
             }
         }
 

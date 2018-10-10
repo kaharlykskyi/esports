@@ -20,7 +20,7 @@ $user_id = false;
  if (!\Yii::$app->user->isGuest){
     $user_id = \Yii::$app->user->identity->id;
  }
-    //$user_id =19;
+    //$user_id =12;
 ?>
 
     <div class="time-match" >

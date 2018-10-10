@@ -349,7 +349,9 @@ function ojectSort (respons) {
 function contentWrite (oject){
     let content = $('.container_cards');
     $.map(oject,function(element,index){
-        let p =`<div class="block_card_class" ><img src="/images/game/hearthstone/${element}.png" ><p class="text_card_class" >${element}</p></div>`;
+        let p =`<div class="block_card_class" >
+        <img src="/images/game/hearthstone/${element}.png" >
+        <p class="text_card_class" >${element}</p></div>`;
         content.append(p);  
     });
 }

@@ -608,4 +608,35 @@ div.jQBracket .team.na {
     -webkit-box-shadow: 0px 1px 7px 4px rgba(250, 5, 5, 0.55);
     -moz-box-shadow: 0px 1px 7px 4px rgba(250, 5, 5, 0.55);
     box-shadow: 0px 1px 7px 4px rgba(250, 5, 5, 0.55);
-    }
+}
+
+.block_card_class.wow{
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.block_card_class.wow img{
+    height: 80px;   
+    box-shadow: 0 0 10px #e02929;
+    border: 2px solid #000;
+    border-radius: 2px;
+}
+
+.hidden_select2,.hidden_select1,.terrain{
+    display: none;
+}
+
+.select_dungeon select{
+    border:none;
+    height: 40px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.select_dungeon select option{
+    font-weight: bold;
+}
+
+.select_dungeon select:focus{
+    box-shadow:none;
+}

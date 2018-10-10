@@ -6,16 +6,39 @@
     use kartik\datetime\DateTimePicker;
 
     $this->registerCssFile('css/profile.css', ['depends' => ['app\assets\AppAsset']]);
+    $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/profile.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/update-team.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Profile';
     $this->params['breadcrumbs'][] = $this->title;
     $user = \Yii::$app->user->identity;
+    $script = "$('.dropify').dropify({
+        defaultFile:'{$user->logo}',
+        messages: {
+            'default': 'Drag and drop a file here or click',
+            'replace': 'Drag and drop or click to replace',
+            'remove':  'Remove',
+            'error':   'Ooops, something wrong happended.'
+        }
+    });
+
+    $('.dropify1').dropify({
+        defaultFile:'{$user->background}',
+        messages: {
+            'default': 'Drag and drop a file here or click',
+            'replace': 'Drag and drop or click to replace',
+            'remove':  'Remove',
+            'error':   'Ooops, something wrong happended.'
+        }
+    });
+    ";
+
+    $this->registerJs($script, yii\web\View::POS_END);
     $teams_m = $user->getMessageTeams();
 ?>
 
 
-<section class="image-header img-url" style="margin-bottom:70px">
+<section class="image-header img-url" style="margin-bottom:70px;<?=$user->background ? "background-image: url($user->background);" :''?>">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-12">
@@ -25,7 +48,7 @@
                             <div class="youplay-user"> 
                                 <a href="https://wp.nkdev.info/youplay/members/craager/" class="angled-img">
                                     <div class="img"> 
-                                        <img src="https://cdn-wp.nkdev.info/youplay/wp-content/uploads/avatars/1/3e326e4e6643db89fc3bf1447d9474e3-bpfull.jpg" class="avatar user-1-avatar avatar-200 photo" width="200" height="200" alt="Profile picture of nK">
+                                        <img src="<?=$user->avatar()?>" class="avatar user-1-avatar avatar-200 photo" width="200" height="200" alt="Profile picture of nK">
                                     </div> 
                                 </a>
                                 <div class="user-data">
@@ -211,6 +234,39 @@
                                             </div>
                                         </div>
                                     </div>
+                                <?php endforeach; ?>
+                                <?php foreach($user->invitationUser as $user_tournament) : ?>
+                                    <div class="lists">
+                                        <div class="youplay-timeline-icon "> 
+                                            <a href="/tournaments/public/<?=$user_tournament->tournament_id?>">
+                                                <img src="/" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
+                                            </a>
+                                        </div>
+
+                                        <div class="wrap">     
+                                            <h3 class="activity-header">
+                                                <p>
+                                                    You are invited to take part in the tournament <a href="/tournaments/public/<?=$user_tournament->tournament_id?>"><?=$user_tournament->tournament->name?></a> 
+                                                </p>
+                                            </h3>
+                                            <div class="clearfix"></div>
+                                            <div class="activity-inner">
+                                                <p>
+                                                     To confirm or reject click the link:</br>
+                                                     <?php $url_invitation = Url::to(
+                                                        [
+                                                            'tournaments/invitation',
+                                                            'tournament' => $user_tournament->tournament_id,
+                                                            'tokin' => $user_tournament->tokin
+                                                        ],true); ?>
+                                                    <a href="<?= $url_invitation ?>" >
+                                                     <?= $url_invitation ?>
+                                                    </a>.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 <?php endforeach; ?>
                                     
                             </div>
@@ -488,6 +544,8 @@
                                     $form->successCssClass = false;
                             ?>   
                                 <?= $form->field($user, 'name')->textInput(['class' => false])->label('First name', ['class' => false]) ?>
+                                <?=$form->field($user, 'file_logo')->fileInput(['class' => 'dropify','data-height'=>"200",'data-allowed-file-extensions'=>"jpg png jepg gif"]) ?> 
+                                <?=$form->field($user, 'file_background')->fileInput(['class' => 'dropify1','data-height'=>"300",'data-allowed-file-extensions'=>"jpg png jepg gif"]) ?> 
 
                                 <div style="margin-bottom: 25px;">
                                     <label class="control-label">Sex</label>
