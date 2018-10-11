@@ -15,7 +15,7 @@ class UsersMatch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user1', 'user2', 'match', 'results1', 'results2', 'tournament_id', 'round'], 'integer'],
+            [['user1', 'user2', 'match', 'results1', 'results2', 'tournament_id', 'round','state'], 'integer'],
             [['match'], 'required'],
             [['data'], 'string'],
             [['match'], 'exist', 'skipOnError' => true, 'targetClass' => ScheduleTeams::className(), 'targetAttribute' => ['match' => 'id']],

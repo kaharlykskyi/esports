@@ -18,6 +18,7 @@ use Yii;
 use yii\web\HttpException;
 use app\models\ScheduleTeams;
 use app\models\UsetTeamTournament;
+use app\models\servises\UserServis;
 
 
 class MatchesController extends \yii\web\Controller
@@ -71,9 +72,8 @@ class MatchesController extends \yii\web\Controller
     {
         if(Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-
-            foreach ($post['user_matc'] as $match) {
-                if ((!empty($match['results2'])) && (!empty($match['results1']))) {
+            foreach ($post['user_match'] as $match) {
+                if ((isset($match['results2'])) && (isset($match['results1']))) {
                     if(is_numeric($match['results2']) && is_numeric($match['results1'])) {
                         if ($match['results2'] != $match['results1']) {
                             $user_team = UsersMatch::findOne($match['id']);
@@ -84,7 +84,8 @@ class MatchesController extends \yii\web\Controller
                     }
                 }
             }
-            return $this->redirect(['public','id'=>$post['match']]);
+            UserServis::addTur($post['match'],$post['tournament'],$post['round']);
+            return $this->redirect(['public','id'=> $post['match']]);
         }
     }
 

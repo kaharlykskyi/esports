@@ -141,7 +141,8 @@ $user_id = false;
                                                 ?>
                                                 <form action="/matches/result-user" method="POST" >
                                                      <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
-                                                     <input type="hidden" name="match" value="<?=$model->id?>">
+                                                    <input type="hidden" name="match" value="<?=$model->id?>">
+                                                    <input type="hidden" name="tournament" value="<?=$tournament->id?>">
                                                 <?php  foreach ($userMatchs as $userMatch):?>
                                                     <?php if($i_count != $userMatch->round) {
                                                         $i_count =  $userMatch->round;
@@ -152,37 +153,23 @@ $user_id = false;
                                                     <div class="item">
                                                         <div class="col-sm-5" style="padding: 0;">
                                                             <div class="number">
-                                                                <?php
-                                                                    if (!empty($data[0])&&is_array($data)) {
-                                                                       foreach ($data[0] as $element) {
-                                                                           echo '<img class="img_data"
-                                                                           src="/images/game/hearthstone/'.$element.'.png" >';
-                                                                       }
-                                                                    } else {
-                                                                        echo "no data";
-                                                                    }
-                                                                ?>
+                                                                <?= $this->render('icon',['data' => $data[0],'tournament'=>$tournament])?>
                                                             </div>
                                                             <div class="name"><?=$userMatch->userS->name?></div>
                                                         </div>
                                                         <div class="col-sm-2 input_round_match" style="padding: 0;text-align: center;">
-                                                            <?php if (($user_id == $tournament->user_id)&&($second>900)):?>
+                                                            <?php if (($user_id == $tournament->user_id)&&($second>900)&&!$userMatch->state):?>
                                                             <input maxlength="2" 
                                                                 value="<?=$userMatch->results1??''?>"
                                                                 type='text' onkeyup = 'this.value=parseInt(this.value) | 0' 
-                                                                autocomplete="off"
-                                                                <?//$model->active_result>=2?'disabled':''?>
-                                                                name="user_matc[<?=$userMatch->id?>][results1]"  
+                                                                name="user_match[<?=$userMatch->id?>][results1]"  autocomplete="off"
                                                                 >
                                                             <span>:</span>
                                                             <input maxlength="2"
                                                                 value="<?=$userMatch->results2??''?>"
-                                                                onkeyup = 'this.value=parseInt(this.value) | 0'
-                                                                name="user_matc[<?=$userMatch->id?>][results2]" 
-                                                                autocomplete="off"
-                                                                <?//$model->active_result>=2?'disabled':''?>
-                                                                type='text' onkeyup = 'this.value=parseInt(this.value) | 0'>
-                                                            <input type="hidden" name="user_matc[<?=$userMatch->id?>][id]" value="<?=$userMatch->id?>">
+                                                                type='text' onkeyup = 'this.value=parseInt(this.value) | 0'
+                                                                name="user_match[<?=$userMatch->id?>][results2]" autocomplete="off">
+                                                            <input type="hidden" name="user_match[<?=$userMatch->id?>][id]" value="<?=$userMatch->id?>">
                                                             <?php else: ?>
                                                                 <div style="margin-top: 7px;display: inline-block;">
                                                                     <b><?=$userMatch->results1??'--'?></b>
@@ -193,16 +180,7 @@ $user_id = false;
                                                         </div>
                                                         <div class="col-sm-5" style="padding: 0;">
                                                             <div class="number" style="float: right;">
-                                                                <?php
-                                                                    if (!empty($data[1])&&is_array($data)) {
-                                                                       foreach ($data[1] as $element) {
-                                                                           echo '<img class="img_data"
-                                                                           src="/images/game/hearthstone/'.$element.'.png" >';
-                                                                       }
-                                                                    }else{
-                                                                        echo "no data";
-                                                                    }
-                                                                ?>
+                                                                <?= $this->render('icon',['data' => $data[1],'tournament'=>$tournament])?>
                                                             </div>
                                                             <div class="name" style="float: right;padding-right: 25px;"><?=$userMatch->userF->name?></div>
                                                         </div>
@@ -267,6 +245,7 @@ $user_id = false;
         <!-- // ============================== End Sistem Ban  ===========================================-->
                                                     </div>
                                                 <?php endforeach; ?>
+                                                <input type="hidden" value="<?=$i_count?>" name="round" >
                                                 <div class="col-md-12" style="text-align: center;margin-top: 30px;">
                                                     <button class="btn seve_tur_btn" style="display:none;">save</button>
                                                 </div>

@@ -9,12 +9,22 @@
     use app\widgets\Schedule;
     use app\models\Tournaments;
     use app\widgets\ParticipantsData;
-
+    $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
     $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournament-public.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Tournament';
-    $this->params['breadcrumbs'][] = $this->title;
-
+    
+    $default_logo = $model->banner??false;
+    $script = "$('.dropify').dropify({
+       defaultFile:'{$default_logo}',
+        messages: {
+            'default': 'Drag and drop a file here or click',
+            'replace': 'Drag and drop or click to replace',
+            'remove':  'Remove',
+            'error':   'Ooops, something wrong happended.'
+        }
+    });";
+    $this->registerJs($script, yii\web\View::POS_END);
     $access = false;
 
     if (is_object(Yii::$app->user->identity)) {
@@ -286,7 +296,7 @@
                                                       
                                                     <input type="radio" name="Tournaments[flag]" id="size_2" value="2" <?= $model->flag==2 ? 'checked' : ''?> />
                                                     <label for="size_2">Only teams</label>
-                                                    <?php if($model->game_id > 2): ?>
+                                                    <?php if($model->game_id < 3): ?>
                                                         <input type="radio" name="Tournaments[flag]" id="size_3" value="3" <?= $model->flag==3 ? 'checked' : ''?> />
                                                         <label for="size_3">Mixed</label>
                                                     <?php endif; ?>
@@ -294,8 +304,8 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <?= $form->field($model, 'time_limit')
-                                                     ->textInput(['type' => 'number','class' => 'input_numeric','min' => '15','step' => '5', 'value'=>$model->time_limit])
-                                                     ->label('Time limit')?>
+                                                    ->textInput(['type' => 'number','class' => 'input_numeric','min' => '15','step' => '5', 'value'=>$model->time_limit])
+                                                    ->label('Time limit')?>
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="col-sm-12 control-label" for="teams-background">Region</label>
@@ -349,8 +359,10 @@
                                                         </select>
                                                     </div>      
                                                 </div>
+                                                <?= $form->field($model, 'banner_file')->fileInput(['class' => 'dropify','data-height'=>"200",'data-allowed-file-extensions'=>"jpg png jepg gif"]) ?>
                                                 <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
                                                 <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
+                                                <?= $form->field($model, 'prize_pool')->textInput(['class' => false]) ?>
                                                 <?php if(empty($model->cup)&&empty($model->league)): ?>
                                                     <?php if($model->format == Tournaments::LEAGUE_G): ?>
                                                         <div style="margin-bottom:20px;">

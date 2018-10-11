@@ -19,6 +19,7 @@ use yii\web\HttpException;
 use app\models\ScheduleTeams;
 use app\models\UsetTeamTournament;
 use app\models\servises\ApiString;
+use app\models\servises\SerchTournaments;
 
 class TournamentsController extends \yii\web\Controller
 {
@@ -37,12 +38,21 @@ class TournamentsController extends \yii\web\Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['public','cup'],
+                        'actions' => ['public','cup','index'],
                         'roles' => ['?'],
                     ],
                 ],
             ],
         ];
+    }
+
+    public function actionIndex()
+    {
+        $searchModel = new SerchTournaments();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = Tournaments::find()->all();
+        
+        return $this->render('all_tournaments',compact('dataProvider','searchModel'));
     }
 
     public function actionPublic($id)

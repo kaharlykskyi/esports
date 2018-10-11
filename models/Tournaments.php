@@ -5,6 +5,7 @@ namespace app\models;
 use yii\helpers\Html;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\web\UploadedFile;
 
 
 class Tournaments extends \yii\db\ActiveRecord
@@ -23,6 +24,7 @@ class Tournaments extends \yii\db\ActiveRecord
     const TEAMS = 2;
     const MIXED = 3;
     
+    public $banner_file;
 
     public function behaviors()
     {
@@ -39,9 +41,9 @@ class Tournaments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p','league_g','state','max_players'], 'integer'],
+            [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p','league_g','state','max_players','prize_pool'], 'integer'],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
-            [['rules', 'prizes','name'], 'string'],
+            [['rules', 'prizes','name','banner'], 'string'],
             [['start_date','region','data','cup','league_table','forum_text'], 'safe'],
             [['name'], 'unique'],
             [['game_id'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['game_id' => 'id']],
@@ -58,7 +60,30 @@ class Tournaments extends \yii\db\ActiveRecord
             'rules' => 'Rules of the tournament',
             'prizes' => 'Tournament prizes',
             'start_date' => 'Tournament start date',
+            'prize_pool' => 'Prize pool $',
+            'banner' => 'Tournament logo',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $this->banner_file = UploadedFile::getInstance($this,'banner_file');
+        if (is_object($this->banner_file)) {
+            $now_name = time();
+            $path = \Yii::getAlias('@webroot').'/images/tournaments/'.$this->id.'/'; 
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }    
+            $this->banner_file->saveAs($path.$now_name.'.'.$this->banner_file->extension);
+            //$this->resizeImg($path.$now_name.'.'.$this->banner_file->extension);
+            $this->banner = '/images/tournaments/'.$this->id.'/'.$now_name.'.'.$this->banner_file->extension;
+        }
+
+        return true;
     }
 
     public function getGame()

@@ -538,7 +538,7 @@ div.jQBracket .team.na {
 }
 
 .broadcast-item .lineup-list .number {
-    min-width: 130px;
+    width: auto;
     text-align: center;
     display: inline-block;
 }
