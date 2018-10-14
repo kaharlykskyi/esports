@@ -4,28 +4,54 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$this->title = 'tournament statistics';
+$this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
+$this->title = 'Tournament statistics';
 ?>
 
 <div class="container">
-    <h3>Tournament statistics</h3>
+    <h3 style="text-align: center;" >Tournament statistics</h3>
+    <form  method="GET">
+        <!--  //Html::hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(),[]); -->
+    <div class="col-md-10 col-md-offset-1 search_tournament" style="margin-top:20px;margin-bottom:20px;">
+        <div class="col-md-10">
+            <input type="text" placeholder="Tournament name" name="SerchTournaments[name]" autocomplete="off" >
+        </div>
+        <div class="col-md-2">
+            <button class="btn" ><span class="glyphicon glyphicon-search"></span> Search</button>
+        </div>
+    </div>
+    </form>
     <div class="box-body">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            //'filterModel' => $searchModel,
             'summary' => false,
-            //'tableOptions' =>['class' => 'table table-bordered table-hover dataTable'],
+            'tableOptions' =>['class' => 'table-statistic'],
+             'pager' => [
+                    'options' => [
+                        'class' => 'pagination_new',
+                    ],
+                    'prevPageLabel' => '<i class="fa fa-chevron-left" aria-hidden="true"></i>',
+                    'nextPageLabel' => '<i class="fa fa-chevron-right" aria-hidden="true"></i>',
+            ],
             'columns' => [
+
+                [
+                    'attribute'=> 'banner',
+                   // 'label'=>'Tournament logo',
+                    'header' => 'Tournament logo',
+                    'content' => function($data) {
+                        return "<img src='{$data->logo}' alt='logo'>";
+                    }
+                ],
 
                 [
                     'attribute'=> 'name',
                     'label'=>'Tournament name',
-                    'options' => ['width' => '180'],
                 ],
+
                 [
                     'attribute'=> 'game_id',
                     'label' => 'Game',
-                    'options' => ['width' => '180'],
                     'content' => function($data) {
                         if (!is_object($data->game)) {
                             return 'Not game';
@@ -33,52 +59,21 @@ $this->title = 'tournament statistics';
                         return $data->game->name;
                     },
                 ],
-              //   [
-              //       'attribute'=>'title',
-              //       'label'=>'Статья',
-              //       'options' => ['width' => '500'],
-              //       'filterInputOptions' => [ 
-              //           'placeholder'  =>  'Введите название',
-              //           'class'  =>  'form-control',
-              //       ]
-              //   ],
-              //           //'material:ntext',
-              //   [
-              //       'attribute'=>'created_at',
-              //       'label'=>'Дата создания',
-              //       'format' => 'date',
-              //       'options' => ['width' => '200'],
-              //       'filterInputOptions' => [ 'type'  =>  'date','class'  =>  'form-control' ,],
-              //   ],
 
-              //   [
-              //       'attribute'=>'category_id',
-              //       'label'=>'Категория',
-              //       'content'=>function($data) {
-              //           if (!is_object($data->category)) {
-              //               return 'Нет категории';
-              //           }
-              //           return $data->category->title;
-              //       },
-              //       'filter' => yii\helpers\ArrayHelper::map(common\models\Category::find()->all(),'id','title'),
-              //       'filterInputOptions' => [ 'class'  =>  'form-control' , 'prompt' => 'Все категории',],
-              //   ],
+                [
+                    'attribute'=> 'prize_pool',
+                    'label' => 'Prize pool',
+                    'content' => function($data) {
+                        return $data->prize_pool ? '$'.$data->prize_pool: '--';
+                    },
+                ],
 
-              //   [
-              //       'attribute' => 'status',
-              //       'format'=> 'raw',
-              //       'filter' => [1 =>'Активный' ,0 =>'Не активный' ],
-              //       'filterInputOptions' => [ 'class' => 'form-control' ,'prompt' => 'Статус',],
-              //       'value' => function($data) {
-              //           $src = Url::to(['materials/status','id' => $data->id]);
-              //           if ($data->status) {
-              //             return '<a href="'.$src.'" class="fa fa-toggle-on fa-2x status_toglle" ></a>';  
-              //         }
-              //         return '<a href="'.$src.'" class="fa fa-toggle-off fa-2x status_toglle" ></a>';
-              //     }
-              // ],
-
-        ],
+                [  
+                    'attribute'=> 'created_at',
+                    'label' => 'Date start',
+                    'format' => ['date', 'php:Y-m-d'],
+                ],
+            ],
         ]); ?>
     </div>
 </div>

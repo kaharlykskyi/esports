@@ -8,9 +8,13 @@ class NewsAsset extends AssetBundle
 {
     public $sourcePath = '@app/modules/admin/web';
    
+    public $css = [
+    ];
+
     public $js = [
         'js/news.js'
     ];
+
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapPluginAsset',

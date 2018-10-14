@@ -1,0 +1,93 @@
+.table-statistic {
+    border-left: none;
+    border-right: none;
+    font-weight: bold;
+}
+
+.table-statistic tr td {
+    font-size: 18px;
+    padding: 10px;
+}
+
+.table-statistic tr td img{
+    border-radius: 10px;
+}
+
+.table-statistic tr th {
+    background: transparent;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #1976d2;
+    height: auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.table-statistic tr:hover {
+    background: transparent;
+}
+
+.search_tournament input{
+    display: inline-block;
+}
+
+.pagination_new {
+
+    margin: 40px 0 100px 0;
+    width: 100%;
+    text-align: center;
+    border-radius: 4px;
+    display: inline-block;
+    padding-left: 0;
+}
+
+.pagination_new li {
+    float: none;
+    display: inline-block;
+    font-size: 12px;
+    vertical-align: top;
+}
+
+.pagination_new li a {
+    padding: 0;
+    margin: 1px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 0;
+    border: none;
+    text-align: center;
+    line-height: 48px;
+    font-size: 15px;
+    color: #666;
+    display: inline-block;
+}
+.pagination_new .prev.disabled,.pagination_new .next.disabled{
+    padding: 0;
+    margin: 1px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 0;
+    border: none;
+    text-align: center;
+    line-height: 48px;
+    font-size: 12px;
+    color: #666;
+    display: inline-block;
+}
+
+.pagination_new .next a,.pagination_new .prev a{
+    font-size: 12px;
+}
+
+.pagination_new .active a{
+    background-color: #141414;
+    color: #fff;
+}
+
+.pagination_new li a:hover {
+    background-color: #141414;
+    color: #fff;
+}
+

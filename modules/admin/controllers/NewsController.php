@@ -8,7 +8,7 @@ use app\modules\admin\models\NewsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\modules\admin\models\NewsCategory;
 
 class NewsController extends Controller
 {
@@ -71,7 +71,7 @@ class NewsController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        return $this->redirect('/admin/news/index');
+        return $this->redirect('/3kljs89s/news/index');
     }
 
     protected function findModel($id)
@@ -80,5 +80,16 @@ class NewsController extends Controller
             return $model;
         }
        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionCreateCategory ()
+    {
+        $model = new NewsCategory();
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }   
+
+        return $this->render('create-category',compact('model'));   
     }
 }

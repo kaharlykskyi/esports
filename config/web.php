@@ -86,8 +86,9 @@ $config = [
             'rules' => [
                 '<module:forum>/<id:\d+>' => '<module>/default/index',
                 '<module:forum>/<action:[A-Z,a-z,-]+>/<id:\d+>' => '<module>/default/<action>',
-                '<module:admin>' => '<module>/site/index',
-                '<module:admin>/<action:[A-Z,a-z,-]+>' => '<module>/site/<action>',
+                '3kljs89s' => 'admin/site/index',
+                '3kljs89s/<action:[A-Z,a-z,-]+>' => 'admin/site/<action>',
+                '3kljs89s/<controller>/<action:[A-Z,a-z,-]+>' => 'admin/<controller>/<action>',
                 '<controller:(profile|teams|tournaments)>' => '<controller>/index',
                 '<action:[A-Z,a-z,-]+>' => 'site/<action>',
                 '<controller>/<action:[A-Z,a-z,-]+>/<id:\d+>' => '<controller>/<action>',
@@ -113,7 +114,7 @@ if (YII_ENV_DEV) {
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
-    //$config['components']['assetManager']['forceCopy'] = true;
+    $config['components']['assetManager']['forceCopy'] = true;
 
 }
 

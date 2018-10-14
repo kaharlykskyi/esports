@@ -155,10 +155,13 @@ AppAsset::register($this);
                                 <i class="fas fa-copy"></i>News</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="/admin/news/index">All news</a>
+                                    <a href="<?=Url::to(['/admin/news/index'])?>">All news</a>
                                 </li>
                                 <li>
-                                    <a href="/admin/news/create">Create news</a>
+                                    <a href="<?=Url::to(['/admin/news/create'])?>">Create news</a>
+                                </li>
+                                <li>
+                                    <a href="<?=Url::to(['/admin/news/create-category'])?>">Create news category</a>
                                 </li>
                             </ul>
                         </li>
@@ -331,7 +334,7 @@ AppAsset::register($this);
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="/admin/logout">
+                                                <a href="<?=Url::to(['/admin/site/logout'])?>">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>

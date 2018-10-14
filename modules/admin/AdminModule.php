@@ -8,7 +8,6 @@ class AdminModule extends \yii\base\Module
 
     public $controllerNamespace = 'app\modules\admin\controllers';
 
-
     public function init()
     {
         parent::init();
@@ -22,7 +21,7 @@ class AdminModule extends \yii\base\Module
                 'identityCookie' => [
                     'name' => '_tidentity-admin', 
                     'httpOnly' => true,
-                    'path' => '/admin',
+                    'path' => '/3kljs89s',
                 ],
                 'loginUrl' => ['admin/site/login'],
             ],

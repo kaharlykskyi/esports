@@ -25,6 +25,7 @@ class Tournaments extends \yii\db\ActiveRecord
     const MIXED = 3;
     
     public $banner_file;
+    public $banner_default = '/images/tournaments/logo.png';
 
     public function behaviors()
     {
@@ -79,11 +80,16 @@ class Tournaments extends \yii\db\ActiveRecord
                 mkdir($path, 0777, true);
             }    
             $this->banner_file->saveAs($path.$now_name.'.'.$this->banner_file->extension);
-            //$this->resizeImg($path.$now_name.'.'.$this->banner_file->extension);
+            $this->resizeImg($path.$now_name.'.'.$this->banner_file->extension);
             $this->banner = '/images/tournaments/'.$this->id.'/'.$now_name.'.'.$this->banner_file->extension;
         }
 
         return true;
+    }
+
+    public function getLogo()
+    {
+        return $this->banner ?? $this->banner_default;
     }
 
     public function getGame()
@@ -213,6 +219,15 @@ class Tournaments extends \yii\db\ActiveRecord
             ->where('UNIX_TIMESTAMP(date)<UNIX_TIMESTAMP()')
             ->andWhere(['active_result' => null])
             ->all();
+    }
+
+    private function resizeImg ($pathFile)
+    {
+        $image = \Yii::$app->image->load($pathFile);
+        $image->background('#fff', 0);
+        $image->resize('300', '100', \yii\image\drivers\Image::INVERSE);
+        $image->crop('300','100');
+        $image->save($pathFile);
     }
 
 }

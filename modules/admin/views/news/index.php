@@ -39,18 +39,19 @@ $this->title = 'News';
                                         $src = Url::to(['/admin/news/state','id' => $data->id]);
                                         if ($data->state) {
                                           return '<a href="'.$src.'" class="fa fa-toggle-on fa-2x status_toglle" ></a>';  
-                                      }
-                                      return '<a href="'.$src.'" class="fa fa-toggle-off fa-2x status_toglle" ></a>';
-                                  }
-                              ],
+                                        }
+                                            return '<a href="'.$src.'" class="fa fa-toggle-off fa-2x status_toglle" ></a>';
+                                    }
+                                ],
 
-                              [
+                            [
                                 'attribute' => 'created_at',
                                 'label'=>'Date of creation',
                                 'format' =>  ['date', 'dd-MM-Y'],
                                 'options' => ['width' => '100'],
                                 'filterInputOptions' => [ 'type'  =>  'date','class'  =>  'form-control' ,],
                             ],
+
                             [
                                 'class' => 'yii\grid\ActionColumn',
                                 'header'=>'Action', 

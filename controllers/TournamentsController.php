@@ -49,9 +49,7 @@ class TournamentsController extends \yii\web\Controller
     public function actionIndex()
     {
         $searchModel = new SerchTournaments();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $model = Tournaments::find()->all();
-        
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);     
         return $this->render('all_tournaments',compact('dataProvider','searchModel'));
     }
 

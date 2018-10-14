@@ -7,20 +7,15 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Tournaments;
 
-/**
- * SerchMaterials represents the model behind the search form of `\backend\models\Materials`.
- */
+
 class SerchTournaments extends Tournaments
 {
-    /**
-     * @inheritdoc
-     */
+
     public function rules()
     {
         return [
             [['id','game_id','created_at'], 'integer'],
-            ['name','string'],
-            //[[, 'material'], 'safe'],
+            [['name','banner'],'string'],
         ];
     }
 
@@ -40,8 +35,8 @@ class SerchTournaments extends Tournaments
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['created_at'=>SORT_DESC]]
-          
+            'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'pagination' => [ 'pageSize' => 5 ],
         ]);
 
         $this->load($params);
@@ -57,11 +52,9 @@ class SerchTournaments extends Tournaments
             'id' => $this->id,
             'created_at' => $this->created_at,
             'game_id' => $this->game_id,
-            //'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
-            //->andFilterWhere(['like', 'material', $this->material]);
 
         return $dataProvider;
     }
