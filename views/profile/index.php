@@ -212,7 +212,7 @@
                                         <div class="closes" data-delete="<?=$message->id?>" ></div>
                                         <div class="youplay-timeline-icon "> 
                                             <a href="#">
-                                                <img src="https://cdn-wp.nkdev.info/youplay/wp-content/uploads/avatars/1/3e326e4e6643db89fc3bf1447d9474e3-bpthumb.jpg" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
+                                                <img src="<?=$message->senders->avatar()?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
                                             </a>
                                         </div>
 
@@ -239,7 +239,7 @@
                                     <div class="lists">
                                         <div class="youplay-timeline-icon "> 
                                             <a href="/tournaments/public/<?=$user_tournament->tournament_id?>">
-                                                <img src="/" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
+                                                <img src="<?=$user_tournament->tournament->user->avatar()?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
                                             </a>
                                         </div>
 
@@ -497,9 +497,11 @@
                                 </div>
                                 <div class="col-sm-7 content_btn">
                                     <p>
+                                        <?php if($user->id == $tournament->user_id): ?>
                                         <a class="btn edit-team" href="/tournaments/public/<?=$tournament->id?>#manage_tournament">
                                             Manage
                                         </a>
+                                    <?php endif; ?>
                                     </p>
                                     <p>
                                         <a class="btn edit-team" href="/tournaments/public/<?=$tournament->id?>">
@@ -609,7 +611,6 @@
                                 </div>
                                 
                                 <button type="submit" class="btn submit-btn" >Save</button>
-                           <!--  </form> -->
                             <?php ActiveForm::end(); ?>
                         </div>
                     </div>

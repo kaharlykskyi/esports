@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use app\modules\admin\models\NewsCategory;
 
 $this->title = 'News';
 
@@ -28,8 +29,20 @@ $this->title = 'News';
                                 [
                                     'attribute' => 'title',
                                     'label'=>'News Title',
-                                    'options' => ['width' => '500']
+                                    //'options' => ['width' => '500']
                                 ],
+
+                                [
+                                    'attribute' => 'category_id',
+                                    'label'=>'Category',
+                                    'filterInputOptions' => [ 'class'  =>  'form-control' ],
+                                    'filter' => yii\helpers\ArrayHelper::map(NewsCategory::find()->all(),'id','title'),
+                                    'filterInputOptions' => [ 'class'  =>  'form-control' , 'prompt' => 'Все категории',],
+                                    'value' => function($data) {
+                                        return $data->category->title;
+                                    }
+                                ],
+
                                 [
                                     'attribute' => 'state',
                                     'format'=> 'raw',
@@ -44,28 +57,28 @@ $this->title = 'News';
                                     }
                                 ],
 
-                            [
-                                'attribute' => 'created_at',
-                                'label'=>'Date of creation',
-                                'format' =>  ['date', 'dd-MM-Y'],
-                                'options' => ['width' => '100'],
-                                'filterInputOptions' => [ 'type'  =>  'date','class'  =>  'form-control' ,],
-                            ],
-
-                            [
-                                'class' => 'yii\grid\ActionColumn',
-                                'header'=>'Action', 
-                                'headerOptions' => ['width' => '80'],
-                                'class' => 'yii\grid\ActionColumn',
-                                'buttons'=>[
-                                    'delete' => function ($url,$model) {
-                                        return '&nbsp;&nbsp;'.Html::a(
-                                            '<span style="color:red;"  class="glyphicon glyphicon glyphicon-trash"></span>', 
-                                            $url);
-                                    },
+                                [
+                                    'attribute' => 'created_at',
+                                    'label'=>'Date of creation',
+                                    'format' =>  ['date', 'dd-MM-Y'],
+                                    //'options' => ['width' => '100'],
+                                    'filterInputOptions' => [ 'type'  =>  'date','class'  =>  'form-control' ,],
                                 ],
-                                'template'=>'{update}{delete}',
-                            ],
+
+                                [
+                                    'class' => 'yii\grid\ActionColumn',
+                                    'header'=>'Action', 
+                                    //'headerOptions' => ['width' => '80'],
+                                    'class' => 'yii\grid\ActionColumn',
+                                    'buttons'=>[
+                                        'delete' => function ($url,$model) {
+                                            return '&nbsp;&nbsp;'.Html::a(
+                                                '<span style="color:red;"  class="glyphicon glyphicon glyphicon-trash"></span>', 
+                                                $url);
+                                        },
+                                    ],
+                                    'template'=>'{update}{delete}',
+                                ],
                         ],
                         ]); ?>
 

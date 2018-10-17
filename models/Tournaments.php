@@ -92,6 +92,11 @@ class Tournaments extends \yii\db\ActiveRecord
         return $this->banner ?? $this->banner_default;
     }
 
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
     public function getGame()
     {
         return $this->hasOne(Games::className(), ['id' => 'game_id']);

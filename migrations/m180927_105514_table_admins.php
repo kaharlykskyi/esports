@@ -2,9 +2,7 @@
 
 use yii\db\Migration;
 use yii\db\Schema;
-/**
- * Class m180927_105514_table_admins
- */
+
 class m180927_105514_table_admins extends Migration
 {
     /**
@@ -23,7 +21,7 @@ class m180927_105514_table_admins extends Migration
 
         $this->insert('admins', [
             'login' => 'admin',
-            'username' => 'Admin'
+            'username' => 'Admin',
             'password' => Yii::$app->security->generatePasswordHash('admin'),
         ]);
     }

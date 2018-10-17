@@ -11,6 +11,8 @@ use Yii;
 use yii\web\UploadedFile;
 use app\models\User;
 use app\models\Tournaments;
+use app\models\TournamentTeam;
+use yii\helpers\ArrayHelper;
 
 class ProfileController extends \yii\web\Controller
 {
@@ -54,9 +56,12 @@ class ProfileController extends \yii\web\Controller
 
     public function actionIndex()
     {   
-        $tournaments = Tournaments::find(['user_id' => Yii::$app->user->identity->id])->all();
-
         $teams = Teams::getTeamsThisUser();
+        $ids = ArrayHelper::getColumn($teams['teams'], 'id');
+        $tournaments = Tournaments::find()
+            ->leftJoin('tournament_team', '`tournament_team`.`tournament_id` = `tournaments`.`id`')
+            ->where(['in', 'tournament_team.team_id', $ids])
+            ->andWhere(['tournament_team.status'=>TournamentTeam::ACCEPTED])->all();
         $games = Games::find()->all();
         $not_games = $this->games();
         return $this->render('index',compact('teams','games','not_games','tournaments'));
@@ -177,6 +182,7 @@ class ProfileController extends \yii\web\Controller
     }
 
     public function actionConfirmationTeam ($confirmation_tokin, $status = false) {
+        
         $id = Yii::$app->user->identity->id;
         $user_team = UserTeam::find()
         ->where(['id_user' => $id])
@@ -210,8 +216,6 @@ class ProfileController extends \yii\web\Controller
         }
         return $this->redirect('/profile');    
     }
-
-
 
     public function actionExitTeam ($id) 
     {

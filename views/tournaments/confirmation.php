@@ -22,12 +22,19 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/invitation.js'
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3 text-center" style="margin-bottom: 40px;">
             <h2>Invitation to join the tournament</h2>
-            <div class="col-md-12" style="margin-bottom: 60px;">
-            	
+            <div class="col-md-12" style="margin-bottom: 20px;">
             	<div class="col-md-6 col-md-offset-3" style="margin-top:18px;font-size: 20px; " >
-            		<p><a href="/tournaments/public/<?=$tournament->id?>" target="_blank"><b><?= $tournament->name ?></b></a></p>
+            		<p><a href="/tournaments/public/<?=$tournament->id?>" target="_blank"><b><?= $tournament->name ?></b></a></p><br>
             		<p class="invitation_game"> <img src="/images/game/<?=$tournament->game->logo?>" alt=""> <b><?=$tournament->game->name?></b></p>
             	</div>
+            </div>
+            <div class="col-md-12" style="margin-bottom: 20px;">
+                <div  style="font-size: 20px; " >
+                    <p><b>Rules:</b></p> 
+                    <p><?=$tournament->rules?></p>
+                    <p><b>Tournament Prize</b></p> 
+                    <p><?=$tournament->prizes?></p>
+                </div>
             </div>
             <form method="POST" id="invitation_form" >
             	<?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
