@@ -57,11 +57,16 @@ class ProfileController extends \yii\web\Controller
     public function actionIndex()
     {   
         $teams = Teams::getTeamsThisUser();
-        $ids = ArrayHelper::getColumn($teams['teams'], 'id');
+        $userteams =Yii::$app->user->identity->getUserteams()
+        ->where(['user_team.status'=> UserTeam::ACCEPTED])
+        ->orWhere(['user_team.status'=> UserTeam::DUMMY])->all();
+        $ids = ArrayHelper::getColumn($userteams, 'id_team');
         $tournaments = Tournaments::find()
             ->leftJoin('tournament_team', '`tournament_team`.`tournament_id` = `tournaments`.`id`')
             ->where(['in', 'tournament_team.team_id', $ids])
-            ->andWhere(['tournament_team.status'=>TournamentTeam::ACCEPTED])->all();
+            ->andWhere(['tournament_team.status'=>TournamentTeam::ACCEPTED])
+            ->orWhere(['tournaments.user_id'=>Yii::$app->user->identity->id])
+            ->all();
         $games = Games::find()->all();
         $not_games = $this->games();
         return $this->render('index',compact('teams','games','not_games','tournaments'));

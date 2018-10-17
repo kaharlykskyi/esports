@@ -235,39 +235,39 @@
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
-                                <?php foreach($user->invitationUser as $user_tournament) : ?>
+                        <!--         <?php //foreach($user->invitationUser as $user_tournament) : ?>
                                     <div class="lists">
                                         <div class="youplay-timeline-icon "> 
-                                            <a href="/tournaments/public/<?=$user_tournament->tournament_id?>">
-                                                <img src="<?=$user_tournament->tournament->user->avatar()?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
+                                            <a href="/tournaments/public/<?//$user_tournament->tournament_id?>">
+                                                <img src="<?//$user_tournament->tournament->user->avatar()?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
                                             </a>
                                         </div>
 
                                         <div class="wrap">     
                                             <h3 class="activity-header">
                                                 <p>
-                                                    You are invited to take part in the tournament <a href="/tournaments/public/<?=$user_tournament->tournament_id?>"><?=$user_tournament->tournament->name?></a> 
+                                                    You are invited to take part in the tournament <a href="/tournaments/public/<?//$user_tournament->tournament_id?>"><?//$user_tournament->tournament->name?></a> 
                                                 </p>
                                             </h3>
                                             <div class="clearfix"></div>
                                             <div class="activity-inner">
                                                 <p>
                                                      To confirm or reject click the link:</br>
-                                                     <?php $url_invitation = Url::to(
-                                                        [
-                                                            'tournaments/invitation',
-                                                            'tournament' => $user_tournament->tournament_id,
-                                                            'tokin' => $user_tournament->tokin
-                                                        ],true); ?>
-                                                    <a href="<?= $url_invitation ?>" >
-                                                     <?= $url_invitation ?>
+                                                     <?php// $url_invitation = Url::to(
+                                                        //[
+                                                        //    'tournaments/invitation',
+                                                        //    'tournament' => $user_tournament->tournament_id,
+                                                        //    'tokin' => $user_tournament->tokin
+                                                       // ],true); ?>
+                                                    <a href="<?// $url_invitation ?>" >
+                                                     <?// $url_invitation ?>
                                                     </a>.
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
 
-                                <?php endforeach; ?>
+                                <?php //endforeach; ?> -->
                                     
                             </div>
                         </div>

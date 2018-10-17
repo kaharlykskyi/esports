@@ -9,9 +9,7 @@ use yii\helpers\Url;
 
 class Teams extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public $file;
     public $file1; 
 

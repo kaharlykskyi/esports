@@ -324,8 +324,8 @@ class AjaxController extends \yii\web\Controller
                         'tournament' => $tournament->id, 'team' => $team->id], true);
                     $a = Html::a($url,$url);
                     $message = '<p>The invitation to join the tournament for the team '.$team->name.' 
-                               for confirmation or rejection click on the link<br> '.$a.'</p>';
-
+                        for confirmation or rejection click on the link<br> '.$a.'</p>';
+                    $player_id = $team->capitan;
                 }  
             } else {
                 $tournament_user = new TournamentUser();
@@ -338,8 +338,9 @@ class AjaxController extends \yii\web\Controller
                 $url = Url::toRoute(['tournaments/invitation','tokin'=> $tokin,
                     'tournament' => $tournament->id], true);
                 $a = Html::a($url,$url);
-                $message = '<p>Invitation to enter the tournament for the player '.$user->name.'
-                            to confirm or reject the move click on the link<br> '.$a.'</p>';
+                $message = '<p>Invitation to enter the tournament for the player <b>'.$user->name.'
+                            </b>to confirm or reject the move click on the link<br> '.$a.'</p>';
+                $player_id = $user->id;
             }
             $a = Html::a($url,$url);
             Yii::$app->mailer->compose()
@@ -348,7 +349,9 @@ class AjaxController extends \yii\web\Controller
                 ->setSubject("Invitation to join the tournament")
                 ->setTextBody("Invitation to join the tournament")
                 ->setHtmlBody($message)
-                ->send();    
+                ->send();
+            (new MessageUser())->writeTitle("Invitation to join the tournament")
+                ->writeMessage($tournament->user_id,$player_id,$message);   
             return ['sent' => true];
         }
         return ['sent' => false];
