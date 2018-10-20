@@ -23,7 +23,7 @@ class m180927_105514_table_admins extends Migration
 
         $this->insert('admins', [
             'login' => 'admin',
-            'username' => 'Admin'
+            'username' => 'Admin',
             'password' => Yii::$app->security->generatePasswordHash('admin'),
         ]);
     }
