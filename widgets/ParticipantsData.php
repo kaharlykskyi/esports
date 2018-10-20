@@ -45,10 +45,13 @@ class ParticipantsData extends Widget
         }
     }
 
-    private function dataPokemon($data)
+    private function dataPokemon($datas)
     {
-        echo "<div class='block_pokemon'><img src='/images/game/{$data['icons']['.']}.png' > {$data['name']}</div>";
-        
+        foreach ($datas as $data) {
+            if(!empty($data['name']))  {
+                echo "<div class='block_pokemon'><img src='/images/game/{$data['icons']['.']}.png' > {$data['name']}</div>";
+            } 
+        }
     }
 
     private function dataWow($data)

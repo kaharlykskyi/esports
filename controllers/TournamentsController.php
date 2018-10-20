@@ -240,7 +240,7 @@ class TournamentsController extends \yii\web\Controller
     public function actionCup($id) 
     {
         $model = Tournaments::findOne($id);
-        $this->layout = 'cup.php';
+        $this->layout = false;//'cup.php';
         if (!is_object($model)) {
            throw new HttpException(404 ,'Page not found');
         }
@@ -263,7 +263,7 @@ class TournamentsController extends \yii\web\Controller
             $post = Yii::$app->request->post();
             if (!empty($post['decstring'])) {
                 $user_config->text = $post['decstring']; 
-                $user_config->save();  
+                $user_config->save(false);  
                 return $this->redirect('/tournaments/public/'.$model->id);
             }         
         }

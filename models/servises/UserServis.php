@@ -36,9 +36,9 @@ class UserServis
                 $json1 = json_decode($team1_users[$i]->text,true);
                 $json2 = json_decode($team2_users[$i]->text,true);
                 if ($tournament->game_id == 1) {
-                    $user_match->text = json_encode([$json1[1],$json2[1]]);
+                    $user_match->data = json_encode([$json1[1],$json2[1]]);
                 } elseif ($tournament->game_id == 2) {
-                    $user_match->text = json_encode([$json1,$json2]);
+                    $user_match->data = json_encode([$json1,$json2]);
                 } 
                 $user_match->save();
             }

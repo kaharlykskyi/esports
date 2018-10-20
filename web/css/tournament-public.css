@@ -498,7 +498,7 @@ div.jQBracket .team.na {
     color: #000;
 }
 
-.block_card_class,.block_pokemon{
+.block_card_class{
     display: inline-block;
     background-color: #fff;
     cursor: pointer;
@@ -507,6 +507,18 @@ div.jQBracket .team.na {
     padding: 5px 10px;
     margin-left: 10px;
     margin-bottom: 10px;
+}
+
+.block_pokemon{
+    display: inline-block;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid #207ad54a;
+    padding: 0 5px 0 0;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    font-size: 12px;
 }
 
 .block_card_class img{
@@ -639,4 +651,15 @@ div.jQBracket .team.na {
 
 .select_dungeon select:focus{
     box-shadow:none;
+}
+
+.container_iframe{
+    position: relative;
+}
+
+.download_iframe{
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
 }

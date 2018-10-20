@@ -4,29 +4,15 @@ namespace app\models;
 
 use Yii;
 
-/**
- * This is the model class for table "stream".
- *
- * @property int $id
- * @property int $tournament_id
- * @property int $stream_chanal
- * @property string $stream_url
- *
- * @property Tournaments $tournament
- */
+
 class Stream extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public static function tableName()
     {
         return 'stream';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -36,9 +22,6 @@ class Stream extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -49,9 +32,7 @@ class Stream extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+ 
     public function getTournament()
     {
         return $this->hasOne(Tournaments::className(), ['id' => 'tournament_id']);

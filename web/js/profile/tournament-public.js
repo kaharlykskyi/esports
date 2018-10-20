@@ -300,16 +300,7 @@ $(document).ready( function() {
 });
 
 
-$(document).ready( function() {                                                                                                                                                                         
-    if (!$('#tournamentgrid').hasClass('active')) {
-
-        $('#tournamentgrid').addClass('active');
-        $('#tournamentgrid').attr('style','opacity: 0;');
-        setTimeout(function(){
-            $('#tournamentgrid').removeClass('active');
-            $('#tournamentgrid').attr('style','opacity: 1;');
-        }, 4000);
-    }
+$(document).ready( function() {    
 
     $('.glyphicon-fullscreen').on('click',function(){
         $('.container_iframes').addClass('full-screen');
@@ -320,6 +311,24 @@ $(document).ready( function() {
         $('.container_iframes').removeClass('full-screen');
         $('.glyphicon-resize-small').hide();
         $('.glyphicon-fullscreen').show();
+    });
+
+    $('.champ-nav-list a').on('shown.bs.tab', function (e) {
+        if($(e.target).text()=='Tournament grid') {
+            let container_iframe = $('#container_iframe');
+            if (!container_iframe.hasClass("newsIframe")) {
+                let html_ifreme = `<iframe src ="${container_iframe.data('href')}" id="ifrem_cup" ></iframe>`;
+                container_iframe.append(html_ifreme);
+                container_iframe.append('<img src="/images/profile/load.gif" class="download_iframe" >')
+                container_iframe.attr('style','opacity: 5;');
+                setTimeout( function() {
+                   $('.download_iframe').remove();
+                   container_iframe.attr('style','opacity: 1;');
+                },2000);
+                container_iframe.addClass("newsIframe");
+            }
+        }
+
     });
 });
 

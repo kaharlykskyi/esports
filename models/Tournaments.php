@@ -92,6 +92,11 @@ class Tournaments extends \yii\db\ActiveRecord
         return $this->banner ?? $this->banner_default;
     }
 
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
     public function getGame()
     {
         return $this->hasOne(Games::className(), ['id' => 'game_id']);
@@ -162,7 +167,7 @@ class Tournaments extends \yii\db\ActiveRecord
 
     public function getPlayers()
     {
-        $teams = (new \yii\db\Query())->select(['teams.*'])->from('teams')
+        $teams = Teams::find()->select(['teams.*'])
             ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
             ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $this->id])
             ->all();

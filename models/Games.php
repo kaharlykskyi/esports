@@ -30,7 +30,9 @@ class Games extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 200],
+            [['alias'], 'string', 'max' => 30],
             [['name'], 'unique'],
+            [['alias'], 'unique'],
         ];
     }
 

@@ -134,7 +134,7 @@ $user_id = false;
                                 <div class="row">
                                     <div class="col-md-10 col-md-offset-1">
                                         <div class="lineup-list">
-                                            <?php if($tournament->flag == Tournaments::TEAMS&&$tournament->game_id == 1): ?>
+                                            <?php if($tournament->flag == Tournaments::TEAMS&&$tournament->game_id < 3): ?>
                                                 <?php 
                                                     $userMatchs = $model->userMatch; 
                                                     $i_count = 0;
@@ -255,10 +255,10 @@ $user_id = false;
                                     </div>
                                 </div>  
                             </div>
-                            <?php if (!\Yii::$app->user->isGuest&&($second>900)&&$tournament->game_id != 1):?>
+                            <?php if (!\Yii::$app->user->isGuest&&($second>900)&&$tournament->game_id > 2):?>
                             <?php if (\Yii::$app->user->identity->id == $tournament->user_id):?>    
                                 <div class="item-body write-result-match">
-                                    <?php if($model->active_result<2): ?>
+                                    <?php if($model->active_result!=1): ?>
                                         <h6 style="text-align: center;margin-top: 10px;">set match results</h6>
                                     <?php else: ?>
                                         <h6 style="text-align: center;margin-top: 10px;">match results</h6>
@@ -268,15 +268,15 @@ $user_id = false;
                                         <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
                                         <div class="col-md-8 col-md-offset-2">
                                             <div class="col-md-4" style="text-align: right;margin-top: 10px;">
-                                                <a href="/teams/public/<?=$team2->id?>">
-                                                    <span><?=$team2->name ?></span>
+                                                <a href="<?=$team1->links()?>">
+                                                    <span><?=$team1->name ?></span>
                                                 </a>
                                             </div>
                                             <div class="col-md-4" style="text-align: center;" >
                                                 <input maxlength="2" 
                                                     value="<?=$model->results2??''?>"
                                                     autocomplete="off"
-                                                    <?=$model->active_result>=2?'disabled':''?>
+                                                    <?=$model->active_result==1?'disabled':''?>
                                                     name="ScheduleTeams[results2]" type='text' 
                                                     onkeyup = 'this.value=parseInt(this.value) | 0'>
                                                 <span>:</span>
@@ -284,17 +284,17 @@ $user_id = false;
                                                     value="<?=$model->results1??''?>" 
                                                     name="ScheduleTeams[results1]" 
                                                     autocomplete="off"
-                                                    <?=$model->active_result>=2?'disabled':''?>
+                                                    <?=$model->active_result==1?'disabled':''?>
                                                     type='text' onkeyup = 'this.value=parseInt(this.value) | 0'>
                                             </div>
                                             <div class="col-md-4" style="text-align: left;margin-top: 10px;">
-                                                <a href="/teams/public/<?=$team2->id?>">
-                                                    <span><?=$team1->name ?></span>
+                                                <a href="<?=$team2->links()?>">
+                                                    <span><?=$team2->name ?></span>
                                                 </a>
                                             </div>
                                             <div class="row">
-                                                <?php if($model->active_result<2): ?>
-                                                <div class="col-md-12" style="text-align: center;">
+                                                <?php if($model->active_result != 1): ?>
+                                                <div class="col-md-12" style="text-align: center;margin-top: 20px;">
                                                     <button class="btn" >Save result</button>
                                                 </div> 
                                                 <?php endif; ?>
@@ -305,6 +305,25 @@ $user_id = false;
                                 </div>
                             <?php endif;?>
                             <?php endif;?>
+                            <?php if (\Yii::$app->user->isGuest):?>
+                                <div class="item-body write-result-match" style="margin-bottom: 40px;">
+                                    <h6 style="text-align: center;margin-top: 10px;">match results</h6>
+                                    <div class="col-md-4" style="text-align: right;margin-top: 10px;">
+                                        <a href="<?=$team1->links()?>">
+                                            <span><?=$team1->name ?></span>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4" style="text-align: center;" >
+                                        <span><b><?=$model->results1??'--'?></b></span>
+                                        <span><b><?=$model->results2??'--'?></b></span>
+                                    </div>
+                                    <div class="col-md-4" style="text-align: left;margin-top: 10px;">
+                                        <a href="<?=$team2->links()?>">
+                                            <span><?=$team2->name ?></span>
+                                        </a>
+                                    </div>
+                                </div>  
+                            <?php endif; ?>
                             </div>
                         </div>
                     </div>

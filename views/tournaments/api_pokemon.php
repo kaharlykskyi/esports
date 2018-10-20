@@ -5,9 +5,9 @@
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/pokemon.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
 
 ?>
-<h4 style="text-align:center;" >Choose Pokemon for the game</h4>
+<h4 style="text-align:center;" >SELECT 6 POKEMONS FOR THE GAME</h4>
 <div class="container">
-    <div class="row" style="margin:40px 0; ">
+    <div class="row" style="margin:30px 0; ">
         <div class="col-md-8 col-md-offset-2" >
             <div class="col-md-8" >
                 <input type="text" class="pokemon-input">
@@ -17,8 +17,14 @@
             </div>
         </div> 
     </div>
-    <div class="row" style="margin:40px 0; ">
+    <div class="row" style="margin-top:30px; ">
         <div class="col-md-8 col-md-offset-2 container_pokemons" ></div> 
+    </div>
+    <div class="row" style="margin-top:15px;margin-bottom:30px; ">
+        <div class="col-md-8 col-md-offset-2">
+            <p style="text-align: center;"><b>Selected Pokemon</b></p><hr>
+        </div>
+        <div class="col-md-8 col-md-offset-2 container_selected" ></div> 
     </div>
     <div class="row block_form" style="margin:40px 0;display:none;"  >
         <form  method="POST">

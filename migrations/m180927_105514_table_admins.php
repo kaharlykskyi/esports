@@ -2,9 +2,7 @@
 
 use yii\db\Migration;
 use yii\db\Schema;
-/**
- * Class m180927_105514_table_admins
- */
+
 class m180927_105514_table_admins extends Migration
 {
     /**

@@ -59,7 +59,7 @@ class m180803_085541_create_table_teams extends Migration
             'CASCADE'
         );
 
-            $this->insert('teams', [
+    $this->insert('teams', [
             'name' => 'Start',
             'logo' => 'logo',
             'background' => 'background',
@@ -68,7 +68,7 @@ class m180803_085541_create_table_teams extends Migration
             'capitan' => 1,
             'created_at' => 1533553967,
             'updated_at' => 1533553967,
-        ]);
+    ]);
 
     $this->insert('teams', [
             'name' => 'Stop',

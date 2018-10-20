@@ -9,9 +9,7 @@ use yii\helpers\Url;
 
 class Teams extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public $file;
     public $file1; 
 
@@ -31,7 +29,7 @@ class Teams extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'capitan'], 'required'],
-            [['game_id','capitan'], 'integer'],
+            [['game_id','capitan','single_user'], 'integer'],
             [['file', 'file1'],'file','skipOnEmpty' => false,
                 'when' => function($model) { return !isset($model->id);},
                 'whenClient' => "function (attribute, value) {
@@ -79,6 +77,22 @@ class Teams extends \yii\db\ActiveRecord
         return $count;
     }
 
+    public function links()
+    {
+        if (is_null($this->single_user)) {
+            return "/teams/public/{$this->id}";
+        }
+        return "/users/public/{$this->id}";
+    }
+
+    public function logo()
+    {
+        if (is_null($this->single_user)) {
+            return $this->logo;
+        }
+        return $this->capitans->avatar();
+    }
+
     public static function getTeamsThisUser()
     {
         $teams = [];
@@ -117,7 +131,7 @@ class Teams extends \yii\db\ActiveRecord
     public function getMembers()
     {
         $ids = ArrayHelper::getColumn(UserTeam::find()->where(['id_team' => $this->id, 'status' => UserTeam::ACCEPTED])->asArray()->all(), 'id_user');
-        return User::find()->where(['in', 'id', $ids])->all();
+        return User::find()->with('statisticAll')->where(['in', 'id', $ids])->all();
     }
 
 

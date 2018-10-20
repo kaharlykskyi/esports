@@ -4,19 +4,9 @@ namespace app\models;
 
 use Yii;
 
-/**
- * This is the model class for table "tournament_user".
- *
- * @property int $id
- * @property int $tournament_id
- * @property int $user_id
- *
- * @property Tournaments $tournament
- * @property Users $user
- */
+
 class TournamentUser extends \yii\db\ActiveRecord
 {
-    
 
     const SENT = 1;
     const ACCEPTED = 2;
@@ -27,9 +17,6 @@ class TournamentUser extends \yii\db\ActiveRecord
         return 'tournament_user';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -39,9 +26,6 @@ class TournamentUser extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -51,17 +35,11 @@ class TournamentUser extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTournament()
     {
         return $this->hasOne(Tournaments::className(), ['id' => 'tournament_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getUser()
     {
         return $this->hasOne(Users::className(), ['id' => 'user_id']);
