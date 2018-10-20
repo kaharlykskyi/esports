@@ -20,15 +20,16 @@ class SearchResultsStatistics extends ResultsStatistics
         ];
     }
 
-
     public function scenarios()
     {
         return Model::scenarios();
     }
 
-    public function search($params)
+    public function search($params,$alias)
     {
-        $query = ResultsStatistics::find()->with('team');
+        $query = ResultsStatistics::find()->with('team')
+            ->joinWith('game')
+            ->where(['games.alias' => $alias]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -42,6 +43,7 @@ class SearchResultsStatistics extends ResultsStatistics
                     'desc' => ['`victories`/`loss`' =>  SORT_DESC],
                 ],
                 'victories',
+                'team_id',
                 'loss',
             ]
         ]);

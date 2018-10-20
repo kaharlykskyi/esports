@@ -4,8 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
-$this->title = 'Tournament statistics';
+    $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
+    $this->title = 'Tournament statistics';
 ?>
 
 <div class="container">
@@ -46,31 +46,6 @@ $this->title = 'Tournament statistics';
                     'attribute' => 'rate',
                     'label'=>'K/D Rate',
                 ],
-
-                // [
-                //     'attribute'=> 'game_id',
-                //     'label' => 'Game',
-                //     'content' => function($data) {
-                //         if (!is_object($data->game)) {
-                //             return 'Not game';
-                //         }
-                //         return $data->game->name;
-                //     },
-                // ],
-
-                // [
-                //     'attribute'=> 'prize_pool',
-                //     'label' => 'Prize pool',
-                //     'content' => function($data) {
-                //         return $data->prize_pool ? '$'.$data->prize_pool: '--';
-                //     },
-                // ],
-
-                // [  
-                //     'attribute'=> 'created_at',
-                //     'label' => 'Date start',
-                //     'format' => ['date', 'php:Y-m-d'],
-                // ],
             ],
         ]); ?>
     </div>

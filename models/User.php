@@ -171,6 +171,24 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasMany(MessageUser::className(), ['recipient' => 'id']);
     }
 
+    public function getStatisticAll()
+    {
+        return $this->hasMany(ResultsStatisticUsers::className(), ['user_id' => 'id']);
+    }
+
+    public function StatisticTeam($team)
+    {
+        $statistic = $this->statisticAll;
+        if (!empty($statistic)) {
+            foreach ( $statistic as $model) {
+                if($model->team_id == $team) {
+                    return $model;
+                }
+            }
+        }
+        return new class { public $loss = 0; public $victories = 0; public $rate = 0;};
+    }
+
 
     public function getInvitationUser()
     {

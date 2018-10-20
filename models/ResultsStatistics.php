@@ -16,7 +16,7 @@ class ResultsStatistics extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['team_id', 'victories', 'loss'], 'integer'],
+            [['team_id', 'victories', 'loss','game_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team_id' => 'id']],
         ];
@@ -37,6 +37,11 @@ class ResultsStatistics extends \yii\db\ActiveRecord
     public function getTeam()
     {
         return $this->hasOne(Teams::className(), ['id' => 'team_id']);
+    }
+
+    public function getGame()
+    {
+        return $this->hasOne(Games::className(), ['id' => 'game_id']);
     }
 
     public function getRate()

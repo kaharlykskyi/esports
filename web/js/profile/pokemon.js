@@ -1,7 +1,8 @@
-
+ 
 $(document).ready(function(){
     let responsPokimon;
     let arryPokemons = [];
+    let selectedPokemons = {};
     function searchMix () {
         let statechange = function() {
             if(this.readyState == 4) {
@@ -32,7 +33,7 @@ $(document).ready(function(){
             if(key.indexOf(data) + 1) {
                 let objectP = responsPokimon[key];
                 objectP.name = key;
-                arryPokemons.push(objectP);
+                arryPokemons[objectP.id] = objectP;
             }
         }
         contentWrite(arryPokemons);
@@ -41,33 +42,67 @@ $(document).ready(function(){
     function contentWrite (data) {
         
         let container = $('.container_pokemons');
-        let i = data.length - 1;
-        if (i > 20) {
-            i = 20;
+        let count = data.length - 1;
+        if (count > 20) {
+            count = 20;
         }
-        for ( i ;i >= 0; i--) {
-            let block = `<div class="block_pokemon" data-pokimon="${i}" >
-                        <img src='/images/game/${data[i].icons['.']}.png'  >${data[i].name}</div>`;
+        let a = 0;
+        for (let i in data) {
+            if (count == a) { return; }
+            a++;
+            let block = `<div class="block_pokemon" data-pokimon="${data[i].id}" >
+                         <img src='/images/game/${data[i].icons['.']}.png'  >${data[i].name}</div>`;
             block = $(block).on('click',clickBlock);
             container.append(block);
         }
     }
 
     function clickBlock() {
-        $('.block_card_active').removeClass('block_card_active');
-        $(this).addClass('block_card_active');
-        $('.block_form').slideDown();
+
+        let index = $(this).data('pokimon');
+        if (typeof arryPokemons[index] !== "undefined") {
+            if (typeof selectedPokemons[index] == "undefined" && Object.keys(selectedPokemons).length<6) {
+                selectedPokemons[arryPokemons[index].id] = arryPokemons[index];
+                contentWriteSelected(arryPokemons[index]);
+                if (Object.keys(selectedPokemons).length == 6) {
+                    $('.block_form').slideDown();
+                }
+            }
+        }
+    }
+
+    function contentWriteSelected (data) {
+        
+        let container = $('.container_selected');
+        let block = `<div class="block_pokemon" data-pokimon="${data.id}" >
+                    <img src='/images/game/${data.icons['.']}.png'  >${data.name}</div>`;
+        let span_rem = `<span class="glyphicon glyphicon-remove"
+                        style='color:#cc4040;top: 3px;margin-left:5px;'></span>`;
+        span_rem = $(span_rem).on('click',dellBlock);
+        block = $(block).append(span_rem);
+        container.append(block);
+    }
+
+    function dellBlock() {
+        let block = $(this).parent('.block_pokemon');
+        let id = block.data('pokimon');
+        block.remove();
+        delete selectedPokemons[id];
+        $('.block_form').slideUp();
     }
 
     $('.btn-save').on('click',function(event) {
-        let json,index;
-        index = $('.block_card_active').data('pokimon');
-        if (typeof arryPokemons[index] !== "undefined") {
-            json = JSON.stringify(arryPokemons[index]);
-            $('.input_class_cards').val(json);
-            return true;
+        let json,arry_pok;
+       if (Object.keys(selectedPokemons).length != 6) {
+            event.preventDefault();
+            return false;
         }
+        json = JSON.stringify(selectedPokemons);
+        $('.input_class_cards').val(json);
+        console.log(json);
+        return true;
         event.preventDefault();
+        
     });
     
 });

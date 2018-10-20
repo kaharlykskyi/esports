@@ -90,7 +90,7 @@ class Teams extends \yii\db\ActiveRecord
         if (is_null($this->single_user)) {
             return $this->logo;
         }
-        return $this->capitans->logo;
+        return $this->capitans->avatar();
     }
 
     public static function getTeamsThisUser()
@@ -131,7 +131,7 @@ class Teams extends \yii\db\ActiveRecord
     public function getMembers()
     {
         $ids = ArrayHelper::getColumn(UserTeam::find()->where(['id_team' => $this->id, 'status' => UserTeam::ACCEPTED])->asArray()->all(), 'id_user');
-        return User::find()->where(['in', 'id', $ids])->all();
+        return User::find()->with('statisticAll')->where(['in', 'id', $ids])->all();
     }
 
 

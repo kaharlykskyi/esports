@@ -1,9 +1,9 @@
 <?php
     use app\widgets\Alert;
     use yii\helpers\Html;
+    use app\models\servises\FlagServis;
     $this->registerCssFile('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
     $this->registerCssFile('css/team.css', ['depends' => ['app\assets\AppAsset']]);
-    //$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/profile.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Team';
     $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -33,24 +33,45 @@
                 <h2 class="text-center"><?=$team->name?></h2>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="edgtf-st-title" >STATISTICS</h4>
+                <div class="statistic_icons">
+                    <span class="glyphicon glyphicon-star"></span> 
+                    <span class="glyphicon glyphicon-remove"></span>  
+                    <span class="glyphicon glyphicon-screenshot"></span>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <h4 class="edgtf-st-title" >OUR MEMBERS</h4>
             </div>
             <div class="staff-box">
                 <?php foreach ($members as $member): ?>
-                    <div class="col-md-4 col-sm-6 col-xs-12 image_big ">
+                    <?php 
+                        $statistic = $member->StatisticTeam($team->id); 
+                        $flag_src = FlagServis::getLinkFlag($member->country);
+                    ?>
+                    <div class="col-md-3 col-sm-6 col-xs-12 image_big ">
                         <a href="#" class="item">
                             <span class="info">
+                                <span class="position"><img src="<?=$flag_src?>" alt="country"></span>
                                 <span class="name"><?=$member->name?></span>
                                 <span class="position">@<?=$member->username?></span>
+                                <br>
+                                <span class="position" >W/L <?=$statistic->rate ?></span>
+                                <span class="position" >Wins <?=$statistic->victories ?></span>
+                                <span class="position" >Loss <?=$statistic->loss ?></span>
                                 <span class="number">
                                     <i class="fab fa-twitter-square edgtf-icon-element"></i>
                                     <i class="edgtf-icon-font-awesome fab fa-youtube edgtf-icon-element"></i>
                                     <i class="edgtf-icon-font-awesome fab fa-twitch edgtf-icon-element"></i>
                                 </span>
                             </span>
-                            <img src="http://playerx.edge-themes.com/wp-content/uploads/2018/06/p2-team-img-1.jpg" alt="player">
+                            <img src="<?=$member->avatar()?>" alt="player">
                         </a>
                     </div>
                 <?php endforeach; ?>

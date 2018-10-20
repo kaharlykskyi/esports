@@ -92,6 +92,7 @@ $config = [
                 '<controller:(profile|teams|tournaments)>' => '<controller>/index',
                 '<action:[A-Z,a-z,-]+>' => 'site/<action>',
                 '<controller>/<action:[A-Z,a-z,-]+>/<id:\d+>' => '<controller>/<action>',
+                '<controller>/<action:[A-Z,a-z,-]+>/<alias:\w+>' => '<controller>/<action>'
             ],
         ],
     ],

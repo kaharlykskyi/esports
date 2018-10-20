@@ -88,9 +88,9 @@
                     <div class="row">
                         <?php foreach ($players as $player): ?>
                             <div class="col-md-3">
-                                <a href="/teams/public/<?=$player['id']?>" class="item">
-                                    <span class="logo"><img src="<?= $player['logo'] ?? "/images/profile/images.png" ?>" width="80" height="80" alt="team-logo"></span>
-                                    <span class="name"><?=$player['name']?></span>
+                                <a href="<?= $player->links() ?>" class="item">
+                                    <span class="logo"><img src="<?= $player->logo() ?>" width="80" height="80" alt="team-logo"></span>
+                                    <span class="name"><?=$player->name?></span>
                                 </a>
                             </div>
                         <?php endforeach ;?>
@@ -248,8 +248,8 @@
                         </div>
                         <?php endif; ?>
                         <div class="row container_iframes"  > 
-                            <div id="container_iframe" ><!-- //data-id-tournament="<?=$model->id?>" -->
-                                <iframe src="/tournaments/cup/<?=$model->id?>" id="ifrem_cup" ></iframe>
+                            <div id="container_iframe" data-href='/tournaments/cup/<?=$model->id?>'><!-- //data-id-tournament="<?=$model->id?>" -->
+                                <!-- <iframe src=""  id="ifrem_cup" style='display: none;' ></iframe> -->
                             </div> 
                             <div class="buttons">
                                 <span class="glyphicon glyphicon-fullscreen"></span>

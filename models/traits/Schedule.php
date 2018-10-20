@@ -3,7 +3,7 @@
 namespace app\models\traits;
 
 use app\models\ScheduleTeams;
-use app\models\servises\HearthstoneServis;
+use app\models\servises\UserServis;
 trait Schedule {
 
     public function createSchedule($teams,$format,$date = false)

@@ -51,18 +51,12 @@ class MatchesController extends \yii\web\Controller
             throw new HttpException(404 ,'Page not found');
         }
         if(Yii::$app->request->isPost) {
-            if ($model->active_result < 2) {
                 if ($model->load(Yii::$app->request->post())) {
-                    if ($model->active_result == 1) {
-                        $model->active_result = 2;
-                    } else {
                         $model->active_result = 1;
-                    }
                     if (!empty($model->results2)&&!empty($model->results1)) {
                         $model->save();
                     }
                 }   
-            }
             return $this->refresh();
         }
         return $this->render('index',compact('model'));

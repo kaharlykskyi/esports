@@ -14,12 +14,11 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
+use app\models\servises\FlagServis;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function behaviors()
     {
         return [
@@ -43,9 +42,6 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
@@ -59,21 +55,11 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         return $this->render('index');
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -113,8 +99,8 @@ class SiteController extends Controller
             }
         }
         return $this->render('register',[
-            'errors' => $model->getErrors()
-        ]);
+            'all_flag' => FlagServis::getAllflag(),
+            'errors' => $model->getErrors() ]);
     }
 
     public function actionRecovery()
