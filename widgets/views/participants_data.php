@@ -5,7 +5,7 @@
         $users_tournaments = $model->getPlayersTeams();
     ?>
         <?php $i = 0; foreach ($users_tournaments as $users_tournament):?>
-            <?php if (is_null($users_tournament->team_id)): ?>
+            <?php if (!is_null($users_tournament->team->single_user)): ?>
                 <h6 style="text-align:center;" >single player</h6>
             <?php elseif ($users_tournament->team->id != $i):?>
                 <?php $i = $users_tournament->team->id; ?>
@@ -25,7 +25,7 @@
             <?php if ($users_tournament->team->id != $i):?>
                 <?php $i = $users_tournament->team->id; ?>
                 <h6 style="text-align:center;" >
-                    <?=$users_tournament->team->single_user?'single player':$users_tournament->team->name?>
+                    <?= $users_tournament->team->single_user?'single player':$users_tournament->team->name?>
                 </h6>
             <?php endif; ?>
                 <p style="text-align:center;" ><b>User: </b> <?=$users_tournament->user->name?></p>

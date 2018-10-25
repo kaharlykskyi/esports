@@ -4,22 +4,26 @@ use yii\helpers\Html;
 use app\models\Tournaments;
 
 $this->title = 'Match';
-
 $script = "$.matchDate = ".(strtotime($model->date)-time()).";";
 $this->registerJs($script, yii\web\View::POS_END);
-$this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
-$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/match.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
+$this->registerCssFile(
+    'css/tournament-public.css', 
+    ['depends' => ['app\assets\AppAsset']]
+);
+$this->registerJsFile(
+    '/js/profile/match.js',
+    ['depends' => 'yii\web\JqueryAsset',
+    'position' => yii\web\View::POS_END
+]);
      
-
 $team1 = $model->teamF;
 $team2 = $model->teamS;
 $tournament = $model->tournament;
 $second = time() - strtotime($model->date);
-
 $user_id = false;
- if (!\Yii::$app->user->isGuest){
-    $user_id = \Yii::$app->user->identity->id;
- }
+    if (!\Yii::$app->user->isGuest){
+        $user_id = \Yii::$app->user->identity->id;
+    }
     //$user_id =12;
 ?>
 
@@ -34,9 +38,9 @@ $user_id = false;
                 <div class="col-md-12">
                     <div class="upcoming-match-info">
                         <div class="team">
-                            <div class="avatar"><a href="/reams/public/<?=$team1->id?>"><img src="<?=$team1->logo?>" alt="match-list-team-img"></a></div>
+                            <div class="avatar"><a href="<?=$team1->links() ?>"><img src="<?=$team1->logo()?>" alt="match-list-team-img"></a></div>
                             <div class="text">
-                                <a href="/teams/public/<?=$team1->id?>">
+                                <a href="<?=$team1->links() ?>">
                                     <?=$team1->name ?>
                                 </a>
                                 <span><?= $team1->game->name ?></span>
@@ -72,7 +76,7 @@ $user_id = false;
                         </div>
                         <div class="team right">
                             <div class="text">
-                                <a href="/teams/public/<?=$team2->id?>">
+                                <a href="<?=$team2->links() ?>">
                                     <?=$team2->name ?> 
                                 </a>
                                 <span><?= $team2->game->name ?></span>
@@ -92,8 +96,8 @@ $user_id = false;
                                 </div>
                             </div>
                             <div class="avatar">
-                                <a href="/teams/public/<?=$team2->id?>">
-                                    <img src="<?=$team2->logo?>" alt="match-list-team-img">
+                                <a href="<?=$team1->links() ?>">
+                                    <img src="<?=$team2->logo()?>" alt="match-list-team-img">
                                 </a>
                             </div>
                         </div>
@@ -117,9 +121,9 @@ $user_id = false;
                                 </div>
                                 <div class="col-md-7 col-sm-10">
                                     <div class="item-head-body">
-                                        <img src="<?=$team1->logo?>" width="40" height="40" alt="team-logo1">
+                                        <img src="<?=$team1->logo()?>" width="40" height="40" alt="team-logo1">
                                         <span class="vs">vs</span>
-                                        <img src="<?=$team2->logo?>" width="40" height="40" alt="team-logo2">
+                                        <img src="<?=$team2->logo()?>" width="40" height="40" alt="team-logo2">
                                         <span class="info">
                                             <span class="what">National cup - semifinal</span>
                                             <span class="then"><?=date(' d F Y / h:i ',strtotime($model->date))?>PM</span>
@@ -134,7 +138,7 @@ $user_id = false;
                                 <div class="row">
                                     <div class="col-md-10 col-md-offset-1">
                                         <div class="lineup-list">
-                                            <?php if($tournament->flag == Tournaments::TEAMS&&$tournament->game_id < 3): ?>
+                                            <?php if($tournament->game_id < 3): ?>
                                                 <?php 
                                                     $userMatchs = $model->userMatch; 
                                                     $i_count = 0;

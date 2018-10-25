@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use app\models\servises\FlagServis;
 
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
-    $this->title = 'Tournament statistics';
+    $this->title = 'Users statistics';
 ?>
 
 <div class="container">

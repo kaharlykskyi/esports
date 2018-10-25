@@ -18,7 +18,12 @@ class ResultsStatistics extends \yii\db\ActiveRecord
         return [
             [['team_id', 'victories', 'loss','game_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team_id' => 'id']],
+            [
+                ['team_id'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => Teams::className(), 
+                'targetAttribute' => ['team_id' => 'id']
+            ],
         ];
     }
 
@@ -48,6 +53,16 @@ class ResultsStatistics extends \yii\db\ActiveRecord
     {   if (!empty($this->victories)&&!empty($this->loss)) {
             return round($this->victories/$this->loss,2);
         } else {
+            return 0;
+        }
+        
+    }
+
+    public function getPercentage()
+    {  
+        if(!empty($this->victories)) {
+            return round($this->victories/($this->victories+$this->loss)*100,1);
+        } else{
             return 0;
         }
         

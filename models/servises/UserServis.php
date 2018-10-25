@@ -14,32 +14,33 @@ use app\models\Tournaments;
 use app\models\ScheduleTeams;
 use app\models\UsetTeamTournament;
 
-
 class UserServis
 {
-	public function scheduleUsers ($match,$tournament)
+	public static function scheduleUsers($match,$tournament_id)
 	{
-		$team1_users = UsetTeamTournament::findAll(['tournament_id'=>$tournament->id,'team_id'=>$match->team1]);
-        $team2_users = UsetTeamTournament::findAll(['tournament_id'=>$tournament->id,'team_id'=>$match->team2]);
+		$team1_users = UsetTeamTournament::findAll([
+            'tournament_id'=>$tournament_id,
+            'team_id'=>$match->team1
+        ]);
+        $team2_users = UsetTeamTournament::findAll([
+            'tournament_id'=>$tournament_id,
+            'team_id'=>$match->team2
+        ]);
         if ((count($team2_users) == count($team1_users))&&!empty($team2_users)) {
             shuffle($team1_users);
             shuffle($team2_users);
             $count = count($team1_users);
             for ($i=0; $i < $count; $i++) { 
                 $user_match = new UsersMatch();
-                $user_match->user1 = $team1_users[$i]->id;
-                $user_match->user2 = $team2_users[$i]->id;
-                $user_match->tournament_id = $tournament->id;
+                $user_match->user1 = $team1_users[$i]->user_id;
+                $user_match->user2 = $team2_users[$i]->user_id;
+                $user_match->tournament_id = $tournament_id;
                 $user_match->match = $match->id;
                 $user_match->round = 1;
                 $arry = [];
                 $json1 = json_decode($team1_users[$i]->text,true);
                 $json2 = json_decode($team2_users[$i]->text,true);
-                if ($tournament->game_id == 1) {
-                    $user_match->data = json_encode([$json1[1],$json2[1]]);
-                } elseif ($tournament->game_id == 2) {
-                    $user_match->data = json_encode([$json1,$json2]);
-                } 
+                $user_match->data = json_encode([$json1[1],$json2[1]]);
                 $user_match->save();
             }
         }
@@ -47,7 +48,12 @@ class UserServis
 
    public static function addTur($id,$tournament,$round)
    {
-        $user_matches = UsersMatch::findAll(['match'=>$id,'state'=>null,'tournament_id'=>$tournament,'round'=>$round]);
+        $user_matches = UsersMatch::findAll([
+            'match' => $id,
+            'state' => null,
+            'tournament_id' => $tournament,
+            'round' => $round
+        ]);
         if (empty($user_matches)) {
             return false;
         }
@@ -56,8 +62,8 @@ class UserServis
         $array_user2 = [];
         foreach ($user_matches as $user_match) {
             if(!is_numeric($user_match->results1)
-                ||!is_numeric($user_match->results2)
-                ||($user_match->results2==$user_match->results1))
+                || !is_numeric($user_match->results2)
+                || ($user_match->results2==$user_match->results1))
             {
                 return false;
             }
@@ -68,7 +74,10 @@ class UserServis
             }
         }
 
-        $result = UsersMatch::updateAll(['state' => 1], ['match'=>$id,'state'=>null,'tournament_id'=>$tournament,'round'=>$round]);
+        $result = UsersMatch::updateAll(
+            ['state' => 1], 
+            ['match'=>$id,'state'=>null,'tournament_id'=>$tournament,'round'=>$round]
+        );
 
         if ((count($array_user1) == count($array_user2))) {
             $count = count($array_user1);
@@ -95,7 +104,14 @@ class UserServis
                 $match->results2 = 1;
             }
             if ($match->save()){
-                UsersMatch::updateAll(['state' => 1], ['match'=>$id,'state'=>null,'tournament_id'=>$tournament]);
+                UsersMatch::updateAll(
+                    ['state' => 1], 
+                    [
+                        'match' => $id,
+                        'state' => null,
+                        'tournament_id' => $tournament
+                    ]
+                );
             }
         }
    }

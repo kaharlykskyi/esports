@@ -165,6 +165,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasMany(Teams::className(), ['capitan' => 'id']);
     }
 
+    public function getGameF()
+    {
+        return $this->hasOne(Games::className(), ['id' => 'favorite_game']);
+    }
+
     
     public function getMessages()
     {
@@ -201,13 +206,18 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         $image = \Yii::$app->image->load($pathFile);
         $image->background('#fff', 0);
-        $image->resize('200', '200', \yii\image\drivers\Image::INVERSE);
-        $image->crop('200','200');
+        $image->resize('400', '400', \yii\image\drivers\Image::INVERSE);
+        $image->crop('400','400');
         $image->save($pathFile);
     }
 
     public function avatar()
     {
         return $this->logo ?? '/images/profile/user_man.jpg';
+    }
+
+    public function background()
+    {
+        return $this->background ?? '/images/profile/images.jpg';
     }
 }

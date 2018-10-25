@@ -21,21 +21,21 @@
     <p class="item">
         <span class="teams-wrap">
             <span class="team">
-                <a href="/teams/public/<?=$posit_game['team1']?>">
+                <a href="<?= $posit_game->teamF->links() ?>">
                     <span>
-                        <img src="<?= $posit_game['f_logo'] ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
+                        <img src="<?= $posit_game->teamF->logo() ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'" >
                     </span>
-                    <span><?=$posit_game['f_name']?></span>
+                    <span><?=$posit_game->teamF->name?></span>
                 </a>
             </span>
             <span class="score">
-               <a href="/matches/public/<?=$posit_game['id']?>"><span><?=$posit_game['results1']??' -- ' ?>:<?=$posit_game['results2']??' -- ' ?></span></a> 
+               <a href="/matches/public/<?=$posit_game->id?>"><span><?=$posit_game['results1']??' -- ' ?>:<?=$posit_game['results2']??' -- ' ?></span></a> 
             </span>
             <span class="team1">
-                <a href="/teams/public/<?=$posit_game['team2']?>">
-                    <span><?=$posit_game['s_name']?></span>
+                <a href="<?= $posit_game->teamS->links() ?>">
+                    <span><?=$posit_game->teamS->name?></span>
                     <span>
-                        <img src="<?= $posit_game['s_logo'] ?? '/images/hockey/team-logo1.png' ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
+                        <img src="<?= $posit_game->teamS->logo() ?>" alt="team-logo" onerror="this.src = '/images/hockey/team-logo1.png'"  >
                     </span>
                 </a>
             </span>

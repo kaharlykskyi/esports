@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use app\models\servises\UserServis;
 
 class Teams extends \yii\db\ActiveRecord
 {
@@ -65,9 +66,23 @@ class Teams extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'capitan']);
     }
 
+    public function getStatistic()
+    {
+        return $this->hasOne(ResultsStatistics::className(), ['team_id' => 'id']);
+    }
+
     public function getUserTeams()
     {
         return $this->hasMany(UserTeam::className(), ['id_team' => 'id']);
+    }
+
+    public function getMatces()
+    {
+        return ScheduleTeams::find()
+            ->with(['teamS','teamF','tournament'])
+            ->where(['team1' => $this->id])
+            ->orWhere(['team2' => $this->id])
+            ->orderBy(['id' => SORT_DESC])->limit(10)->all();
     }
 
     public function coutUsers()
@@ -82,7 +97,7 @@ class Teams extends \yii\db\ActiveRecord
         if (is_null($this->single_user)) {
             return "/teams/public/{$this->id}";
         }
-        return "/users/public/{$this->id}";
+        return "/users/public/{$this->capitans->id}";
     }
 
     public function logo()

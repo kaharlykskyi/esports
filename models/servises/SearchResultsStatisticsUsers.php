@@ -14,7 +14,7 @@ class SearchResultsStatisticsUsers extends ResultsStatisticUsers
     public function rules()
     {
         return [
-            [['id','team_id','victories','loss'], 'integer'],
+            [['id','team_id','victories','loss','user_id'], 'integer'],
             ['rate','safe'],
             ['created_at','string'],
         ];
@@ -28,7 +28,7 @@ class SearchResultsStatisticsUsers extends ResultsStatisticUsers
     public function search($params,$alias)
     {
         $query = ResultsStatisticUsers::find()->with('team','user')
-            ->joinWith('game')
+            ->joinWith(['game','team','user'])
             ->where(['games.alias' => $alias]);
 
         $dataProvider = new ActiveDataProvider([
@@ -44,8 +44,14 @@ class SearchResultsStatisticsUsers extends ResultsStatisticUsers
                 ],
                 'victories',
                 'loss',
-                'user_id',
-                'team_id',
+                'team_id' => [
+                    'asc' => ['teams.name' => SORT_ASC],
+                    'desc' => ['teams.name' => SORT_DESC],
+                ],
+                'user_id' => [
+                    'asc' => ['users.name' => SORT_ASC],
+                    'desc' => ['users.name' => SORT_DESC],
+                ],
             ]
         ]);
 

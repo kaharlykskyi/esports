@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
-    $this->title = 'Tournament statistics';
+    $this->title = 'Teams statistics';
 ?>
 
 <div class="container">
@@ -44,7 +44,7 @@ use yii\helpers\Url;
 
                 [
                     'attribute' => 'rate',
-                    'label'=>'K/D Rate',
+                    'label'=>'W/L Rate',
                 ],
             ],
         ]); ?>

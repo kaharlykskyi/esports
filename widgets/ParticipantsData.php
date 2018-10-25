@@ -26,7 +26,7 @@ class ParticipantsData extends Widget
         }
         if($this->model->game_id == 2){
             if (!empty($dataJson)&&is_array($dataJson)) {
-                $this->dataPokemon($dataJson);
+                $this->dataPokemon($dataJson[1]);
             }
         }
         if($this->model->game_id == 3){
@@ -49,7 +49,9 @@ class ParticipantsData extends Widget
     {
         foreach ($datas as $data) {
             if(!empty($data['name']))  {
-                echo "<div class='block_pokemon'><img src='/images/game/{$data['icons']['.']}.png' > {$data['name']}</div>";
+                echo "<div class='block_pokemon'>
+                    <img src='/images/game/{$data['icons']['.']}.png' > 
+                    {$data['name']}</div>";
             } 
         }
     }

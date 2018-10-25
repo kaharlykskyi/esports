@@ -110,8 +110,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="main-lates-matches">
-                                <?=Schedule::widget(['turs'=> $model->getScheduleCup()])?>
-                                <?=Schedule::widget(['turs'=> $model->getScheduleLeague()])?>
+                                <?=Schedule::widget(['turs'=> $model->getScheduleLeagueModel()])?>
+                                <?=Schedule::widget(['turs'=> $model->getScheduleCupModel()])?>
                             </div>
                         </div>
                     </div>

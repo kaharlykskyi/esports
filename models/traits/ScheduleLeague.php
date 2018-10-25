@@ -2,7 +2,7 @@
 
 namespace app\models\traits;
 
-
+use yii\helpers\ArrayHelper;
 
 trait ScheduleLeague {
 
@@ -25,24 +25,46 @@ trait ScheduleLeague {
             for ($d=0; $d < $group; $d++) {
                 $group_mas = []; 
                 for ($dc=0; $dc < $this->league_g; $dc++) { 
-                    $group_mas[] = array_pop($players);
+                    $group_temp = array_pop($players);
+
+                    $group_mas[] = ArrayHelper::toArray($group_temp, [
+                        'app\models\Teams' => [
+                            'id',
+                            'name',
+                            'logo' => function ($player) {
+                            return $player->logo();
+                            },
+                        ],
+                    ]);
                 }
                 $c_block[] = $group_mas;
             }
             $this->league_table = json_encode($c_block);
             for ($i=0; $i < $group; $i++) { 
-                $players_turs = array_merge($players_turs ,$this->generateLeague($c_block[$i],$ch,($i+1)));
+                $players_turs = array_merge(
+                    $players_turs,
+                    $this->generateLeague($c_block[$i],$ch,($i+1))
+                );
             }
         }
         if (($this->format == self::LEAGUE_P) || ($this->format == self::LEAGUE)) {
             $players_turs = $this->generateLeague($players,$ch);
 
+            $players = ArrayHelper::toArray($players, [
+                'app\models\Teams' => [
+                    'id',
+                    'name',
+                    'logo' => function ($player) {
+                        return $player->logo();
+                    },
+                ],
+            ]);
             $this->league_table = json_encode($players);
         }   
 
         if ((\Yii::$app->user->identity->id == $this->user_id)) {
             
-            $this->createSchedule($players_turs,2);
+            $this->createSchedule($players_turs,3);
 
             if ( isset($this->league_p) && (($this->format == self::LEAGUE_P) || ($this->format == self::LEAGUE_G))) {
                 $cup["teams"] = [];

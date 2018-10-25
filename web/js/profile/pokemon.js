@@ -1,8 +1,8 @@
  
 $(document).ready(function(){
     let responsPokimon;
-    let arryPokemons = [];
-    let selectedPokemons = {};
+    let arryPokemons = {};
+    let strengPokemon = '';
     function searchMix () {
         let statechange = function() {
             if(this.readyState == 4) {
@@ -18,88 +18,69 @@ $(document).ready(function(){
     searchMix();
 
     $('.find-pokemon').on('click',function () {
-        $('.container_pokemons').html('');
+        $('.container_selected').html('');
         $('.block_form').slideUp();
-        arryPokemons = [];
+        $('.massage_pokemons').hide();
+        arryPokemons = {};
         const data = $('.pokemon-input').val();
         if (data.trim() == '') return;
-        searchMass(data);
+        splitStreng(data);
     });
 
+    function splitStreng(data) {
+       strengPokemon = data;
+       let arryP = [];
+       let reg = /[A-Z]+ ?-?[A-Z]+ @/ig;
+       data = data.match(reg);
+        for (let i = data.length - 1; i >= 0; i--) {
+           arryP[i] = data[i].replace(/@/gm,'').trim(' ').replace(' ','-');
+        }
+
+        if (arryP.length == 6) {
+            for (let i = arryP.length - 1; i >= 0; i--) {
+                searchMass(arryP[i]);
+            }
+        }
+        if (Object.keys(arryPokemons).length == 6) {
+            for (let i in arryPokemons) {
+                contentWriteSelected(arryPokemons[i]);
+            }
+            $('.block_form').slideDown();
+        } else {
+            $('.massage_pokemons').show();
+        }
+
+    }
+
     function searchMass (data) {
-        data = data.toLowerCase();
-        
+        data = data.toLowerCase(); 
         for (let key in responsPokimon) {
-            if(key.indexOf(data) + 1) {
+            if(key == data) {
                 let objectP = responsPokimon[key];
                 objectP.name = key;
                 arryPokemons[objectP.id] = objectP;
             }
         }
-        contentWrite(arryPokemons);
-    }
-
-    function contentWrite (data) {
-        
-        let container = $('.container_pokemons');
-        let count = data.length - 1;
-        if (count > 20) {
-            count = 20;
-        }
-        let a = 0;
-        for (let i in data) {
-            if (count == a) { return; }
-            a++;
-            let block = `<div class="block_pokemon" data-pokimon="${data[i].id}" >
-                         <img src='/images/game/${data[i].icons['.']}.png'  >${data[i].name}</div>`;
-            block = $(block).on('click',clickBlock);
-            container.append(block);
-        }
-    }
-
-    function clickBlock() {
-
-        let index = $(this).data('pokimon');
-        if (typeof arryPokemons[index] !== "undefined") {
-            if (typeof selectedPokemons[index] == "undefined" && Object.keys(selectedPokemons).length<6) {
-                selectedPokemons[arryPokemons[index].id] = arryPokemons[index];
-                contentWriteSelected(arryPokemons[index]);
-                if (Object.keys(selectedPokemons).length == 6) {
-                    $('.block_form').slideDown();
-                }
-            }
-        }
     }
 
     function contentWriteSelected (data) {
-        
+
         let container = $('.container_selected');
         let block = `<div class="block_pokemon" data-pokimon="${data.id}" >
-                    <img src='/images/game/${data.icons['.']}.png'  >${data.name}</div>`;
-        let span_rem = `<span class="glyphicon glyphicon-remove"
-                        style='color:#cc4040;top: 3px;margin-left:5px;'></span>`;
-        span_rem = $(span_rem).on('click',dellBlock);
-        block = $(block).append(span_rem);
+                     <img src='/images/game/${data.icons['.']}.png'  >${data.name}</div>`;
         container.append(block);
     }
 
-    function dellBlock() {
-        let block = $(this).parent('.block_pokemon');
-        let id = block.data('pokimon');
-        block.remove();
-        delete selectedPokemons[id];
-        $('.block_form').slideUp();
-    }
-
     $('.btn-save').on('click',function(event) {
-        let json,arry_pok;
-       if (Object.keys(selectedPokemons).length != 6) {
+        let json,arry_pok = [];
+       if (Object.keys(arryPokemons).length != 6) {
             event.preventDefault();
             return false;
         }
-        json = JSON.stringify(selectedPokemons);
+        arry_pok[0] = strengPokemon;
+        arry_pok[1] = arryPokemons;
+        json = JSON.stringify(arry_pok);
         $('.input_class_cards').val(json);
-        console.log(json);
         return true;
         event.preventDefault();
         

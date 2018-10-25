@@ -99,7 +99,7 @@
                                     <td>Sex</td>
                                     <td>
                                         <?php if ($user->sex) :?>
-                                            <?=$user->sex == 1 ? 'Male': 'Female' ?>
+                                            <?=$user->sex == 1 ? 'Male': ($user->sex == 2 ?'Female': '----') ?>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
@@ -125,8 +125,9 @@
                                 <tr>
                                     <td>Favorite game</td>
                                     <td>
-                                        <?php if ($game_favorite = app\models\Games::findOne($user->favorite_game)) :?>
-                                            <img  style="height: 25px;" src="/images/game/<?=$game_favorite->logo?>" alt="<?=$game_favorite->name;?>">  &#160;&#160;<?=$game_favorite->name;?>
+                                        <?php if ($user->gameF):?>
+                                            <img  style="height: 25px;" src="/images/game/<?=$user->gameF->logo;?>" alt="<?=$user->gameF->name;?>">  &#160;&#160;
+                                            <?=$user->gameF->name;?>
                                         <?php endif; ?>
                                     </td>
                                 </tr>        
