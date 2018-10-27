@@ -4,11 +4,10 @@ namespace app\controllers;
 
 use app\models\Tournaments;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use app\models\Teams;
 use app\models\Games;
 use app\models\User;
-use app\models\TournamentData;
+use app\models\ResultsStatisticUsers;
 use app\models\UserTeam;
 use app\models\UsersMatch;
 use app\models\TournamentTeam;
@@ -51,12 +50,12 @@ class MatchesController extends \yii\web\Controller
             throw new HttpException(404 ,'Page not found');
         }
         if(Yii::$app->request->isPost) {
-                if ($model->load(Yii::$app->request->post())) {
-                        $model->active_result = 1;
-                    if (!empty($model->results2)&&!empty($model->results1)) {
-                        $model->save();
-                    }
-                }   
+            if ($model->load(Yii::$app->request->post())) {
+                $model->active_result = 1;
+                if (!empty($model->results2)&&!empty($model->results1)) {
+                    $model->save();
+                }
+            }   
             return $this->refresh();
         }
         return $this->render('index',compact('model'));
@@ -70,7 +69,8 @@ class MatchesController extends \yii\web\Controller
                 if ((isset($match['results2'])) && (isset($match['results1']))) {
                     if(is_numeric($match['results2']) && is_numeric($match['results1'])) {
                         if ($match['results2'] != $match['results1']) {
-                            $user_team = UsersMatch::findOne($match['id']);
+                            $user_team = UsersMatch::find()->with(['matche','tournament'])
+                                ->where(['id' => $match['id']])->one();
                             $user_team->results1 = $match['results1'];
                             $user_team->results2 = $match['results2'];
                             $user_team->save();

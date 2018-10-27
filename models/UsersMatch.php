@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\ResultsStatisticUsers;
 use Yii;
 
 class UsersMatch extends \yii\db\ActiveRecord
@@ -38,6 +39,15 @@ class UsersMatch extends \yii\db\ActiveRecord
             'round' => 'Round',
             'data' => 'Data',
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    { 
+        if (!$insert) {
+            ResultsStatisticUsers::addStatistic($this);
+        }
+        
+        parent::afterSave($insert, $changedAttributes);
     }
 
     public function getMatche()

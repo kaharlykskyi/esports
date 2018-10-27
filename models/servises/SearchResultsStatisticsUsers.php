@@ -36,7 +36,7 @@ class SearchResultsStatisticsUsers extends ResultsStatisticUsers
             'pagination' => [ 'pageSize' => 10 ],
         ]);
         $dataProvider->setSort([
-            'defaultOrder' => ['rate'=>SORT_DESC],
+            'defaultOrder' => ['rate'=>SORT_ASC],
             'attributes'=>[
                 'rate'=>[
                     'asc' => ['`victories`/`loss`' => SORT_ASC,],
