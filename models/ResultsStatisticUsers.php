@@ -12,10 +12,11 @@ class ResultsStatisticUsers extends \yii\db\ActiveRecord
         return 'results_statistic_users';
     }
 
+   
     public function rules()
     {
         return [
-            [['user_id', 'team_id', 'victories', 'loss','game_id'], 'integer'],
+            [['user_id', 'team_id', 'victories', 'loss','game_id','rate'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -23,18 +24,11 @@ class ResultsStatisticUsers extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function beforeSave($insert)
     {
-        return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'team_id' => 'Team ID',
-            'victories' => 'Victories',
-            'loss' => 'Loss',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-        ];
-    }
+        if (!parent::beforeSave($insert)) return false;
+        $this->rateUpdate();
+    } 
 
     public function getTeam()
     {
@@ -97,13 +91,38 @@ class ResultsStatisticUsers extends \yii\db\ActiveRecord
 
     }
 
-    public function getRate()
-    {   if (!empty($this->victories)&&!empty($this->loss)) {
-            return round($this->victories/$this->loss,2);
-        } elseif(empty($this->loss)) {
-            return $this->victories;
+    public static function addSingleResults($match, $team, $flag)
+    {
+        if($flag) {
+            $pole = 'victories';
         } else {
-            return 0;
+            $pole = 'loss';
+        }
+        $model = self::find()
+            ->where([ 
+                'user_id' => $team->capitan,
+                'team_id' => $team->id, 
+                'game_id' => $match->tournament->game_id,
+            ])->one();
+
+        if(!is_object($model)) {
+            $model = new self();
+            $model->team_id = $team->id;
+            $model->game_id = $match->tournament->game_id;
+        }
+
+        $model->$pole = $model->$pole+1;
+        $model->save();
+
+    }
+
+    private function rateUpdate()
+    {   if (!empty($this->victories)&&!empty($this->loss)) {
+            $this->rate = round($this->victories/$this->loss,2);
+        } elseif(empty($this->loss)) {
+            $this->rate = $this->victories;
+        } else {
+            $this->rate =  0;
         }
         
     }

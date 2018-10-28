@@ -29,7 +29,8 @@ use app\models\servises\FlagServis;
                     'label' => 'User',
                     'content' => function($data) {
                         $flag_src = FlagServis::getLinkFlag($data->user->country);
-                        return "<a href='/' ><img src= '{$flag_src}' style='height:28px;'>  {$data->user->name}</a>";
+                        return "<a href='/' ><img src= '{$flag_src}' 
+                                style='height:28px;'>  {$data->user->name}</a>";
                     }
                 ],
 

@@ -16,7 +16,7 @@ class ResultsStatistics extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['team_id', 'victories', 'loss','game_id'], 'integer'],
+            [['team_id', 'victories', 'loss','game_id','rate'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [
                 ['team_id'], 'exist', 
@@ -27,17 +27,11 @@ class ResultsStatistics extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function beforeSave($insert)
     {
-        return [
-            'id' => 'ID',
-            'team_id' => 'Team ID',
-            'victories' => 'Victories',
-            'loss' => 'Loss',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-        ];
-    }
+        if (!parent::beforeSave($insert)) return false;
+        $this->rateUpdate();
+    } 
 
     public function getTeam()
     {
@@ -49,22 +43,68 @@ class ResultsStatistics extends \yii\db\ActiveRecord
         return $this->hasOne(Games::className(), ['id' => 'game_id']);
     }
 
-    public function getRate()
+    private function rateUpdate()
     {   if (!empty($this->victories)&&!empty($this->loss)) {
-            return round($this->victories/$this->loss,2);
+            $this->rate = round($this->victories/$this->loss,2);
+        } elseif(empty($this->loss)) {
+            $this->rate = $this->victories;
         } else {
-            return 0;
+            $this->rate =  0;
         }
-        
     }
 
     public function getPercentage()
     {  
         if(!empty($this->victories)) {
             return round($this->victories/($this->victories+$this->loss)*100,1);
-        } else{
+        } else {
             return 0;
         }
-        
+    }
+
+    public static function addStatistic($match)
+    {
+        if($match->results1 > $match->results2) {
+            self::addResults($match, $match->teamS, true);
+            self::addResults($match, $match->teamF, false);
+        } elseif($match->results1 < $match->results2) {
+            self::addResults($match, $match->teamS, false);
+            self::addResults($match, $match->teamF, true);
+        } else {
+            return;
+        }
+    }
+
+    private static function addResults($match, $team, $flag)
+    {
+        if (!is_null($team->single_user)) {
+            if ($match->tournament->game_id < 3) {
+               return;
+            }
+            ResultsStatisticUsers::addSingleResults($match, $team, $flag);
+            return;
+        }
+
+        if($flag) {
+            $pole = 'victories';
+        } else {
+            $pole = 'loss';
+        }
+
+        $model = self::find()
+            ->where([ 
+                'team_id' => $team->id, 
+                'game_id' => $match->tournament->game_id,
+            ])->one();
+
+        if(!is_object($model)) {
+            $model = new self();
+            $model->team_id = $team->id;
+            $model->game_id = $match->tournament->game_id;
+        }
+
+        $model->$pole = $model->$pole+1;
+        $model->save();
+
     }
 }

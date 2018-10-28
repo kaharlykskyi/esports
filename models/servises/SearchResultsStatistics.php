@@ -14,7 +14,7 @@ class SearchResultsStatistics extends ResultsStatistics
     public function rules()
     {
         return [
-            [['id','team_id','victories','loss'], 'integer'],
+            [['id','team_id','victories','loss','rate'], 'integer'],
             ['rate','safe'],
             ['created_at','string'],
         ];
@@ -36,12 +36,9 @@ class SearchResultsStatistics extends ResultsStatistics
             'pagination' => [ 'pageSize' => 10 ],
         ]);
         $dataProvider->setSort([
-            'defaultOrder' => ['rate'=>SORT_DESC],
+            'defaultOrder' => ['rate' => SORT_DESC],
             'attributes'=>[
-                'rate'=>[
-                    'asc' => ['`victories`/`loss`' => SORT_ASC,],
-                    'desc' => ['`victories`/`loss`' =>  SORT_DESC],
-                ],
+                'rate',
                 'victories',
                 'team_id' => [
                     'asc' => ['teams.name' => SORT_ASC],

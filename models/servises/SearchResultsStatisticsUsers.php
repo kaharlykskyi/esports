@@ -27,21 +27,20 @@ class SearchResultsStatisticsUsers extends ResultsStatisticUsers
 
     public function search($params,$alias)
     {
-        $query = ResultsStatisticUsers::find()->with('team','user')
+        $query = ResultsStatisticUsers::find()
+            //->with(['team','user'])
             ->joinWith(['game','team','user'])
             ->where(['games.alias' => $alias]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [ 'pageSize' => 10 ],
+            'pagination' => ['pageSize' => 10 ],
         ]);
+
         $dataProvider->setSort([
-            'defaultOrder' => ['rate'=>SORT_ASC],
+            'defaultOrder' => ['rate' => SORT_DESC],
             'attributes'=>[
-                'rate'=>[
-                    'asc' => ['`victories`/`loss`' => SORT_ASC,],
-                    'desc' => ['`victories`/`loss`' =>  SORT_DESC],
-                ],
+                'rate',
                 'victories',
                 'loss',
                 'team_id' => [
@@ -60,10 +59,6 @@ class SearchResultsStatisticsUsers extends ResultsStatisticUsers
         if (!$this->validate()) {
             return $dataProvider;
         }
-
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
 
         $query->andFilterWhere(['like', 'created_at', $this->created_at]);
 

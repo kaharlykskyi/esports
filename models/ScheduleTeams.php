@@ -51,6 +51,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             }     
         } else {
             $this->addMatch();
+            ResultsStatistics::addStatistic($this);
         }
         
         parent::afterSave($insert, $changedAttributes);
