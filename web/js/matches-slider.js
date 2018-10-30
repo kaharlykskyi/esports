@@ -17,9 +17,6 @@
             throw new Error('MatchesSlider: Slider element not found');
         }
         
-        /**
-         * Resize slider for full height
-         */
         var match_slider_resize = function () {
             var top = $slider.offset().top;
             var max_height = $(window).height() - top;

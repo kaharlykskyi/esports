@@ -91,3 +91,13 @@
     color: #fff;
 }
 
+
+.news-list .item .info .name {
+    padding-top: 12px;
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #141414;
+    line-height: normal;
+}
+

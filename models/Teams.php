@@ -97,7 +97,7 @@ class Teams extends \yii\db\ActiveRecord
         if (is_null($this->single_user)) {
             return "/teams/public/{$this->id}";
         }
-        return "/users/public/{$this->capitans->id}";
+        return "/user/public/{$this->capitans->id}";
     }
 
     public function logo()

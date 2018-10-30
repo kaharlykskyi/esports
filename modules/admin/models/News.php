@@ -62,8 +62,8 @@ class News extends \yii\db\ActiveRecord
     {
         $image = \Yii::$app->image->load($pathFile);
         $image->background('#fff', 0);
-        $image->resize('400', '200', \yii\image\drivers\Image::INVERSE);
-        $image->crop('400','200');
+        $image->resize('600', '300', \yii\image\drivers\Image::INVERSE);
+        $image->crop('600','300');
         $image->save($pathFile);
     }
 }

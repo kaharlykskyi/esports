@@ -13,8 +13,10 @@ trait ScheduleCup {
         $teams_p = $array_cub['teams'];
         $start_r = count($teams_p);
         $tek_r = count($results);
-        $a = $start_r/($tek_r*2);
+
+        $a = $start_r/($tek_r);
         $tur = array_search($a, $array_tur)+1;
+
         $result_arry = array_fill(0,($tek_r*2),0);
         $ids = [];
         foreach ($teams_p as $teams) {
@@ -22,17 +24,18 @@ trait ScheduleCup {
         }
         $count_team = count($ids);
         for ($i=0; $i < $count_team; $i++) { 
-            if (in_array($ids[$i],$results)) {
+            if (in_array($ids[$i], $results)) {
                $b = ceil(($i+1)/$tur);
                $result_arry[$b-1] = 1;
             }
         }
-       // print_r($result_arry);exit;
+
         $result_arry = array_chunk($result_arry, 2);
         if (empty($array_cub['results'])) {
            $array_cub['results'] = [];
         }
-        $array_cub['results'][] = $result_arry;
+
+        $array_cub['results'][$tur-1] = $result_arry;
 
         $this->cup = json_encode($array_cub);
         $this->save();

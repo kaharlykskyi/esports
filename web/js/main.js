@@ -116,19 +116,6 @@
             $(".featured-products").teamProductSlider();
         }
 
-        /**
-         * Init Bootstrap tabs navigation events listener
-         * @deps: bootstrap.js
-         * @html: ./html-component/standings.html
-         *        ./html-component/championship_navigation.html
-         *        ./html-component/amateurs_match_schedule.html
-         *        ./html-component/amateurs_news_list.html
-         *        ./html-component/best_players.html
-         *        ./html-component/main_store_container.html
-         *        ./html-component/next_matc_score.html
-         *        ./html-component/player_statistic_slider.html
-         *        ./html-component/players_slider.html
-         */
         $('.champ-navigation li a, .tab-filters li a, .player-filters li a').on('click', function (e) {
 
             if ($(e.target).is('a')) {
@@ -148,120 +135,13 @@
          */
         $('.basic').fancySelect();
 
-        /**
-         * Init circle-bar statistic elements
-         * @html: ./html-component/player_single_wrap.html 
-         *        ./html-component/organisation_header.html
-         * @js: ./js/circle-bar.js     
-         */
+   
         if ($(".circle-bar").length > 0) {
             $(".circle-bar").each(function () {
                 $(this).teamCircleBar();
             });
         }
 
-        /**
-         * Init standing brackets
-         * @html: ./html-component/standings.html
-         * @js: ./js/standings.js
-         * @see [http://www.aropupu.fi/bracket/]
-         */
-        // if ($('#qualification').length > 0) {
-
-        //     $('#qualification').teamStandings({
-        //         teams: [
-
-        //             ["Team 1", "Team 2"],
-        //             ["Team 3", "Team 4"],
-        //             ["Team 8", "Team 5"],
-        //             ["Team 6", "Team 7"]
-        //         ],
-        //         results: [
-        //             [[3, 2], [3, 4], [4, 5], [1, 0]],
-        //             [[4, 6], [2, 1]]
-        //         ]
-        //     });
-        // }
-
-        // /**
-        //  * Init standing brackets
-        //  * @html: ./html-component/standings.html 
-        //  * @js: ./js/standings.js
-        //  * @see [http://www.aropupu.fi/bracket/]
-        //  */
-        // if ($('#quarterfinal').length > 0) {
-
-        //     $('#quarterfinal').teamStandings({
-        //         teams: [
-        //             ["Team 4", "Team 5"],
-        //             ["CSA", "NFTA"],
-        //             ["Team 2 Pandas", "Heart of Willem"],
-        //             ["CSA", "Inverness"]
-        //         ],
-        //         results: [
-        //             [[3, 5], [2, 4], [8, 3], [2, 1]],
-        //             [[4, 6], [7, 3]],
-        //             [[2, 1]]
-        //         ]
-        //     });
-        // }
-
-        // *
-        //  * Init standing brackets
-        //  * @html: ./html-component/standings.html 
-        //  * @js: ./js/standings.js
-        //  * @see [http://www.aropupu.fi/bracket/]
-         
-        // if ($('#semifinal').length > 0) {
-
-        //     $('#semifinal').teamStandings({
-        //         teams: [
-        //             ["Team 3", "Team 4"],
-        //             ["Team 1", "Team 2"],
-        //             ["Team 6", "Team 7"],
-        //             ["Team 8", "Team 5"]
-        //         ],
-        //         results: [
-        //             [[3, 2], [8, 1], [2, 3], [2, 1]],
-        //             [[4, 6], [3, 2]]
-        //         ]
-        //     });
-        // }
-
-        // /**
-        //  * Init standing brackets
-        //  * @html: ./html-component/standings.html 
-        //  * @js: ./js/standings.js
-        //  * @see [http://www.aropupu.fi/bracket/]
-        //  */
-        // if ($('#final').length > 0) {
-
-        //     $('#final').teamStandings({
-        //         teams: [
-        //             ["Team 1", "Team 2"],
-        //             ["Team 6", "Team 7"]
-        //         ],
-        //         results: [
-        //             [[4, 6], [2, 1]],
-        //             [[2, 1]]
-        //         ]
-        //     });
-        // }
-
-        // /**
-        //  * Init standing brackets
-        //  * @js: ./js/shop-price-filter.js
-        //  * @usage: ./store.html
-        //  */
-        // if ($('.filter-slider').length > 0) {
-        //     $('.filter-slider').teamShopPriceFilter();
-        // }
-
-        /**
-         * Init store filters event listener
-         * @deps: checkbox.css
-         * @usage: ./store.html
-         */
         $('.filter-items-wrap .filter-title').on('click', function () {
             $(this).toggleClass('active');
             $(this).next().toggle('slow');
@@ -281,11 +161,6 @@
             $(window).on('scroll', scroll_listener);
         }
 
-        /**
-         * Init and configuration timeseries graphs
-         * @js: ./js/timeseries.js.js
-         * @usage: ./html-components/club_main_stat.html
-         */
         if ($('#attack-per-game').length > 0) {
 
             $('#attack-per-game').teamGraphTimeseries(

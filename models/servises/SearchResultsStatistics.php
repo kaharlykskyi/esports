@@ -29,7 +29,7 @@ class SearchResultsStatistics extends ResultsStatistics
     {
         $query = ResultsStatistics::find()->with('team')
             ->joinWith(['game','team'])
-            ->where(['games.alias' => $alias]);
+            ->where(['games.alias' => $alias,'teams.single_user'=>null]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

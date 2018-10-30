@@ -8,8 +8,10 @@ use app\models\servises\SearchResultsStatistics;
 use app\models\servises\SearchResultsStatisticsUsers;
 use app\models\Teams;
 use app\models\Games;
+use app\modules\admin\models\News;
 use yii\web\HttpException;
 use Yii;
+use yii\data\Pagination;
 
 class StatisticController extends \yii\web\Controller
 {
@@ -25,8 +27,8 @@ class StatisticController extends \yii\web\Controller
     {
         $this->hasGame($alias);
         $searchModel = new SearchResultsStatisticsUsers();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$alias);     
-        return $this->render('users_results',compact('dataProvider','searchModel'));
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$alias);
+        return $this->render('users_results', compact('dataProvider','searchModel'));
     }
 
     private function hasGame($alias) 

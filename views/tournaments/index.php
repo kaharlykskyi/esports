@@ -111,7 +111,7 @@
                         <div class="col-sm-12">
                             <div class="main-lates-matches">
                                 <?=Schedule::widget(['turs'=> $model->getScheduleLeagueModel()])?>
-                                <?=Schedule::widget(['turs'=> $model->getScheduleCupModel()])?>
+                                <?=Schedule::widget(['turs'=> $model->getScheduleCupModel($model->format)])?>
                             </div>
                         </div>
                     </div>

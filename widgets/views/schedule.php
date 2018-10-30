@@ -1,11 +1,12 @@
 <div class="col-md-12">
     <?php $i = 0; $g = 0; foreach ($turs as $posit_game): ?>
     <?php if(($g != $posit_game['group'])&& !is_null($posit_game['group'])): ?>
-        <h4 style="text-align: center;">
-            GROUP 
+        <h4 style="text-align: center;"> 
             <?php 
-                echo $posit_game['group']; 
+                $wiget->group($posit_game);
+                //echo $posit_game['group']; 
                 $g = $posit_game['group'];
+                $i = 0;
             ?>
         </h4>
     <?php endif; ?>

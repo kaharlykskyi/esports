@@ -1,7 +1,5 @@
 <?php
 
-/* @var $this yii\web\View */
-
 $this->title = 'eSport';
 ?>
 <div class="main-slider-section">

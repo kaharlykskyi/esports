@@ -47,7 +47,6 @@ class ResultsStatisticUsers extends \yii\db\ActiveRecord
 
     public static function addStatistic($user_match)
     {
-
         if($user_match->results1 > $user_match->results2) {
             self::addResults($user_match, $user_match->user1, true);
             self::addResults($user_match, $user_match->user2, false);

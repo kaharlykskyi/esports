@@ -125,7 +125,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         if ($this->format == 1) {
             $this->addMatchSingle();
         } elseif ($this->format == 2) {
-            $d;
+            $this->addMatchDuble();
         } elseif ($this->format == 3) {
             $l;
         }    
@@ -137,8 +137,96 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             'tournament_id'=>$this->tournament_id,
             'tur'=>$this->tur,
         ])->all();
+        $result = $this->winAndLoss($matches);
+        if (!$result) {
+            return false;
+        }
+        $this->writeStringTable($result[0],1,($this->tur + 1));
+        if (!empty($result[0])) {
+            $this->tournament->addCupSingle($result[0]);
+        }
+       
+    }
+
+    private function addMatchDuble()
+    {
+        if ($this->tur==1 && $this->group==1) {
+            $matches = self::find()->where([
+                'tournament_id'=>$this->tournament_id,
+                'tur'=>1,
+                'group' => 1,
+            ])->all();
+            $result = $this->winAndLoss($matches);
+            if (!$result) {
+                return false;
+            }
+            $this->writeStringTable($result[0], 2, ($this->tur + 1), 1);
+            $this->writeStringTable($result[1], 2, 1, 2);
+        } elseif(($this->group==1 && $this->group >1)|| $this->group==2 ) {
+
+            if ($this->group ==1) {
+                $tur_winner = $this->tur;
+                $tur_losers = (($this->tur-2)*2)+1;
+            } elseif ($this->group == 2) {
+                $tur_winner = ($this->tur-1)/2+2;
+                $tur_losers = $this->tur;
+            }
+
+            $matches_win = self::find()->where([
+                'tournament_id '=> $this->tournament_id,
+                'tur' => $tur_winner,
+                'group' => 1,
+            ])->all();
+
+            $matches_los = self::find()->where([
+                'tournament_id '=> $this->tournament_id,
+                'tur' => $tur_losers,
+                'group' => 2,
+            ])->all();
+
+            $result_win = $this->winAndLoss($matches_win);
+            $result_los = $this->winAndLoss($matches_los);
+            if (!$result_win||!$result_los) {
+                return false;
+            }
+
+
+        // } elseif ($this->group==3) {
+        //     if ($this->tur%==0) {
+        //        # code...
+        //     } else {
+
+        //     }
+         }
+      
+    }
+
+    private function writeStringTable($players,$format,$tur,$group=null)
+    {
+        $winner = $players;
+        $count = count($winner);
+        if ($count%2==0&&$count>0) {
+            $count = $count/2;
+            for ($i=0; $i < $count; $i++) { 
+                $new_mathc = new self();
+                $winer1 = array_pop($winner);
+                $winer2 = array_pop($winner);
+                $new_mathc->team1 = $winer1;
+                $new_mathc->team2 = $winer2;
+                $new_mathc->tur = $tur;
+                $new_mathc->tournament_id = $this->tournament_id;
+                $new_mathc->format = $format;
+                $new_mathc->group = $group;
+                $new_mathc->date = $this->date;
+                $new_mathc->save();
+            }
+        }
+    }
+
+    private function winAndLoss($matches)
+    {
         $winner = [];
-        //$loser = [];
+        $loser = [];
         foreach ($matches as $match) {
             if(!is_numeric($match->results1)
                 || !is_numeric($match->results2)
@@ -148,31 +236,15 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             }
             if ($match->results1 > $match->results2) {
                 $winner[] = $match->team1;
+                $loser[] = $match->team2;
             } elseif ($match->results1 < $match->results2) {
                 $winner[] = $match->team2;
+                $loser[] = $match->team1;
             }
         }
-        $count = count($winner);
-        $winner_cup = $winner;
-        if ($count%2==0&&$count>0) {
-            $count = $count/2;
-            for ($i=0; $i < $count; $i++) { 
-                $new_mathc = new self();
-                $winer1 = array_pop($winner);
-                $winer2 = array_pop($winner);
-                $new_mathc->team1 = $winer1;
-                $new_mathc->team2 = $winer2;
-                $new_mathc->tur = ($this->tur + 1);
-                $new_mathc->tournament_id = $this->tournament_id;
-                $new_mathc->format = 1;
-                $new_mathc->date = $this->date;
-                $new_mathc->save();
-            }
-        }
-        if (!empty($winner_cup)) {
-            $this->tournament->addCupSingle($winner_cup);
-        }
-       
+
+        return [array_reverse($winner),array_reverse($loser)];
     }
+
 
 }

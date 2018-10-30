@@ -287,7 +287,7 @@ class AjaxController extends \yii\web\Controller
             ->from('teams')->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
             ->leftJoin('tournament_team', '`tournament_team`.`team_id` = `teams`.`id`')
             ->where(['games.id'=> $id_game])
-            ->andWhere(['!=','teams.capitan',Yii::$app->user->identity->id])
+            //->andWhere(['!=','teams.capitan',Yii::$app->user->identity->id])
             ->andWhere(['LIKE', 'teams.name', $post['search']])
             ->andWhere(['tournament_team.status' => null])
             ->limit(50)->all();

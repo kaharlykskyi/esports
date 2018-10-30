@@ -10,8 +10,17 @@ class Schedule extends Widget
 
     public function run()
     {
-        $turs = $this->turs;
-        return $this->render('schedule',compact('turs'));
+        return $this->render('schedule',['turs'=>$this->turs,'wiget'=>$this]);
         
+    }
+
+    public function group($posit_game)
+    {
+    	$arra_cub = ['Winners','Losers','Final'];
+    	if ($posit_game->format == 2 ) {
+    		echo $arra_cub[$posit_game->group-1];
+    	} else {
+    		echo "GROUP {$posit_game->group}";
+    	}
     }
 }

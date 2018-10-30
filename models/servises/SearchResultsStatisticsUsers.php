@@ -28,7 +28,6 @@ class SearchResultsStatisticsUsers extends ResultsStatisticUsers
     public function search($params,$alias)
     {
         $query = ResultsStatisticUsers::find()
-            //->with(['team','user'])
             ->joinWith(['game','team','user'])
             ->where(['games.alias' => $alias]);
 

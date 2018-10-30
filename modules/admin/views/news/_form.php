@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\tinymce\TinyMce;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use app\modules\admin\models\NewsCategory;
 $this->registerCssFile('/dropify/dist/css/dropify.css');
 $this->registerJsFile('/dropify/dist/js/dropify.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
@@ -45,12 +46,12 @@ $this->registerJs($script, yii\web\View::POS_END);
                         ['prompt' => 'Select a category','options' =>[ $model->category_id => ['Selected' => true]]
                     ])->label('Category')?>
 
-                    <?=$form->field($model, 'logo_file')->fileInput(['class' => 'dropify','data-height'=>"200",'data-allowed-file-extensions'=>"jpg png jepg gif"]) ?>
+                    <?=$form->field($model, 'logo_file')->fileInput(['class' => 'dropify','data-height'=>"200",'data-allowed-file-extensions'=>"jpg png jpeg gif"]) ?>
                     <?= $form->field($model, 'description')->widget(TinyMce::className(), [
                         'options' => ['rows' => 12],
                         'language' => 'en',
                         'clientOptions' => [
-                            'images_upload_url'=> '/admin/ajax/file-upload',
+                            'images_upload_url'=> Url::to(['/admin/ajax/file-upload']),//'/admin/ajax/file-upload',
                             'plugins' => [
                                 "image",
                                 'advlist autolink lists link charmap  print hr preview pagebreak',

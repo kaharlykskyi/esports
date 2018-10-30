@@ -3,15 +3,19 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 use app\models\servises\FlagServis;
+use yii\widgets\Pjax;
 
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
-    $this->title = 'Users statistics';
+    $this->title = 'News';
 ?>
+
 
 <div class="container">
     <h3 style="text-align: center;" >Users statistics</h3>
     <div class="box-body">
+        <?php Pjax::begin(); ?>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'summary' => false,
@@ -29,34 +33,34 @@ use app\models\servises\FlagServis;
                     'label' => 'User',
                     'content' => function($data) {
                         $flag_src = FlagServis::getLinkFlag($data->user->country);
-                        return "<a href='/' ><img src= '{$flag_src}' 
+                        return "<a href='/user/public/{$data->user->id}' ><img src= '{$flag_src}' 
                                 style='height:28px;'>  {$data->user->name}</a>";
                     }
                 ],
-
                 [
                     'attribute' => 'team_id',
                     'label' => 'Team',
                     'content' => function($data) {
+                        if (!is_null($data->team->single_user)) {
+                            return '----';
+                        }
                         return "<a href='{$data->team->links()}' ><img src= '{$data->team->logo()}' style='height:28px;'>  {$data->team->name}</a>";
                     }
                 ],
-
                 [
                     'attribute' => 'victories',
                     'label' => 'victories',
                 ],
-
                 [
                     'attribute' => 'loss',
                     'label' => 'loss',
                 ],
-
                 [
                     'attribute' => 'rate',
                     'label'=>'W/L RATE',
                 ],
             ],
         ]); ?>
+        <?php Pjax::end(); ?>
     </div>
 </div>
