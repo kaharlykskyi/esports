@@ -205,19 +205,23 @@ class AjaxController extends \yii\web\Controller
             ->where(['LIKE', 'users.name', $post['input']])->andWhere(['user_team.status' => UserTeam::ACCEPTED]);
        
         $teams = (new \yii\db\Query())
-            ->select(['teams.name','teams.logo','teams.id','teams.created_at', 'games.name as g_name',
+            ->select(['teams.name','teams.logo','teams.slug',
+                'teams.id','teams.created_at', 'games.name as g_name',
             '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) as c_user'])
             ->from('teams')->leftJoin('games','games.id = teams.game_id')
             ->leftJoin('user_team', '`user_team`.`id_team` = `teams`.`id`')
             ->where(['LIKE', 'teams.name', $post['input']])
+            ->andWhere(['teams.single_user' => null])
             ->orWhere(['in', 'user_team.id_user', $userst])
-            //->andWhere(['user_team.status' => 2])
+            ->andWhere(['teams.single_user' => null])
             ->groupBy(['teams.name'])
             ->limit(18)
             ->all();
 
         $users_m = (new \yii\db\Query())
-            ->select(['users.id','users.name','users.created_at','teams.name as t_name','teams.id as t_id','user_team.status as t_status'])
+            ->select(['users.id','users.name','users.created_at','users.logo',
+                'teams.name as t_name','teams.slug',
+                'teams.id as t_id','user_team.status as t_status'])
             ->from('users')
             ->leftJoin('user_team', '`user_team`.`id_user` = `users`.`id`')
             ->leftJoin('teams', '`teams`.`id` = `user_team`.`id_team`')
@@ -242,12 +246,25 @@ class AjaxController extends \yii\web\Controller
         foreach ($users_m as $user) {
             if (array_key_exists($user['id'], $user_mass)) {
                 if (isset($user['t_id'])&&$user['t_status'] == UserTeam::ACCEPTED) {
-                    $user_mass[$user['id']]['teams'][] = ['name'=>$user['t_name'],'id'=>$user['t_id'],];
+                    $user_mass[$user['id']]['teams'][] = [
+                        'name' => $user['t_name'],
+                        'id' => $user['t_id'],
+                        'slug' => $user['slug'],
+                    ];
                 }
             } else {
-                $user_mass[$user['id']] = ['name'=>$user['name'],'id'=>$user['id'],'created_at'=>substr($user['created_at'],0,10),];
+                $user_mass[$user['id']] = [
+                    'name' => $user['name'],
+                    'id' => $user['id'],
+                    'logo'=> $user['logo'],
+                    'created_at'=>substr($user['created_at'],0,10),
+                ];
                 if (isset($user['t_id'])&&$user['t_status'] == UserTeam::ACCEPTED) {
-                    $user_mass[$user['id']]['teams'][] = ['name'=>$user['t_name'],'id'=>$user['t_id'],];
+                    $user_mass[$user['id']]['teams'][] = [
+                        'name'=>$user['t_name'],
+                        'id'=>$user['t_id'],
+                        'slug' => $user['slug'],
+                    ];
                 } 
             } 
         }
@@ -258,13 +275,12 @@ class AjaxController extends \yii\web\Controller
         if (empty($arry_search['users']) && empty($arry_search['teams']) && empty($arry_search['tournaments'])) {
             $arry_search = ['not' => true];
         }
-           
         return $arry_search;
     }
 
     public function actionGetTeamsPlayers() {
-        $post = Yii::$app->request->post();
 
+        $post = Yii::$app->request->post();
         $tournament = Tournaments::findOne($post['tournament_id']);
         $id_game  = $tournament->game_id;
         $flag = (int)$post['flag'];
@@ -272,25 +288,50 @@ class AjaxController extends \yii\web\Controller
         $users = [];
 
         if((Tournaments::USERS == $flag) || (Tournaments::MIXED == $flag)) {
-            $users = (new \yii\db\Query())->select(['users.id','users.name','users.username'])->from('users')
+            $users_in_teams = (new \yii\db\Query())
+                ->select(['users.id'])->from('users')
+                ->innerJoin('user_team', '`user_team`.`id_user` = `users`.`id`')
+                ->innerJoin('teams', '`teams`.`id` = `user_team`.`id_team`')
+                ->where([ 'user_team.status' => UserTeam::ACCEPTED ])
+                ->andWhere(['!=','teams.game_id', $tournament->game_id]);
+            $users_qery = (new \yii\db\Query())
+                ->select(['users.id','users.name','users.username'])
+                ->from('users')
                 ->leftJoin('tournament_user', '`tournament_user`.`user_id` = `users`.`id`')
-                ->where(['LIKE', 'name', $post['search']])
-                ->andWhere(['!=', 'users.id', $tournament->user_id])
-                ->andWhere(['tournament_user.status' => null])
-                //->andWhere(['!=','tournament_user.status', UserTeam::ACCEPTED])
-                ->limit(50)->all();
+                ->leftJoin('tournaments','`tournaments`.`id`=`tournament_user`.`tournament_id`')
+                ->where(['not in', 'users.id', $users_in_teams])
+                ->andWhere(['LIKE', 'users.name', $post['search']])
+                ->andWhere(['>', 'users.fair_play', 79]);
+            $users_qery1 = clone $users_qery;
+            $users_qery1 = $users_qery1->andWhere(['tournament_user.status' => null]);
+            $users_qery2 = $users_qery->andWhere(['!=','tournaments.game_id', $tournament->game_id]);
+            $users = $users_qery1->union($users_qery2)->limit(25)->orderBy(['users.name' => SORT_ASC])->all();
         } 
 
         if((Tournaments::TEAMS == $flag) || (Tournaments::MIXED == $flag)) {
-            $teams = (new \yii\db\Query())->select(['teams.id','teams.name','games.name as g_name','teams.logo','teams.capitan',
-               '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) as c_user'])
-            ->from('teams')->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
+            $teams = (new \yii\db\Query())->select([
+                'teams.id','teams.name',
+                'games.name as g_name',
+                'teams.logo','teams.capitan',
+                '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) as c_user'
+            ])->from('teams')
+            ->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
             ->leftJoin('tournament_team', '`tournament_team`.`team_id` = `teams`.`id`')
             ->where(['games.id'=> $id_game])
-            //->andWhere(['!=','teams.capitan',Yii::$app->user->identity->id])
+            ->andWhere(['>=',
+                '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' )',
+                $tournament->max_players
+            ])
             ->andWhere(['LIKE', 'teams.name', $post['search']])
-            ->andWhere(['tournament_team.status' => null])
-            ->limit(50)->all();
+            ->andWhere(['!=', 'tournament_team.tournament_id', $tournament->id])
+            ->orWhere(['tournament_team.status' => null])
+            ->andWhere(['LIKE', 'teams.name', $post['search']])
+            ->andWhere(['games.id'=> $id_game])
+            ->andWhere(['>=',
+                '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' )',
+                $tournament->max_players
+            ])
+            ->groupBy(['teams.id'])->limit(25)->all();
         } 
        
         $response['users'] = $users;

@@ -122,6 +122,10 @@ class TournamentsController extends \yii\web\Controller
                 ->where(['tournament_id'=> $tournament->id])
                 ->andWhere(['tokin' => $tokin,'team_id' => $team,'status' => TournamentTeam::SENT])
                 ->one();
+
+            if (!is_object($model)) {
+                throw new HttpException(404 ,'Page not found');
+            }
             $team_model = Teams::find()->where(['id'=> $model->team_id])->one();
             if (!is_object($team_model)) {
                 throw new HttpException(404 ,'Page not found');
@@ -153,13 +157,15 @@ class TournamentsController extends \yii\web\Controller
 
             } elseif (isset($post['ACCEPT'])) {
                 $count = count($post['uset_team_tournament']);
-                if ( $count==$tournament->max_players ) {
+                if ( $count == $tournament->max_players ) {
                     $model->status = 2;
                     $model->tokin = 'ok';
                     if ($model->save()) {
                         $uset_tournament = new UsetTeamTournament();
-                        $uset_tournament
-                        ->seveMembersTournament($post['uset_team_tournament'],$tournament,$team_model);    
+                        $uset_tournament->seveMembersTournament(
+                            $post['uset_team_tournament'],
+                            $tournament,$team_model
+                        );    
                     }
                 }
             }
@@ -283,15 +289,14 @@ class TournamentsController extends \yii\web\Controller
         
     }
 
-    // public function actionTest($id) 
-    // {
-    //     $model = Tournaments::findOne($id);
-    //     $this->layout = false;
-    //     if (!is_object($model)) {
-    //        throw new HttpException(404 ,'Page not found');
-    //     }
-    //     $model->addCupSingle([11,12]);
-    //     return $this->render('cup',compact('model'));
-    // }
-
+    public function actionTest() 
+    {
+        $model = Tournaments::findOne(7);
+        if (!is_object($model)) {
+            throw new HttpException(404 ,'Page not found');
+        }
+        $model->addCupDuble([7,4,3,2]);
+        $this->layout = false;
+        return $this->render('cup',compact('model'));
+    }
 }

@@ -23,8 +23,12 @@ $config = [
             ],
     
     ],
+    'on beforeAction' => function ($event) {
+        \Yii::$app->params['domains'] = (explode(".",\Yii::$app->request->hostName))[0];
+    },
 
     'components' => [
+
         'image' => [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD',  //GD or Imagick
@@ -90,13 +94,16 @@ $config = [
                 '3kljs89s/<action:[A-Z,a-z,-]+>' => 'admin/site/<action>',
                 '3kljs89s/<controller>/<action:[A-Z,a-z,-]+>' => 'admin/<controller>/<action>',
                 '<controller:(profile|teams|tournaments)>' => '<controller>/index',
+                
                 '<action:[A-Z,a-z,-]+>' => 'site/<action>',
                 '<controller>/<action:[A-Z,a-z,-]+>/<id:\d+>' => '<controller>/<action>',
-                '<controller>/<action:[A-Z,a-z,-]+>/<alias:\w+>' => '<controller>/<action>'
+                '<controller>/<action:[A-Z,a-z,-]+>/<alias:\w+>' => '<controller>/<action>',
+                '<controller:(teams)>/<slug:[A-Z,a-z,-]+>' => '<controller>/index',
             ],
         ],
     ],
     'params' => $params,
+
 ];
 
 if (YII_ENV_DEV) {

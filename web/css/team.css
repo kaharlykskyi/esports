@@ -502,7 +502,19 @@ img {
     border-radius: 4px;
 
 }
+.btn-sm{
+    text-transform:none;
+    padding: 5px 10px;
+    font-size: 14px;
+}
 
-
-
+.staff-box .info {
+    padding: 10px 0 10px 15px;
+    width: 34%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: -1px;
+    display: block;
+}
 

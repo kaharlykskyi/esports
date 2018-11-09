@@ -18,6 +18,7 @@ class m180920_071232_table_uset_team_tournament extends Migration
             'team_id' => $this->integer(),
             'user_id' => $this->integer(),
             'text' => $this->text()->null(),
+            'fair_play' => $this->integer()->defaultValue(0),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ]);

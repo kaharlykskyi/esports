@@ -31,6 +31,10 @@ class SearchResultsStatisticsUsers extends ResultsStatisticUsers
             ->joinWith(['game','team','user'])
             ->where(['games.alias' => $alias]);
 
+        // $query = (new \yii\db\Query())
+        //     ->select('*')->from('users')
+        //     ->leftJoin('results_statistic_users', 'results_statistic_users.user_id  = users.id');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => ['pageSize' => 10 ],

@@ -16,13 +16,33 @@ class UsersMatch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user1', 'user2', 'match', 'results1', 'results2', 'tournament_id', 'round','state'], 'integer'],
+            [
+                ['user1', 'user2', 'match', 
+                    'results1', 'results2', 'tournament_id', 'round','state'
+                ], 'integer'
+            ],
             [['match'], 'required'],
             [['data'], 'string'],
-            [['match'], 'exist', 'skipOnError' => true, 'targetClass' => ScheduleTeams::className(), 'targetAttribute' => ['match' => 'id']],
-            [['tournament_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tournaments::className(), 'targetAttribute' => ['tournament_id' => 'id']],
-            [['user1'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user1' => 'id']],
-            [['user2'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user2' => 'id']],
+            [['match'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => ScheduleTeams::className(), 
+                'targetAttribute' => ['match' => 'id']
+            ],
+            [['tournament_id'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => Tournaments::className(), 
+                'targetAttribute' => ['tournament_id' => 'id']
+            ],
+            [['user1'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => User::className(), 
+                'targetAttribute' => ['user1' => 'id']
+            ],
+            [['user2'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => User::className(), 
+                'targetAttribute' => ['user2' => 'id']
+            ],
         ];
     }
 
@@ -45,8 +65,8 @@ class UsersMatch extends \yii\db\ActiveRecord
     { 
         if (!$insert) {
             ResultsStatisticUsers::addStatistic($this);
+            $this->addBallUser();
         }
-        
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -68,5 +88,20 @@ class UsersMatch extends \yii\db\ActiveRecord
     public function getUserF()
     {
         return $this->hasOne(User::className(), ['id' => 'user2']);
+    }
+
+    private function addBallUser()
+    {
+        if (is_numeric($this->results1)&&is_numeric($this->results2)) {
+            if ($this->results1 != $this->results2) {
+                if ($this->results1 > $this->results2) {
+                    $this->userS->addBall(20);
+                    $this->userF->addBall(10);
+                } else {
+                    $this->userS->addBall(10);
+                    $this->userF->addBall(20);
+                }
+            }
+        }
     }
 }

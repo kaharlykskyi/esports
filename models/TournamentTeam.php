@@ -4,16 +4,7 @@ namespace app\models;
 
 use Yii;
 
-/**
- * This is the model class for table "tournament_team".
- *
- * @property int $id
- * @property int $tournament_id
- * @property int $team_id
- *
- * @property Teams $team
- * @property Tournaments $tournament
- */
+
 class TournamentTeam extends \yii\db\ActiveRecord
 {
     

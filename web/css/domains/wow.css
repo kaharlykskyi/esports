@@ -1,0 +1,16 @@
+.main-menu-wrap,.footer-menu-wrap {
+    background: #50432d;
+}
+
+.footer {
+    background-image:none; /*url(../images/hockey/footer-bg.jpg) 50% 50% no-repeat; */
+    background-color: #3e3525;
+}
+
+.main-menu>li>ul>li:hover {
+	background: #50432d;
+}
+
+.main-menu>li>ul li {
+    border-left: 2px solid #50432d;
+}

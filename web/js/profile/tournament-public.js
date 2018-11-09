@@ -24,51 +24,69 @@ $(document).ready(function(){
         if (value == 'Bo5') {
             i = 4;
         }
-         $('.system_select').find('.system_select_message').remove();
+        $('.system_select').find('.system_select_message').remove();
         $('.system_select').append(`<div class="system_select_message">With the selected format, each player will have ${i} decks, and will be able to ban a deck of the opponent.</div>`);
     });
 
 ///////////////////////////////WOW//////////////////////////////////////////
+
     $('.select_format').find('.options').find('li').on('click',function() {
         let value = $(this).text();
         firstPVP(value);
     });
 
     function firstPVP(value) {
+        $(".terrain").find('.trigger').html('Arena');
        if (value == 'PvP') {
+            $('.hidden_select1').find('select').prop("disabled", false);
             $('.hidden_select1').show();
+            $('.terrain').find('select').prop("disabled", false);
             $('.terrain').show();
             $('.select_dungeon').remove();
         }
         if (value == 'PvE') {
+            
             $('.hidden_select2').hide();
             $('.hidden_select1').hide();
+            $('.hidden_select1').find('select').prop("disabled", true);
+            $('.hidden_select2').find('select').prop("disabled", true);
+            $('.terrain').find('select').prop("disabled", true);
             $('.terrain').hide();
-            let val = $('.sistem_wow').find('option:selected').val();
-            if (val == 'Bo1') {
-                andeground(2);
-            }
-            if (val == 'Bo3') {
-                andeground(3);
-            }
-            if (val == 'Bo5') {
-                andeground(4);
-            }
+
+            if ($.wowData.hasOwnProperty('dungeon')) {
+                if (Array.isArray($.wowData.dungeon)) {
+                    andeground(0,$.wowData.dungeon);
+                    $.wowData = false;
+                } 
+            } else {
+                    let val = $('.sistem_wow').find('option:selected').val();
+                    if (val == 'Bo1') {
+                        andeground(2);
+                    }
+                    if (val == 'Bo3') {
+                        andeground(3);
+                    }
+                    if (val == 'Bo5') {
+                        andeground(4);
+                    }
+            }   
         } 
     }
-
+   
     firstPVP($('.select_format').find('option:selected').val());
-
+    
     $('.terrain').find('.options').find('li').on('click',function() {
         let value = $(this).text();
         let hidden_select1 = $('.hidden_select1');
         let hidden_select2 = $('.hidden_select2');
+
         if (value == 'Arena') {
             hidden_select2.hide();
             hidden_select2.find('select').prop("disabled", true);
             hidden_select1.show();
             hidden_select1.find('select').prop("disabled", false);
         }
+
         if (value == 'Battleground') {
             hidden_select1.hide();
             hidden_select1.find('select').prop("disabled", true);
@@ -92,52 +110,44 @@ $(document).ready(function(){
                 andeground(4);
             }
         }
-
-
     });
 
-    function andeground(int) {
+    function andeground(int,selected = false) {
         let html = $('<div  class="conteiner_filed select_dungeon" ><label >Dungeon</label></div>');
+        let arry_dungeon = ["Freehold","Waycrest Manor","Shrine of the Storm",
+                            "Temple of Sethraliss","Atal'Dazar","Kings' Rest",
+                            "Tol Dagor","Siege of Boralus","The Underrot"];
+        if (!selected) {
+            for (var i = 0; i < int; i++) {
+                let select = $('<select class="form-control" name="Data[dungeon][]" ></select>');
+                let option = '';
 
-        let select = `<select class="form-control" name="Data[dungeon][]" >
-            <option value="Freehold" >Freehold</option>
-            <option value="Waycrest Manor" >Waycrest Manor</option>
-            <option value="Shrine of the Storm" >Shrine of the Storm</option>
-            <option value="Temple of Sethraliss" >Temple of Sethraliss</option>
-            <option value="Atal'Dazar" >Atal'Dazar</option>
-            <option value="Kings' Rest" >Kings' Rest</option>
-            <option value="Tol Dagor" >Tol Dagor</option>
-            <option value="Siege of Boralus" >Siege of Boralus</option>
-            <option value="The Underrot" >The Underrot</option>
-            </select>`;
-
-        for (var i = 0; i < int; i++) {
-           html.append(select);
-        } 
+                for (var a = arry_dungeon.length - 1; a >= 0; a--) {
+                    option += `<option value="${arry_dungeon[a]}" >${arry_dungeon[a]}</option>`
+                }
+                select.append(option);
+                html.append(select);
+            } 
+        } else if (Array.isArray(selected)) {
+                for (var i = 0; i < selected.length; i++) {
+                let select = $('<select class="form-control" name="Data[dungeon][]" ></select>');
+                let option = '';
+                    for (var a = arry_dungeon.length - 1; a >= 0; a--) {
+                        let vstavka = '';
+                        if (selected[i] == arry_dungeon[a]) {
+                            vstavka = 'selected';
+                        }
+                        option += `<option value="${arry_dungeon[a]}" ${vstavka} >${arry_dungeon[a]}</option>`
+                    }
+                select.append(option);
+                html.append(select);
+            }
+        }
         $('.castom_seting').append(html);
     }
 
 
-
-
-
-
-
-    //$('.select_format').find('select').attr('name', '');
-
-    // let input_num  = $('.hidden_num').find('input');
-    // let select_hidden  = $('.nidden_select').find('select');
-
-    // if(input_num.val() == '') {
-    //     input_num.attr('name', '');
-    //     $('.hidden_num').hide();
-    // }
-
-    // let i = $('.nidden_select option').attr("selected");
-    // if (typeof i === typeof undefined || i === false) {
-    //     select_hidden.attr('name', '');
-    //     $('.nidden_select').hide();
-    // }
+///{"name":"dungeon","title":"Dungeon","class":"dungeon","type":"select","options":["Freehold","Waycrest Manor","Shrine of the Storm","Temple of Sethraliss","Atal'Dazar","Kings'Rest","Tol Dagor","Siege of Boralus","The Underrot"]}
 
 
 });

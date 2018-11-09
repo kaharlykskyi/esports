@@ -77,16 +77,21 @@ $(document).ready(function(){
         fdata.append('input',input);
         const statechange = function() {
             if(this.readyState == 4) {
-                let response = JSON.parse(this.responseText);
-                $.myVarContainer.contentSearch = response;
-                setTimeout(function(){
-                    if (response.not) {
-                        message("Sorry, we can't find what you're looking for. Give it another whirl.");
-                    } else {
-                        //console.log(response);
-                        addcontent(response); 
-                    }
-                }, 1000);
+                if (this.status ==200) {
+                    let response = JSON.parse(this.responseText);
+                    $.myVarContainer.contentSearch = response;
+                    setTimeout(function(){
+                        if (response.not) {
+                            message("Sorry, we can't find what you're looking for. Give it another whirl.");
+                        } else {
+                            //console.log(response);
+                            addcontent(response); 
+                        }
+                    }, 1000);
+                }
+                if (this.status != 200) {
+                    message("Error Server");
+                }
             }
             if(this.readyState == 1) {
                 menuSerchHide();
@@ -113,21 +118,22 @@ $(document).ready(function(){
         $.each(users ,function (indx, element) {
             let teamsl = '';
             $(element.teams).each(function (indx, element) {
-                teamsl +=` <a href="/teams/public/${element.id}">${element.name}</a>`;
+                teamsl +=` <a href="/teams/${element.slug}">${element.name}</a>`;
             });
+            if (!element.logo) {
+                element.logo = '/images/profile/user_man.jpg';
+            }
             let content = `<div class="col-sm-6 col-md-4">
-                                        <div class="blok_search_username">
-                                            <div class="col-xs-4 img_cont_search clearfix">
-                                                <img src="/images/profile/images.png" alt="">
-                                            </div>
-                                            <div class="col-xs-8">
-                                                <p class="username">${element.name}</p>
-                                                <p>Registration date : ${element.created_at}</p>
-                                                <p>Teams:</p>
-                                                <p class="list_teams">${teamsl}</p>
-                                            </div>
-                                        </div>
-                                    </div>`;
+                           <div class="blok_search_username">
+                           <div class="col-xs-4 img_cont_search clearfix">
+                            <a href="/user/public/${element.id}">
+                            <img src="${element.logo}" alt=""></a></div>
+                            <div class="col-xs-8">
+                            <p class="username"><a href="/user/public/${element.id}">
+                            ${element.name}</a></p>
+                            <p>Registration date : ${element.created_at}</p>
+                            <p>Teams:</p><p class="list_teams">${teamsl}</p>
+                            </div></div></div>`;
             $('.container_search_modal').append(content);
         });      
     }
@@ -144,18 +150,15 @@ $(document).ready(function(){
                 day ='0'+ day;
             }
             let content = `<div class="col-sm-6 col-md-4">
-                                        <div class="blok_search_teams">
-                                            <div class="col-xs-4 img_cont_search clearfix">
-                                                <a href="/teams/public/${element.id}"><img src="${element.logo}" ></a>
-                                            </div>
-                                            <div class="col-xs-8">
-                                                <p class="teams"><a href="/teams/public/${element.id}">${element.name}</a></p>
-                                                <p>Registration date : ${date.getFullYear()}-${month}-${day}</p>
-                                                <p>Game: ${element.g_name}</p>
-                                                <p class="list_teams">Members ${element.c_user}</p>
-                                            </div>
-                                        </div>
-                                    </div>`;
+                            <div class="blok_search_teams">
+                            <div class="col-xs-4 img_cont_search clearfix">
+                            <a href="/teams/${element.slug}"><img src="${element.logo}" ></a>
+                            </div><div class="col-xs-8">
+                            <p class="teams"><a href="/teams/${element.slug}">${element.name}</a></p>
+                            <p>Registration date : ${date.getFullYear()}-${month}-${day}</p>
+                            <p>Game: ${element.g_name}</p>
+                            <p class="list_teams">Members ${element.c_user}</p>
+                            </div></div></div>`;
             $('.container_search_modal').append(content);
         });      
     }
@@ -182,19 +185,15 @@ $(document).ready(function(){
                 break;           
             }
             let content = `<div class="col-sm-6 col-md-4">
-                                        <div class="blok_search_teams tournaments_block">
-                                            <div class="col-xs-4 img_cont_search clearfix">
-                                                <a href="/toutnaments/public/${element.id}"><img src="/images/profile/images.png" alt=""></a>
-                                            </div>
-                                            <div class="col-xs-8">
-                                            <p class="tournaments"><a href="/tournaments/public/${element.id}">${element.name}</a></p>
-                                            <p>Game: ${element.g_name}</p>
-                                            <p>Start date: ${element.start_date.substr(0, 10)}</p>
-                                            <p>Teams: ${element.c_teams}</p>
-                                            <p>Format: ${format}</p>
-                                            </div>
-                                        </div>
-                                    </div>`;
+                            <div class="blok_search_teams tournaments_block">
+                            <div class="col-xs-4 img_cont_search clearfix">
+                            <a href="/toutnaments/public/${element.id}"><img src="/images/profile/images.png" alt=""></a>
+                            </div><div class="col-xs-8">
+                            <p class="tournaments"><a href="/tournaments/public/${element.id}">${element.name}</a></p>
+                            <p>Game: ${element.g_name}</p>
+                            <p>Start date: ${element.start_date.substr(0, 10)}</p>
+                            <p>Teams: ${element.c_teams}</p>
+                            <p>Format: ${format}</p></div></div></div>`;
 
             $('.container_search_modal').append(content);
         });      

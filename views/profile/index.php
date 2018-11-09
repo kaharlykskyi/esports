@@ -46,7 +46,7 @@
                     <div class="wrap clearfix">
                         <div class="info_user">
                             <div class="youplay-user"> 
-                                <a href="https://wp.nkdev.info/youplay/members/craager/" class="angled-img">
+                                <a href="/user/public/<?=$user->id?>" class="angled-img">
                                     <div class="img"> 
                                         <img src="<?=$user->avatar()?>" class="avatar user-1-avatar avatar-200 photo" width="200" height="200" alt="Profile picture of nK">
                                     </div> 
@@ -188,7 +188,9 @@
                                         <div class="wrap">     
                                             <h3 class="activity-header">
                                                 <p>
-                                                    The <a href="/teams/public/<?=$team['id']?>"><?=$team['name']?></a> team invites you to become part of its players.
+                                                    The <a href="/teams/public/<?=$team['id']?>">
+                                                        <?=$team['name']?>
+                                                    </a> team invites you to become part of its players.
                                                 </p>
                                             </h3>
                                             <div class="clearfix"></div>
@@ -236,40 +238,6 @@
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
-                        <!--         <?php //foreach($user->invitationUser as $user_tournament) : ?>
-                                    <div class="lists">
-                                        <div class="youplay-timeline-icon "> 
-                                            <a href="/tournaments/public/<?//$user_tournament->tournament_id?>">
-                                                <img src="<?//$user_tournament->tournament->user->avatar()?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
-                                            </a>
-                                        </div>
-
-                                        <div class="wrap">     
-                                            <h3 class="activity-header">
-                                                <p>
-                                                    You are invited to take part in the tournament <a href="/tournaments/public/<?//$user_tournament->tournament_id?>"><?//$user_tournament->tournament->name?></a> 
-                                                </p>
-                                            </h3>
-                                            <div class="clearfix"></div>
-                                            <div class="activity-inner">
-                                                <p>
-                                                     To confirm or reject click the link:</br>
-                                                     <?php// $url_invitation = Url::to(
-                                                        //[
-                                                        //    'tournaments/invitation',
-                                                        //    'tournament' => $user_tournament->tournament_id,
-                                                        //    'tokin' => $user_tournament->tokin
-                                                       // ],true); ?>
-                                                    <a href="<?// $url_invitation ?>" >
-                                                     <?// $url_invitation ?>
-                                                    </a>.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                <?php //endforeach; ?> -->
-                                    
                             </div>
                         </div>
                         <div id="matches" class="tab-pane fade in">
@@ -336,7 +304,7 @@
                                             </td>
                                             <td style="vertical-align: middle; padding-left: 20px;">
                                                 <div class="item-title">
-                                                    <a href="/teams/public/<?=$team->id?>"><?=$team->name?></a>
+                                                    <a href="<?=$team->links()?>"><?=$team->name?></a>
                                                 </div>
                                                 <div class="item-meta">
                                                     <span class="date">Created <?= date("d-m-Y",$team->created_at) ?></span>

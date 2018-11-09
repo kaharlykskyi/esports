@@ -1,8 +1,5 @@
 <?php
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -11,7 +8,13 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use \yii\helpers\Url;
 
+$alias = Yii::$app->params['domains'];
+
 AppAsset::register($this);
+$this->registerCssFile(
+    "css/domains/{$alias}.css", 
+    ['depends' => ['app\assets\AppAsset']]
+);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -82,7 +85,7 @@ AppAsset::register($this);
                     </ul>
                 </div>
                     <div class="top-search clearfix" id="search-bar">
-                        <button><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button tyle="width: 50px;"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>
 
                     <div class="clear"></div>

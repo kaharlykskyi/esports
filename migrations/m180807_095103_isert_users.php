@@ -2,17 +2,12 @@
 
 use yii\db\Migration;
 
-/**
- * Class m180807_095103_add_colum_users
- */
-class m180807_095103_add_colum_users extends Migration
+
+class m180807_095103_isert_users extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function safeUp()
     {
-        
         $this->insert('users', [
             'name' => 'Vasa',
             'username' => 'vasa',
@@ -45,26 +40,10 @@ class m180807_095103_add_colum_users extends Migration
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown()
     {
        return;
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
 
-    }
-
-    public function down()
-    {
-        echo "m180807_095103_add_colum_users cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

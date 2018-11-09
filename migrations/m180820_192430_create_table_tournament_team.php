@@ -16,6 +16,8 @@ class m180820_192430_create_table_tournament_team extends Migration
             'id' => $this->primaryKey(),
             'tournament_id' => $this->integer(),
             'team_id' => $this->integer(),
+            'status' => $this->integer(3)->defaultValue(0),
+            'tokin' => $this->string(250)->Null()
         ]);
 
 

@@ -96,7 +96,7 @@ $user_id = false;
                                 </div>
                             </div>
                             <div class="avatar">
-                                <a href="<?=$team1->links() ?>">
+                                <a href="<?=$team2->links() ?>">
                                     <img src="<?=$team2->logo()?>" alt="match-list-team-img">
                                 </a>
                             </div>

@@ -22,9 +22,12 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             [['name','email'], 'required'],
             [['name','email'], 'unique'],
             ['email','email'],
-            [['sex','favorite_game'],'number'],
+            [['sex','favorite_game','fair_play','system_ball'],'number'],
             ['visible', 'boolean',],
             [['username','name',  'birthday','activities','interests','logo','background'], 'string'],
+            [['activities','interests','username','name'], 
+                'filter', 'filter' => 'strip_tags'
+            ],
         ];
     }
 
@@ -219,5 +222,13 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function background()
     {
         return $this->background ?? '/images/profile/images.jpg';
+    }
+
+    public function addBall($ball)
+    {
+        if (is_numeric($ball)){
+            $this->system_ball+=$ball;
+            $this->save();
+        }
     }
 }

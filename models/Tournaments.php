@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\web\UploadedFile;
+use app\models\servises\FairPlay;
 
 
 class Tournaments extends \yii\db\ActiveRecord
@@ -132,7 +133,8 @@ class Tournaments extends \yii\db\ActiveRecord
                     if ($filed->type =='number') {
                         
                         $result .= '<div class="conteiner_filed '.$class.'" ><label class="col-sm-12" >'
-                        . $filed->title .'</label>'. Html::input('number', "Data[{$filed->name}]",$value, ['class' => false,'min'=>"1" ,'max'=>"30"]) .'</div>';
+                        . $filed->title .'</label>'. Html::input('number', "Data[{$filed->name}]",$value, 
+                            ['class' => false,'min'=>"1" ,'max'=>"30"]) .'</div>';
 
                     } elseif ($filed->type === 'select') {
 
@@ -224,6 +226,14 @@ class Tournaments extends \yii\db\ActiveRecord
             ->where('UNIX_TIMESTAMP(date)<UNIX_TIMESTAMP()')
             ->andWhere(['active_result' => null])
             ->all();
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!$insert) {
+            FairPlay::addRating($this);
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 
     private function resizeImg ($pathFile)

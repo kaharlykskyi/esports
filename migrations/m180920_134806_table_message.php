@@ -49,9 +49,7 @@ class m180920_134806_table_message extends Migration
             'id',
             'CASCADE'
         );
-
     }
-
 
     public function safeDown()
     {

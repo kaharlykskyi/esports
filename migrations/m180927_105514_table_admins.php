@@ -5,9 +5,7 @@ use yii\db\Schema;
 
 class m180927_105514_table_admins extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function safeUp()
     {
         $this->createTable('admins', [
@@ -26,26 +24,9 @@ class m180927_105514_table_admins extends Migration
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown()
     {
         $this->dropTable('admins');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m180927_105514_table_admins cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

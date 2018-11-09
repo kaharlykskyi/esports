@@ -12,6 +12,7 @@ use Yii;
 use app\models\User;
 use app\models\UsetTeamTournament;
 
+
 class TeamsController extends \yii\web\Controller
 {
 	public function behaviors()
@@ -38,9 +39,9 @@ class TeamsController extends \yii\web\Controller
         ];
     }
 
-    public function actionPublic($id)
+    public function actionIndex($slug)
     {
-        $team = Teams::findOne($id);
+        $team = Teams::find()->where(['slug'=>$slug])->one();
         if (!is_object($team)) {
            throw new HttpException(404 ,'Page not found');
         }
@@ -52,9 +53,11 @@ class TeamsController extends \yii\web\Controller
     public function actionContact($id)
     {
         if (Yii::$app->request->isPost) {
-            $user = User::find()->leftJoin('teams', '`teams`.`capitan` = `users`.`id`')->where(['teams.id'=> $id])->one();
+            $user = User::find()
+                ->leftJoin('teams', '`teams`.`capitan` = `users`.`id`')
+                ->where(['teams.id'=> $id])->one();
             $post = Yii::$app->request->post();
-            
+            $team = Teams::findOne($id);
             Yii::$app->mailer->compose()
                 ->setFrom([Yii::$app->params['adminEmail'] => 'The organization'])
                 ->setTo([$user->email => $user->name])
@@ -64,7 +67,7 @@ class TeamsController extends \yii\web\Controller
                 ->send(); 
             Yii::$app->session->setFlash('success', '<p> Email sent </p>'); 
         }
-        return $this->redirect(['public','id'=>$id]);
+        return $this->redirect("/teams/{$team->slug}");
     }
 
     public function actionDeleteTeam ($confirmation_tokin, $id_user_team) {

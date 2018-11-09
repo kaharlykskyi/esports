@@ -2,20 +2,18 @@
 
 use yii\db\Migration;
 
-/**
- * Class m180820_192459_create_table_tournament_user
- */
+
 class m180820_192459_create_table_tournament_user extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
+    
     public function safeUp()
     {
         $this->createTable('tournament_user', [
             'id' => $this->primaryKey(),
             'tournament_id' => $this->integer(),
             'user_id' => $this->integer(),
+            'status' => $this->integer(3)->defaultValue(0),
+            'tokin' => $this->string(250)->Null()
         ]);
 
         $this->createIndex(
@@ -54,26 +52,9 @@ class m180820_192459_create_table_tournament_user extends Migration
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown()
     {
         $this->dropTable('tournament_user');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m180820_192459_create_table_tournament_user cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

@@ -15,11 +15,13 @@ class m180803_085541_create_table_teams extends Migration
         $this->createTable('teams', [
             'id' => $this->primaryKey(),
             'name' => $this->string(200)->notNull()->unique(),
+            'slug' => $this->string(250)->unique(),
             'logo' => $this->string(200)->notNull(),
             'background' => $this->string(200)->notNull(),
             'game_id' => $this->integer(),
             'website' => $this->string(200)->Null(),
             'capitan' => $this->integer(),
+            'single_user' => $this->integer(3)->Null(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ]);
@@ -57,31 +59,7 @@ class m180803_085541_create_table_teams extends Migration
             'users',
             'id',
             'CASCADE'
-        );
-
-    $this->insert('teams', [
-            'name' => 'Start',
-            'logo' => 'logo',
-            'background' => 'background',
-            'game_id' => 1,
-            'website' => 'qqqqqqqqqqqqq',
-            'capitan' => 1,
-            'created_at' => 1533553967,
-            'updated_at' => 1533553967,
-    ]);
-
-    $this->insert('teams', [
-            'name' => 'Stop',
-            'logo' => 'logo',
-            'background' => 'background',
-            'game_id' => 2,
-            'website' => 'qqqqqqqqqqqqq',
-            'capitan' => 1,
-            'created_at' => 1533553967,
-            'updated_at' => 1533553967,
-        ]);
-    
-        
+        );    
     }
 
 /**

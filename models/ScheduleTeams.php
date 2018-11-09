@@ -43,7 +43,6 @@ class ScheduleTeams extends \yii\db\ActiveRecord
 
     public function afterSave($insert, $changedAttributes)
     {
-        
         if ($insert) {
             $this->tournament->forumText($this);
             if($this->tournament->game->id < 3) {
@@ -53,7 +52,6 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             $this->addMatch();
             ResultsStatistics::addStatistic($this);
         }
-        
         parent::afterSave($insert, $changedAttributes);
     }
   
@@ -162,7 +160,8 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             }
             $this->writeStringTable($result[0], 2, ($this->tur + 1), 1);
             $this->writeStringTable($result[1], 2, 1, 2);
-        } elseif(($this->group==1 && $this->group >1)|| $this->group==2 ) {
+
+        } elseif(($this->group==1 && $this->tur >1)||($this->group == 2 && !($this->tur%2==0)) ) {
 
             if ($this->group ==1) {
                 $tur_winner = $this->tur;
@@ -173,31 +172,88 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             }
 
             $matches_win = self::find()->where([
-                'tournament_id '=> $this->tournament_id,
+                'tournament_id' => $this->tournament_id,
                 'tur' => $tur_winner,
                 'group' => 1,
             ])->all();
 
             $matches_los = self::find()->where([
-                'tournament_id '=> $this->tournament_id,
+                'tournament_id' => $this->tournament_id,
                 'tur' => $tur_losers,
                 'group' => 2,
             ])->all();
 
             $result_win = $this->winAndLoss($matches_win);
             $result_los = $this->winAndLoss($matches_los);
-            if (!$result_win||!$result_los) {
+            if ( empty($result_win) || empty($result_los)) {
                 return false;
             }
 
+            if (count($result_win[1]) == count($result_los[0])) {
+                $los = $result_los[0];
+                $win = $result_win[1];
+                $arry_new_loss = [];
+                $c = count($los);
+                if (!(($tur_losers+1)%4==0)) {
+                    $los = array_reverse($los);
+                }
+                for ($i=0; $i < $c; $i++) { 
+                  $arry_new_loss[] = array_pop($los);
+                  $arry_new_loss[] = array_pop($win);
+                }
 
-        // } elseif ($this->group==3) {
-        //     if ($this->tur%==0) {
-        //        # code...
-        //     } else {
+            }
+            $this->writeStringTable($result_win[0], 2, ($tur_winner+1), 1);
+            $this->writeStringTable($arry_new_loss, 2, ($tur_losers+1), 2);
 
-        //     }
-         }
+        } elseif($this->group == 2 && ($this->tur%2==0)) {
+            $matches_los = self::find()->where([
+                'tournament_id' => $this->tournament_id,
+                'tur' => $this->tur,
+                'group' => 2,
+            ])->all();
+            $result_los = $this->winAndLoss($matches_los);
+            if (!$result_los) {
+                return false;
+            }
+
+            if (count($result_los[0]) == 1) {
+
+                $matches_win = self::find()->where([
+                    'tournament_id' => $this->tournament_id,
+                    'tur' => ($this->tur-2)/2+2,
+                    'group' => 1,
+                ])->all();
+
+                $result_win = $this->winAndLoss($matches_win);
+                if (!$result_win) {
+                    return false;
+                }
+
+                if (count($result_los[0]) ==  count($result_win[0])){
+                    $final_arry = [];
+
+                    $final_arry[] = array_pop($result_los[0]);
+                    $final_arry[] = array_pop($result_win[0]);
+                    $this->writeStringTable($final_arry, 2, 1, 3);
+                }
+            } else {
+                $this->writeStringTable($result_los[0], 2, ($this->tur+1), 2);
+            }
+        } elseif( $this->group == 3 ) {
+            $matches_final = self::find()->where([
+                'tournament_id' => $this->tournament_id,
+                'tur' => 1,
+                'group' => 3,
+            ])->all();
+
+            $matches_final = $this->winAndLoss($matches_final);
+            if (!$matches_final) {
+                return false;
+            }
+            $this->tournament->state =2;
+            $this->tournament->save();
+        }
       
     }
 

@@ -21,6 +21,7 @@ class m180911_171240_table_schedule_teams extends Migration
             'format' => $this->integer(3)->null(),
             'status' => $this->integer(3)->null(),
             'group' => $this->integer()->null(),
+            'active_result' => $this->integer(3)->Null(),
             'date' => $this->dateTime()->null(),
         ]);
 

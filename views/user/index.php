@@ -6,7 +6,11 @@
     $this->registerCssFile('css/team.css', ['depends' => ['app\assets\AppAsset']]);
     $this->title = $model->name;
 
-    
+    $user = false;
+    if (Yii::$app->user->identity) {
+        $user = Yii::$app->user->identity->id;
+    }
+
 ?>
 
 <section class="image-header" style="min-height: 450px; background: url(<?=$model->background()?>) no-repeat right;background-size: cover;">
@@ -68,7 +72,9 @@
                     <div class="col-md-3 col-sm-3 col-xs-3">
                         <div class="item"><b>Date of Birth:</b></div>
                     </div>
-                    <div class="col-md-9 col-sm-9 col-xs-9"><?=date('Sd F ',strtotime($model->birthday))?></div>
+                    <div class="col-md-9 col-sm-9 col-xs-9">
+                        <?=date('Sj F ',strtotime($model->birthday))?>
+                    </div>
                 </div>
                 <div class="row" style="margin-bottom: 15px;">
                     <div class="col-md-3 col-sm-3 col-xs-3">
@@ -79,16 +85,67 @@
                             <img  style="height: 25px;" src="/images/game/<?=$model->gameF->logo;?>" alt="<?=$model->gameF->name;?>">
                             <?=$model->gameF->name;?>
                         <?php else: ?>
-                            -----
+                            ----
                         <?php endif; ?>
                     </div>
-                 </div>
-                
+                </div>
+                <div class="row player-hockey-wrap" style="margin-bottom: 15px;background-color: transparent;">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <div class="item"><b>Fair play:</b></div>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 ">
+                            <div class="wrapper-circle">
+                                <div class="circle-item" >
+                                    <div class="circle-bar" id="circle_1" data-percent="<?=$model->fair_play?>">
+                                    </div>
+                                    <?php if($user && $capitan_tournament):?>
+                                    <?php if($capitan_tournament->tournament->user_id == $user):?>
+                                    <form action="/user/remove-rating/<?=$model->id?>" method="POST">
+                                        <input type="text" name="tournament" hidden value="<?=$capitan_tournament->tournament->id ?>" >
+                                        <?= Html::hiddenInput(
+                                            \Yii::$app->getRequest()->csrfParam, 
+                                            \Yii::$app->getRequest()->getCsrfToken(), 
+                                            []
+                                        );?>
+                                        <?php
+                                            $disabled = '';
+                                            if($capitan_tournament->fair_play){
+                                                $disabled = 'disabled';
+                                            }
+                                        ?>
+                                        <button class="btn btn-red btn-sm" <?=$disabled?>
+                                            style="margin-left:25px;" >
+                                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                            Remove rating
+                                        </button>
+                                    </form>
+                                    <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <div class="item"><b>Activities:</b></div>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-9">
+                        <?= !empty($model->activities)?$model->activities:'----' ?>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <div class="item"><b>Interests:</b></div>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-9">
+                        <?= !empty($model->interests)?$model->interests:'----' ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-  
+
 <!-- end image-header -->
 <div class="container">
     <div class="col-md-8 col-md-offset-2">

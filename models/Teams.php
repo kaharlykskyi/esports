@@ -7,6 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use app\models\servises\UserServis;
+use dosamigos\transliterator\TransliteratorHelper;
 
 class Teams extends \yii\db\ActiveRecord
 {
@@ -37,9 +38,18 @@ class Teams extends \yii\db\ActiveRecord
                     return !$('#game_idf').val();
                 }"
             ],
-            [['name', 'website' ], 'string', 'max' => 200],
-            [['name'], 'unique'],
-            [['game_id'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['game_id' => 'id']],
+            [['name', 'website', 'slug'], 'string', 'max' => 200],
+            ['name', 'filter', 'filter'=>'trim'],
+            ['slug', 'filter', 
+               'filter' => function($model) {
+                   return mb_strtolower(str_replace(' ', '-', TransliteratorHelper::process(($this->name))));
+             }],
+            [['name', 'slug'], 'unique'],
+            [['game_id'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => Games::className(), 
+                'targetAttribute' => ['game_id' => 'id']
+            ],
         ];
     }
 
@@ -95,7 +105,7 @@ class Teams extends \yii\db\ActiveRecord
     public function links()
     {
         if (is_null($this->single_user)) {
-            return "/teams/public/{$this->id}";
+            return "/teams/{$this->slug}";
         }
         return "/user/public/{$this->capitans->id}";
     }
@@ -139,13 +149,17 @@ class Teams extends \yii\db\ActiveRecord
         return "<p>Team captain {$user->name},
                 </p><p>I ask to remove a command <b>{$team->name}</b></p>
                 <p>To delete or cancel, follow the link   <a href='$a'>$a</a></p>
-                <p>You can write a letter to the captain of the team <b>{$team->name}</b> his mail  {$user->email}.</p>
+                <p>You can write a letter to the captain of the team <b>{$team->name}</b> 
+                his mail  {$user->email}.</p>
                 <p>The capitan.</p>";
     }
 
     public function getMembers()
     {
-        $ids = ArrayHelper::getColumn(UserTeam::find()->where(['id_team' => $this->id, 'status' => UserTeam::ACCEPTED])->asArray()->all(), 'id_user');
+        $ids = ArrayHelper::getColumn(UserTeam::find()->where([
+            'id_team' => $this->id, 
+            'status' => UserTeam::ACCEPTED
+        ])->asArray()->all(), 'id_user');
         return User::find()->with('statisticAll')->where(['in', 'id', $ids])->all();
     }
 
@@ -174,7 +188,6 @@ class Teams extends \yii\db\ActiveRecord
             $user_team->status = UserTeam::DUMMY;
             $user_team->save(false);
         }
-
 
         $tournament_team = new TournamentTeam();
         $tournament_team->status = TournamentTeam::ACCEPTED;

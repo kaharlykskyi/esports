@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\RegisterForm;
 use app\models\User;
 use Yii;
+use app\models\Games;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\HttpException;
@@ -15,6 +16,10 @@ use app\models\ContactForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use app\models\servises\FlagServis;
+use yii\data\Pagination;
+use app\modules\admin\models\News;
+use app\models\ResultsStatisticUsers;
+use app\models\servises\SearchResultsStatisticsUsers;
 
 class SiteController extends Controller
 {
@@ -57,7 +62,27 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $alias = Yii::$app->params['domains'];
+        $game = Games::findOne(['alias' => $alias]);
+        if (!is_object($game)) {
+           throw new HttpException(404 ,'Page not found');
+        }
+        $searchModel = new SearchResultsStatisticsUsers();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$alias);
+        $query = News::find()->where(['state' => 1]);
+        $countQuery = clone $query;
+        $pages = new Pagination([
+            'totalCount' => $countQuery->count(), 
+            'pageSize' => 6
+        ]);
+        $pages->pageSizeParam = false;
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)->orderBy("created_at DESC")->all();
+        
+        return $this->render(
+            'index',
+            compact('dataProvider','searchModel','models','pages','alias')
+        );
     }
 
     public function actionLogin()
@@ -156,11 +181,6 @@ class SiteController extends Controller
         return $this->redirect('/');
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
     public function actionLogout()
     {
         Yii::$app->user->logout();

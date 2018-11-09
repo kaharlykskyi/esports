@@ -67,12 +67,25 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/invitation.js'
                         <p style="text-align: center;color:red;" >The number of participants must be equal <?=$tournament->max_players?></p>
                         <div class="col-sm-offset-1 col-sm-10" style="height: 230px;overflow-y: auto;">
                         <?php foreach ($members as $key => $member): ?>
+                            <?php if($member->fair_play > 80): ?>
                             <div class="col-sm-12" style="margin-bottom: 10px;">
-                                <input  form="invitation_form" type="checkbox" name="uset_team_tournament[]" value="<?=$member->id?>" uncheckvalue="0" class="filter-check" id="check<?=$key?>" >
+                                <input  form="invitation_form" type="checkbox" name="uset_team_tournament[]" value="<?=$member->id?>" uncheckvalue="0" class="filter-check" id="check<?=$key?>" 
+                                <?= $member->fair_play < 80 ? 'disabled':''?> >
                                 <label for="check<?=$key?>"  class="input_checkbox" >
                                     <span style="font-size: 18px;position: relative;bottom: 5px;"><?=$member->name?></span>
                                 </label>
                             </div>
+                            <?php else: ?>
+                                <div class="col-sm-12" style="margin-bottom: 10px;">
+                                    <span style="font-weight:700;font-size:18px;position:relative;bottom:5px;margin-left: 33px;">
+                                        <?=$member->name?>
+                                        <span style="color:red;font-weight:normal;margin-left: 33px;" >
+                                            rating 'fair play' below 80
+                                        </span>
+                                    </span>
+
+                                </div>
+                            <?php endif; ?>
                         <?php endforeach; ?> 
                         </div>
                         <div class="col-sm-12 invitation_input_submit" style="display: none;">

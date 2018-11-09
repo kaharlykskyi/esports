@@ -81,9 +81,11 @@
                                 <span class="name"><?=$member->name?></span>
                                 <span class="position">@<?=$member->username?></span>
                                 <br>
+                                <span class="position" >Fair Play <?=$member->fair_play ?>%</span>
                                 <span class="position" >W/L <?=$statistic->rate ?></span>
                                 <span class="position" >Wins <?=$statistic->victories ?></span>
                                 <span class="position" >Loss <?=$statistic->loss ?></span>
+
                                 <span class="number">
                                     <i class="fab fa-twitter-square edgtf-icon-element"></i>
                                     <i class="edgtf-icon-font-awesome fab fa-youtube edgtf-icon-element"></i>
@@ -416,7 +418,7 @@
             </div>
             <div class="col-md-6"> 
                 <div class="leave-comment-wrap">
-                    <form action="/teams/contact?id=<?=$team->id?>" method="POST" >
+                    <form action="/teams/contact/<?=$team->id?>" method="POST" >
                         <div class="row">
                             <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []);?>
                             <div class="col-md-12">

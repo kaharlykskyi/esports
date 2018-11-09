@@ -14,11 +14,10 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
         return 'uset_team_tournament';
     }
 
-
     public function behaviors()
     {
         return [
-             TimeStampBehavior::className(),
+            TimeStampBehavior::className(),
         ];
     }
 
@@ -84,8 +83,9 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
         $members = User::find()->where(['in','id',$users])->all();
         $url = Url::toRoute(['tournaments/public','id' => $tournament->id], true);
         $a_api_hearstone = '';
-        if ($tournament->game_id > 4) {
-           $a_api_hearstone ='<a href="'.Url::toRoute(['api-string','id' => $tournament->id], true).'">'.Url::toRoute(['api-string','id' => $tournament->id], true).'</a>' ;
+        if ($tournament->game_id < 4) {
+            $url = Url::toRoute(['api-string','id' => $tournament->id], true);
+            $a_api_hearstone ='<a href="'.$url.'">'.$url.'</a>' ;
         }
 
         foreach ($members as $member) {

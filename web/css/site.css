@@ -62,3 +62,7 @@ input[type=email], input[type=password] {
 .main-menu-wrap .custom-logo-link {
     z-index: 100000;
 }
+
+.main-slider-section{
+    background: none;
+}

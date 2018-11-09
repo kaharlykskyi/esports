@@ -42,7 +42,7 @@ trait Schedule {
     {
         $forum_text = $this->forum_text;
         $text = $match->teamS->name." vs ".$match->teamF->name;
-        $forum_text .= '<p><a href="/tournaments/upcoming-match/'.$match->id.'" >'.$text.'</a></p>';
+        $forum_text .= '<p><a href="/matches/public/'.$match->id.'" >'.$text.'</a></p>';
         $this->forum_text = $forum_text;
         $this->save(false);
     }

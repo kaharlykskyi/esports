@@ -9,11 +9,15 @@
     use app\widgets\Schedule;
     use app\models\Tournaments;
     use app\widgets\ParticipantsData;
+    
     $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
     $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournament-public.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Tournament';
-    
+    $var_data = 'false';
+    if ($model->game_id == 3) {
+       $var_data = $model->data;
+    }
     $default_logo = $model->banner??false;
     $script = "$('.dropify').dropify({
        defaultFile:'{$default_logo}',
@@ -23,7 +27,7 @@
             'remove':  'Remove',
             'error':   'Ooops, something wrong happended.'
         }
-    });";
+    }); $.wowData ={$var_data};";
     $this->registerJs($script, yii\web\View::POS_END);
     $access = false;
 
@@ -36,7 +40,6 @@
             $access = 3;
         }
     } 
-
 ?>
 <!--CHAMPIONSHIP WRAP BEGIN-->
     <div class="championship-wrap">
@@ -53,7 +56,7 @@
                             <?php endif; ?>
                             <li><a href="#matches">Matches</a></li>
                             <li><a href="#tournamentgrid" class="tournamentgrid" >Tournament grid</a></li>
-                            <?php if(($access==1)&&is_null($model->state)):?>
+                            <?php if(($access==1)&&is_null($model->state)&&(empty($players))):?>
                                 <li><a href="#manage_tournament">Manage Tournament</a></li>
                             <?php endif; ?>
                             <?php if(is_object(Yii::$app->user->identity)): ?>
@@ -61,6 +64,7 @@
                                     <span><a href="/forum/<?=$model->id?>">Tournament thread</a></span>
                                 <?php endif; ?>
                             <?php endif; ?>
+                            <li><a href="#info">Tournament info</a></li>
                         </ul>       
                     </div>
                 </div>
@@ -260,7 +264,7 @@
                 </div>
             </div>
             <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->
-            <?php if(($access==1)&&is_null($model->state)):?>
+            <?php if(($access==1)&&is_null($model->state)&&empty($players)):?>
                 <div class="tab-item news-tab tab-pane" id="manage_tournament">
                         <div class="container">
                             <div class="row">
@@ -332,7 +336,7 @@
                                     </div>  
                                 </div>
                                 <div id="main" class="tab-pane fade in">
-                                                                    <div class="col-md-8 col-md-offset-2" style="margin-bottom: 40px;" >
+                                    <div class="col-md-8 col-md-offset-2" style="margin-bottom: 40px;" >
                                         <?php $form = ActiveForm::begin([ 
                                                 'validateOnBlur'=>false,  
                                                 'options' => ['enctype' => 'multipart/form-data'],
@@ -350,7 +354,7 @@
                                             
                                             <div class="col-md-12">
                                                 <div  style="margin-bottom:35px;" >
-                                                    <label style="padding-left: 20px;" >Max team players </label>
+                                                    <label style="padding-left: 20px;" >Number of players per team</label>
                                                     <div class="item select-show">
                                                         <select class="basic" name="Tournaments[max_players]" required>
                                                             <option value="1" <?=$model->max_players == 1 ? 'selected' : '' ?> >One player</option>
@@ -424,7 +428,87 @@
                         </div>
                 </div>
             <?php endif; ?>
-            <!--CHAMPIONSHIP manage_tournament TAB END -->   
+            <!--CHAMPIONSHIP manage_tournament TAB END --> 
+            <div class="tab-item part-wrap tab-pane" id="info">
+                <h3  style="text-align: center;" >tournament information</h3>
+                <div class="container" style="margin-bottom: 40px;">
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2"><b>Game:</b></div>
+                        <div class="col-md-6"><?=$model->game->name?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2 "><b>Format tournament:</b></div>
+                        <div class="col-md-6">
+                            <span>
+                            <?php
+                            switch ($model->format) {
+                                case 1:
+                                echo "Cup (Single elimination)";
+                                break;
+                                case 2:
+                                echo "Cup (Duble elimination)";
+                                break;
+                                case 3:
+                                echo "League (Regular)";
+                                break;
+                                case 4:
+                                echo "League (Regular + Playoff)";
+                                break;
+                                case 5:
+                                echo "League (Group + Playoff)";
+                                break;           
+                            }
+                            ?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2"><b>Rules of the tournament:</b></div>
+                        <div class="col-md-6"><?=$model->rules?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2"><b>Tournament prizes:</b></div>
+                        <div class="col-md-6"><?=$model->prizes?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2"><b>Prize pool $:</b></div>
+                        <div class="col-md-6"><?=$model->prize_pool?></div>
+                    </div>
+
+                    <?php 
+                        $t_data = json_decode($model->data,true);
+                        $g_data = json_decode($model->game->filed,true);
+                        $g_data = ArrayHelper::index($g_data, 'name');
+                    ?>
+                    <?php if(is_array($t_data)): ?>
+                    <?php foreach($t_data as $key => $val): ?>
+                        <?php if(!empty($g_data[$key])): ?>
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-2"><b><?=$g_data[$key]['title']?>:</b></div>
+                                <div class="col-md-6"><?=$val?></div>
+                            </div>
+                        <?php else: ?>
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-2"><b>
+                                    <?=mb_convert_case(str_replace('_','',$key),MB_CASE_TITLE)?>:</b>
+                                </div>
+                                <div class="col-md-6">
+                                    <?php 
+                                        if (is_array($val)) {
+                                            foreach ($val as $val_data) {
+                                               echo '\''.$val_data.'\'&nbsp;&nbsp;&nbsp;';
+                                            }
+                                        } else {
+                                            echo $val.' ';
+                                        }
+                                    ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                   <?php endif; ?>
+                </div>
+            </div>  
         </div>
     </div>
     <!--CHAMPIONSHIP WRAP END-->

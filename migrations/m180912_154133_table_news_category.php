@@ -3,7 +3,7 @@
 use yii\db\Migration;
 use yii\db\Schema;
 
-class m181012_154133_table_news_category extends Migration
+class m180912_154133_table_news_category extends Migration
 {
     public function safeUp()
     {

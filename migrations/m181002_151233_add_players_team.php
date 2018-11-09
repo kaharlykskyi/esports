@@ -22,6 +22,17 @@ class m181002_151233_add_players_team extends Migration
                 
             }
         }
+        $count_user = 1;
+        for ($i=1; $i < 5; $i++) { 
+            for ($a=1; $a < 9; $a++) {
+                $this->insert('user_team', [
+                    'id_user' => $count_user,
+                    'id_team' => $a,
+                    'status' => 2,
+                ]);
+              $count_user++;  
+            }
+        }
     }
 
     public function safeDown()

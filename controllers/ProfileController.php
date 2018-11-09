@@ -84,7 +84,6 @@ class ProfileController extends \yii\web\Controller
         $model = new Teams();
         
         if (Yii::$app->request->isPost) {
-           
             $model->capitan = $id;
             if ($model->load(Yii::$app->request->post())) {
                     $model->file = UploadedFile::getInstance($model, 'file');

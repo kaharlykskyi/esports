@@ -29,8 +29,11 @@ class ResultsStatistics extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        if (!parent::beforeSave($insert)) return false;
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
         $this->rateUpdate();
+        return true;
     } 
 
     public function getTeam()
@@ -84,13 +87,11 @@ class ResultsStatistics extends \yii\db\ActiveRecord
             ResultsStatisticUsers::addSingleResults($match, $team, $flag);
             return;
         }
-
         if($flag) {
             $pole = 'victories';
         } else {
             $pole = 'loss';
-        }
-
+        }  
         $model = self::find()
             ->where([ 
                 'team_id' => $team->id, 
@@ -101,10 +102,12 @@ class ResultsStatistics extends \yii\db\ActiveRecord
             $model = new self();
             $model->team_id = $team->id;
             $model->game_id = $match->tournament->game_id;
+            $model->victories = 0;
+            $model->loss = 0;
+            $model->rate = 0;
         }
-
-        $model->$pole = $model->$pole+1;
+        $model->$pole +=1;
         $model->save();
-
+        //var_dump($model);exit;
     }
 }

@@ -2,9 +2,7 @@
 
 use yii\db\Migration;
 
-/**
- * Class m180803_085541_create_table_games
- */
+
 class m180803_085590_create_table_users_team extends Migration
 {
     /**
@@ -16,7 +14,8 @@ class m180803_085590_create_table_users_team extends Migration
             'id' => $this->primaryKey(),
             'id_user' => $this->integer(),
             'id_team' => $this->integer(),
-           
+            'status' => $this->integer(3)->defaultValue(0),
+            'status_tokin' => $this->string(250)->Null(),
         ]);
 
         // creates index for column `id_user`
@@ -52,39 +51,13 @@ class m180803_085590_create_table_users_team extends Migration
             'id',
             'CASCADE'
         );
-        
-        $this->insert('user_team', [
-            'id_user' => 1,
-            'id_team' => 1,
-        ]);
-
-        $this->insert('user_team', [
-            'id_user' => 1,
-            'id_team' => 2,
-        ]);
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown()
     {
         $this->dropTable('user_team');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m180803_085541_teams cannot be reverted.\n";
-
-        return false;
-    }
-    */
+  
 }

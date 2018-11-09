@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <?php endif; ?>
             <div class="row">
-                <?= Html :: hiddenInput(\Yii :: $app->getRequest()->csrfParam, \Yii :: $app->getRequest()->getCsrfToken(), []);?>
+                <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []);?>
                 <div class="col-md-4">
                     <div class="item">
                         <label>

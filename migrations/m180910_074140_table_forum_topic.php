@@ -2,14 +2,10 @@
 
 use yii\db\Migration;
 
-/**
- * Class m180910_074140_table_forum_topic
- */
+
 class m180910_074140_table_forum_topic extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
+   
     public function safeUp()
     {
         $this->createTable('forum_topic', [
@@ -52,30 +48,11 @@ class m180910_074140_table_forum_topic extends Migration
                 'id',
                 'CASCADE'
         );
-
-
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown()
     {
          $this->dropTable('forum_topic');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m180910_074140_table_forum_topic cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

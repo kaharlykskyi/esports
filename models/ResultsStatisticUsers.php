@@ -28,6 +28,7 @@ class ResultsStatisticUsers extends \yii\db\ActiveRecord
     {
         if (!parent::beforeSave($insert)) return false;
         $this->rateUpdate();
+        return true;
     } 
 
     public function getTeam()

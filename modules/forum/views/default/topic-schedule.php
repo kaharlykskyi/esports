@@ -38,21 +38,34 @@ $this->params['breadcrumbs'][] = ['label' => $team1->name.' vs '.$team2->name];
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 tems_vs">
            <div class="col-sm-2 ">
-            <p> <a href="/teams/public/<?=$topic->team1?>"><img src="<?=$team1->logo?>"></a></p>
+                <p> 
+                    <a href="<?=$team1->links()?>">
+                        <img src="<?=$team1->logo()?>">
+                    </a>
+                </p>
             </div>
             <div class="col-sm-8 ">
-                <p style="text-transform: uppercase;font-weight: bold;margin: 0; "><a href="/tournaments/public/<?=$topic->tournament_id?>"><?=$topic->tournament->name?></a></p>
+                <p style="text-transform: uppercase;font-weight: bold;margin: 0; ">
+                    <a href="/tournaments/public/<?=$topic->tournament_id?>">
+                        <?=$topic->tournament->name?></a>
+                    </p>
                 <p style="font-weight: bold;text-align: center;margin: 0;"><span>ROUND  <?=$topic->tur?></span></p>
                     <div class="row" style="font-weight: bold;font-size:13px;">
-                        <div class="col-sm-5" style="text-align:right;padding: 0;" ><a href="/teams/public/<?=$topic->team1?>"> <?=$team1->name?></a></div>
-                        <div class="col-sm-2" style="text-align:center;font-size: 25px;padding: 0;" ><span>VS</span></div>
-                        <div class="col-sm-5" style="padding: 0;"><a href="/teams/public/<?=$topic->team2?>"><?=$team2->name?></a></div>
+                        <div class="col-sm-5" style="text-align:right;padding: 0;" >
+                            <a href="<?=$team1->links()?>"> <?=$team1->name?></a>
+                        </div>
+                        <div class="col-sm-2" style="text-align:center;font-size: 25px;padding: 0;" >
+                            <span>VS</span>
+                        </div>
+                        <div class="col-sm-5" style="padding: 0;">
+                            <a href="<?=$team2->links()?>"><?=$team2->name?></a>
+                        </div>
                     </div>
                 <p style="margin-bottom: 0;font-size:13px;" ><?=date(' d \of F, Y ',strtotime($topic->date))?></p>
                 <p style="margin-bottom: 0;font-size:13px;" ><?=date('H:i',strtotime($topic->date))?></p>
             </div>
             <div class="col-sm-2 ">
-                <p><a href="/teams/public/<?=$topic->team2?>"><img src="<?=$team2->logo?>" ></a></p>
+                <p><a href="<?=$team2->links()?>"><img src="<?=$team2->logo()?>" ></a></p>
             </div>
         </div>
     </div>
