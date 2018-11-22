@@ -56,14 +56,14 @@ class Tournaments extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name of the tournament',
-            'game_id' => 'Select the tournament game',
-            'format' => 'Tournament format',
-            'rules' => 'Rules of the tournament',
-            'prizes' => 'Tournament prizes',
-            'start_date' => 'Tournament start date',
-            'prize_pool' => 'Prize pool $',
-            'banner' => 'Tournament logo',
+            'name' => Yii::t('app','Name of the tournament'),
+            'game_id' => Yii::t('app','Select the tournament game'),
+            'format' => Yii::t('app','Tournament format'),
+            'rules' => Yii::t('app','Rules of the tournament'),
+            'prizes' => Yii::t('app','Tournament prizes'),
+            'start_date' => Yii::t('app','Tournament start date'),
+            'prize_pool' => Yii::t('app','Prize pool').' $',
+            'banner' => Yii::t('app','Tournament logo'),
         ];
     }
 
@@ -171,14 +171,17 @@ class Tournaments extends \yii\db\ActiveRecord
     {
         $teams = Teams::find()->select(['teams.*'])
             ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
-            ->where(['tournament_team.status' => TournamentTeam::ACCEPTED,'tournament_team.tournament_id' => $this->id])
-            ->all();
+            ->where([
+                'tournament_team.status' => TournamentTeam::ACCEPTED,
+                'tournament_team.tournament_id' => $this->id
+            ])->all();
         return $teams;
     }
 
     public function isCapitanTeam($id)
     {
-        $models = $this->getTournamentTeam()->select('team_id')->where(['status' => TournamentTeam::ACCEPTED]);
+        $models = $this->getTournamentTeam()
+            ->select('team_id')->where(['status' => TournamentTeam::ACCEPTED]);
         $team = Teams::find()->where(['in','id',$models])->andWhere(['capitan' => $id])->all();
         if (is_null($team)) {
             return false;

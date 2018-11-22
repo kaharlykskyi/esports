@@ -4,6 +4,7 @@
     use yii\widgets\ActiveForm;
     use yii\helpers\Url;
     use kartik\datetime\DateTimePicker;
+    use Yii;
 
     $this->registerCssFile('css/profile.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
@@ -15,20 +16,20 @@
     $script = "$('.dropify').dropify({
         defaultFile:'{$user->logo}',
         messages: {
-            'default': 'Drag and drop a file here or click',
-            'replace': 'Drag and drop or click to replace',
-            'remove':  'Remove',
-            'error':   'Ooops, something wrong happended.'
+            'default': '".Yii::t('app','Drag and drop a file here or click')."',
+            'replace': '".Yii::t('app','Drag and drop or click to replace')."',
+            'remove':  '".Yii::t('app','Remove')."',
+            'error':   '".Yii::t('app','Ooops, something wrong happended.')."'
         }
     });
 
     $('.dropify1').dropify({
         defaultFile:'{$user->background}',
         messages: {
-            'default': 'Drag and drop a file here or click',
-            'replace': 'Drag and drop or click to replace',
-            'remove':  'Remove',
-            'error':   'Ooops, something wrong happended.'
+            'default': '".Yii::t('app','Drag and drop a file here or click')."',
+            'replace': '".Yii::t('app','Drag and drop or click to replace')."',
+            'remove':  '".Yii::t('app','Remove')."',
+            'error':   '".Yii::t('app','Ooops, something wrong happended.')."'
         }
     });
     ";
@@ -54,9 +55,7 @@
                                 <div class="user-data">
                                     <h2 class="user-data-h2"><?= $user->name ?></h2> @<?= $user->username ?>
                                     <div class="youplay-user-activity">
-                                        <div>
-                                            <div class="title"> active 16 hours, 36 minutes ago</div>
-                                        </div>
+                
                                     </div>
                                 </div>
                             </div>
@@ -70,12 +69,41 @@
     <div class="youplay-user-navigation">
         <div class="container">
             <ul class="flickity-enabled is-draggable nav nav-tabs" tabindex="0">
-                <li id="activity-personal-li" class="current selected active is-selected" aria-selected="true" ><a id="user-activity" data-toggle="tab" href="#profile">Profile</a></li>
-                <li id="xprofile-personal-li" aria-selected="false" ><a id="user-xprofile" data-toggle="tab" href="#activity">Activity</a></li>
-                <li id="blogs-personal-li" aria-selected="false" ><a id="user-blogs" data-toggle="tab" href="#teams">My teams <span class="badge mnb-1"><?=$teams['count_teams']?></span></a></li>
-                <li id="seting-personal-li" aria-selected="false" ><a id="user-seting" data-toggle="tab" href="#tournaments">My tournaments <span class="badge mnb-1"><?=count($tournaments)?></span></a></li>  
-                <li id="friends-personal-li" aria-selected="false" ><a id="user-friends" data-toggle="tab" href="#panel4">Friends<span class="badge mnb-1 sr-only">0</span></a></li> 
-                <li id="seting-personal-li" aria-selected="false" ><a id="user-seting" data-toggle="tab" href="#settings">Settings<span class="badge mnb-1 sr-only">0</span></a></li> 
+                <li id="activity-personal-li" class="current selected active is-selected" aria-selected="true" >
+                    <a id="user-activity" data-toggle="tab" href="#profile">
+                        <?=Yii::t('app','Profile')?>
+                    </a>
+                </li>
+                <li id="xprofile-personal-li" aria-selected="false" >
+                    <a id="user-xprofile" data-toggle="tab" href="#activity">
+                        <?=Yii::t('app','Activity')?>
+                    </a>
+                </li>
+                <li id="blogs-personal-li" aria-selected="false" >
+                    <a id="user-blogs" data-toggle="tab" href="#teams">
+                        <?=Yii::t('app','My teams')?> 
+                        <span class="badge mnb-1"><?=$teams['count_teams']?></span></a>
+                </li>
+                <li id="seting-personal-li" aria-selected="false" >
+                    <a id="user-seting" data-toggle="tab" href="#tournaments">
+                        <?=Yii::t('app','My tournaments')?> 
+                        <span class="badge mnb-1">
+                            <?=count($tournaments)?>
+                        </span>
+                    </a>
+                </li>  
+                <li id="friends-personal-li" aria-selected="false" >
+                    <a id="user-friends" data-toggle="tab" href="#panel4">
+                        <?=Yii::t('app','Friends')?>
+                        <span class="badge mnb-1 sr-only">0</span>
+                    </a>
+                </li> 
+                <li id="seting-personal-li" aria-selected="false" >
+                    <a id="user-seting" data-toggle="tab" href="#settings">
+                        <?=Yii::t('app','Settings')?>
+                        <span class="badge mnb-1 sr-only">0</span>
+                    </a>
+                </li> 
             </ul>
         </div>
     </div>
@@ -84,46 +112,45 @@
     <?=Alert::widget()?>
     <div class="row">
         <div class="col-md-9 ">
-
             <div class="tab-content my-tabs">
                 <div id="profile" class="tab-pane fade in active">
                     <div class="col-md-12">
-                        <h4>Base</h4>
+                        <h4><?=Yii::t('app','Base')?></h4>
                         <table class="table table-profile" >
                             <tbody>
                                 <tr>
-                                    <td >Name</td>
+                                    <td ><?=Yii::t('app','Name')?></td>
                                     <td><?= $user->name ?></td>
                                 </tr>
                                 <tr>
-                                    <td>Sex</td>
+                                    <td><?=Yii::t('app','Sex') ?></td>
                                     <td>
                                         <?php if ($user->sex) :?>
-                                            <?=$user->sex == 1 ? 'Male': ($user->sex == 2 ?'Female': '----') ?>
+                                            <?=$user->sex == 1 ? Yii::t('app','Male'): ($user->sex == 2 ?Yii::t('app','Female'): '----') ?>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Birthday</td>
+                                    <td><?=Yii::t('app','Birthday') ?></td>
                                     <td><?= $user->birthday ?></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-12">
-                        <h4>Interests</h4>
+                        <h4><?=Yii::t('app','Interests')?></h4>
                         <table class="table table-profile">
                             <tbody>
                                 <tr>
-                                    <td >Activities</td>
+                                    <td ><?=Yii::t('app','Activities')?></td>
                                     <td ><?= $user->activities ?></td>
                                 </tr>
                                 <tr>
-                                    <td>Interests</td>
-                                     <td ><?= $user->interests ?></td>
+                                    <td><?=Yii::t('app','Interests')?></td>
+                                    <td ><?=$user->interests ?></td>
                                 </tr>
                                 <tr>
-                                    <td>Favorite game</td>
+                                    <td><?=Yii::t('app','Favorite game')?></td>
                                     <td>
                                         <?php if ($user->gameF):?>
                                             <img  style="height: 25px;" src="/images/game/<?=$user->gameF->logo;?>" alt="<?=$user->gameF->name;?>">  &#160;&#160;
@@ -139,9 +166,15 @@
                     <div class="row">
                         <div class="col-md-7">
                             <ul class="tab-filters">
-                                <li class="active"><a href="#personal">Personal</a></li>
-                                <li><a href="#notifications">Notifications</a></li>
-                                <li><a href="#matches">Matches</a></li>
+                                <li class="active">
+                                    <a href="#personal"><?=Yii::t('app','Personal')?></a>
+                                </li>
+                                <li>
+                                    <a href="#notifications"><?=Yii::t('app','Notifications')?></a>
+                                </li>
+                                <li>
+                                    <a href="#matches"><?=Yii::t('app','Matches')?></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -188,21 +221,24 @@
                                         <div class="wrap">     
                                             <h3 class="activity-header">
                                                 <p>
-                                                    The <a href="/teams/public/<?=$team['id']?>">
+                                                    <?=Yii::t('app','The')?> <a href="/teams/public/<?=$team['id']?>">
                                                         <?=$team['name']?>
-                                                    </a> team invites you to become part of its players.
+                                                    </a> <?=Yii::t('app','team invites you to become part of its players.')?>
                                                 </p>
                                             </h3>
                                             <div class="clearfix"></div>
                                             <div class="activity-inner">
                                                 <p>
-                                                    To accept or decline the invitation click the link below:</br>
+                                                    <?=Yii::t('app','To accept or decline the invitation click the link below:')?></br>
                                                     <a href="<?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>" >
                                                      <?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>
                                                     </a></br>
-                                                     Finally, if you want more information, contact <?=$team['name']?> 
-                                                     through their website, or through their captain, by email 
-                                                     <a href="<?= $team['u_email']?>"><?= $team['u_email']?>
+                                                    <?=Yii::t('app','Finally, if you want more information, contact')?> 
+                                                    <?=$team['name']?> 
+                                                    <?=Yii::t('app','through their website, or through their captain, by email ')?>
+                                                     
+                                                    <a href="<?= $team['u_email']?>">
+                                                        <?= $team['u_email']?>
                                                     </a>.
                                                 </p>
                                             </div>
@@ -248,20 +284,21 @@
                                     <div class="lists" style="margin-bottom: 25px;">   
                                         <h3 class="activity-header">
                                                 <p>
-                                                    match between teams 
+                                                    <?=Yii::t('app','match between teams')?> 
                                                 <a href="/teams/public/<?=$match->teamS->id?>"><?=$match->teamS->name?></a>
-                                                    and
+                                                    <?=Yii::t('app','and')?>
                                                 <a href="/teams/public/<?=$match->teamF->id?>"><?=$match->teamF->name?></a> 
                                                 <p class="view youplay-timeline-date pt-5 bp-tooltip"  style="color: ">
                                                     <span class="time-since" style="color: #1976d2;" >
-                                                        date of the match <?=  date(' d \of F, Y ',strtotime($match->date)) ?>
+                                                    <?=Yii::t('app','date of the match')?> 
+                                                    <?=date(' d \of F, Y ',strtotime($match->date)) ?>
                                                     </span>
                                                 </p>
                                             </p>
                                         </h3>
                                         <div class="activity-inner">
                                             <div>
-                                                To set the match results follow the link
+                                                <?=Yii::t('app','To set the match results follow the link')?> 
                                                 <a href="/matches/public/<?=$match->id?>">
                                                     /matches/public/<?=$match->id?>
                                                 </a>
@@ -280,8 +317,12 @@
                             <?php if ($teams['btn']>0): ?>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a href="/profile/create-team" class="btn btn-primary">Create a team</a>
-                                        <a href="#myModal2" class="btn btn-primary" data-toggle="modal" >Find the team</a>
+                                        <a href="/profile/create-team" class="btn btn-primary">
+                                            <?=Yii::t('app','Create a team')?>
+                                        </a>
+                                        <a href="#myModal2" class="btn btn-primary" data-toggle="modal" >
+                                            <?=Yii::t('app','Find the team')?>
+                                        </a>
                                     </div>
                                 </div>
                             <?php endif;?>
@@ -299,7 +340,9 @@
                                         <tr>
                                             <td style="width: 130px; vertical-align: middle" >
                                                 <div class="img-game">
-                                                    <a href="/teams/public/<?=$team->id?>"><img src="<?=$team->logo ?>" class="avatar group-1-avatar avatar-100 photo" width="100" height="100" alt="Team logo"></a>
+                                                    <a href="/teams/public/<?=$team->id?>">
+                                                        <img src="<?=$team->logo ?>" class="avatar group-1-avatar avatar-100 photo" width="100" height="100" alt="Team logo">
+                                                    </a>
                                                 </div>
                                             </td>
                                             <td style="vertical-align: middle; padding-left: 20px;">
@@ -307,32 +350,44 @@
                                                     <a href="<?=$team->links()?>"><?=$team->name?></a>
                                                 </div>
                                                 <div class="item-meta">
-                                                    <span class="date">Created <?= date("d-m-Y",$team->created_at) ?></span>
+                                                    <span class="date">
+                                                        <?=Yii::t('app','Created')?> 
+                                                        <?= date("d-m-Y",$team->created_at) ?>
+                                                    </span>
                                                 </div>
                                                 <div class="item-desc">
                                                     <p><?= $team->game->name ?></p>
                                                 </div>
                                                 <div class="members-small">
-                                                    <p> <?= $team->coutUsers() ?> member(s)</p>
+                                                    <p> 
+                                                        <?= $team->coutUsers() ?>
+                                                        <?=Yii::t('app','member(s)')?> 
+                                                    </p>
                                                 </div>
                                             </td>
                                             <td class="text-right" style="vertical-align: middle">
                                                 <div class="meta">
                                                     <?php if($team->capitan == $user->id ): ?>
-                                                    <a class="btn edit-team" href="#myModal1" data-toggle="modal" data-game-id="<?=$team->id ?>">Add new members</a>
+                                                    <a class="btn edit-team" href="#myModal1" data-toggle="modal" data-game-id="<?=$team->id ?>">
+                                                        <?=Yii::t('app','Add new members')?>
+                                                    </a>
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="meta">
                                                     <?php if($team->capitan == $user->id ): ?>
-                                                        <a href="/profile/update-team?id=<?=$team->id?>" class="btn edit-team edit-btn">Edit team</a>
+                                                        <a href="/profile/update-team?id=<?=$team->id?>" class="btn edit-team edit-btn">
+                                                            <?=Yii::t('app','Edit team')?>
+                                                        </a>
                                                     <?php else: ?>
-                                                        <a href="/profile/exit-team?id=<?=$team->id?>" class="btn edit-team btn-red">Leave the team</a>   
+                                                        <a href="/profile/exit-team?id=<?=$team->id?>" class="btn edit-team btn-red">
+                                                            <?=Yii::t('app','Leave the team')?>
+                                                        </a>   
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="meta conteiner_btn">
                                                     <?php if($team->capitan == $user->id ): ?>
                                                         <button class="btn edit-team btn-red delete"  data-modeel-id="<?=$team->id?>">
-                                                           Delete the team
+                                                            <?=Yii::t('app','Delete the team')?>
                                                         </button>  
                                                     <?php endif; ?>
                                                 </div>
@@ -352,10 +407,13 @@
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-xs-9">
-                                                <input type="text" class="modal_search" placeholder="Search for players" >
+                                                <input type="text" class="modal_search" placeholder="
+                                                <?=Yii::t('app','Search for players')?>" >
                                             </div>
                                             <div class="col-xs-3">
-                                                <button class="btn search_btn" id="search_mod">Search</button>
+                                                <button class="btn search_btn" id="search_mod">
+                                                    <?=Yii::t('app','Search')?>
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -377,34 +435,51 @@
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-xs-8 col-md-9" >
-                                                <input type="text" class="modal_search_team" placeholder="Search by team name" >
+                                                <input type="text" class="modal_search_team" placeholder="
+                                                    <?=Yii::t('app','Search by team name')?>" >
                                             </div>
                                             <div class="col-xs-2">
-                                                <button class="btn search_btn" id="search_mod_team_btn">Search</button>
+                                                <button class="btn search_btn" id="search_mod_team_btn"><?=Yii::t('app','Search')?></button>
                                             </div>
                                            
                                         </div>
                                         <div class="row filtres_modal" style="margin-top: 20px">
                                             <div class="col-xs-12">
-                                                <p><a href="#" class="filter_modal_link" >Filters <span class="glyphicon glyphicon-filter"></span></a></p>
+                                                <p><a href="#" class="filter_modal_link" >
+                                                    <?=Yii::t('app','Filters')?> <span class="glyphicon glyphicon-filter"></span></a>
+                                                </p>
                                             </div>
                                             <div class="filter_modal_content" style="display: none;" >
                                                 <div class="col-md-6">
-                                                    <p style="text-align: center;" >By team quality</p>
+                                                    <p style="text-align: center;" >
+                                                         <?=Yii::t('app','By team quality')?>
+                                                    </p>
                                                     <div class="item select-show team_quality">
                                                         <select class="basic" name="" id="">
-                                                            <option value="0">Please Select</option>
-                                                            <option value="1" >The team participates in a league or cup</option>
-                                                            <option value="2" >The team has participated in a league or cup</option>
-                                                            <option value="3" >The team is new and has not participated in a league or a cup</option>
+                                                            <option value="0">
+                                                                <?=Yii::t('app','Please Select')?> 
+                                                            </option>
+                                                            <option value="1" >
+                                                                <?=Yii::t('app','The team participates in a league or cup')?>
+                                                            </option>
+                                                            <option value="2" >
+                                                                <?=Yii::t('app','The team has participated in a league or cup')?>
+                                                            </option>
+                                                            <option value="3" >
+                                                                <?=Yii::t('app','The team is new and has not participated in a league or a cup')?>
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                <p style="text-align: center;" >By team game</p>
+                                                <p style="text-align: center;" >
+                                                    <?=Yii::t('app','By team game')?>
+                                                </p>
                                                  <div class="item select-show team_game">
                                                     <select class="basic" name="" id="">
-                                                        <option value="0">Please Select</option>
+                                                        <option value="0">
+                                                            <?=Yii::t('app','Please Select')?>
+                                                        </option>
                                                         <?php foreach ($not_games as $game): ?>
                                                             <option value="<?=$game->id?>" ><?=$game->name?></option>
                                                         <?php endforeach; ?>
@@ -430,34 +505,40 @@
 
                     <div class="row">
                         <div class="col-md-12" style="margin-bottom: 30px;">
-                            <a href="/tournaments/create" class="btn btn-primary">Create a tournament</a> 
+                            <a href="/tournaments/create" class="btn btn-primary">
+                                <?=Yii::t('app','Create a tournament')?>
+                            </a> 
                         </div>
                     </div>
                     <div class="row">
                         <?php foreach ($tournaments as $tournament):?>
                             <div class="col-md-12 tournament_list">
                                 <div class="col-sm-5">
-                                    <p class="name"> <a href="/tournaments/public/<?=$tournament->id?>"><?=$tournament->name?></a></p>
-                                    <p>Participants: <span><?=count($tournament->getPlayers())?></span></p>
-                                    <p>Game: <span><?=$tournament->game->name?></span></p>
+                                    <p class="name"> <a href="/tournaments/public/<?=$tournament->id?>">
+                                        <?=$tournament->name?></a>
+                                    </p>
+                                    <p><?=Yii::t('app','Participants')?>: 
+                                        <span><?=count($tournament->getPlayers())?></span>
+                                    </p>
+                                    <p><?=Yii::t('app','Game')?>: <span><?=$tournament->game->name?></span></p>
                                     <p>Format:
                                         <span>
                                             <?php
                                                 switch ($tournament->format) {
                                                     case 1:
-                                                        echo "Cup (Single elimination)";
+                                                        echo Yii::t('app','Cup (Single elimination)');
                                                         break;
                                                     case 2:
-                                                        echo "Cup (Duble elimination)";
+                                                        echo Yii::t('app','Cup (Duble elimination)');
                                                         break;
                                                     case 3:
-                                                        echo "League (Regular)";
+                                                        echo Yii::t('app','League (Regular)');
                                                         break;
                                                     case 4:
-                                                        echo "League (Regular + Playoff)";
+                                                        echo Yii::t('app','League (Regular + Playoff)');
                                                         break;
                                                     case 5:
-                                                        echo "League (Group + Playoff)";
+                                                        echo Yii::t('app','League (Group + Playoff)');
                                                         break;           
                                                 }
                                             ?>
@@ -468,13 +549,13 @@
                                     <p>
                                         <?php if($user->id == $tournament->user_id): ?>
                                         <a class="btn edit-team" href="/tournaments/public/<?=$tournament->id?>#manage_tournament">
-                                            Manage
+                                            <?=Yii::t('app','Manage')?>
                                         </a>
                                     <?php endif; ?>
                                     </p>
                                     <p>
                                         <a class="btn edit-team" href="/tournaments/public/<?=$tournament->id?>">
-                                            View
+                                            <?=Yii::t('app','View')?>
                                         </a>
                                     </p>
                                 </div>            
@@ -514,17 +595,22 @@
                                     $form->validateOnBlur = false;
                                     $form->successCssClass = false;
                             ?>   
-                                <?= $form->field($user, 'name')->textInput(['class' => false])->label('First name', ['class' => false]) ?>
-                                <?=$form->field($user, 'file_logo')->fileInput(['class' => 'dropify','data-height'=>"200",'data-allowed-file-extensions'=>"jpg png jepg gif"]) ?> 
-                                <?=$form->field($user, 'file_background')->fileInput(['class' => 'dropify1','data-height'=>"300",'data-allowed-file-extensions'=>"jpg png jepg gif"]) ?> 
+                                <?= $form->field($user, 'name')->textInput(['class' => false])
+                                    ->label(Yii::t('app','First name')) ?>
+                                <?=$form->field($user, 'file_logo')->fileInput(['class' => 'dropify','data-height'=>"200",'data-allowed-file-extensions'=>"jpg png jepg gif"])->label(Yii::t('app','Logo')) ?> 
+                                <?=$form->field($user, 'file_background')->fileInput(['class' => 'dropify1','data-height'=>"300",'data-allowed-file-extensions'=>"jpg png jepg gif"])->label(Yii::t('app','Background')) ?> 
 
                                 <div style="margin-bottom: 25px;">
-                                    <label class="control-label">Sex</label>
+                                    <label class="control-label"><?=Yii::t('app','Sex')?></label>
                                     <div class="item select-show">
                                         <div class="fancy-select ">
                                             <select class="basic" name="User[sex]" >
-                                                <option value="1" <?=$user->sex == 1 ? 'selected' : '' ?> >Male</option>
-                                                <option value="2" <?=$user->sex == 2 ? 'selected' : '' ?> >Female</option>
+                                                <option value="1" <?=$user->sex == 1 ? 'selected' : '' ?> >
+                                                    <?=Yii::t('app','Male')?>
+                                                </option>
+                                                <option value="2" <?=$user->sex == 2 ? 'selected' : '' ?> >
+                                                    <?=Yii::t('app','Female')?>
+                                                </option>
                                             </select>
                                         </div>    
                                     </div>
@@ -532,7 +618,9 @@
 
                               
                                 <div style="margin-bottom: 80px;">
-                                    <label class="control-label" >Favorite game</label>
+                                    <label class="control-label" >
+                                        <?=Yii::t('app','Favorite game')?>
+                                   </label>
                                     <div id="radios" class="clearfix" style="text-align: center;">
                                         <?php $i=0; foreach($games as $value):
                                             $i++;
@@ -549,7 +637,9 @@
                                 <div class="checkbox" style="margin-bottom: 40px;">
                                     <input type="checkbox" name="User[visible]" value='1' uncheckValue='0' class='filter-check' id="check_visible" <?= $user->visible ? 'checked': ''?>>
                                     <label for="check_visible" >
-                                        <span style="font-size: 18px;position: relative;bottom: 5px;">I allow to send me invites to the teams</span>
+                                        <span style="font-size: 18px;position: relative;bottom: 5px;">
+                                            <?=Yii::t('app','I allow to send me invites to the teams')?>
+                                        </span>
                                     </label>
                                 </div>
                 
@@ -565,21 +655,21 @@
                                         'format' => 'yyyy-MM-dd hh:i',
                                         //'startDate' => date("Y-m-d H:i"),//'2018-08-22 02:55'
                                         'todayHighlight' => true
-                                ]]) ?>
+                                ]])->label(Yii::t('app','Birthday')) ?>
                                         
                                 </div>
                                
                                 <div class="item" style="margin-bottom: 25px;">
-                                    <label >Activities</label>
+                                    <label ><?=Yii::t('app','Activities')?></label>
                                     <textarea name="User[activities]" ><?= $user->activities ?></textarea>
                                 </div>
 
                                 <div class="item" style="margin-bottom: 25px;">
-                                    <label >Interests</label>
-                                    <textarea name="User[interests]"  ><?= $user->interests ?></textarea>
+                                    <label ><?=Yii::t('app','Interests')?></label>
+                                    <textarea name="User[interests]" ><?=$user->interests ?></textarea>
                                 </div>
                                 
-                                <button type="submit" class="btn submit-btn" >Save</button>
+                                <button type="submit" class="btn submit-btn" ><?=Yii::t('app','Save')?></button>
                             <?php ActiveForm::end(); ?>
                         </div>
                     </div>

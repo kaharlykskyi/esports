@@ -46,34 +46,47 @@ trait ScheduleCup {
     {
         $array_cub = json_decode($this->cup,true);
         $teams_p = $array_cub['teams'];
-        if(empty($array_cub['results'])) return;
-        $results_win = $array_cub['results'][0];
-        $last_win = array_pop($results_win);
-        if (empty(end($last_win))) {
-            $array_id = $this->arryId($array_cub['teams']);
-            $result_arry = array_fill(0,count($array_id),0);
-            $win_state_id = [];
-            $los_state_id = [];
-            foreach ($array_id as $key => $value) {
-                if(in_array($value, $results)) {
-                    $result_arry[$key] = 1;
-                    $win_state_id[] = $value;
-                } else {
-                    $los_state_id[] = $value;
-                }
+        //if(empty($array_cub['results'])) return;
+        if (!empty($array_cub['results'][3])) {
+            $win_id = end($array_cub['results'][3][0]);
+            reset($array_cub['results'][3][0]);
+            $los_id = end($array_cub['results'][3][1]);
+            reset($array_cub['results'][3][1]);
+            $result_arry_los = array_fill(0,count($los_id),0);
+
+            if(!empty(array_uintersect($los_id, $results, "strcasecmp"))) {
+                $result_arry_win = array_fill(0,count($win_id),0);
             }
-            $result_arry = array_chunk($result_arry, 2);
-            $array_cub['results'][0][0] = $result_arry;
-            $array_cub['results'][3] = [$win_state_id,$los_state_id];
+        } else {
+
+            $results_win = $array_cub['results'][0];
+            $last_win = array_pop($results_win);
+            if (empty(end($last_win))) {
+                $array_id = $this->arryId($array_cub['teams']);
+                $result_arry = array_fill(0,count($array_id),0);
+                $win_state_id = [];
+                $los_state_id = [];
+                foreach ($array_id as $key => $value) {
+                    if(in_array($value, $results)) {
+                        $result_arry[$key] = 1;
+                        $win_state_id[] = $value;
+                    } else {
+                        $los_state_id[] = $value;
+                    }
+                }
+                $result_arry = array_chunk($result_arry, 2);
+                $array_cub['results'][0][0] = $result_arry;
+                $array_cub['results'][3][0][] = $win_state_id;
+                $array_cub['results'][3][1][] = $los_state_id;
+            }
+
         }
 
-
-
         
-        // echo "<pre>";
-        // VarDumper::dump($array_cub['results'][0][0]);
-        // echo "</pre>";
-        // exit;
+       // echo "<pre>";
+       // VarDumper::dump(array_uintersect($los_id, $results, "strcasecmp"));
+       // echo "</pre>";
+       // exit;
         $this->cup=json_encode($array_cub);
         $this->save();
 

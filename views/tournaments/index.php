@@ -9,6 +9,7 @@
     use app\widgets\Schedule;
     use app\models\Tournaments;
     use app\widgets\ParticipantsData;
+    use Yii;
     
     $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
     $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
@@ -19,15 +20,17 @@
        $var_data = $model->data;
     }
     $default_logo = $model->banner??false;
+
     $script = "$('.dropify').dropify({
-       defaultFile:'{$default_logo}',
+        defaultFile:'{$default_logo}',
         messages: {
-            'default': 'Drag and drop a file here or click',
-            'replace': 'Drag and drop or click to replace',
-            'remove':  'Remove',
-            'error':   'Ooops, something wrong happended.'
+            'default': '".Yii::t('app','Drag and drop a file here or click')."',
+            'replace': '".Yii::t('app','Drag and drop or click to replace')."',
+            'remove':  '".Yii::t('app','Remove')."',
+            'error':   '".Yii::t('app','Ooops, something wrong happended.')."'
         }
     }); $.wowData ={$var_data};";
+
     $this->registerJs($script, yii\web\View::POS_END);
     $access = false;
 
@@ -41,7 +44,7 @@
         }
     } 
 ?>
-<!--CHAMPIONSHIP WRAP BEGIN-->
+    <!--CHAMPIONSHIP WRAP BEGIN-->
     <div class="championship-wrap">
         <h1 style="text-align: center;"><?=$model->name?></h1>
         <!--CHAMPIONSHIP NAVIGATION BEGIN -->
@@ -50,21 +53,41 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="champ-nav-list">
-                            <li class="active"><a href="#participants">participants</a></li>
+                            <li class="active">
+                                <a href="#participants">
+                                    <?= Yii::t('app','participants') ?>
+                                </a>
+                            </li>
                             <?php if ($access): ?>
-                                <li ><a href="#participants_data">Partisipation data</a></li>
+                                <li >
+                                    <a href="#participants_data">
+                                        <?= Yii::t('app','Partisipation data') ?>
+                                    </a>
+                                </li>
                             <?php endif; ?>
-                            <li><a href="#matches">Matches</a></li>
-                            <li><a href="#tournamentgrid" class="tournamentgrid" >Tournament grid</a></li>
+                            <li>
+                                <a href="#matches"><?= Yii::t('app','Matches') ?></a>
+                            </li>
+                            <li>
+                                <a href="#tournamentgrid" class="tournamentgrid" >
+                                    <?= Yii::t('app','Tournament grid') ?>
+                                </a>
+                            </li>
                             <?php if(($access==1)&&is_null($model->state)&&(empty($players))):?>
-                                <li><a href="#manage_tournament">Manage Tournament</a></li>
+                                <li>
+                                    <a href="#manage_tournament">
+                                        <?= Yii::t('app','Manage Tournament') ?>
+                                    </a>
+                                </li>
                             <?php endif; ?>
                             <?php if(is_object(Yii::$app->user->identity)): ?>
                                 <?php if( in_array(['id' => Yii::$app->user->identity->id],$users_id)&&!empty($model->state)): ?>
-                                    <span><a href="/forum/<?=$model->id?>">Tournament thread</a></span>
+                                    <span><a href="/forum/<?=$model->id?>">
+                                        <?= Yii::t('app','Tournament thread') ?></a>
+                                    </span>
                                 <?php endif; ?>
                             <?php endif; ?>
-                            <li><a href="#info">Tournament info</a></li>
+                            <li><a href="#info"><?= Yii::t('app','Tournament info') ?></a></li>
                         </ul>       
                     </div>
                 </div>
@@ -81,9 +104,13 @@
                             <?php if(empty($model->cup) && empty($model->league)): ?>
                                 <?php if($access==1):?>
                                     <?php if(empty($model->flag)):?>
-                                        <p style="color:red;" >To invite teams/player first setup your main tournament settings</p>
+                                        <p style="color:red;" >
+                                            <?= Yii::t('app','To invite teams/player first setup your main tournament settings') ?>
+                                        </p>
                                     <?php else: ?>
-                                        <a href="#myModal1" class="btn btn-secusses btn_mobil" data-toggle="modal" data-flag ="<?=$model->flag ?>"  data-tournament-id="<?=$model->id?>" >Invite participants</a>
+                                        <a href="#myModal1" class="btn btn-secusses btn_mobil" data-toggle="modal" data-flag ="<?=$model->flag ?>"  data-tournament-id="<?=$model->id?>" >
+                                            <?= Yii::t('app','Invite participants') ?>
+                                        </a>
                                     <?php endif; ?>
                                 <?php endif; ?>
                              <?php endif; ?>   
@@ -132,11 +159,13 @@
                                         <form action="/tournaments/add-schedule?id=<?=$model->id?>" method="POST"  >
                                             <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
                                              <div  >
-                                                <?= Html::submitButton('Start tournament', ['class' => 'btn btn-primary btn_mobil']) ?>
+                                                <?= Html::submitButton(Yii::t('Start tournament'), ['class' => 'btn btn-primary btn_mobil']) ?>
                                              </div>
                                         </form>
                                     <?php else: ?>
-                                        <p style="color:red;">The number of teams in the tournament must be 4,8,16,32</p> 
+                                        <p style="color:red;">
+                                            <?= Yii::t('app','The number of teams in the tournament must be 4,8,16,32') ?>
+                                        </p> 
                                     <?php endif; ?>
                                <?php endif; ?>
                             <?php endif; ?>
@@ -148,11 +177,13 @@
                                         <form action="/tournaments/add-league?id=<?=$model->id?>" method="POST"  >
                                             <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
                                              <div  >
-                                                <?= Html::submitButton('Start tournament', ['class' => 'btn btn-primary btn_mobil']) ?>
+                                                <?= Html::submitButton(Yii::t('app','Start tournament'), ['class' => 'btn btn-primary btn_mobil']) ?>
                                              </div>
                                         </form>
                                         <?php else: ?>
-                                            <p style="font-size: 18px;font-weight: bold;color:red;">In the league there must be at least 4 participants</p>
+                                            <p style="font-size: 18px;font-weight: bold;color:red;">
+                                                <?= Yii::t('app','In the league there must be at least 4 participants') ?>
+                                            </p>
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
@@ -162,16 +193,16 @@
                     <?php if(!empty($table_players = json_decode($model->league_table)) && (($model->format == Tournaments::LEAGUE) || ($model->format == Tournaments::LEAGUE_P))): ?>
                     <div class="row">
                         <div class="col-md-12 overflow-scroll">
-                            <h6>League table</h6>
+                            <h6><?= Yii::t('app','League table') ?></h6>
                             <table class="standing-full">
                                     <tr>
-                                        <th>club</th>
-                                        <th>played</th>
-                                        <th>won</th>
-                                        <th>drawn</th>
-                                        <th>lost</th>
-                                        <th>points</th>
-                                        <th>form</th>
+                                        <th><?= Yii::t('app','club') ?></th>
+                                        <th><?= Yii::t('app','played') ?></th>
+                                        <th><?= Yii::t('app','won') ?></th>
+                                        <th><?= Yii::t('app','drawn') ?></th>
+                                        <th><?= Yii::t('app','lost') ?></th>
+                                        <th><?= Yii::t('app','points') ?></th>
+                                        <th><?= Yii::t('app','form') ?></th>
                                     </tr>
                                     <?php foreach($table_players as $players): ?>
                                         <tr>
@@ -204,17 +235,17 @@
                         <div class="row">
                         <?php  foreach ($turs as $key => $tur): ?>
                             <div class="col-md-12"> 
-                                <h6 style="text-align: center;">GROUP <?=($key+1)?></h6>
+                                <h6 style="text-align: center;"><?= Yii::t('app','GROUP') ?> <?=($key+1)?></h6>
                                 <table class="standing-full">
                                     <tr>
-                                        <th>club</th>
-                                        <th>played</th>
-                                        <th>won</th>
-                                        <th>drawn</th>
-                                        <th>lost</th>
+                                        <th><?= Yii::t('app','club') ?></th>
+                                        <th><?= Yii::t('app','played') ?></th>
+                                        <th><?= Yii::t('app','won') ?></th>
+                                        <th><?= Yii::t('app','drawn') ?></th>
+                                        <th><?= Yii::t('app','lost') ?></th>
                                         <th>gd</th>
-                                        <th>points</th>
-                                        <th>form</th>
+                                        <th><?= Yii::t('app','points') ?></th>
+                                        <th><?= Yii::t('app','form') ?></th>
                                     </tr>
                                     <?php foreach ($tur as $teamin_group): ?>
                                         <tr>
@@ -248,7 +279,9 @@
                     <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>
                         <?php if($model->format > 2): ?>
                         <div class="row">
-                             <div class="col-md-12"><h6 style="text-align: center;" >Teams in playoff</h6></div>
+                             <div class="col-md-12">
+                                <h6 style="text-align: center;" ><?= Yii::t('app','Teams in playoff') ?></h6>
+                            </div>
                         </div>
                         <?php endif; ?>
                         <div class="row container_iframes"  > 
@@ -270,8 +303,12 @@
                             <div class="row">
                                 <div class="col-md-7">
                                     <ul class="tab-filters">
-                                        <li class="active"><a href="#games_settings">Game settings</a></li>
-                                        <li><a href="#main" >Main</a></li>
+                                        <li class="active">
+                                            <a href="#games_settings"><?= Yii::t('app','Game settings') ?></a>
+                                        </li>
+                                        <li>
+                                            <a href="#main" ><?= Yii::t('app','Main') ?></a>
+                                        </li>
                                     </ul>
                                 </div>  
                             </div>
@@ -290,19 +327,23 @@
                                             $form->successCssClass = false;
                                         ?>
                                         <div class="row">
-                                            <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
-                                            <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
+                                            <h4 style="text-align: center;"  ><?= Yii::t('app','UPDATE TOURNAMENT') ?></h4>
+                                            <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > 
+                                                <?=Alert::widget()?>
+                                            </div>
                                             <div class="col-md-12">
-                                                <label class="col-sm-12 control-label" >Format</label>
+                                                <label class="col-sm-12 control-label" >
+                                                    <?= Yii::t('app','Format') ?>
+                                                </label>
                                                 <div class="center-align field-tournaments-flag"> 
                                                     <input type="radio" name="Tournaments[flag]" id="size_1" value="1" <?= $model->flag==1 ? 'checked' : ''?> />
-                                                    <label for="size_1">Only players</label>
+                                                    <label for="size_1"><?= Yii::t('app','Only players') ?></label>
                                                       
                                                     <input type="radio" name="Tournaments[flag]" id="size_2" value="2" <?= $model->flag==2 ? 'checked' : ''?> />
-                                                    <label for="size_2">Only teams</label>
+                                                    <label for="size_2"><?= Yii::t('app','Only teams') ?></label>
                                                     <?php if($model->game_id > 2): ?>
                                                         <input type="radio" name="Tournaments[flag]" id="size_3" value="3" <?= $model->flag==3 ? 'checked' : ''?> />
-                                                        <label for="size_3">Mixed</label>
+                                                        <label for="size_3"><?= Yii::t('app','Mixed') ?></label>
                                                     <?php endif; ?>
                                                 </div>    
                                             </div>
@@ -312,7 +353,9 @@
                                                     ->label('Time limit')?>
                                             </div>
                                             <div class="col-md-12">
-                                                <label class="col-sm-12 control-label" for="teams-background">Region</label>
+                                                <label class="col-sm-12 control-label" for="teams-background">
+                                                    <?= Yii::t('app','Region') ?>
+                                                </label>
                                                 <div class="item select-show">
                                                     <div class="fancy-select ">
                                                         <select class="basic" name="Tournaments[region]" required>
@@ -329,7 +372,7 @@
                                         </div>   
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
+                                                <?= Html::submitButton(Yii::t('app','Submit'), ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
                                             </div>
                                         </div>
                                         <?php ActiveForm::end(); ?>
@@ -349,17 +392,27 @@
                                             $form->successCssClass = false;
                                         ?>
                                         <div class="row">
-                                            <h4 style="text-align: center;"  >UPDATE TOURNAMENT</h4>
-                                            <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > <?=Alert::widget()?></div>
+                                            <h4 style="text-align: center;"  ><?= Yii::t('app','UPDATE TOURNAMENT') ?></h4>
+                                            <div class="alert_tour col-md-12" style="margin: 20px 0;font-size: 16px;" > 
+                                                <?=Alert::widget()?>
+                                            </div>
                                             
                                             <div class="col-md-12">
                                                 <div  style="margin-bottom:35px;" >
-                                                    <label style="padding-left: 20px;" >Number of players per team</label>
+                                                    <label style="padding-left: 20px;" >
+                                                        <?= Yii::t('app','Number of players per team') ?>
+                                                    </label>
                                                     <div class="item select-show">
                                                         <select class="basic" name="Tournaments[max_players]" required>
-                                                            <option value="1" <?=$model->max_players == 1 ? 'selected' : '' ?> >One player</option>
-                                                            <option value="2" <?=$model->max_players == 2 ? 'selected' : '' ?> >Two players</option>
-                                                            <option value="4" <?=$model->max_players == 4 ? 'selected' : '' ?> >Four players</option>
+                                                            <option value="1" <?=$model->max_players == 1 ? 'selected' : '' ?> >
+                                                                <?= Yii::t('app','One player') ?>
+                                                            </option>
+                                                            <option value="2" <?=$model->max_players == 2 ? 'selected' : '' ?> >
+                                                                <?= Yii::t('app','Two players') ?>
+                                                            </option>
+                                                            <option value="4" <?=$model->max_players == 4 ? 'selected' : '' ?> >
+                                                                <?= Yii::t('app','Four players') ?>
+                                                            </option>
                                                         </select>
                                                     </div>      
                                                 </div>
@@ -370,7 +423,9 @@
                                                 <?php if(empty($model->cup)&&empty($model->league)): ?>
                                                     <?php if($model->format == Tournaments::LEAGUE_G): ?>
                                                         <div style="margin-bottom:20px;">
-                                                            <label class="col-sm-12 control-label" for="teams-background">Number of teams in the a group</label>
+                                                            <label class="col-sm-12 control-label" for="teams-background">
+                                                                <?= Yii::t('app','Number of teams in the a group') ?>
+                                                            </label>
                                                             <div class="item select-show">
                                                                 <div class="fancy-select ">
                                                                     <select class="basic" name="Tournaments[league_g]" required>
@@ -385,7 +440,9 @@
                                                     <?php endif; ?>
                                                     <?php if(($model->format == Tournaments::LEAGUE_G)||($model->format == Tournaments::LEAGUE_P)): ?>
                                                         <div style="margin-bottom:20px;">
-                                                            <label class="col-sm-12 control-label" for="teams-background">Number of teams that go into the playoffs</label>
+                                                            <label class="col-sm-12 control-label" for="teams-background">
+                                                                <?= Yii::t('app','Number of teams that go into the playoffs') ?>
+                                                            </label>
                                                             <div class="item select-show">
                                                                 <div class="fancy-select ">
                                                                     <select class="basic" name="Tournaments[league_p]" required>
@@ -418,7 +475,7 @@
                                         </div>   
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
+                                                <?= Html::submitButton( Yii::t('app','Submit'), ['class' => 'btn btn-primary formbtn btn_mobil']) ?>
                                             </div>
                                         </div>
                                         <?php ActiveForm::end(); ?>
@@ -430,7 +487,7 @@
             <?php endif; ?>
             <!--CHAMPIONSHIP manage_tournament TAB END --> 
             <div class="tab-item part-wrap tab-pane" id="info">
-                <h3  style="text-align: center;" >tournament information</h3>
+                <h3  style="text-align: center;" ><?=Yii::t('app','tournament information')?></h3>
                 <div class="container" style="margin-bottom: 40px;">
                     <div class="row">
                         <div class="col-md-4 col-md-offset-2"><b>Game:</b></div>
@@ -443,19 +500,19 @@
                             <?php
                             switch ($model->format) {
                                 case 1:
-                                echo "Cup (Single elimination)";
+                                echo Yii::t('app','Cup (Single elimination)');
                                 break;
                                 case 2:
-                                echo "Cup (Duble elimination)";
+                                echo Yii::t('app','Cup (Duble elimination)');
                                 break;
                                 case 3:
-                                echo "League (Regular)";
+                                echo Yii::t('app','League (Regular)');
                                 break;
                                 case 4:
-                                echo "League (Regular + Playoff)";
+                                echo Yii::t('app','League (Regular + Playoff)');
                                 break;
                                 case 5:
-                                echo "League (Group + Playoff)";
+                                echo Yii::t('app','League (Group + Playoff)');
                                 break;           
                             }
                             ?>
@@ -463,15 +520,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-2"><b>Rules of the tournament:</b></div>
+                        <div class="col-md-4 col-md-offset-2"><b><?=Yii::t('app','Rules of the tournament')?>:</b></div>
                         <div class="col-md-6"><?=$model->rules?></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-2"><b>Tournament prizes:</b></div>
+                        <div class="col-md-4 col-md-offset-2"><b><?=Yii::t('app','Tournament prizes')?>:</b></div>
                         <div class="col-md-6"><?=$model->prizes?></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-2"><b>Prize pool $:</b></div>
+                        <div class="col-md-4 col-md-offset-2"><b><?=Yii::t('app','Prize pool')?> $:</b></div>
                         <div class="col-md-6"><?=$model->prize_pool?></div>
                     </div>
 
@@ -484,7 +541,9 @@
                     <?php foreach($t_data as $key => $val): ?>
                         <?php if(!empty($g_data[$key])): ?>
                             <div class="row">
-                                <div class="col-md-4 col-md-offset-2"><b><?=$g_data[$key]['title']?>:</b></div>
+                                <div class="col-md-4 col-md-offset-2">
+                                    <b><?=$g_data[$key]['title']?>:</b>
+                                </div>
                                 <div class="col-md-6"><?=$val?></div>
                             </div>
                         <?php else: ?>
@@ -525,7 +584,7 @@
                             <input type="text" class="modal_search search_mobil" placeholder="Search for players" >
                         </div>
                         <div class="col-md-3 col-sm-3 col-xs-5">
-                            <button class="btn search_btn btn_mobil" id="search_mod">Search</button>
+                            <button class="btn search_btn btn_mobil" id="search_mod"><?=Yii::t('app','Search')?></button>
                         </div>
                     </div>
                     <div class="row">

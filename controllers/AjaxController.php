@@ -102,10 +102,10 @@ class AjaxController extends \yii\web\Controller
                     $a = Html::a($url,$url);
                     $inviteHtml = Teams::getInviteEmailHtml($a, $user, $team, $capitanEmail);
                     Yii::$app->mailer->compose()
-                        ->setFrom([Yii::$app->params['adminEmail'] => 'The organization'])
+                        ->setFrom([Yii::$app->params['adminEmail'] => Yii::t('app','The organization')])
                         ->setTo([$user->email => $user->name])
-                        ->setSubject("New invitation to the $team->name team")
-                        ->setTextBody("New invitation to the $team->name team")
+                        ->setSubject(Yii::t('app','New invitation to the {name} team',['name' => $team->name]))
+                        ->setTextBody(Yii::t('app','New invitation to the {name} team',['name' => $team->name]))
                         ->setHtmlBody($inviteHtml)
                         ->send();    
                 }
@@ -132,10 +132,10 @@ class AjaxController extends \yii\web\Controller
                     $a = Html::a($url,$url);
                     $deleteHtml = Teams::sentDeleteHtml($a,$user, $team);
                     Yii::$app->mailer->compose()
-                        ->setFrom([Yii::$app->params['adminEmail'] => 'Captain of the team '.$team->name])
+                        ->setFrom([Yii::$app->params['adminEmail'] => Yii::t('app','Captain of the team').$team->name])
                         ->setTo([Yii::$app->params['EmailModerator']])
-                        ->setSubject("Request for deletion $team->name team")
-                        ->setTextBody("Request for deletion $team->name team")
+                        ->setSubject(Yii::t('app','Request for deletion {name} team',['name' => $team->name]))
+                        ->setTextBody(Yii::t('app','Request for deletion {name} team',['name' => $team->name]))
                         ->setHtmlBody($deleteHtml)
                         ->send();    
                     return ['del'=>true];
@@ -364,8 +364,8 @@ class AjaxController extends \yii\web\Controller
                     $url = Url::toRoute(['tournaments/invitation','tokin'=> $tokin,
                         'tournament' => $tournament->id, 'team' => $team->id], true);
                     $a = Html::a($url,$url);
-                    $message = '<p>The invitation to join the tournament for the team '.$team->name.' 
-                        for confirmation or rejection click on the link<br> '.$a.'</p>';
+                    $message = '<p>'.Yii::t('app','The invitation to join the tournament for the team {team} for confirmation or rejection click on the link',['team'=>$team->name]).' 
+                        <br> '.$a.'</p>';
                     $player_id = $team->capitan;
                 }  
             } else {
@@ -379,19 +379,18 @@ class AjaxController extends \yii\web\Controller
                 $url = Url::toRoute(['tournaments/invitation','tokin'=> $tokin,
                     'tournament' => $tournament->id], true);
                 $a = Html::a($url,$url);
-                $message = '<p>Invitation to enter the tournament for the player <b>'.$user->name.'
-                            </b>to confirm or reject the move click on the link<br> '.$a.'</p>';
+                $message = '<p>'.Yii::t('app','Invitation to enter the tournament for the player {name} to confirm or reject the move click on the link',['name'=>'<b>'.$user->name.'</b>']).' <br> '.$a.'</p>';
                 $player_id = $user->id;
             }
             $a = Html::a($url,$url);
             Yii::$app->mailer->compose()
-                ->setFrom([Yii::$app->params['adminEmail'] => 'Invitation to join the tournament '.$tournament->name])
+                ->setFrom([Yii::$app->params['adminEmail'] => Yii::t('app','Invitation to join the tournament ').$tournament->name])
                 ->setTo([$user->email])
-                ->setSubject("Invitation to join the tournament")
-                ->setTextBody("Invitation to join the tournament")
+                ->setSubject(Yii::t('app',"Invitation to join the tournament"))
+                ->setTextBody(Yii::t('app',"Invitation to join the tournament"))
                 ->setHtmlBody($message)
                 ->send();
-            (new MessageUser())->writeTitle("Invitation to join the tournament")
+            (new MessageUser())->writeTitle(Yii::t('app',"Invitation to join the tournament"))
                 ->writeMessage($tournament->user_id,$player_id,$message);   
             return ['sent' => true];
         }

@@ -48,7 +48,7 @@ class ProfileController extends \yii\web\Controller
                 $email = Yii::$app->user->identity->email;
                 $a_email = '<a href="http://'.$email.'">'.$email.'</a>';
                 $resend = '<a href="/resend">&nbsp;&nbsp;&nbsp;Resend</a>';
-                Yii::$app->session->setFlash('warning', 'Please confirm you email: '.$a_email.$resend);
+                Yii::$app->session->setFlash('warning', Yii::t('app','Please confirm you email:').' '.$a_email.$resend);
             }
         }
  		return parent::beforeAction($action);

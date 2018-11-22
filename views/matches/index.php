@@ -2,8 +2,9 @@
 
 use yii\helpers\Html;
 use app\models\Tournaments;
+use Yii;
 
-$this->title = 'Match';
+$this->title = Yii::t('app','Match');
 $script = "$.matchDate = ".(strtotime($model->date)-time()).";";
 $this->registerJs($script, yii\web\View::POS_END);
 $this->registerCssFile(
@@ -28,7 +29,7 @@ $user_id = false;
 ?>
 
     <div class="time-match" >
-        <h3> date of the match </h3> 
+        <h3> <?=Yii::t('app','date of the match')?> </h3> 
         <span><?=date(' d \of F, h:i ',strtotime($model->date))?></span>
     </div>
     <!--MATCH PAGE TOP BEGIN-->
@@ -45,7 +46,7 @@ $user_id = false;
                                 </a>
                                 <span><?= $team1->game->name ?></span>
                                 <div class="latest">
-                                    <div class="latest-title">Latest Results</div>
+                                    <div class="latest-title"><?=Yii::t('app','Latest Results')?></div>
                                     <?php $res = $model->getFiveResult();?> 
                                     <?php foreach ($res['result1'] as $int){
                                         if ($int == 1) {
@@ -81,7 +82,7 @@ $user_id = false;
                                 </a>
                                 <span><?= $team2->game->name ?></span>
                                 <div class="latest">
-                                    <div class="latest-title">Latest Results</div>
+                                    <div class="latest-title"><?=Yii::t('app','Latest Results')?></div>
                                     <?php foreach ($res['result2'] as $int){
                                         if ($int == 1) {
                                            echo "<span class='win' >w</span>";
@@ -125,10 +126,8 @@ $user_id = false;
                                         <span class="vs">vs</span>
                                         <img src="<?=$team2->logo()?>" width="40" height="40" alt="team-logo2">
                                         <span class="info">
-                                            <span class="what">National cup - semifinal</span>
                                             <span class="then"><?=date(' d F Y / h:i ',strtotime($model->date))?>PM</span>
                                         </span>
-                                        <span class="marker">live</span>
                                     </div>
                                 </div>
                             </div>  
@@ -150,7 +149,8 @@ $user_id = false;
                                                 <?php  foreach ($userMatchs as $userMatch):?>
                                                     <?php if($i_count != $userMatch->round) {
                                                         $i_count =  $userMatch->round;
-                                                        echo '<div class="title" style="text-align:center;" >Round'.$i_count.'</div>'; 
+                                                        echo '<div class="title" style="text-align:center;" >'.
+                                                        Yii::t('app','Round').$i_count.'</div>'; 
                                                     }
                                                         $data = json_decode($userMatch->data,true);
                                                     ?>
@@ -195,10 +195,10 @@ $user_id = false;
                                                         <div class="col-md-12" style="background-color: #fff;padding-bottom:10px;text-align: center;">
                                                             <div class="col-md-6 lhs" >
                                                                 <?php if($user_id == $userMatch->userS->id): ?>
-                                                                    <p class="message_to_ban" >Your classes</p>
+                                                                    <p class="message_to_ban" ><?=Yii::t('app','Your classes')?></p>
                                                                     <?php $class = ''; ?>
                                                                 <?php else :?>
-                                                                    <p class="message_to_ban" >Ban rival class</p>
+                                                                    <p class="message_to_ban" ><?=Yii::t('app','Ban rival class')?></p>
                                                                     <?php $class = 'rival'; ?>
                                                                 <?php endif;?>
                                                                 <?php
@@ -220,10 +220,10 @@ $user_id = false;
                                                             </div>
                                                             <div class="col-md-6 lhs">
                                                                 <?php if($user_id == $userMatch->userF->id): ?>
-                                                                    <p class="message_to_ban" >Your classes</p>
+                                                                    <p class="message_to_ban" ><?=Yii::t('app','Your classes')?></p>
                                                                     <?php $class = ''; ?>
                                                                 <?php else :?>
-                                                                    <p class="message_to_ban" >Ban rival class</p>
+                                                                    <p class="message_to_ban" ><?=Yii::t('app','Ban rival class')?></p>
                                                                     <?php $class = 'rival'; ?>
                                                                 <?php endif;?>
                                                                 <?php
@@ -251,7 +251,8 @@ $user_id = false;
                                                 <?php endforeach; ?>
                                                 <input type="hidden" value="<?=$i_count?>" name="round" >
                                                 <div class="col-md-12" style="text-align: center;margin-top: 30px;">
-                                                    <button class="btn seve_tur_btn" style="display:none;">save</button>
+                                                    <button class="btn seve_tur_btn" style="display:none;"><?=Yii::t('app','save')?>
+                                                </button>
                                                 </div>
                                                 </form>
                                             <?php endif; ?>
@@ -263,9 +264,9 @@ $user_id = false;
                             <?php if (\Yii::$app->user->identity->id == $tournament->user_id):?>    
                                 <div class="item-body write-result-match">
                                     <?php if($model->active_result!=1): ?>
-                                        <h6 style="text-align: center;margin-top: 10px;">set match results</h6>
+                                        <h6 style="text-align: center;margin-top: 10px;"><?=Yii::t('app','set match results')?></h6>
                                     <?php else: ?>
-                                        <h6 style="text-align: center;margin-top: 10px;">match results</h6>
+                                        <h6 style="text-align: center;margin-top: 10px;"><?=Yii::t('app','match results')?></h6>
                                     <?php endif; ?>   
                                     <div class="row">
                                         <form  method="POST" >
@@ -299,7 +300,7 @@ $user_id = false;
                                             <div class="row">
                                                 <?php if($model->active_result != 1): ?>
                                                 <div class="col-md-12" style="text-align: center;margin-top: 20px;">
-                                                    <button class="btn" >Save result</button>
+                                                    <button class="btn" ><?=Yii::t('app','Save result')?></button>
                                                 </div> 
                                                 <?php endif; ?>
                                             </div>
@@ -311,7 +312,7 @@ $user_id = false;
                             <?php endif;?>
                             <?php if (\Yii::$app->user->isGuest):?>
                                 <div class="item-body write-result-match" style="margin-bottom: 40px;">
-                                    <h6 style="text-align: center;margin-top: 10px;">match results</h6>
+                                    <h6 style="text-align: center;margin-top: 10px;"><?=Yii::t('app','match results')?></h6>
                                     <div class="col-md-4" style="text-align: right;margin-top: 10px;">
                                         <a href="<?=$team1->links()?>">
                                             <span><?=$team1->name ?></span>

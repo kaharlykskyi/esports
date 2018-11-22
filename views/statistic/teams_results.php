@@ -3,13 +3,14 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use Yii;
 
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
-    $this->title = 'Teams statistics';
+    $this->title = Yii::t('app','Teams statistics');
 ?>
 
 <div class="container">
-    <h3 style="text-align: center;" >Teams statistics</h3>
+    <h3 style="text-align: center;" ><?=$this->title?></h3>
     <div class="box-body">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -26,7 +27,7 @@ use yii\helpers\Url;
 
                 [
                     'attribute' => 'team_id',
-                    'label' => 'Team',
+                    'label' => Yii::t('app','Team'),
                     'content' => function($data) {
                         return "<a href='{$data->team->links()}' ><img src= '{$data->team->logo()}' style='height:28px;'>  {$data->team->name}</a>";
                     }
@@ -34,17 +35,17 @@ use yii\helpers\Url;
 
                 [
                     'attribute' => 'victories',
-                    'label' => 'victories',
+                    'label' => Yii::t('app','Victories'),
                 ],
 
                 [
                     'attribute' => 'loss',
-                    'label' => 'loss',
+                    'label' => Yii::t('app','Loss'),
                 ],
 
                 [
                     'attribute' => 'rate',
-                    'label'=>'W/L Rate',
+                    'label'=> Yii::t('app','W/L Rate'),
                 ],
             ],
         ]); ?>

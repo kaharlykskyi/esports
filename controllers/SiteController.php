@@ -12,7 +12,6 @@ use yii\web\HttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
-use app\models\ContactForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use app\models\servises\FlagServis;
@@ -83,6 +82,25 @@ class SiteController extends Controller
             'index',
             compact('dataProvider','searchModel','models','pages','alias')
         );
+    }
+
+    public function actionTranslations($lang)
+    {
+        $cookies = Yii::$app->response->cookies;
+        if(($lang != 'en-EN')&&($lang != 'fr-FR')&&($lang != 'es-ES')) {
+            return $this->goBack();
+        }   
+
+        $cookies->add(new \yii\web\Cookie([
+            'name' => 'language',
+            'value' => $lang,
+            'expire' => time() + 86400 * 365,
+        ]));
+
+        if(Yii::$app->user->returnUrl != '/') 
+            return $this->goBack();
+        else return Yii::$app->request->referrer ? $this
+            ->redirect(Yii::$app->request->referrer) : $this->goHome();
     }
 
     public function actionLogin()
@@ -156,10 +174,7 @@ class SiteController extends Controller
             throw new \HttpException(401 ,'Wrong token');
         }
 
-        return $this->render('change-password', [
-            'token' => $token
-            //'error' => isset($model->getErrors()['password'][0]) ? $model->getErrors()['password'][0] : ''
-        ]);
+        return $this->render('change-password', [ 'token' => $token ]);
     }
 
     public function actionChangePassword()
@@ -219,12 +234,12 @@ class SiteController extends Controller
             ['site/confirmation',
                 'confirmation_tokin'=> $stringTokin,'email' => $email,
             ], true);
-        $a = Html::a('<b>Follow the link to confirm your email</b>',$url);
+        $a = Html::a('<b>'.Yii::t('app','Follow the link to confirm your email').'</b>',$url);
         Yii::$app->mailer->compose()
             ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo($email)
-            ->setSubject('Registration')
-            ->setTextBody('<p>Confirmation of registration</p>')
+            ->setSubject(Yii::t('app','Registration'))
+            ->setTextBody('<p>'.Yii::t('app','Confirmation of registration').'</p>')
             ->setHtmlBody($a)
             ->send();
     }

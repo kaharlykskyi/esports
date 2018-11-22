@@ -82,7 +82,7 @@ $(document).ready(function(){
                     $.myVarContainer.contentSearch = response;
                     setTimeout(function(){
                         if (response.not) {
-                            message("Sorry, we can't find what you're looking for. Give it another whirl.");
+                            message($.language_n18.sorry);
                         } else {
                             //console.log(response);
                             addcontent(response); 
@@ -127,12 +127,12 @@ $(document).ready(function(){
                            <div class="blok_search_username">
                            <div class="col-xs-4 img_cont_search clearfix">
                             <a href="/user/public/${element.id}">
-                            <img src="${element.logo}" alt=""></a></div>
+                            <img src="${element.logo}" alt="logo"></a></div>
                             <div class="col-xs-8">
                             <p class="username"><a href="/user/public/${element.id}">
                             ${element.name}</a></p>
-                            <p>Registration date : ${element.created_at}</p>
-                            <p>Teams:</p><p class="list_teams">${teamsl}</p>
+                            <p>${$.language_n18.registration}: ${element.created_at}</p>
+                            <p>${$.language_n18.teams}:</p><p class="list_teams">${teamsl}</p>
                             </div></div></div>`;
             $('.container_search_modal').append(content);
         });      
@@ -155,9 +155,9 @@ $(document).ready(function(){
                             <a href="/teams/${element.slug}"><img src="${element.logo}" ></a>
                             </div><div class="col-xs-8">
                             <p class="teams"><a href="/teams/${element.slug}">${element.name}</a></p>
-                            <p>Registration date : ${date.getFullYear()}-${month}-${day}</p>
-                            <p>Game: ${element.g_name}</p>
-                            <p class="list_teams">Members ${element.c_user}</p>
+                            <p>${$.language_n18.registration} : ${date.getFullYear()}-${month}-${day}</p>
+                            <p>${$.language_n18.game}: ${element.g_name}</p>
+                            <p class="list_teams">${$.language_n18.members} ${element.c_user}</p>
                             </div></div></div>`;
             $('.container_search_modal').append(content);
         });      
@@ -190,9 +190,9 @@ $(document).ready(function(){
                             <a href="/toutnaments/public/${element.id}"><img src="/images/profile/images.png" alt=""></a>
                             </div><div class="col-xs-8">
                             <p class="tournaments"><a href="/tournaments/public/${element.id}">${element.name}</a></p>
-                            <p>Game: ${element.g_name}</p>
-                            <p>Start date: ${element.start_date.substr(0, 10)}</p>
-                            <p>Teams: ${element.c_teams}</p>
+                            <p>${$.language_n18.game}: ${element.g_name}</p>
+                            <p>${$.language_n18.start}: ${element.start_date.substr(0, 10)}</p>
+                            <p>${$.language_n18.teams}: ${element.c_teams}</p>
                             <p>Format: ${format}</p></div></div></div>`;
 
             $('.container_search_modal').append(content);

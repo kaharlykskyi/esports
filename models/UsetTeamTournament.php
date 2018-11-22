@@ -89,17 +89,20 @@ class UsetTeamTournament extends \yii\db\ActiveRecord
         }
 
         foreach ($members as $member) {
-            $text_meesage = '<p><b>'.$team->capitans->name.'</b> chose you to participate in tournament 
-                            <a href="'.$url.'" >'.$tournament->name.'</a></p>';
+            $text_meesage = '<p><b>'.$team->capitans->name.'</b>'.
+                Yii::t('app','chose you to participate in tournament').
+                ' <a href="'.$url.'" >'.$tournament->name.'</a></p>';
             Yii::$app->mailer->compose()
-                ->setFrom([Yii::$app->params['adminEmail'] => 'Participation in the tournament '.$tournament->name])
+                ->setFrom([
+                    Yii::$app->params['adminEmail'] => 
+                    Yii::t('app','Participation in the tournament').' '.$tournament->name])
                 ->setTo([$member->email])
-                ->setSubject("Participation in the tournament")
-                ->setTextBody("Participation in the tournament")
+                ->setSubject(Yii::t('app','Participation in the tournament'))
+                ->setTextBody(Yii::t('app','Participation in the tournament'))
                 ->setHtmlBody($text_meesage)
                 ->send();
             (new MessageUser())
-                ->writeTitle('You have been chosen to participate in the tournament')
+                ->writeTitle(Yii::t('app','You have been chosen to participate in the tournament'))
                 ->writeMessage($team->capitans->id,$member->id,$text_meesage.$a_api_hearstone);   
         }   
     }

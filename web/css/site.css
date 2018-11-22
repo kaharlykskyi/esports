@@ -58,11 +58,28 @@ input[type=email], input[type=password] {
     opacity: .6;
 }
 
-
 .main-menu-wrap .custom-logo-link {
     z-index: 100000;
 }
 
 .main-slider-section{
     background: none;
+}
+
+.top-language img {
+    width: 30px;
+}
+
+.top-language .list {
+    padding: 15px 0 15px 20px;
+}
+
+
+.top-language .list li a {
+    background-image: none;
+}
+
+.top-language .dropdown-menu {
+    min-width: 90px;
+    max-width: 90px;
 }

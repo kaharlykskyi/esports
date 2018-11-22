@@ -25,10 +25,25 @@ $config = [
     ],
     'on beforeAction' => function ($event) {
         \Yii::$app->params['domains'] = (explode(".",\Yii::$app->request->hostName))[0];
+        $cookies = \Yii::$app->request->cookies;
+        if ($cookies->has('language')) {
+            $language = $cookies->getValue('language', 'en-EN');
+            \Yii::$app->language = $language;
+        }
     },
 
     'components' => [
 
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/translations',
+                    'sourceLanguage' => 'en',
+                ],
+            ],
+        ],
+        
         'image' => [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD',  //GD or Imagick

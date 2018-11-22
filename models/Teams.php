@@ -57,12 +57,12 @@ class Teams extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Team name',
-            'file' => 'Team logo',
-            'file1' => 'Background',
-            'game_id' => 'Game',
-            'website' => 'Website URL',
-            'capitan' => 'Capitan',
+            'name' => Yii::t('app','Team name'),
+            'file' => Yii::t('app','Team logo'),
+            'file1' => Yii::t('app','Background'),
+            'game_id' => Yii::t('app','Game'),
+            'website' => Yii::t('app','Website URL'),
+            'capitan' => Yii::t('app','Capitan'),
         ];
     }
 
@@ -136,22 +136,26 @@ class Teams extends \yii\db\ActiveRecord
 
     public static function getInviteEmailHtml($a, $user, $team, $capitanEmail)
     {
-        return "<p>Hello {$user->name},
-                </p><p>The <b>{$team->name}</b> team invites you to become part of its players. To <b>accept</b> or <b>decline</b> the invitation click the link below: </p>
-                <p><a href='$a'>$a</a></p><p>Finally, if you want more information, contact <b>{$team->name}</b> through their website, or through their captain, by email {$capitanEmail}.</p>
-                <p>We hope you enjoy competing in our tournaments.</p>
-                <p>Sincerely.</p>
-                <p>The organization.</p>";
+        return Yii::t('app','<p>Hello {user_name},</p><p>The <b>{team_name}</b> team invites you to become part of its players. To <b>accept</b> or <b>decline</b> the invitation click the link below: </p><p><a href="{link}">{link}</a></p><p>Finally, if you want more information, contact <b>{team_name}</b> through their website, or through their captain, by email {email}.</p><p>We hope you enjoy competing in our tournaments.</p><p>Sincerely.</p><p>The organization.</p>',
+                [
+                    'user_name'=> $user->name,
+                    'team_name'=> $team->name,
+                    'email' => $capitanEmail,
+                    'link' => $a,
+                ]
+            );
     }
 
     public static function sentDeleteHtml($a, $user, $team)
     {
-        return "<p>Team captain {$user->name},
-                </p><p>I ask to remove a command <b>{$team->name}</b></p>
-                <p>To delete or cancel, follow the link   <a href='$a'>$a</a></p>
-                <p>You can write a letter to the captain of the team <b>{$team->name}</b> 
-                his mail  {$user->email}.</p>
-                <p>The capitan.</p>";
+        return Yii::t('app','<p>Team captain {user_name},</p><p>I ask to remove a command <b>{team_name}</b></p><p>To delete or cancel, follow the link   <a href="{link}">{link}</a></p><p>You can write a letter to the captain of the team <b>{team_name}</b> his mail  {email}.</p><p>The capitan.</p>',
+                [
+                    'user_name'=> $user->name,
+                    'team_name'=> $team->name,
+                    'email' => $user->email,
+                    'link' => $a,
+                ]
+            );
     }
 
     public function getMembers()
@@ -197,13 +201,13 @@ class Teams extends \yii\db\ActiveRecord
             if(($tournament->game_id==1)||($tournament->game_id==2)) {
                 (new UsetTeamTournament)->seveMembersTournament([$user->id],$tournament,$model,false);
                 $url ='<a href="'.Url::toRoute(['api-string','id' => $tournament->id], true).'">'.Url::toRoute(['api-string','id' => $tournament->id], true).'</a>' ;
-                $text_meesage = "<p> To participate in the tournament, enter the data $url </p>";
+                $text_meesage = "<p> ".Yii::t('app','To participate in the tournament, enter the data')." {$url} </p>";
             } else {
-                $text_meesage = "<p> You took part in the tournament <a  href='/tournaments/public/$tournament->id' >$tournament->name</a> </p>";
+                $text_meesage = "<p> ".Yii::t('app','You took part in the tournament')." <a  href='/tournaments/public/{$tournament->id}' >{$tournament->name}</a> </p>";
             }
 
             $message_config = new MessageUser();
-            $message_config->writeTitle('You are participating in a tournament.')
+            $message_config->writeTitle(Yii::t('app','You are participating in a tournament.'))
                 ->writeMessage($tournament->user_id,$user->id,$text_meesage);
         } else {
             return false;

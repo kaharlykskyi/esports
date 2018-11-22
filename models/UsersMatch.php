@@ -65,7 +65,6 @@ class UsersMatch extends \yii\db\ActiveRecord
     { 
         if (!$insert) {
             ResultsStatisticUsers::addStatistic($this);
-            $this->addBallUser();
         }
         parent::afterSave($insert, $changedAttributes);
     }
@@ -88,20 +87,5 @@ class UsersMatch extends \yii\db\ActiveRecord
     public function getUserF()
     {
         return $this->hasOne(User::className(), ['id' => 'user2']);
-    }
-
-    private function addBallUser()
-    {
-        if (is_numeric($this->results1)&&is_numeric($this->results2)) {
-            if ($this->results1 != $this->results2) {
-                if ($this->results1 > $this->results2) {
-                    $this->userS->addBall(20);
-                    $this->userF->addBall(10);
-                } else {
-                    $this->userS->addBall(10);
-                    $this->userF->addBall(20);
-                }
-            }
-        }
     }
 }

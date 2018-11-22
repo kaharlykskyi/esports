@@ -3,29 +3,29 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use Yii;
 
+$this->title = Yii::t('app','Create team');
 
-$this->title = 'Create team';
-$this->params['breadcrumbs'][] = $this->title;
-
-$script = "$('.dropify').dropify({
+    $script = "
+    $('.dropify').dropify({
         messages: {
-            'default': 'Drag and drop a file here or click',
-            'replace': 'Drag and drop or click to replace',
-            'remove':  'Remove',
-            'error':   'Ooops, something wrong happended.'
+            'default': '".Yii::t('app','Drag and drop a file here or click')."',
+            'replace': '".Yii::t('app','Drag and drop or click to replace')."',
+            'remove':  '".Yii::t('app','Remove')."',
+            'error':   '".Yii::t('app','Ooops, something wrong happended.')."'
         }
     });
 
     $('.dropify1').dropify({
         messages: {
-            'default': 'Drag and drop a file here or click',
-            'replace': 'Drag and drop or click to replace',
-            'remove':  'Remove',
-            'error':   'Ooops, something wrong happended.'
+            'default': '".Yii::t('app','Drag and drop a file here or click')."',
+            'replace': '".Yii::t('app','Drag and drop or click to replace')."',
+            'remove':  '".Yii::t('app','Remove')."',
+            'error':   '".Yii::t('app','Ooops, something wrong happended.')."'
         }
     });
-";
+    ";
 
 $this->registerJs($script, yii\web\View::POS_END);
 $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
@@ -48,14 +48,14 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/create-team.js',['depe
             $form->successCssClass = false;
         ?>
         <div class="row">
-            <h1>Create team</h1>
+            <h1> <?=Yii::t('app','Create team')?></h1>
             <div class="col-md-8 col-md-offset-2">
                 <?= $form->field($model, 'name')->textInput(['class' => false]) ?>
                 <?=$form->field($model, 'file')->fileInput(['class' => 'dropify','data-height'=>"200",'data-allowed-file-extensions'=>"jpg png jepg gif"]) ?> 
                 <?=$form->field($model, 'file1')->fileInput(['class' => 'dropify1','data-height'=>"300",'data-allowed-file-extensions'=>"jpg png jepg gif"]) ?> 
                 <div class="row" >
                      <div class="col-md-12">
-                        <label class="col-sm-12 control-label" >Select game</label>
+                        <label class="col-sm-12 control-label" ><?=Yii::t('app','Select game')?></label>
                         <div id="radios" class="clearfix">
                             <?php $i = 0; foreach($not_gemes as $value):
                                 $i++;
@@ -66,7 +66,9 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/create-team.js',['depe
                             <input id="input<?=$i?>" name="Teams[game_id]" type="radio" value="<?=$value->id?>">
                         <?php endforeach; ?>
                         </div>
-                        <div class="erroe-massage" style="display: none;">To select a game press the logo</div>                    
+                        <div class="erroe-massage" style="display: none;">
+                            <?=Yii::t('app','To select a game press the logo')?>
+                        </div>                    
                      </div>
                 </div>
                    
@@ -75,7 +77,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/create-team.js',['depe
          </div>   
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                <?= Html::submitButton(Yii::t('app','Submit'), ['class' => 'btn btn-primary formbtn']) ?>
             </div>
         </div>
         <?php ActiveForm::end(); ?>

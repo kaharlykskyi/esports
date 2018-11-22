@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-
+use Yii;
 
 $this->title = 'Update team';
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,11 +13,10 @@ $script = "$('.dropify').dropify({
         height:200,
         defaultFile:'{$model->logo}',
         messages: {
-            
-            'default': 'Drag and drop a file here or click',
-            'replace': 'Drag and drop or click to replace',
-            'remove':  'Remove',
-            'error':   'Ooops, something wrong happended.'
+            'default': '".Yii::t('app','Drag and drop a file here or click')."',
+            'replace': '".Yii::t('app','Drag and drop or click to replace')."',
+            'remove':  '".Yii::t('app','Remove')."',
+            'error':   '".Yii::t('app','Ooops, something wrong happended.')."'
         }
     });
 
@@ -26,11 +25,10 @@ $script = "$('.dropify').dropify({
         height:300,
         defaultFile:'{$model->background}',
         messages: {
-            
-            'default': 'Drag and drop a file here or click',
-            'replace': 'Drag and drop or click to replace',
-            'remove':  'Remove',
-            'error':   'Ooops, something wrong happended.'
+            'default': '".Yii::t('app','Drag and drop a file here or click')."',
+            'replace': '".Yii::t('app','Drag and drop or click to replace')."',
+            'remove':  '".Yii::t('app','Remove')."',
+            'error':   '".Yii::t('app','Ooops, something wrong happended.')."'
         }
     });
 ";
@@ -56,7 +54,7 @@ $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/create-team.css');
             $form->successCssClass = false;
         ?>
         <div class="row">
-            <h1>Update team</h1>
+            <h1><?=Yii::t('app','Update team')?></h1>
             <div class="col-md-8 col-md-offset-2">
                 <?= $form->field($model, 'name')->textInput(['class' => false]) ?>
                 <?=$form->field($model, 'file')->fileInput(['class' => 'dropify','data-allowed-file-extensions'=>"jpg png jepg gif", 'accept'=>"image/jpeg,image/png,image/gif" ]) ?> 
@@ -66,7 +64,9 @@ $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/create-team.css');
                 <?= $form->field($model, 'website')->textInput(['class' => false]) ?>
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="col-sm-12 control-label" for="teams-background">Capitan</label>
+                        <label class="col-sm-12 control-label" for="teams-background">
+                            <?=Yii::t('app','Capitan')?>
+                        </label>
                         <div class="item select-show">
                             <div class="fancy-select ">
                                 <select class="basic" name="Teams[capitan]" required>

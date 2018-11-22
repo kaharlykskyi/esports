@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use app\models\servises\FlagServis;
 use yii\widgets\Pjax;
+use Yii;
 
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
     $this->title = 'News';
@@ -13,7 +14,7 @@ use yii\widgets\Pjax;
 
 
 <div class="container">
-    <h3 style="text-align: center;" >Users statistics</h3>
+    <h3 style="text-align: center;" ><?=Yii::t('app','Users statistics') ?></h3>
     <div class="box-body">
         <?php Pjax::begin(); ?>
         <?= GridView::widget([
@@ -49,15 +50,15 @@ use yii\widgets\Pjax;
                 ],
                 [
                     'attribute' => 'victories',
-                    'label' => 'victories',
+                    'label' => Yii::t('app','Victories'),
                 ],
                 [
                     'attribute' => 'loss',
-                    'label' => 'loss',
+                    'label' => Yii::t('app','Loss'),
                 ],
                 [
                     'attribute' => 'rate',
-                    'label'=>'W/L RATE',
+                    'label'=> Yii::t('app','W/L Rate'),
                 ],
             ],
         ]); ?>

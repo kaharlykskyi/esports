@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use app\models\servises\FlagServis;
 use yii\widgets\Pjax;
+use Yii;
 
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
     $this->title = mb_convert_case($alias, MB_CASE_TITLE);
@@ -53,7 +54,7 @@ use yii\widgets\Pjax;
         <div class="news-list col-xs-12 col-sm-4">
             <div class="item img-top">
                 <div class="img-wrap">
-                    <div class="bage"><a href="/news/single/<?=$model->id?>">highlight</a></div>
+                    <div class="bage"><a href="/news/single/<?=$model->id?>"><?=yii::t('app','highlight')?></a></div>
                     <a href="/news/single/<?=$model->id?>"><img src="<?=$model->logo?>" alt="post image"></a>
                 </div>
                 <div class="info">
@@ -93,7 +94,7 @@ use yii\widgets\Pjax;
 </div>
 
 <div class="container">
-    <h3 style="text-align: center;" >Users statistics</h3>
+    <h3 style="text-align: center;" ><?=Yii::t('app', 'users statistics')?></h3>
     <div class="box-body">
         <?php Pjax::begin(); ?>
         <?= GridView::widget([
@@ -110,7 +111,7 @@ use yii\widgets\Pjax;
             'columns' => [
                 [
                     'attribute' => 'user_id',
-                    'label' => 'User',
+                    'label' => Yii::t('app','User'),
                     'content' => function($data) {
                         $flag_src = FlagServis::getLinkFlag($data->user->country);
                         return "<a href='/user/public/{$data->user->id}' ><img src= '{$flag_src}' 
@@ -119,7 +120,7 @@ use yii\widgets\Pjax;
                 ],
                 [
                     'attribute' => 'team_id',
-                    'label' => 'Team',
+                    'label' => Yii::t('app','Team'),
                     'content' => function($data) {
                         if (!is_null($data->team->single_user)) {
                             return '----';
@@ -129,15 +130,15 @@ use yii\widgets\Pjax;
                 ],
                 [
                     'attribute' => 'victories',
-                    'label' => 'victories',
+                    'label' => Yii::t('app','Victories'),
                 ],
                 [
                     'attribute' => 'loss',
-                    'label' => 'loss',
+                    'label' => Yii::t('app','Loss'),
                 ],
                 [
                     'attribute' => 'rate',
-                    'label'=>'W/L RATE',
+                    'label'=>Yii::t('app','W/L RATE'),
                 ],
             ],
         ]); ?>

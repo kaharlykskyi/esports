@@ -279,4 +279,14 @@ class FlagServis
         return '';
     }
 
+    public static function getLinkFlagLoc() 
+    {
+        $lang_iso = \Yii::$app->language;
+        $lang_iso = mb_strtolower(substr($lang_iso,0,2));
+        $arry_flag = self::$all_flag;
+        if (in_array(mb_strtoupper($lang_iso),$arry_flag)) {
+            return "/images/flag/svg/{$lang_iso}.svg";
+        }
+        return "/images/flag/svg/gb.svg";
+    }
 }

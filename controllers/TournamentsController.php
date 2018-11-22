@@ -68,7 +68,7 @@ class TournamentsController extends \yii\web\Controller
                 }
                     
                 if($model->save()) {                    
-                    Yii::$app->session->setFlash('success', 'Tournament settings updated');
+                    Yii::$app->session->setFlash('success', Yii::t('app','Tournament settings updated'));
                     return $this->redirect('/tournaments/public/'.$model->id.'#manage_tournament');
                 }
             }
@@ -295,7 +295,7 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($model)) {
             throw new HttpException(404 ,'Page not found');
         }
-        $model->addCupDuble([7,4,3,2]);
+        $model->addCupDuble([4,2,7,1]);
         $this->layout = false;
         return $this->render('cup',compact('model'));
     }

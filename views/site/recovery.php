@@ -1,19 +1,16 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
-
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use Yii;
 
 $this->title = 'Recovery';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login col-md-offset-4">
-    <h1 style="padding-bottom: 15px;">Forgot your password?</h1>
+    <h1 style="padding-bottom: 15px;"><?=Yii::t('app','Forgot your password')?>?</h1>
     <?php if(!$message): ?>
-    <p class="help-text">Enter your email address and we'll send you instructions on how to reset your password</p>
+    <p class="help-text"><?=Yii::t('app','Enter your email address and we\'ll send you instructions on how to reset your password')?></p>
     <?php endif; ?>
     <div class="customer-info">
         <form id="login-form" action="/recovery" method="post">
@@ -41,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary login-btn">Send &nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                    <button type="submit" class="btn btn-primary login-btn"><?=Yii::t('app','Send')?> &nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                 </div>
             </div>
             <?php endif; ?>

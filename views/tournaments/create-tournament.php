@@ -4,20 +4,21 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\datetime\DateTimePicker;
+use Yii;
 
 
-$this->title = 'Create tournaments';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app','Create tournaments');
 
 $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/create-team.css');
 $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/tournaments.css');
-$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
+$this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js',
+    ['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]
+);
 
 ?>
 <div class="profile-createteam">
     <div class="container leave-comment-wrap" >
         <?php $form = ActiveForm::begin([
-                
                 'options' => ['enctype' => 'multipart/form-data'],
                 'fieldConfig' => [
                     'template' => '{label}{hint}{input}{error}',
@@ -29,30 +30,37 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
             $form->successCssClass = false;
         ?>
         <div class="row">
-            <h1>Create tournament</h1>
+            <h1><?= $this->title ?></h1>
             <div class="col-md-8 col-md-offset-2">
                 <?= $form->field($model, 'name')->textInput(['class' => false]) ?>
                 
                 <div class="row" >
                      <div class="col-md-12">
-                        <label class="col-sm-12 control-label" >Select the tournament game</label>
+                        <label class="col-sm-12 control-label" >
+                            <?=Yii::t('app','Select the tournament game')?>
+                        </label>
                         <div id="radios" class="clearfix">
                             <?php $i = 0; foreach($games as $value):
                                 $i++;
                             ?>      
-                            <label for="input<?=$i?>" class='game'  ><!-- style="background-image:url(../images/game/<?=$value->logo?>);" -->
+                            <label for="input<?=$i?>" class='game'  >
+                                <!-- style="background-image:url(../images/game/<?=$value->logo?>);" -->
                                 <img class='geme_icon' src="../images/game/<?=$value->logo?>" alt="">
                             </label>
                             <input id="input<?=$i?>" name="Tournaments[game_id]" class="input_radio_games" type="radio" value="<?=$value->id?>">
                         <?php endforeach; ?>
                         </div>
-                        <div class="erroe-massage" style="display: none;">To select a game press the logo</div>                    
+                        <div class="erroe-massage" style="display: none;">
+                            <?= Yii::t('app','To select a game press the logo') ?>
+                        </div>                    
                      </div>
                 </div>
 
                 <div class="row" id="format_campions_elimination" style="margin:25px 0;" >
                    
-                    <label class="col-sm-12 control-label" >Tournament format</label>
+                    <label class="col-sm-12 control-label" >
+                            <?= Yii::t('app','Tournament format') ?>
+                    </label>
                     
                     <div class="col-md-10 col-md-offset-1 "  style="margin-top:25px;">
                         <div class="col-md-6 ">
@@ -60,7 +68,9 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                                 <div class="container_img" >
                                     <img src="/images/profile/cup.png"  alt="cup">
                                 </div>
-                                <div style="padding-left: 25px;" ><h5>cup</h5></div>
+                                <div style="padding-left: 25px;" >
+                                    <h5><?= Yii::t('app','cup') ?></h5>
+                                </div>
                             </div>
                         </div>
 
@@ -69,7 +79,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                                 <div class="container_img" style="padding-left: 10px;">
                                     <img src="/images/profile/league.png"  alt="league">
                                 </div>
-                                <div style="padding-left: 25px;" ><h5>league</h5></div>
+                                <div style="padding-left: 25px;" ><h5><?= Yii::t('app','league') ?></h5></div>
                             </div>
                         </div>
                     </div>
@@ -79,7 +89,9 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                                 <div class="container_img" >
                                     <img src="/images/profile/single_elimination.png"  alt="s_cup">
                                 </div>
-                                <div style="flex-grow: " ><h5>Single elimination</h5></div>
+                                <div style="flex-grow: " ><h5>
+                                    <?= Yii::t('app','Single elimination') ?></h5>
+                                </div>
                             </div>
                         </div>
 
@@ -88,7 +100,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                                 <div class="container_img" >
                                     <img src="/images/profile/duble_elimination.png"  alt="d_cup">
                                 </div>
-                                <div><h5>Double elimination</h5></div>
+                                <div><h5><?= Yii::t('app','Double elimination') ?></h5></div>
                             </div>
                         </div>
                     </div>
@@ -98,17 +110,17 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                             <div class="col-md-12" style="margin-bottom: 25px;" >
                                 <div class="col-md-4 ">
                                     <div class="format_campions league default" data-farmat ='3'>
-                                        <span>Regular League</span> 
+                                        <span><?= Yii::t('app','Regular League') ?></span> 
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="format_campions league" data-farmat ='4'>
-                                        <span>Regular League + PlayOff </span>
+                                        <span><?= Yii::t('app','Regular League + PlayOff') ?> </span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="format_campions league" data-farmat ='5' >
-                                        <span>Groups</span>
+                                        <span><?= Yii::t('app','Groups') ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +128,9 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         
                         <div class="col-md-12" >
                             <div class="grus_l" style="display: none;">
-                                <p style="font-size: 15px;font-weight:bold;" >Number of teams in the a group</p>
+                                <p style="font-size: 15px;font-weight:bold;" >
+                                    <?= Yii::t('app','Number of teams in the a group') ?>
+                                </p>
                                 <div class="item select-show"> 
                                 <select class="basic" name="Tournaments[league_g]" required>
                                     <option  value="2" >2</option>
@@ -127,7 +141,9 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                                 </div>
                             </div>
                             <div class="playoffs_l" style="display: none;" >
-                                <p style="font-size: 15px;font-weight:bold;" >Number of teams that go into the playoffs</p>
+                                <p style="font-size: 15px;font-weight:bold;" >
+                                    <?= Yii::t('app','Number of teams that go into the playoffs') ?>
+                                </p>
                                 <div class="item select-show"> 
                                     <select class="basic" name="Tournaments[league_p]" required>
                                         <option  value="2" >2</option>
@@ -138,14 +154,16 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                                 </div>
                             </div>
 
-                            <label>Match schedule</label>
+                            <label>
+                                <?= Yii::t('app','Match schedule') ?>
+                            </label>
                             <div class="item select-show">
                                 <select class="basic" name="Tournaments[match_schedule]" required>
-                                    <option value="1">one day</option>
-                                    <option value="3">three days</option>
-                                    <option value="5">five days</option>
-                                    <option value="7">one week</option>
-                                    <option value="14">two weeks</option>
+                                    <option value="1"><?= Yii::t('app','one day') ?></option>
+                                    <option value="3"><?= Yii::t('app','three days') ?></option>
+                                    <option value="5"><?= Yii::t('app','five days') ?></option>
+                                    <option value="7"><?= Yii::t('app','one week') ?></option>
+                                    <option value="14"><?= Yii::t('app','two weeks') ?></option>
                                 </select>
                             </div>         
                         </div>
@@ -156,12 +174,12 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                     <?= $form->field($model, 'format')->radioList([1 => 'a', 2 => 'b', 3 => 'c',4 => 'd', 5 => 'e'],['class' =>'radiolist_elimination'])->label(false) ?>
                 </div>
                 <div>
-                    <label style="padding-left: 20px;" >Number of players per team</label>
+                    <label style="padding-left: 20px;" ><?=Yii::t('app','Number of players per team') ?></label>
                     <div class="item select-show">
                         <select class="basic" name="Tournaments[max_players]" required>
-                            <option value="1">One player</option>
-                            <option value="2">Two players</option>
-                            <option value="4">Four players</option>
+                            <option value="1"><?=Yii::t('app','One player')?></option>
+                            <option value="2"><?=Yii::t('app','Two players')?></option>
+                            <option value="4"><?=Yii::t('app','Four players')?></option>
                         </select>
                     </div>      
                 </div>
@@ -173,7 +191,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                     //'value' => '01-Jan-2017 10:00',
                     'options' => [  
                         'readonly' => true ,
-                        'placeholder' => 'Select operating time ...',
+                        'placeholder' => Yii::t('app','Select operating time ...'),
                         'autocomplete'=>"off",'class'=>'datainput',
                     ],
                     'convertFormat' => true,
@@ -186,8 +204,10 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                 
                 <div class="row"  style="margin:45px 0;" >
                     <div class="row">
-                         <div class="col-md-4" style="margin-bottom: 15px;">
-                            <button style="width: 100%;"  id="stream_add"  class="btn btn-primary">Add new stream</button> 
+                         <div class="col-md-offset-2 col-md-8" style="margin-bottom: 15px;">
+                            <button style="width: 100%;"  id="stream_add"  class="btn btn-primary">
+                                <?= Yii::t('app','Add new stream') ?>
+                            </button> 
                         </div>
                     </div>
                     <div id="conteiner_stream">
@@ -199,7 +219,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
          </div>   
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary formbtn']) ?>
+                <?= Html::submitButton(Yii::t('app','Submit'), ['class' => 'btn btn-primary formbtn']) ?>
             </div>
         </div>
         <?php ActiveForm::end(); ?>
@@ -220,7 +240,8 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
             </div>         
         </div>       
         <div class="col-xs-10 col-md-6">
-            <input type="text" name="stream_url[]" placeholder="Enter stream link here" autocomplete="off">
+            <input type="text" name="stream_url[]" 
+                placeholder="<?= Yii::t('app','Enter stream link here') ?>" autocomplete="off">
         </div>
         <span class="close_stream">
         </span>          

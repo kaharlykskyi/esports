@@ -59,13 +59,13 @@ class TeamsController extends \yii\web\Controller
             $post = Yii::$app->request->post();
             $team = Teams::findOne($id);
             Yii::$app->mailer->compose()
-                ->setFrom([Yii::$app->params['adminEmail'] => 'The organization'])
+                ->setFrom([Yii::$app->params['adminEmail'] => Yii::t('app','The organization')])
                 ->setTo([$user->email => $user->name])
-                ->setSubject("Message from the user  ".$post['name'])
-                ->setTextBody("Message from the user ".$post['name'])
-                ->setHtmlBody('<p>'.$post["message"].'</p><p>Mail of the user '.$post["email"].'</p>')
+                ->setSubject(Yii::t('app','Message from the user') ." ".$post['name'])
+                ->setTextBody(Yii::t('app','Message from the user') ." ".$post['name'])
+                ->setHtmlBody('<p>'.$post["message"].'</p><p>'.Yii::t('app','Mail of the user').' '.$post["email"].'</p>')
                 ->send(); 
-            Yii::$app->session->setFlash('success', '<p> Email sent </p>'); 
+            Yii::$app->session->setFlash('success', '<p>'.Yii::t('app','Email sent').' </p>'); 
         }
         return $this->redirect("/teams/{$team->slug}");
     }
@@ -82,7 +82,8 @@ class TeamsController extends \yii\web\Controller
                     $team_name = $team->name;
                     if ($team->delete()) {
                         $delete = 1;
-                        Yii::$app->session->setFlash('warning', 'The team of the <b>'.$team_name.'</b> is remote');
+                        Yii::$app->session->setFlash('warning', 
+                            Yii::t('The team of the {name} is remote',['name' => '<b>'.$team_name.'</b>']));
                         return $this->render('delete-team',compact('delete'));
                     }
                 }

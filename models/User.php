@@ -5,11 +5,13 @@ namespace app\models;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
+use Yii;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
     public $file_logo;
     public $file_background;
+    public $appraisal;
 
     public static function tableName()
     {
@@ -137,13 +139,16 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         $mail = \Yii::$app->mailer->compose()
             ->setFrom([\Yii::$app->params['adminEmail'] => "Bumeen Group Dev"])
             ->setTo($email)
-            ->setSubject('Email recovery')
-            ->setTextBody("You can change your password by clicking on the button below. \n $link")
-            ->setHtmlBody("<p>You can change your password by clicking on the link below.</p><p>$link</p>");
+            ->setSubject(Yii::t('app','Email recovery'))
+            ->setTextBody(Yii::t('app','You can change your password by clicking on the button below.')." \n $link")
+            ->setHtmlBody("<p>".Yii::t('app','You can change your password by clicking on the button below.')."</p><p>$link</p>");
         if($mail->send()) {
             return [
                 'status' => true,
-                'message' => "Recovery email was successfully send to $email. <br> Please check your inbox!"
+                'message' => Yii::t('app',
+                    'Recovery email was successfully send to {email}. <br> Please check your inbox!',
+                    ['email'=>$email]
+                )
             ];
         }
     }
@@ -224,11 +229,29 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return $this->background ?? '/images/profile/images.jpg';
     }
 
-    public function addBall($ball)
+    public function addBall($bonus_id,$ball)
     {
-        if (is_numeric($ball)){
-            $this->system_ball+=$ball;
-            $this->save();
+        if (is_numeric($ball)&&is_numeric($bonus_id)){
+            UserPoint::addBall($bonus_id,$this->id,$ball);
         }
     }
+
+    public function getBall()
+    {
+        if (is_numeric($this->appraisal)) {
+            return $this->appraisal;
+        }
+        $appraisal = (new \yii\db\Query())
+           ->select(['sum(appraisal) as ball'])
+           ->from('user_point')
+           ->where(['user_id' => $this->id])->one();
+
+        if (is_numeric($appraisal['ball'])) {
+            $this->appraisal = $appraisal['ball'];
+            return $this->appraisal;
+        }
+        $this->appraisal = 0;
+        return 0;
+    }
+
 }

@@ -9,6 +9,7 @@ use app\models\Teams;
 use app\models\UserTeam;
 use app\models\UsetTeamTournament;
 use app\models\servises\FairPlay;
+use app\models\UserPoint;
 use Yii;
 
 class UserController extends \yii\web\Controller
@@ -34,8 +35,18 @@ class UserController extends \yii\web\Controller
         if (!empty($get['tournament'])) {
             $capitan_tournament = FairPlay::capitanTournaments($id,$get['tournament']);
         }
+        $user_points = UserPoint::find()
+            ->where(['user_id' => $model->id])
+            ->orderBy(['id' => SORT_DESC])
+            ->limit(20)->all();
 
-        return $this->render('index',compact('model','statistic_team','capitan_tournament'));
+        $user_points_month = UserPoint::MonthSum($model->id);
+
+        return $this->render('index',compact(
+            'model','statistic_team',
+            'capitan_tournament','user_points',
+            'user_points_month'
+        ));
     }
 
     public function actionRemoveRating($id)
@@ -46,9 +57,9 @@ class UserController extends \yii\web\Controller
                 if (!empty($post['tournament'])) {
                    $capitan_tournament = FairPlay::RremRating($id,$post['tournament']);
                 }
-                 
             }
         }
         return $this->redirect("/user/public/{$id}?tournament={$post['tournament']}");
     }
+
 }
