@@ -67,6 +67,7 @@ return [
     'Notifications' => 'Notificaciones',
     'Matches' => 'Partidos',
     'The' => 'los',
+    'My tournaments' => 'Mis torneos',
     'team invites you to become part of its players.' => 'vEl equipo te invita a formar parte de sus jugadores.',
     'To accept or decline the invitation click the link below:' => 'Para aceptar o rechazar la invitación, haga clic en el siguiente enlace:',
     'Finally, if you want more information, contact' => 'Por último, si quieres más información, contacta con',
