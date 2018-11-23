@@ -324,7 +324,8 @@ $(document).ready( function() {
     });
 
     $('.champ-nav-list a').on('shown.bs.tab', function (e) {
-        if($(e.target).text()=='Tournament grid') {
+
+        if($(e.target).attr('class')=='tournamentgrid') {
             let container_iframe = $('#container_iframe');
             if (!container_iframe.hasClass("newsIframe")) {
                 let html_ifreme = `<iframe src ="${container_iframe.data('href')}" id="ifrem_cup" ></iframe>`;

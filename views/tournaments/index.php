@@ -1,5 +1,5 @@
 <?php
-
+    
     use app\widgets\Alert;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
@@ -9,11 +9,14 @@
     use app\widgets\Schedule;
     use app\models\Tournaments;
     use app\widgets\ParticipantsData;
-    use Yii;
+    //use Yii;
     
     $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
     $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
-    $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournament-public.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
+    $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournament-public.js',[
+        'depends' => 'yii\web\JqueryAsset',
+        'position' => yii\web\View::POS_END
+    ]);
     $this->title = 'Tournament';
     $var_data = 'false';
     if ($model->game_id == 3) {
@@ -24,10 +27,10 @@
     $script = "$('.dropify').dropify({
         defaultFile:'{$default_logo}',
         messages: {
-            'default': '".Yii::t('app','Drag and drop a file here or click')."',
-            'replace': '".Yii::t('app','Drag and drop or click to replace')."',
-            'remove':  '".Yii::t('app','Remove')."',
-            'error':   '".Yii::t('app','Ooops, something wrong happended.')."'
+            default: \"".Yii::t('app','Drag and drop a file here or click')."\",
+            replace: \"".Yii::t('app','Drag and drop or click to replace')."\",
+            remove:  \"".Yii::t('app','Remove')."\",
+            error:   \"".Yii::t('app','Ooops, something wrong happended.')."\"
         }
     }); $.wowData ={$var_data};";
 
@@ -159,7 +162,7 @@
                                         <form action="/tournaments/add-schedule?id=<?=$model->id?>" method="POST"  >
                                             <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
                                              <div  >
-                                                <?= Html::submitButton(Yii::t('Start tournament'), ['class' => 'btn btn-primary btn_mobil']) ?>
+                                                <?= Html::submitButton(Yii::t('app','Start tournament'), ['class' => 'btn btn-primary btn_mobil']) ?>
                                              </div>
                                         </form>
                                     <?php else: ?>

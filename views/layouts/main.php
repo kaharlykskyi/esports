@@ -20,15 +20,15 @@ $this->registerCssFile(
 
 $script = "
     $.language_n18 = {
-        sorry: '".Yii::t('app','Sorry, we can\'t find what you\'re looking for. Give it another whirl.')."',
-        teams: '".Yii::t('app','Teams')."',
+        sorry: \"".Yii::t('app','Sorry, we can\'t find what you\'re looking for. Give it another whirl.')."\",
+        teams: \"".Yii::t('app','Teams')."\",
         registration: \" ".Yii::t('app','Registration date')." \",
-        game:  '".Yii::t('app','Game')."',
-        members: '".Yii::t('app','Members')."',
+        game:  \"".Yii::t('app','Game')."\",
+        members: \"".Yii::t('app','Members')."\",
         start: \" ".Yii::t('app','Start date')." \"
     };
     ";
-    $this->registerJs($script, yii\web\View::POS_END);
+ $this->registerJs($script, yii\web\View::POS_END);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
