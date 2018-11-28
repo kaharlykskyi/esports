@@ -46,19 +46,87 @@ trait ScheduleCup {
     {
         $array_cub = json_decode($this->cup,true);
         $teams_p = $array_cub['teams'];
-        //if(empty($array_cub['results'])) return;
-        if (!empty($array_cub['results'][3])) {
+
+        if (!empty($array_cub['results'][3][2])&&(count($array_cub['results'][3][2])==2)) {
+            $result_arry = array_fill(0,2,0);
+            foreach ($array_cub['results'][3][2] as $key => $value) {
+                if (in_array($value, $results)) {
+                    $result_arry[$key] = 1;
+                }
+            }
+            $array_cub['results'][2] = [[$result_arry]];
+
+        } elseif (!empty($array_cub['results'][3])) {
             $win_id = end($array_cub['results'][3][0]);
             reset($array_cub['results'][3][0]);
             $los_id = end($array_cub['results'][3][1]);
             reset($array_cub['results'][3][1]);
-            $result_arry_los = array_fill(0,count($los_id),0);
-
-            if(!empty(array_uintersect($los_id, $results, "strcasecmp"))) {
+           
+            if(!empty(array_uintersect($win_id, $results, "strcasecmp"))) {
                 $result_arry_win = array_fill(0,count($win_id),0);
-            }
-        } else {
+                $new_win_id = [];
+                $new_los_id = [];
+                foreach ($win_id as $key => $win) {
+                    if(in_array($win, $results)) {
+                        $result_arry_win[$key] = 1;
+                        $new_win_id[] = $win;
+                    } else {
+                        $new_los_id[] = $win;
+                    }          
+                }
 
+                $result_arry = array_chunk($result_arry_win, 2);
+                $array_cub['results'][0][] = $result_arry;
+                if (count($new_win_id) == 1) {
+                    $array_cub['results'][3][2] = $new_win_id;
+                    $array_cub['results'][3][0][] = [null];
+                } else {
+                    $array_cub['results'][3][0][] = $new_win_id;
+                }   
+            }
+
+            if (!empty($new_los_id)) {
+                if (count($array_cub['results'][3][1])%4 == 0) {
+                    $metka = 1;
+                } else {
+                    $metka = 2;
+                }
+            }
+
+            $new_los_old_id = [];
+            foreach ($los_id as $keys => $los) {
+                if(in_array($los, $results)) {
+                    $new_los_old_id[] = $los;
+                    if (!empty($metka)) {
+                        if ($metka == 1) {
+                            $new_los_old_id[] = array_shift($new_los_id);
+                        } else {
+                            $new_los_old_id[] = array_pop($new_los_id);
+                        }
+                    }
+                }        
+            }
+            if (count($new_los_old_id) == 1) {
+                $array_cub['results'][3][2][] = end($new_los_old_id);
+                $array_cub['results'][3][1][] = [null];
+            } else {
+                $array_cub['results'][3][1][] = $new_los_old_id;
+            }
+
+            if (isset($metka)) {
+                $count = count($new_los_old_id);
+            } else {
+                $count = count($new_los_old_id)*2;
+            }
+            $result_arry_los = array_fill(0,$count,0);
+            foreach ($los_id as $key => $loss) {
+                if(in_array($loss, $results)) {
+                    $result_arry_los[$key] = 1;
+                }           
+            }
+            $result_arry = array_chunk($result_arry_los, 2);
+            $array_cub['results'][1][] = $result_arry;
+        } else {
             $results_win = $array_cub['results'][0];
             $last_win = array_pop($results_win);
             if (empty(end($last_win))) {
@@ -82,13 +150,8 @@ trait ScheduleCup {
 
         }
 
-        
-       // echo "<pre>";
-       // VarDumper::dump(array_uintersect($los_id, $results, "strcasecmp"));
-       // echo "</pre>";
-       // exit;
-        $this->cup=json_encode($array_cub);
-        $this->save();
+       $this->cup=json_encode($array_cub);
+       $this->save();
 
     }
 
@@ -99,5 +162,9 @@ trait ScheduleCup {
             $ids = array_merge($ids,ArrayHelper::getColumn($teams, 'id'));
         }
         return $ids;
-    }
+    }  
+       // echo "<pre>";
+       // VarDumper::dump();
+       // echo "</pre>";
+       // exit;
 }

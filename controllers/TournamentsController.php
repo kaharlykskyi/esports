@@ -295,7 +295,7 @@ class TournamentsController extends \yii\web\Controller
         if (!is_object($model)) {
             throw new HttpException(404 ,'Page not found');
         }
-        $model->addCupDuble([4,2,7,1]);
+       //$model->addCupDuble([1]);
         $this->layout = false;
         return $this->render('cup',compact('model'));
     }

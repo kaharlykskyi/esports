@@ -161,6 +161,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             }
             $this->writeStringTable($result[0], 2, ($this->tur + 1), 1);
             $this->writeStringTable($result[1], 2, 1, 2);
+            $this->tournament->addCupDuble($result[0]);
 
         } elseif(($this->group==1 && $this->tur >1)||($this->group == 2 && !($this->tur%2==0)) ) {
 
@@ -206,6 +207,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             }
             $this->writeStringTable($result_win[0], 2, ($tur_winner+1), 1);
             $this->writeStringTable($arry_new_loss, 2, ($tur_losers+1), 2);
+            $this->tournament->addCupDuble(array_merge($result_win[0],$result_los[0]));
 
         } elseif($this->group == 2 && ($this->tur%2==0)) {
             $matches_los = self::find()->where([
@@ -237,9 +239,11 @@ class ScheduleTeams extends \yii\db\ActiveRecord
                     $final_arry[] = array_pop($result_los[0]);
                     $final_arry[] = array_pop($result_win[0]);
                     $this->writeStringTable($final_arry, 2, 1, 3);
+                    $this->tournament->addCupDuble($final_arry);
                 }
             } else {
                 $this->writeStringTable($result_los[0], 2, ($this->tur+1), 2);
+                $this->tournament->addCupDuble($result_los[0]);
             }
         } elseif( $this->group == 3 ) {
             $matches_final = self::find()->where([
@@ -252,6 +256,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             if (!$matches_final) {
                 return false;
             }
+            $this->tournament->addCupDuble($matches_final[0]);
             $this->tournament->state =2;
             $this->tournament->save();
         }
