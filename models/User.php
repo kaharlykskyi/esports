@@ -11,7 +11,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
     public $file_logo;
     public $file_background;
-    public $appraisal;
+    private $appraisal;
 
     public static function tableName()
     {
@@ -178,6 +178,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasOne(Games::className(), ['id' => 'favorite_game']);
     }
 
+    public function getSocial_links() 
+    {
+        return $this->hasMany(SocialLinks::className(), ['user_id' => 'id']);
+    }
     
     public function getMessages()
     {
@@ -229,15 +233,15 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return $this->background ?? '/images/profile/images.jpg';
     }
 
-    public function addBall($bonus_id,$ball)
+    public function addBall($bonus_id,$cup = false)
     {
-        if (is_numeric($ball)&&is_numeric($bonus_id)){
-            UserPoint::addBall($bonus_id,$this->id,$ball);
+        if (is_numeric($bonus_id)){
+            UserPoint::addBall($bonus_id,$this->id,$cup);
         }
     }
 
-    public function getBall()
-    {
+    public function getBall() 
+    {   //return 1020;
         if (is_numeric($this->appraisal)) {
             return $this->appraisal;
         }
@@ -253,5 +257,32 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         $this->appraisal = 0;
         return 0;
     }
+
+    public function getCup() 
+    {
+        if ($this->ball>5000) {
+            $awards_text = Yii::t('app','Legendary cup');
+            $cup_awards = '<img src="/images/profile/cup/legendary.svg" alt="legendary">';
+        } elseif ($this->ball>4000) {
+            $awards_text = Yii::t('app','Epic cup');
+            $cup_awards = '<img src="/images/profile/cup/epic.svg" alt="epic">';
+        } elseif ($this->ball>3000) {
+            $awards_text = Yii::t('app','Gold cup');
+            $cup_awards = '<img src="/images/profile/cup/gold.svg" alt="gold">';
+        } elseif ($this->ball>2000) {
+            $awards_text = Yii::t('app','Silver cup');
+            $cup_awards = '<img src="/images/profile/cup/silver.svg" alt="silver">';
+        } elseif ($this->ball>1000) {
+            $awards_text = Yii::t('app','Bronze cup');
+            $cup_awards = '<img src="/images/profile/cup/bronze.svg" alt="bronze">';
+        } else {
+            $awards_text = "";
+            $cup_awards = "";
+        }
+
+        return [$awards_text,$cup_awards];
+    }
+
+
 
 }

@@ -145,11 +145,16 @@ $script = "
                         else:
                     ?>
                         <li>
-                            <a href="/"><span><?=Yii::t('app','Hi')?>, <?=Yii::$app->user->identity->username?></span></a>
+                            <a href="/" >
+                                <span><?=Yii::t('app','Hi')?>, <?=Yii::$app->user->identity->username?></span>
+                            </a>
                             <ul>
                                 <li><a href="/profile"><span><?=Yii::t('app','My profile')?></span></a></li>
                                 <li><a href="/logout"><span><?=Yii::t('app','Logout')?></span></a></li>
                             </ul>
+                        </li>
+                        <li >
+                             <a  href="/profile#activity" class="block-add-message" ></a>
                         </li>
                     <?php
                         endif;

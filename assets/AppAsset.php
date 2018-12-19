@@ -82,6 +82,7 @@ class AppAsset extends AssetBundle
         'js/main.js',
         'dropify/dist/js/dropify.js',
         'js/search-bar.js',
+        'js/message.js',
 
     ];
     public $depends = [

@@ -699,3 +699,53 @@ div.jQBracket .team.lose div.score::after {
     font-size: 18px;
     line-height: 22px;  
 }
+
+.resurses-user-game{
+    padding:15px;
+    font-size:12px;
+    display: none;
+    border: 1px solid #5eb2e9;
+    border-radius: 5px;
+    position: relative;
+}
+
+.resurses-user-game p{
+    text-align: left;
+}
+
+.block-resurse-game{
+    text-align:center;
+    margin-bottom: 20px;
+}
+
+.resurses-btn-show {
+    position: absolute;
+    display: block;
+    background-color: #f7f7f7;
+    z-index: 1000;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, -50%);
+    padding: 7px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.resurses-user-container{
+    position: relative;
+    padding-top: 10px;
+}
+
+.resurses-btn-show:focus {
+    color: #1f82d8;
+    text-decoration: none;
+}
+
+.cups_images img{
+    height: 80px;
+}
+
+.cups_text{
+    font-size: 20px;
+    color:#207ad3;
+}

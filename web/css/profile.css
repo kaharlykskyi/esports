@@ -733,7 +733,21 @@ input[type=date] {
     border-bottom-left-radius: 0;
 }
 
+input[type=url] {
+    padding: 15px 10px;
+    border: 1px solid transparent;
+    width: 100%;
+    background: #fff;
+    font-size: 14px;
+    color: #666;
+    line-height: normal;
+    outline: 0;
+}
 
+.fantom-link{
+    background-color: transparent;
+    border: none;
+}
 
 @media screen and (max-width: 660px) {
     .youplay-user-navigation ul li>a {

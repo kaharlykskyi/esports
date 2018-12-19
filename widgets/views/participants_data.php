@@ -1,5 +1,4 @@
 
-
 <div class="container" style="margin-bottom: 30px;">
     <?php  if($access==1): 
         $users_tournaments = $model->getPlayersTeams();
@@ -14,17 +13,16 @@
                 <?php $i = $users_tournament->team->id; ?>
                 <h6 style="text-align:center;" ><b>Team:</b> 
                     <a href="<?=$users_tournament->team->links()?>">
-                        <?=$users_tournament->team->name?>
-                            
-                        </a>
-                    </h6>
+                        <?=$users_tournament->team->name?> 
+                    </a>
+                </h6>
             <?php endif; ?>
                 <p style="text-align:center;" ><b>User:</b> 
                     <a href="/user/public/<?=$users_tournament->user->id?>?tournament=<?=$model->id?>">
                         <b><?=$users_tournament->user->name?></b>
                     </a>
                 </p>
-                <div style="text-align:center;" >
+                <div class="block-resurse-game"  >
                     <?=$wget->getPers($users_tournament->text)?>
                 </div>
         <?php endforeach; ?>

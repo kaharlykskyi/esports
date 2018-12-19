@@ -13,6 +13,7 @@ use app\models\User;
 use app\models\Tournaments;
 use app\models\TournamentTeam;
 use yii\helpers\ArrayHelper;
+use app\models\SocialLinks;
 
 class ProfileController extends \yii\web\Controller
 {
@@ -69,7 +70,8 @@ class ProfileController extends \yii\web\Controller
             ->all();
         $games = Games::find()->all();
         $not_games = $this->games();
-        return $this->render('index',compact('teams','games','not_games','tournaments'));
+        $social_links = new SocialLinks();
+        return $this->render('index',compact('teams','games','not_games','tournaments','social_links'));
     }
 
     public function actionCreateTeam()
@@ -232,6 +234,35 @@ class ProfileController extends \yii\web\Controller
             }  
         }
         return $this->redirect('/profile#teams');
+    }
+
+    public function actionAddLink ()
+    {
+        if (Yii::$app->request->isPost) {
+            $user = Yii::$app->user->identity;
+            $post = Yii::$app->request->post();
+            $social = new SocialLinks();
+            $social->user_id = $user->id;
+            $social->load($post);
+            $social->save();
+            return $this->redirect('/profile#settings');
+        }       
+    }
+
+    public function actionDelLink ()
+    {
+        if (Yii::$app->request->isPost) {
+            $user = Yii::$app->user->identity;
+            $post = Yii::$app->request->post();
+            if(!empty($post['link_id'])) {
+                $social = SocialLinks::find()
+                ->where(['user_id'=>$user->id,'id'=>$post['link_id']])->one();
+                if (is_object($social)) {
+                    $social->delete();
+                }
+            }
+        }
+        return $this->redirect('/profile#settings');
     }
 
 

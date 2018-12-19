@@ -83,3 +83,17 @@ input[type=email], input[type=password] {
     min-width: 90px;
     max-width: 90px;
 }
+
+.main-menu .block-add-message{
+    padding: 0;
+}
+
+.block-add-message .badge{
+    background-color: #d01414;
+    padding: 3px 10px;
+    border: none;
+}
+
+.block-add-message .badge:hover{
+    background-color: #a52424;
+}

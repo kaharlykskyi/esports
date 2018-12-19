@@ -526,28 +526,13 @@ img {
     width: 100%;
 }
 
-.timeline-bar .date.date-1 {
-    left: 25%;
-}
-
-.timeline-bar .date.date-2 {
-    left: 50%;
-    
-}
-
-.timeline-bar .date.date-3 {
-    left: 75%;
-}
-
 .timeline-bar .date.date-i {
     left: 100%;
 }
 
-.date.date-3:before,.date.date-2:before,.date.date-1:before{
+.date.date-3:before,.date.date-2:before,.date.date-1:before,.date.date-4:before,.date.date-5:before{
     transform:translateX(50%);
 }
-
-
 
 .timeline-bar .date.date-i:before {
     content: '';
@@ -562,7 +547,12 @@ img {
     transform:translateX(50%);
 }
 
-.timeline-bar .date.date-1:before,.timeline-bar .date.date-2:before ,.timeline-bar .date.date-3:before  {
+.timeline-bar .date.date-1:before,
+.timeline-bar .date.date-2:before,
+.timeline-bar .date.date-3:before, 
+.timeline-bar .date.date-4:before,
+.timeline-bar .date.date-5:before 
+{
    z-index: 100;
 }
 
@@ -570,7 +560,7 @@ img {
     top: -33px;
 }
 
-.cup_img svg{
+.cup_img img{
     height: 50px;
     color: red;
 }
@@ -591,16 +581,49 @@ img {
     margin:0;
 }
 
+
+.timeline-bar .date.date-1 {
+    left: 16.666666667%;
+}
+
+.timeline-bar .date.date-2 {
+    left: 33.333333334%;
+    
+}
+
+.timeline-bar .date.date-3 {
+    left: 50%;
+}
+
+.timeline-bar .date.date-4 {
+    left: 66.666666667%;
+}
+
+.timeline-bar .date.date-5 {
+    left: 83.333333334%;
+    
+}
+
+
 .cup_img1{
-    left:25%;
+    left:16.666666667%;
 }
 
 .cup_img2{
-    left:50%;
+    left:33.333333334%;
 }
 
 .cup_img3{
-    left:75%;
+    left:50%;
+}
+
+.cup_img4 {
+    left: 66.666666667%;
+}
+
+.cup_img5 {
+    left: 83.333333334%;
+    
 }
 
 .timeline-bar .bar-result{
@@ -631,8 +654,14 @@ img {
 }
 
 
-.item-header .channel svg{
-    height: 60px;
+.item-header .channel img{
+    height: 60px !important;
+    width: auto !important;
+}
+.broadcast-item.active .item-header .channel img{
+    border-radius: 5px;
+    background-color: #fff;
+
 }
 
 .broadcast-item .channel {
@@ -640,5 +669,9 @@ img {
     padding: 11px;
     align-items: center;
     height: 100px;
+}
+
+.social-links a i{
+    font-size: 25px;
 }
 

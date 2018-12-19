@@ -279,7 +279,8 @@ class ScheduleTeams extends \yii\db\ActiveRecord
                 $new_mathc->tournament_id = $this->tournament_id;
                 $new_mathc->format = $format;
                 $new_mathc->group = $group;
-                $new_mathc->date = $this->date;
+                $newdata = strtotime("+2 day",$this->date);
+                $new_mathc->date = date('Y-m-d', $newdata);
                 $new_mathc->save();
             }
         }
@@ -329,13 +330,13 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             'team_id' => $los_p,
             'tournament_id' => $this->tournament_id
         ])->all();
-
+        $cup = $this->tournament->capitan->ball;
         foreach ($win_p as $win) {
-           $win->user->addBall(2,20);
+           $win->user->addBall(2,$cup);
         }
 
         foreach ($los_p as $los) {
-           $los->user->addBall(1,10);
+           $los->user->addBall(1,$cup);
         }
     }
 

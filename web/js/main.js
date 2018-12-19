@@ -691,7 +691,7 @@
             $(".esport_champoinship_main_slider").slider();
         }
 
-        /** esport-championship-landing.html js end**/
+      
 
     });
 

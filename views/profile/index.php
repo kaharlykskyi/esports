@@ -4,7 +4,6 @@
     use yii\widgets\ActiveForm;
     use yii\helpers\Url;
     use kartik\datetime\DateTimePicker;
-    use Yii;
 
     $this->registerCssFile('css/profile.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
@@ -166,11 +165,13 @@
                     <div class="row">
                         <div class="col-md-7">
                             <ul class="tab-filters">
-                                <li class="active">
-                                    <a href="#personal"><?=Yii::t('app','Personal')?></a>
-                                </li>
-                                <li>
-                                    <a href="#notifications"><?=Yii::t('app','Notifications')?></a>
+                                <!-- <li class="active">
+                                    <a href="#personal"><?php//Yii::t('app','Personal')?></a>
+                                </li> -->
+                                <li class="active" >
+                                    <a href="#notifications">
+                                        <?=Yii::t('app','Notifications')?>
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="#matches"><?=Yii::t('app','Matches')?></a>
@@ -179,7 +180,7 @@
                         </div>
                     </div>
                     <div class="tab-content">
-                        <div id="personal" class="tab-pane fade in active">
+                        <!-- <div id="personal" class="tab-pane fade in active">
                             <div class="wrap-lists">
                                 <div class="lists">
                                     <div class="youplay-timeline-icon "> 
@@ -207,8 +208,8 @@
                                     </div>
                                 </div> 
                             </div>
-                        </div>
-                        <div id="notifications" class="tab-pane fade in">
+                        </div> -->
+                        <div id="notifications" class="tab-pane fade in active">
                             <div class="wrap-lists"> 
                                 <?php foreach($teams_m as $team) : ?>  
                                     <div class="lists">
@@ -250,7 +251,7 @@
                                     <div class="lists">
                                         <div class="closes" data-delete="<?=$message->id?>" ></div>
                                         <div class="youplay-timeline-icon "> 
-                                            <a href="#">
+                                            <a href="/user/public/<?=$message->senders->id?>">
                                                 <img src="<?=$message->senders->avatar()?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
                                             </a>
                                         </div>
@@ -672,14 +673,69 @@
                                 <button type="submit" class="btn submit-btn" ><?=Yii::t('app','Save')?></button>
                             <?php ActiveForm::end(); ?>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12" style="margin-bottom: 40px;" >
+                                <h6 style="text-align: center;" >add a link to your social network</h6>
+                            <?php $sociali = ActiveForm::begin([
+                                        'options' => ['enctype' => 'multipart/form-data'],
+                                        'action' =>'/profile/add-link',
+                                        'validateOnBlur'=>false,
+                                        'fieldConfig' => [
+                                            'template' => '{label}{hint}{input}{error}',
+                                            'labelOptions' => ['class' => 'col-sm-12 control-label'],
+                                        ],]); ?>
+                                
+                                    <div class="col-md-5">
+                                        <div style="margin-bottom: 25px;">
+                                            <label class="control-label"><?=Yii::t('app','Social network')?></label>
+                                            <div class="item select-show">
+                                                <div class="fancy-select ">
+                                                    <select class="basic" name="SocialLinks[social_id]" >
+                                                        <option value="1">
+                                                            Facebook
+                                                        </option>
+                                                        <option value="2"  >
+                                                            Instagram
+                                                        </option>
+                                                    </select>
+                                                </div>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <?=$sociali->field($social_links, 'link')
+                                            ->textInput(['class' => false,'type'=>"url"])
+                                            ->label('Link'); 
+                                        ?>
+                                    </div>
+                             <div class="col-sm-12"> 
+                                <button type="submit" class="btn submit-btn"><?=Yii::t('app','Save Link')?></button>
+                            </div>
+                            <?php ActiveForm::end(); ?>
+                            </div>
+                            <div class="col-sm-12" style="margin-bottom: 30px;">
+                                <?php $social_links = $user->social_links; ?>
+                                <div class="col-sm-8 col-sm-offset-2">
+                                <?php foreach($social_links as $link ): ?>
+                                    <span>
+                                        <form action="/profile/del-link" method="post" >
+                                             <?=Html::hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []);?>
+                                            <a href="<?=$link->link?>"><?=$link->link?></a>
+                                            <input type="hidden" value="<?=$link->id?>" name="link_id">
+                                            <button class="fantom-link" title='delete link'>
+                                                <span style="color:red;" class="glyphicon glyphicon-remove-circle"></span>
+                                            </button>
+                                        </form>
+                                    </span> 
+                                <?php endforeach; ?>
+                                </div>
+                            </div>   
+                        </div>
                     </div>
                 </div>
-               
             </div>
         </div>
-        
         <div class="col-md-3">
-           
         </div>
     </div>
 </div>

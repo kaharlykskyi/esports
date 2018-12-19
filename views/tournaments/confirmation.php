@@ -25,10 +25,14 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/invitation.js'
             <h2><?=$this->title?></h2>
             <div class="col-md-12" style="margin-bottom: 20px;">
             	<div class="col-md-6 col-md-offset-3" style="margin-top:18px;font-size: 20px; " >
-            		<p>
+            		<h6>
                         <a href="/tournaments/public/<?=$tournament->id?>" target="_blank">
                             <b><?= $tournament->name ?></b>
                         </a>
+                    </h6>
+                    <p> 
+                        <span class="cups_text" ><?=$tournament->cups[0]?></span>
+                        <span class="cups_images" ><?=$tournament->cups[1]?></span>
                     </p>
                     <br>
             		<p class="invitation_game"> 

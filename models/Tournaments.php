@@ -85,6 +85,16 @@ class Tournaments extends \yii\db\ActiveRecord
             $this->banner = '/images/tournaments/'.$this->id.'/'.$now_name.'.'.$this->banner_file->extension;
         }
 
+        if (!$insert && ($this->winner)) {
+            $users = $this->uset_team_tournament;
+            $cup = $this->capitan->ball;
+            foreach ($users as $user) {
+                if ($user->team_id == $this->winner) {
+                    $user->user->addBall(5,$cup);
+                }
+            }
+        }
+
         return true;
     }
 
@@ -111,6 +121,11 @@ class Tournaments extends \yii\db\ActiveRecord
     public function getMatches()
     {
         return $this->hasMany(ScheduleTeams::className(), ['tournament_id' => 'id']);
+    }
+
+    public function getUset_team_tournament()
+    {
+        return $this->hasMany(UsetTeamTournament::className(), ['tournament_id' => 'id']);
     }
 
     public function generateForm () 
@@ -229,6 +244,11 @@ class Tournaments extends \yii\db\ActiveRecord
             ->where('UNIX_TIMESTAMP(date)<UNIX_TIMESTAMP()')
             ->andWhere(['active_result' => null])
             ->all();
+    }
+
+    public function getCups()
+    {
+        return $this->user->cup;
     }
 
     public function afterSave($insert, $changedAttributes)

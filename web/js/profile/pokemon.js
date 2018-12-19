@@ -32,6 +32,10 @@ $(document).ready(function(){
        let arryP = [];
        let reg = /[A-Z]+ ?-?[A-Z]+ @/ig;
        data = data.match(reg);
+       if(!Array.isArray(data)){
+            console.log(data);
+            return false;
+       }
         for (let i = data.length - 1; i >= 0; i--) {
            arryP[i] = data[i].replace(/@/gm,'').trim(' ').replace(' ','-');
         }

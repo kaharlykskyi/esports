@@ -49,7 +49,9 @@
 ?>
     <!--CHAMPIONSHIP WRAP BEGIN-->
     <div class="championship-wrap">
-        <h1 style="text-align: center;"><?=$model->name?></h1>
+        <h1 style="text-align: center;"><?=$model->name?>  <br>
+            <span class="cups_text" ><?=$model->cups[0]?></span><span class="cups_images" ><?=$model->cups[1]?></span>
+        </h1>
         <!--CHAMPIONSHIP NAVIGATION BEGIN -->
         <div class="champ-navigation">
             <div class="container">

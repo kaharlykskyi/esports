@@ -15,7 +15,7 @@
     <div class="row" style="margin:30px 0; ">
         <div class="col-md-8 col-md-offset-2" >
             <div class="col-md-8" >
-                <input type="text" class="pokemon-input">
+                <textarea class="pokemon-input" cols="30" rows="10"></textarea>
             </div>
             <div class="col-md-4" >
                 <button class="btn find-pokemon" ><?=Yii::t('app','Find the Pokemon')?></button>

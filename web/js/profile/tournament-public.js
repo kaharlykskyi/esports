@@ -343,6 +343,18 @@ $(document).ready( function() {
     });
 });
 
+$(document).ready( function() { 
+
+    $('.resurses-btn-show').on('click',function(e){
+        e.preventDefault();
+        let container = $(this).parent('.resurses-user-container').find('.resurses-user-game');
+        //console.log(container);
+        $(this).find('span').toggleClass('glyphicon-chevron-down');
+        container.slideToggle();
+    });
+
+});
+
 
 
  

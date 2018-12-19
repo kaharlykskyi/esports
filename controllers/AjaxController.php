@@ -32,13 +32,14 @@ class AjaxController extends \yii\web\Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['search-bar'],
+                        'actions' => ['search-bar','check-new-messages'],
                         'roles' => ['?'],
                     ],
                 ],
             ],
         ];
     }
+
     public function beforeAction($action)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -424,4 +425,31 @@ class AjaxController extends \yii\web\Controller
         return ['sent' => false];
     }
 
+    public function actionCheckNewMessages() 
+    {
+        if(!Yii::$app->user->isGuest) {
+            $user_id = Yii::$app->user->identity->id;
+            $message = (new \yii\db\Query())->select(['*'])->from('message_user')
+                ->where(['recipient' => $user_id])
+                ->andWhere(['view_status' => null])
+             ->all();
+            return $message;
+        } else {
+            return ['sent' => false];
+        }
+    }
+
+    public function actionViewMessages() 
+    {
+        if(!Yii::$app->user->isGuest) {
+            $user_id = Yii::$app->user->identity->id;
+            $int = MessageUser::updateAll(
+                ['view_status' => 1], 
+                ['recipient' => $user_id,'view_status' => null]
+            );
+            return ['sent' => $int];
+        } else {
+            return ['sent' => false];
+        }
+    }
 }
