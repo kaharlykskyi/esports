@@ -2,7 +2,7 @@
     use app\widgets\Alert;
     use yii\helpers\Html;
     use app\models\servises\FlagServis;
-    use Yii;
+
     $this->registerCssFile('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
     $this->registerCssFile('css/team.css', ['depends' => ['app\assets\AppAsset']]);
     $this->title = Yii::t('app','Team');

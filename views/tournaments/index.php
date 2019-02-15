@@ -9,7 +9,7 @@
     use app\widgets\Schedule;
     use app\models\Tournaments;
     use app\widgets\ParticipantsData;
-    //use Yii;
+    
     
     $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
     $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);
@@ -50,7 +50,8 @@
     <!--CHAMPIONSHIP WRAP BEGIN-->
     <div class="championship-wrap">
         <h1 style="text-align: center;"><?=$model->name?>  <br>
-            <span class="cups_text" ><?=$model->cups[0]?></span><span class="cups_images" ><?=$model->cups[1]?></span>
+            <span class="cups_text" ><?=$model->cups[0]?></span>
+            <span class="cups_images" ><?=$model->cups[1]?></span>
         </h1>
         <!--CHAMPIONSHIP NAVIGATION BEGIN -->
         <div class="champ-navigation">
@@ -549,7 +550,17 @@
                                 <div class="col-md-4 col-md-offset-2">
                                     <b><?=$g_data[$key]['title']?>:</b>
                                 </div>
-                                <div class="col-md-6"><?=$val?></div>
+                                <div class="col-md-6">
+                                <?php if (is_array($val)) {
+                                        if (empty($val[0])) {
+                                            echo 'No';
+                                        } else {
+                                            echo 'Yes';
+                                        }
+                                    } else {
+                                        echo $val;
+                                }?>
+                                </div>
                             </div>
                         <?php else: ?>
                             <div class="row">

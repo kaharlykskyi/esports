@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use Yii;
 
 $this->title = 'Recovery';
 $this->params['breadcrumbs'][] = $this->title;

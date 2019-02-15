@@ -6,7 +6,6 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use app\models\servises\FlagServis;
 use yii\widgets\Pjax;
-use Yii;
 
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
     $this->title = 'News';

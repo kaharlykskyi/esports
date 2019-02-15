@@ -1,6 +1,6 @@
 <?php
     use yii\helpers\Html;
-    use Yii;
+    
 
     $this->title = Yii::t('app','Enter Character Details');
     $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/tournaments.css');

@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Class m181213_175601_table_social_links
  */
-class m181213_175601_table_social_links extends Migration
+class m181216_141523_table_social_links extends Migration
 {
     /**
      * {@inheritdoc}
@@ -22,13 +22,13 @@ class m181213_175601_table_social_links extends Migration
         $this->createIndex (
             'idx-social_id',
             'social_links',
-            'social_id'
+            'user_id'
         );
 
         $this->addForeignKey(
             'fk-social_id',
             'social_links',
-            'social_id',
+            'user_id',
             'users',
             'id',
             'CASCADE'
@@ -37,7 +37,7 @@ class m181213_175601_table_social_links extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('results_statistics');
+        $this->dropTable('social_links');
     }
 
 

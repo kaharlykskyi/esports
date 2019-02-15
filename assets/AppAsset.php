@@ -20,10 +20,15 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        // them player
+        'css/them_player/modules.css',
+        'css/them_player/modules-responsive.css',
+        //
         'css/style.min.css',
         'css/site.css',
         'css/search-bar.css',
         'bracket/jquery.bracket.min.css',
+
     ];
     public $js = [
         'js/library/jquery-ui.js',
@@ -83,6 +88,20 @@ class AppAsset extends AssetBundle
         'dropify/dist/js/dropify.js',
         'js/search-bar.js',
         'js/message.js',
+        // them player
+        // 'js/them_player/modules/plugins/jquery.appear.js',
+        // 'js/them_player/modules/plugins/modernizr.min.js',
+        'js/them_player/modules/plugins/jquery.hoverIntent.min.js',
+        // 'js/them_player/modules/plugins/jquery.plugin.js',
+
+         'js/them_player/modules/plugins/jquery.waypoints.min.js',
+        // 'js/them_player/modules/plugins/fluidvids.min.js',
+        'js/them_player/modules/plugins/perfect-scrollbar.jquery.min.js',
+        'js/them_player/modules/plugins/jquery.waitforimages.js',
+        'js/them_player/modules/plugins/jquery.prettyPhoto.js',
+        'js/them_player/modules.js',
+        //'js/them_player/modules/theme-modules/theme-modules-js.js',
+
 
     ];
     public $depends = [

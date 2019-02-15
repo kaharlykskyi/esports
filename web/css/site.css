@@ -97,3 +97,93 @@ input[type=email], input[type=password] {
 .block-add-message .badge:hover{
     background-color: #a52424;
 }
+
+.column-img-game img{
+    height: 100%;
+}
+
+.imag-card-hear img {
+    height: 75px;
+}
+
+.table-statistic .number-card{
+    text-align: center;
+}
+
+.main-menu-wrap .custom-logo-link:before {
+    right: -5%;
+}
+
+
+.stats-title{
+    text-align: center;
+    overflow: hidden;
+    margin: 40px 0 20px;
+}
+
+.stats-title span{
+    display: inline-block;
+    position: relative;
+    text-transform: uppercase;
+    font-size: 30px;
+    font-weight: bold;
+    color: #1976d2;
+}
+
+.stats-title span:before, .stats-title span:after{
+    content: "";
+    position: absolute;
+    border-top: 3px solid #00aeff;
+    top: 50%;
+    width: 410px;
+}
+
+.stats-title span:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.stats-title span:after {
+    left: 100%;
+    margin-left: 15px;
+}
+
+.contener-card-img{
+    text-align: center;
+}
+
+.contener-card-img img{
+    border-radius: 50%;
+}
+
+.card-opis-block{
+    text-align: center;
+}
+
+.card-opis-block .title{
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    color: #1976d2;
+    margin-top: 10px;
+}
+
+.card-opis-block .title{
+    text-transform: uppercase;
+    color: #1976d2;
+}
+
+.card-opis-block .players{
+    color: #1976d2;
+}
+
+.contener-card-img-autsid img{
+    border-radius: 15px;
+    height: 100px;
+}
+
+.card-opis-block-auts {
+    font-size: 14px;
+    font-weight: bold;
+    color: #1976d2;
+}

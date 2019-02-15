@@ -1,6 +1,4 @@
-<?php 
-   use Yii;
-?>
+
 <div class="container" style="margin-top: 50px;">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3 text-center" style="margin-bottom: 40px;">

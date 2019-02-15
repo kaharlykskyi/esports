@@ -165,9 +165,6 @@
                     <div class="row">
                         <div class="col-md-7">
                             <ul class="tab-filters">
-                                <!-- <li class="active">
-                                    <a href="#personal"><?php//Yii::t('app','Personal')?></a>
-                                </li> -->
                                 <li class="active" >
                                     <a href="#notifications">
                                         <?=Yii::t('app','Notifications')?>

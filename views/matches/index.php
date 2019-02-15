@@ -2,10 +2,21 @@
 
 use yii\helpers\Html;
 use app\models\Tournaments;
-use Yii;
 
 $this->title = Yii::t('app','Match');
-$script = "$.matchDate = ".(strtotime($model->date)-time()).";";
+
+$userMatchs = $model->userMatch;
+$count_round = 1;
+foreach ($userMatchs as $userMatchi) {
+    if ($count_round < $userMatchi->round) {
+        $count_round = $userMatchi->round;
+    }
+}
+$count_round--;
+
+$time_start = (strtotime($model->date)+(3600*$count_round))-time();
+
+$script = "$.matchDate = ".$time_start.";";
 $this->registerJs($script, yii\web\View::POS_END);
 $this->registerCssFile(
     'css/tournament-public.css', 
@@ -20,7 +31,7 @@ $this->registerJsFile(
 $team1 = $model->teamF;
 $team2 = $model->teamS;
 $tournament = $model->tournament;
-$second = time() - strtotime($model->date);
+$second = (time() - strtotime($model->date))-(3600*$count_round);
 $user_id = false;
     if (!\Yii::$app->user->isGuest){
         $user_id = \Yii::$app->user->identity->id;
@@ -30,7 +41,7 @@ $user_id = false;
 
     <div class="time-match" >
         <h3> <?=Yii::t('app','date of the match')?> </h3> 
-        <span><?=date(' d \of F, h:i ',strtotime($model->date))?></span>
+        <span><?=date(' d \of F, H:i ',strtotime($model->date))?></span>
     </div>
     <!--MATCH PAGE TOP BEGIN-->
     <div class="match-page-top" style="margin-top: 35px; background-color: #fff;">
@@ -126,7 +137,7 @@ $user_id = false;
                                         <span class="vs">vs</span>
                                         <img src="<?=$team2->logo()?>" width="40" height="40" alt="team-logo2">
                                         <span class="info">
-                                            <span class="then"><?=date(' d F Y / h:i ',strtotime($model->date))?>PM</span>
+                                            <span class="then"><?=date(' d F Y / H:i ',strtotime($model->date))?>PM</span>
                                         </span>
                                     </div>
                                 </div>
@@ -138,8 +149,7 @@ $user_id = false;
                                     <div class="col-md-10 col-md-offset-1">
                                         <div class="lineup-list">
                                             <?php if($tournament->game_id < 3): ?>
-                                                <?php 
-                                                    $userMatchs = $model->userMatch; 
+                                                <?php  
                                                     $i_count = 0;
                                                 ?>
                                                 <form action="/matches/result-user" method="POST" >

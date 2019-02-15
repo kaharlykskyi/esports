@@ -268,5 +268,13 @@ class Tournaments extends \yii\db\ActiveRecord
         $image->save($pathFile);
     }
 
+    public function getMatchNext()
+    {
+        return $this->hasOne(
+            ScheduleTeams::className(), 
+            ['tournament_id' => 'id']
+        )->where(['>','date', date('Y-m-d')]);
+    }
+
 }
 

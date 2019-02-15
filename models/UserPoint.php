@@ -70,11 +70,11 @@ class UserPoint extends \yii\db\ActiveRecord
         $model->save();
 
         if($bonus_id == 2) {
-            $this->dubleWinMatch($user_id,$bonus_ball);
+            self::dubleWinMatch($user_id,$bonus_ball);
         }
 
         if($bonus_id == 5) {
-            $this->dubleWinTournament($user_id,$bonus_ball);
+            self::dubleWinTournament($user_id,$bonus_ball);
         }
     }
 
@@ -101,10 +101,10 @@ class UserPoint extends \yii\db\ActiveRecord
         return $user_points;
     }
 
-    private function dubleWinMatch($user_id,$bonus_ball)
+    public static function dubleWinMatch($user_id,$bonus_ball)
     {
         $model_array = self::find()
-            ->where(['user_id'=>$this->user_id])
+            ->where(['user_id'=>$user_id])
             ->orderBy('id desc')->limit(30)->all(); 
 
         $int_count = 0;
@@ -126,11 +126,11 @@ class UserPoint extends \yii\db\ActiveRecord
         }
     }
 
-    private function dubleWinTournament($user_id,$bonus_ball)
+    public static function dubleWinTournament($user_id,$bonus_ball)
     {
         $model = Tournaments::find()
             ->innerJoin('uset_team_tournament', 'uset_team_tournament.tournament_id = tournaments.id')
-            ->where(['uset_team_tournament.user_id' => $this->user_id])
+            ->where(['uset_team_tournament.user_id' => $user_id])
             ->where(['IS NOT', 'winner', null])
             ->orderBy(['tournaments.id' => SORT_DESC])->one(); 
         if (is_object($model)) {

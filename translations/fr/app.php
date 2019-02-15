@@ -283,6 +283,9 @@ return [
     'So, what are you looking for' =>'Alors, qu\'est-ce que tu cherches',
     'Teams' => 'Les équipes',
     'Start date' => 'Date de début',
+    'cards statistics' => 'cartes statistiques',
+    'card' => 'carte',
+    'Name Card' => 'Carte d\'identité',
 
 
 

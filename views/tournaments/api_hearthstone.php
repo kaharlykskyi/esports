@@ -1,6 +1,6 @@
 <?php
     use yii\helpers\Html;
-    use Yii;
+  
 
     $this->title = 'Deckstrings Hearthstone';
     $this->registerCssFile(\Yii::$app->request->baseUrl .'/css/tournaments.css');

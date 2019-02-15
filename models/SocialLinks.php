@@ -51,7 +51,7 @@ class SocialLinks extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'social_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function getIcon() 
@@ -59,7 +59,6 @@ class SocialLinks extends \yii\db\ActiveRecord
         if(!empty($this->array_link_type[$this->social_id-1])) {
             return $this->array_link_type[$this->social_id-1];
         }
-
         return $this->link;
     }
 }

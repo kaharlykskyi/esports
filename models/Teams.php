@@ -172,7 +172,7 @@ class Teams extends \yii\db\ActiveRecord
     {
         $model = self::findOne(['capitan'=>$user->id,'game_id'=>$tournament->game_id,'single_user' => 1]);
         if (!is_object($model)) {
-            $this->name = $user->name;
+            $this->name = $user->name.'@'.$tournament->game->alias;
             $this->capitan = $user->id;
             $this->logo = '-----';
             $this->background = '-----';

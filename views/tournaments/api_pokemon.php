@@ -1,6 +1,6 @@
 <?php
     use yii\helpers\Html;
-    use Yii;
+  
 
 
     $this->title = Yii::t('app','Choose Pokemon');

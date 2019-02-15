@@ -722,7 +722,6 @@ div.jQBracket .team.lose div.score::after {
     position: absolute;
     display: block;
     background-color: #f7f7f7;
-    z-index: 1000;
     left: 50%;
     top: 100%;
     transform: translate(-50%, -50%);
@@ -749,3 +748,76 @@ div.jQBracket .team.lose div.score::after {
     font-size: 20px;
     color:#207ad3;
 }
+
+/*////////////////////matchess/////////////////////////*/
+
+.edgtf-match-status-to_be_played{
+    background-color: #fff;
+    border-bottom: 1px solid #00aeff;
+    padding: 10px 0;
+}
+
+.edgtf-match-status-to_be_played .edgtf-match-team-title{
+    padding: 0;
+    font-size:15px;
+}
+
+.edgtf-match-single-team{
+    width: 25%;
+}
+
+.edgtf-match-status-to_be_played .edgtf-match-item-holder{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+}
+
+.edgtf-match-status-to_be_played .edgtf-match-item-holder a {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100% 
+}
+
+.edgtf-match-item-image-holder img{
+    height: 70px;
+    border-radius: 50%;
+}
+
+.edgtf-match-vs-image img{
+    height: 70px;
+}
+
+.edgtf-match-item-holder{
+    text-align: center;
+}
+
+.edgtf-match-category-holder span {
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    background-color: #000;
+    padding: 0 13px;
+    margin-right: 15px;
+    font-size: 13px;
+    line-height: 22px;
+}
+
+.edgtf-match-category-holder span:after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -5px;
+    width: 0;
+    height: 0;
+    border-bottom: 23px solid #000;
+    border-right: 5px solid transparent;
+}
+
+.edgtf-match-date {
+    font-size: 13px;
+}
+/*////////////////////end-matchess/////////////////////////*/

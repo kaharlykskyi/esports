@@ -281,5 +281,8 @@ return [
     'So, what are you looking for' =>'Y qué es lo que buscas',
     'Teams' => 'Equipos',
     'Start date' => 'Fecha de inicio',
+    'cards statistics' => 'estadísticas de tarjetas',
+    'card' => 'tarjeta',
+    'Name Card' => 'Nombre de tarjeta',
 
 ];

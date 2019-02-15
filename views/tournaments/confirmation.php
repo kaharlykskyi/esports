@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use app\models\Teams;
-use Yii;
+
 
 $this->title = Yii::t('app','Invitation to join the tournament');
 $this->registerCssFile('css/tournament-public.css', ['depends' => ['app\assets\AppAsset']]);

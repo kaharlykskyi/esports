@@ -20,6 +20,7 @@ use app\models\ScheduleTeams;
 use app\models\UsetTeamTournament;
 use app\models\servises\ApiString;
 use app\models\servises\SerchTournaments;
+use app\models\StatisticCardsHearthstone;
 
 class TournamentsController extends \yii\web\Controller
 {
@@ -49,8 +50,11 @@ class TournamentsController extends \yii\web\Controller
     public function actionIndex()
     {
         $searchModel = new SerchTournaments();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);     
-        return $this->render('all_tournaments',compact('dataProvider','searchModel'));
+        $params = Yii::$app->request->queryParams;
+        $dataProvider = $searchModel->search($params);     
+        return $this->render('all_tournaments',
+            compact('dataProvider' ,'searchModel', 'params')
+        );
     }
 
     public function actionPublic($id)
@@ -270,7 +274,13 @@ class TournamentsController extends \yii\web\Controller
             $post = Yii::$app->request->post();
             if (!empty($post['decstring'])) {
                 $user_config->text = $post['decstring']; 
-                $user_config->save(false);  
+                $user_config->save(false);
+                if ($model->game_id == 1) {
+                    $json_array = json_decode($post['decstring'],true);
+                    if (!empty($json_array[1])) {
+                       StatisticCardsHearthstone::setCards($json_array[1]);
+                    }
+                }  
                 return $this->redirect('/tournaments/public/'.$model->id);
             }         
         }
@@ -289,14 +299,14 @@ class TournamentsController extends \yii\web\Controller
         
     }
 
-    public function actionTest() 
-    {
-        $model = Tournaments::findOne(7);
-        if (!is_object($model)) {
-            throw new HttpException(404 ,'Page not found');
-        }
-       //$model->addCupDuble([1]);
-        $this->layout = false;
-        return $this->render('cup',compact('model'));
-    }
+    // public function actionTest() 
+    // {
+    //     $model = Tournaments::findOne(7);
+    //     if (!is_object($model)) {
+    //         throw new HttpException(404 ,'Page not found');
+    //     }
+    //    //$model->addCupDuble([1]);
+    //     $this->layout = false;
+    //     return $this->render('cup',compact('model'));
+    // }
 }

@@ -1,7 +1,6 @@
 <?php
     use app\widgets\Alert;
     use yii\helpers\Html;
-    use Yii;
 
     $this->title = 'Team-delete';
     $this->params['breadcrumbs'][] = $this->title;

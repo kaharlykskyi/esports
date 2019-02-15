@@ -1,6 +1,6 @@
 <?php
 use app\models\Tournaments;
-use Yii;
+
 
     if(($model->format != Tournaments::LEAGUE)&&(!empty($model->cup))) {
         $script = "$.comandTeams = ".$model->cup.";";

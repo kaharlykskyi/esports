@@ -14,7 +14,7 @@ class SerchTournaments extends Tournaments
     public function rules()
     {
         return [
-            [['id','game_id','created_at'], 'integer'],
+            [['id','game_id','created_at','state'], 'integer'],
             [['name','banner'],'string'],
         ];
     }
@@ -35,27 +35,49 @@ class SerchTournaments extends Tournaments
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]],
-            'pagination' => [ 'pageSize' => 5 ],
+            'sort'=> [
+                'defaultOrder' =>
+                 ['created_at' => SORT_DESC]
+            ],
+            'pagination' => [ 'pageSize' => 12 ],
         ]);
 
-        $this->load($params);
+        // echo "<pre>";
+        // print_r($params);
+        // echo "</pre>";exit;
 
+        $this->load($params);
+        $this->my_load($params);
+        
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'created_at' => $this->created_at,
-            'game_id' => $this->game_id,
-        ]);
+        if ($this->state == '0') {
+            $query->andFilterWhere(['is', 'state', new \yii\db\Expression('null')]);
+        } else {
+            $query->andFilterWhere([
+                'id' => $this->id,
+                'created_at' => $this->created_at,
+                'game_id' => $this->game_id,
+                'state' => $this->state,
+            ]);
+
+        }
+
+        //$query->andWhere(['is', ['state' => null]]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
+    }
+
+    private function my_load($params) 
+    {
+        if(isset($params['state'])) {
+            $this->state = $params['state'];
+        }
     }
 }

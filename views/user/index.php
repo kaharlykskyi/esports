@@ -3,6 +3,7 @@
     use yii\helpers\Html;
     use yii\helpers\ArrayHelper;
     use app\models\servises\FlagServis;
+    use app\models\StatisticCardsHearthstone;
 
     $this->registerCssFile('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
     $this->registerCssFile('css/team.css', ['depends' => ['app\assets\AppAsset']]);
@@ -110,6 +111,23 @@
                         <?php endif; ?>
                     </div>
                 </div>
+
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <div class="item"><b><?=Yii::t('app','Favorite card in game Hearthstone')?>:</b></div>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-9">
+                        <?php 
+                            $favorite_card = StatisticCardsHearthstone::cardsStatisticOne($model->id); 
+                            if (is_object($favorite_card)) {
+                                echo "<p class='card-f-herst'>{$favorite_card->img}</p>";
+                            } else {
+                                echo "----";
+                            }
+                        ?>
+                    </div>
+                </div>
+
                 <div class="row player-hockey-wrap" style="margin-bottom: 15px;background-color: transparent;">
                     <div class="col-md-3 col-sm-3 col-xs-3">
                         <div class="item"><b><?=Yii::t('app','Fair play')?>:</b></div>
@@ -327,6 +345,7 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="row">
             <div class="col-md-12">
+                <?php if (!empty($statistic_team)): ?>
                 <h6><?=Yii::t('app','team member')?></h6>
                 <div class="overflow-scroll">
                     <table>
@@ -364,6 +383,7 @@
                         </tbody>
                     </table>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

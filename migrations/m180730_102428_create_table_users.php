@@ -8,9 +8,7 @@ use yii\db\Schema;
  */
 class m180730_102428_create_table_users extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
+    
     public function safeUp()
     {
         $this->createTable('users', [

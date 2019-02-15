@@ -101,3 +101,108 @@
     line-height: normal;
 }
 
+/*============================header table====================================*/
+
+.blok-headre-table{
+    background-color: #fcfcfc;
+    overflow: hidden;
+    border-bottom: 1px solid #ff0e1f;
+}
+
+.lenk-sot{
+    display: inline-block;
+    transform: skew(20deg);
+    -webkit-transition: background-color 1s cubic-bezier(.19,1,.22,1);
+    -moz-transition: background-color 1s cubic-bezier(.19,1,.22,1);
+     transition: background-color 1s cubic-bezier(.19,1,.22,1); 
+        float: left;
+    margin: 0;
+    margin-left: -2px;
+    padding: 0;
+}
+
+.lenk-sot:hover{
+    background-color: #ff0e1f;
+}
+
+.lenk-sot:hover a{
+    color: #fff;
+}
+
+.lenk-sot.active{
+    background-color: #ff0e1f; 
+}
+
+.lenk-sot.active a{
+    color: #fff;
+}
+
+.lenk-sot a{
+    padding: 12px 47px;
+    line-height: 24px;
+    -webkit-transform: skew(-20deg);
+    -moz-transform: skew(-20deg);
+    transform: skew(-20deg);
+    display: block;
+    text-transform: uppercase;
+}
+/*============================end header table=================================*/
+
+/*============================content table====================================*/
+.tournaments-table  h6{
+    padding: 0; 
+}
+
+.tournaments-table td{
+    vertical-align: middle;
+} 
+
+.tournaments-table .name-content{
+    font-weight: normal;
+}
+
+.tournaments-table .name-content{
+    text-align: left;
+}
+
+.tournaments-table .info-stage span{
+    display: inline-block;
+    padding: 0 10px;
+    margin-right: 12px;
+    font-size: 13px;
+    color: #fff;
+}
+
+.tournaments-table .info-stage .started{
+    background-color: #4caf50;
+    
+}
+
+.tournaments-table .info-stage .overwatch{
+    background-color: #ff9800;
+}
+
+.tournaments-table .info-stage .uncoming{
+    background-color: #2196f3;
+}
+
+.tournaments-table .t-prize{
+    font-size: 13px;
+}
+
+.tournaments-table .mach-logo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   /* align-content: space-between;*/
+    align-items: center;
+}
+
+.tournaments-table .mach-logo img{
+    height: 70px;
+}
+
+.tournaments-table .date{
+    font-size: 12px;
+    font-weight: normal;
+}
