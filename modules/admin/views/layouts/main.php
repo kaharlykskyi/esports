@@ -152,7 +152,8 @@ AppAsset::register($this);
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>News</a>
+                                <i class="fas fa-copy"></i>News
+                            </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="<?=Url::to(['/admin/news/index'])?>">All news</a>
@@ -164,6 +165,11 @@ AppAsset::register($this);
                                     <a href="<?=Url::to(['/admin/news/create-category'])?>">Create news category</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="<?=Url::to(['/admin/user/index'])?>">
+                                <i class="fas fa-copy"></i>Users
+                            </a>
                         </li>
                     </ul>
                 </nav>

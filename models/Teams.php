@@ -86,6 +86,16 @@ class Teams extends \yii\db\ActiveRecord
         return $this->hasMany(UserTeam::className(), ['id_team' => 'id']);
     }
 
+    public function getSponsors()
+    {
+        return $this->hasMany(SponsorTeam::className(), ['team_id' => 'id']);
+    }
+
+    public function getHistory()
+    {
+        return $this->hasMany(TeamHistory::className(), ['team_id' => 'id']);
+    }
+
     public function getMatces()
     {
         return ScheduleTeams::find()
@@ -167,7 +177,6 @@ class Teams extends \yii\db\ActiveRecord
         return User::find()->with('statisticAll')->where(['in', 'id', $ids])->all();
     }
 
-
     public function dummyTeam($tournament,$user)
     {
         $model = self::findOne(['capitan'=>$user->id,'game_id'=>$tournament->game_id,'single_user' => 1]);
@@ -213,5 +222,13 @@ class Teams extends \yii\db\ActiveRecord
             return false;
         }
         return true;
+    }
+
+    public function isCapitan  ($user_id) 
+    {
+        if ($user_id == $this->capitan) {
+            return true;
+        }
+        return false;
     }
 }

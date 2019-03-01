@@ -52,10 +52,10 @@
                                     </div> 
                                 </a>
                                 <div class="user-data">
-                                    <h2 class="user-data-h2"><?= $user->name ?></h2> @<?= $user->username ?>
-                                    <div class="youplay-user-activity">
-                
-                                    </div>
+                                    <h2 class="user-data-h2">
+                                        <?= $user->name ?>
+                                    </h2> @<?= $user->username ?>
+                                    <div class="youplay-user-activity"></div>
                                 </div>
                             </div>
                         </div>
@@ -109,6 +109,11 @@
 </section>
 <div class="container"  >
     <?=Alert::widget()?>
+    <?php if ($user->isBaned()): ?>
+        <div class="alert-danger alert" style="margin-top: 25px;">
+            You are banned to <?=$user->ban_date?>
+        </div>
+    <?php endif; ?>
     <div class="row">
         <div class="col-md-9 ">
             <div class="tab-content my-tabs">
@@ -177,35 +182,6 @@
                         </div>
                     </div>
                     <div class="tab-content">
-                        <!-- <div id="personal" class="tab-pane fade in active">
-                            <div class="wrap-lists">
-                                <div class="lists">
-                                    <div class="youplay-timeline-icon "> 
-                                        <a href="https://wp.nkdev.info/youplay/members/craager/"> 
-                                            <img src="https://cdn-wp.nkdev.info/youplay/wp-content/uploads/avatars/1/3e326e4e6643db89fc3bf1447d9474e3-bpthumb.jpg" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Profile picture of nK"> 
-                                        </a>
-                                    </div>  
-                                    <div class="wrap">     
-                                        <h3 class="activity-header">
-                                            <p>
-                                                <a href="https://wp.nkdev.info/youplay/members/craager/" rel="nofollow">nK</a> replied to the topic 
-                                                <a href="https://wp.nkdev.info/youplay/forums/topic/tomb-rider/">Tomb Rider</a> in the forum 
-                                                <a href="https://wp.nkdev.info/youplay/forums/forum/games/xbox/">Xbox</a> 
-                                                <a href="https://wp.nkdev.info/youplay/forums/topic/tomb-rider/#post-657" class="view youplay-timeline-date pt-5 bp-tooltip">
-                                                    <span class="time-since">2 years ago</span>
-                                                </a>
-                                            </p>
-                                        </h3>
-                                        <div class="clearfix"></div>
-                                        <div class="activity-inner">
-                                            <p>
-                                                Rutrum potenti fusce justo per felis dignissim, molestie orci facilisis et phasellus enim. Malesuada amet justo. Cum ultrices. Suscipit vel orci lorem. Torquent ipsum, pretium cras conubia, posuere urna donec […]
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> 
-                            </div>
-                        </div> -->
                         <div id="notifications" class="tab-pane fade in active">
                             <div class="wrap-lists"> 
                                 <?php foreach($teams_m as $team) : ?>  
@@ -246,7 +222,7 @@
                                 <?php foreach($user->messages as $message) : ?>
                                     
                                     <div class="lists">
-                                        <div class="closes" data-delete="<?=$message->id?>" ></div>
+                                        <!-- <div class="closes" data-delete="<?//$message->id?>" ></div> -->
                                         <div class="youplay-timeline-icon "> 
                                             <a href="/user/public/<?=$message->senders->id?>">
                                                 <img src="<?=$message->senders->avatar()?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
@@ -312,7 +288,7 @@
                 <div id="teams" class="tab-pane fade">
                     <div class="row">
                         <div class="col-md-7" style="margin-bottom: 25px;" >
-                            <?php if ($teams['btn']>0): ?>
+                            <?php if (($teams['btn']>0) && !$user->isBaned()): ?>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <a href="/profile/create-team" class="btn btn-primary">
@@ -502,11 +478,13 @@
                 <div id="tournaments" class="tab-pane fade">
 
                     <div class="row">
+                        <?php if (!$user->isBaned()): ?>
                         <div class="col-md-12" style="margin-bottom: 30px;">
                             <a href="/tournaments/create" class="btn btn-primary">
                                 <?=Yii::t('app','Create a tournament')?>
                             </a> 
                         </div>
+                        <?php endif; ?>
                     </div>
                     <div class="row">
                         <?php foreach ($tournaments as $tournament):?>

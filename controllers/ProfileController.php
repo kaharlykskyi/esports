@@ -17,7 +17,7 @@ use app\models\SocialLinks;
 
 class ProfileController extends \yii\web\Controller
 {
-	public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
@@ -43,7 +43,7 @@ class ProfileController extends \yii\web\Controller
     }
 
     public function beforeAction($action)
-	{
+    {
         if (!Yii::$app->user->isGuest) {
             if (!Yii::$app->user->identity->is_verified) {
                 $email = Yii::$app->user->identity->email;
@@ -52,8 +52,8 @@ class ProfileController extends \yii\web\Controller
                 Yii::$app->session->setFlash('warning', Yii::t('app','Please confirm you email:').' '.$a_email.$resend);
             }
         }
- 		return parent::beforeAction($action);
-	}
+        return parent::beforeAction($action);
+    }
 
     public function actionIndex()
     {   
@@ -76,11 +76,9 @@ class ProfileController extends \yii\web\Controller
 
     public function actionCreateTeam()
     {
-  
-		$id = Yii::$app->user->identity->id;
-		
-		$not_gemes = $this->games();
-        if (empty($not_gemes)) {
+        $id = Yii::$app->user->identity->id;
+        $not_gemes = $this->games();
+        if (empty($not_gemes)||Yii::$app->user->identity->isBaned()) {
             return $this->redirect('/profile#teams');
         }
         $model = new Teams();

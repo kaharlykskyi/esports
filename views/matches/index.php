@@ -22,6 +22,10 @@ $this->registerCssFile(
     'css/tournament-public.css', 
     ['depends' => ['app\assets\AppAsset']]
 );
+$this->registerCssFile(
+    'css/match.css', 
+    ['depends' => ['app\assets\AppAsset']]
+);
 $this->registerJsFile(
     '/js/profile/match.js',
     ['depends' => 'yii\web\JqueryAsset',
@@ -36,11 +40,11 @@ $user_id = false;
     if (!\Yii::$app->user->isGuest){
         $user_id = \Yii::$app->user->identity->id;
     }
-    //$user_id =12;
+    $user_id =12;
 ?>
 
     <div class="time-match" >
-        <h3> <?=Yii::t('app','date of the match')?> </h3> 
+        <h3 style="color: #2e7ad2;"> <?=Yii::t('app','date of the match')?> </h3> 
         <span><?=date(' d \of F, H:i ',strtotime($model->date))?></span>
     </div>
     <!--MATCH PAGE TOP BEGIN-->
@@ -85,8 +89,31 @@ $user_id = false;
                                     <div class="digit digit_s">0</div>
                                 </li>
                             </ul>
+                            <div class="clearfix results" >
+                                <div class="result-left" >
+                                    <?php if($model->results1>$model->results2):?>
+                                        <span class="winner">VICTORY</span>
+                                    <?php endif; ?>
+                                    <?php if($model->results2>$model->results1):?>
+                                        <span class="loser">DEFEATED</span>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="result-right" >
+                                    <?php if($model->results2>$model->results1):?>
+                                        <span class="winner">VICTORY</span>
+                                    <?php endif; ?>
+                                    <?php if($model->results1>$model->results2):?>
+                                        <span class="loser">DEFEATED</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
-                        <div class="team right">
+                        <div class="team ">
+                            <div class="avatar">
+                                <a href="<?=$team2->links() ?>">
+                                    <img src="<?=$team2->logo()?>" alt="match-list-team-img">
+                                </a>
+                            </div>
                             <div class="text">
                                 <a href="<?=$team2->links() ?>">
                                     <?=$team2->name ?> 
@@ -107,11 +134,6 @@ $user_id = false;
                                     } ?>
                                 </div>
                             </div>
-                            <div class="avatar">
-                                <a href="<?=$team2->links() ?>">
-                                    <img src="<?=$team2->logo()?>" alt="match-list-team-img">
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -121,30 +143,12 @@ $user_id = false;
     <!--MATCH PAGE TOP END-->
 
         <!--MATCH PAGE TOP BEGIN-->
-        <div class="match-page-top" >
+        <div class="match-page-top" style="background-color: #ffffff;">
             <div class="container">
                 <div class="row">
-                <div class="col-md-12">
-                    <div class="broadcast-item">
-                        <div class="item-header" id="headingTwo">
-                            <div class="row">
-                                <div class="col-md-1 col-sm-2">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="arrow collapsed" aria-expanded="false"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                                </div>
-                                <div class="col-md-7 col-sm-10">
-                                    <div class="item-head-body">
-                                        <img src="<?=$team1->logo()?>" width="40" height="40" alt="team-logo1">
-                                        <span class="vs">vs</span>
-                                        <img src="<?=$team2->logo()?>" width="40" height="40" alt="team-logo2">
-                                        <span class="info">
-                                            <span class="then"><?=date(' d F Y / H:i ',strtotime($model->date))?>PM</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>  
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
-                            <div class="item-body">
+                    <div class="col-md-12">
+                        <div class="broadcast-item">
+                        
                                 <div class="row">
                                     <div class="col-md-10 col-md-offset-1">
                                         <div class="lineup-list">
@@ -269,7 +273,7 @@ $user_id = false;
                                         </div>
                                     </div>
                                 </div>  
-                            </div>
+                           
                             <?php if (!\Yii::$app->user->isGuest&&($second>900)&&$tournament->game_id > 2):?>
                             <?php if (\Yii::$app->user->identity->id == $tournament->user_id):?>    
                                 <div class="item-body write-result-match">

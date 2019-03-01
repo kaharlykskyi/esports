@@ -187,3 +187,84 @@ input[type=email], input[type=password] {
     font-weight: bold;
     color: #1976d2;
 }
+
+.edgtf-page-header a:hover {
+    color: #1976d2;
+}
+
+::selection {
+    background: #67acec;
+    color: #17161a;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #67acec;
+    outline: 1px solid #67acec;
+}
+
+.edgtf-main-menu > ul > li > a:after {
+    background-color: #005DB4;
+}
+
+#respond textarea:focus, .edgtf-style-form textarea:focus, 
+#respond input:focus[type='text'], input:focus[type='text'], 
+input:focus[type='email'], input:focus[type='password'],
+ .wpcf7-form-control.wpcf7-text:focus, 
+.wpcf7-form-control.wpcf7-number:focus, .wpcf7-form-control.wpcf7-date:focus, 
+.wpcf7-form-control.wpcf7-textarea:focus, .wpcf7-form-control.wpcf7-select:focus, 
+.wpcf7-form-control.wpcf7-quiz:focus {
+    border-color: transparent;
+    border-bottom-color: #3cb9d5;
+}
+
+.edgtf-drop-down .second 
+.inner ul li a .item_outer:before {
+    background-color: #005DB4;
+}
+
+/*============================header table====================================*/
+
+.blok-tabs{
+    background-color: #fcfcfc;
+    overflow: hidden;
+    border-bottom: 1px solid #2196f3;
+}
+
+.lenk-sot{
+    display: inline-block;
+    transform: skew(20deg);
+    -webkit-transition: background-color 1s cubic-bezier(.19,1,.22,1);
+    -moz-transition: background-color 1s cubic-bezier(.19,1,.22,1);
+     transition: background-color 1s cubic-bezier(.19,1,.22,1); 
+        float: left;
+    margin: 0;
+    margin-left: -2px;
+    padding: 0;
+}
+
+.lenk-sot:hover{
+    background-color: #2196f3;
+}
+
+.lenk-sot:hover a{
+    color: #fff;
+}
+
+.lenk-sot.active{
+    background-color: #2196f3; 
+}
+
+.lenk-sot.active a{
+    color: #fff;
+}
+
+.lenk-sot a{
+    padding: 12px 47px;
+    line-height: 24px;
+    -webkit-transform: skew(-20deg);
+    -moz-transform: skew(-20deg);
+    transform: skew(-20deg);
+    display: block;
+    text-transform: uppercase;
+}
+/*============================end header table=================================*/

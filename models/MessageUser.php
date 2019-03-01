@@ -9,9 +9,7 @@ use yii\helpers\Url;
 
 class MessageUser extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public static function tableName()
     {
         return 'message_user';
@@ -20,7 +18,7 @@ class MessageUser extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-             TimeStampBehavior::className(),
+            TimeStampBehavior::className(),
         ];
     }
 
@@ -30,14 +28,21 @@ class MessageUser extends \yii\db\ActiveRecord
             [['sender', 'recipient', 'created_at', 'updated_at'], 'integer'],
             [['text','title'], 'string'],
             [['sender', 'recipient'], 'required'],
-            [['recipient'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['recipient' => 'id']],
-            [['sender'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['sender' => 'id']],
+            [
+                ['recipient'], 
+                'exist', 'skipOnError' => true, 
+                'targetClass' => User::className(), 
+                'targetAttribute' => ['recipient' => 'id']
+            ],
+            [
+                ['sender'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => User::className(), 
+                'targetAttribute' => ['sender' => 'id']
+            ],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [

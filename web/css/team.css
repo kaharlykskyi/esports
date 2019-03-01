@@ -156,6 +156,9 @@ img {
 .edgtf-match-team-title {
     margin: 5px 0 0;
     text-align: center;
+    font-size: 14px;
+    padding: 0;
+    margin-bottom: 15px;
 }
 .edgtf-match-status-finished {
 	background-color:#fff;
@@ -677,4 +680,96 @@ img {
 
 .card-f-herst img {
     height: 60px;
+}
+
+.lain-capitan:after{
+    content: "Capitan";
+    display: block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 5%;
+    height: 30px;
+    width: 130px;
+    background-color: red;
+    right: -20px;
+    color:#fff;
+    display: block;
+    font-weight: bold;
+}
+
+.edgtf-match-item-image-holder img{
+    border-radius: 50%;
+}
+
+/*------------------------------menu---------------------------*/
+.youplay-user-navigation {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 82;
+}
+
+.youplay-user-navigation ul li.active>a::after {
+    background-color: #f7f7f7;
+}
+
+.youplay-user-navigation ul li>a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: transparent;
+    -webkit-transition: .3s background-color;
+    transition: .3s background-color;
+    -webkit-transform: skew(-7deg);
+    transform: skew(-7deg);
+    z-index: -1;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: transparent;
+    border: none;
+    border-bottom-color: transparent;
+}
+
+.youplay-user-navigation ul li>a {
+    position: relative;
+    display: block;
+    padding: 1.25rem 1.8rem;
+    font-size: 1.6rem;
+    color: #696666;
+    text-decoration: none;
+    background: 0 0;
+    border: none;
+    border-radius: 0;
+    font-weight: bold;
+}
+
+.youplay-user-navigation ul li>a {
+    padding: 1.2rem 1.5rem;
+    font-size: 1.4rem;
+}
+
+.youplay-user-navigation ul li:focus>a::after, .youplay-user-navigation ul li:hover>a::after {
+    background-color: rgba(255,255,255,.4);
+}
+
+.nav-tabs>li>a:hover {
+    border-color: transparent;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.youplay-user-navigation .container {
+    margin-left: 15px;
+}
+/*------------------------------end-menu---------------------------*/
+.owl-theme img {
+    border-radius: 8px;
 }

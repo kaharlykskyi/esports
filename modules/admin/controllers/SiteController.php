@@ -9,6 +9,15 @@ use Yii;
 class SiteController extends Controller
 {
 
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         return $this->render('index');
@@ -23,7 +32,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
             if($model->login()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['user/index']);
             }
         }
         $this->layout = 'login';

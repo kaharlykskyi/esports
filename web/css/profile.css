@@ -555,6 +555,8 @@ input[type=date] {
 .block_logo{
     display: flex;
     margin:15px 0;
+    align-items: stretch;
+    height: 80px;
 }
 
 .plashka_teams .box p{
@@ -754,4 +756,19 @@ input[type=url] {
        padding-left: 5px; 
        padding-right: 5px; 
     }
+}
+.wrap-lists{
+    overflow:auto;
+    max-height: 500px;
+    margin-bottom: 25px;
+}
+
+.img_logo_modal_team{
+    display: flex;
+    align-items: stretch;
+}
+
+.img_logo_modal_team img{
+    max-height: 100%;
+    width: auto;
 }

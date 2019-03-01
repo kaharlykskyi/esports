@@ -18,9 +18,24 @@ class ResultsStatisticUsers extends \yii\db\ActiveRecord
         return [
             [['user_id', 'team_id', 'victories', 'loss','game_id','rate'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['game_id'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['game_id' => 'id']],
+            [
+                ['team_id'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => Teams::className(), 
+                'targetAttribute' => ['team_id' => 'id']
+            ],
+            [
+                ['user_id'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => User::className(), 
+                'targetAttribute' => ['user_id' => 'id']
+            ],
+            [
+                ['game_id'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => Games::className(), 
+                'targetAttribute' => ['game_id' => 'id']
+            ],
         ];
     }
 
@@ -124,6 +139,5 @@ class ResultsStatisticUsers extends \yii\db\ActiveRecord
         } else {
             $this->rate =  0;
         }
-        
     }
 }

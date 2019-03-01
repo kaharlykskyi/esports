@@ -88,8 +88,10 @@ class TournamentsController extends \yii\web\Controller
     {
     	$games = Games::find()->all();
     	$model = new Tournaments();
+        if(Yii::$app->user->identity->isBaned()) {
+            return $this->redirect('/profile');
+        }
     	if (Yii::$app->request->isPost) {
-
     		if ($model->load(Yii::$app->request->post())) {
                 $model->user_id = Yii::$app->user->identity->id;
     			if($model->save()) {

@@ -1,0 +1,28 @@
+.sponsor_list{
+	border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    padding: 10px 0;
+}
+
+.sponsor_list p{
+	margin: 0;
+	font-size: 14px;
+}
+
+.sponsor_list .sponsor-logo img {
+	height: 100px;
+	border-radius: 5px;
+}
+
+.btn.edit-team {
+    padding: 7px 12px;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+#modal-sponsor .modal-form input {
+	border: 1px solid #ccc;
+}

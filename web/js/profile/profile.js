@@ -195,11 +195,11 @@ $(document).ready(function () {
             let html = `<div class="col-xs-12 col-md-10 col-md-offset-1 plashka_teams clearfix " >
                         <div class="col-xs-3 block_logo" >
                         <div class="img_logo_modal_team">
-                        <a href="/teams/public/${element.id}"><img src="${element.logo}" alt=""></a>
+                        <a href="/teams/${element.slug}"><img src="${element.logo}" ></a>
                         </div>
                         </div>
                         <div class="col-xs-5 col-md-6" >
-                        <p class="p_name" ><a href="/teams/public/${element.id}">${element.name}<a/></p>
+                        <p class="p_name" ><a href="/teams/${element.slug}">${element.name}<a/></p>
                         <p class="p_gname" >${element.g_name}</p>
                         <p class="p_user" >${element.c_user} member(s)</p>
                         </div>
@@ -219,38 +219,38 @@ $(document).ready(function () {
 });
 
 
-$(document).ready(function () {
+// $(document).ready(function () {
 
-    $('.closes').on('click',function(){
-       let id_message = $(this).attr('data-delete');
-       deleteMessage(id_message,$(this));
-    });
+//     $('.closes').on('click',function(){
+//        let id_message = $(this).attr('data-delete');
+//        deleteMessage(id_message,$(this));
+//     });
 
-    function FSsrf () {
-        const fdata = new FormData();
-        const csrfParam = $('meta[name="csrf-param"]').attr("content");
-        const csrfToken = $('meta[name="csrf-token"]').attr("content");
-        fdata.append(csrfParam,csrfToken); 
-        return fdata;
-    }
+//     function FSsrf () {
+//         const fdata = new FormData();
+//         const csrfParam = $('meta[name="csrf-param"]').attr("content");
+//         const csrfToken = $('meta[name="csrf-token"]').attr("content");
+//         fdata.append(csrfParam,csrfToken); 
+//         return fdata;
+//     }
 
-    function deleteMessage(data,content) {
+//     function deleteMessage(data,content) {
 
-        const fdata = FSsrf();
-        fdata.append('id_message',data);
-        let statechange = function() {
-            if(this.readyState == 4) {
-                let e = JSON.parse(this.responseText);
-                if (e.sent) {
-                    content.parent(".lists").slideUp();
-                }
-            }
-        };
-        const xml = new XMLHttpRequest();
-        xml.onreadystatechange = statechange;
-        xml.open('POST','/ajax/delete-message',true);
-        xml.send(fdata); 
-    }
+//         const fdata = FSsrf();
+//         fdata.append('id_message',data);
+//         let statechange = function() {
+//             if(this.readyState == 4) {
+//                 let e = JSON.parse(this.responseText);
+//                 if (e.sent) {
+//                     content.parent(".lists").slideUp();
+//                 }
+//             }
+//         };
+//         const xml = new XMLHttpRequest();
+//         xml.onreadystatechange = statechange;
+//         xml.open('POST','/ajax/delete-message',true);
+//         xml.send(fdata); 
+//     }
 
-});
+// });
 

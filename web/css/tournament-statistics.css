@@ -106,7 +106,7 @@
 .blok-headre-table{
     background-color: #fcfcfc;
     overflow: hidden;
-    border-bottom: 1px solid #ff0e1f;
+    border-bottom: 1px solid #2196f3;
 }
 
 .lenk-sot{
@@ -122,7 +122,7 @@
 }
 
 .lenk-sot:hover{
-    background-color: #ff0e1f;
+    background-color: #2196f3;
 }
 
 .lenk-sot:hover a{
@@ -130,7 +130,7 @@
 }
 
 .lenk-sot.active{
-    background-color: #ff0e1f; 
+    background-color: #2196f3; 
 }
 
 .lenk-sot.active a{

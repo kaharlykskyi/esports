@@ -128,7 +128,7 @@ class AjaxController extends \yii\web\Controller
                 if ($user_team->save()) {
                     $user = Yii::$app->user->identity;
                     $url = Url::toRoute(
-                        ['teams/delete-team','confirmation_tokin'=> $stringTokin,
+                        ['team/delete-team','confirmation_tokin'=> $stringTokin,
                         'id_user_team' => $user_team->id], true);
                     $a = Html::a($url,$url);
                     $deleteHtml = Teams::sentDeleteHtml($a,$user, $team);
@@ -149,14 +149,15 @@ class AjaxController extends \yii\web\Controller
     public function actionGetTeams () 
     {
         $post = Yii::$app->request->post();
-        //$post['search'] = 's';
         $id = Yii::$app->user->identity->id;
         
         $not_games = (new \yii\db\Query())->select(['games.id'])->from('games')
             ->leftJoin('teams', '`teams`.`game_id` = `games`.`id`')
             ->leftJoin('user_team', '`user_team`.`id_team` = `teams`.`id`')
-            ->where(['user_team.id_user' => $id])
-            ->andWhere(['user_team.status' => UserTeam::ACCEPTED ]);
+            ->andFilterWhere([ 'AND',
+                ['user_team.id_user' => $id],
+                ['user_team.status' => UserTeam::ACCEPTED ],
+            ]);
 
         $teams = (new \yii\db\Query())
             ->select(['teams.*' ,'games.name as g_name','tournaments.name as turname','tournaments.id as turid',
@@ -164,8 +165,10 @@ class AjaxController extends \yii\web\Controller
             ->from('teams')->leftJoin('games', 'games.id = teams.game_id')
             ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
             ->leftJoin('tournaments', 'tournaments.id = tournament_team.tournament_id')
-            ->where(['not in', 'games.id', $not_games])
-            ->andWhere(['LIKE', 'teams.name', $post['search']]);
+            ->andFilterWhere([ 'AND',
+                ['not in', '`games`.`id`', $not_games],
+                ['LIKE', '`teams`.`name`', $post['search']],
+            ])->andWhere(['`teams`.`single_user`' => null ]);
             if((int)$post['game']){
 
                 $teams->andWhere(['games.id' => (int)$post['game']]);
@@ -184,6 +187,7 @@ class AjaxController extends \yii\web\Controller
                 $teami['turname'] = $team['turname'];
                 $teami['c_user'] = $team['c_user'];
                 $teami['turid'] = $team['turid'];
+                $teami['slug'] = $team['slug'];
                 $teams_sort[$team['id']] = $teami;
             } 
         }

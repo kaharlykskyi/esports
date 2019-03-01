@@ -218,11 +218,10 @@ $script = "
                 </div> 
             </div>
             <div class="edgtf-position-center">
-                <div class="edgtf-position-center-inner" 
-                    style="background-image:url(/images/them_player/logo-background-img.jpg);">
+                <div class = "edgtf-position-center-inner" style = "background-color: #005DB4">
                     <div class="edgtf-logo-wrapper">
-                        <a  href="/" style="height: 84px;">
-                            <img  class="edgtf-normal-logo" src="http://playerx.edge-themes.com/wp-content/uploads/2018/06/logo-divided-header.png" width="169" height="168" alt="logo">       
+                        <a  href="/" style="height: 60px;margin-top:7px;">
+                            <img  class="edgtf-normal-logo" src="/images/hockey/logo-background-img.png" alt="logo">       
                         </a>
                     </div>
                 </div>
@@ -312,6 +311,9 @@ $script = "
                                 </div>
                             </div>
                         </li>
+                        <li style="padding-top:15px;" >
+                             <a  href="/profile#activity" class="block-add-message" ></a>
+                        </li>
                         <?php endif;?>
                     </ul>
                 </nav>
@@ -327,7 +329,8 @@ $script = "
                                     <rect x="17.166" y="0.135" transform="matrix(0.7072 0.707 -0.707 0.7072 8.9391 -12.2324)" fill="#ffffff" width="4.145" height="9.083"></rect>
                                     <rect x="2.61" y="0.141" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 11.3045 4.6818)" fill="#ffffff" width="4.145" height="9.083"></rect>
                                     <rect x="17.172" y="14.703" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 46.4606 19.2446)" fill="#ffffff" width="4.146" height="9.083"></rect>
-                                </svg>            </span>
+                                </svg>            
+                            </span>
                             </a>
                         </div>
                     </div>
@@ -375,39 +378,39 @@ $script = "
             </div>
         </div>
 
-    <nav class="edgtf-mobile-nav ps ps--theme_default ps--active-y" data-ps-id="bca1c7c1-5909-c656-a794-beb10bb9e929" style="height: 104px; display: block;">
-        <div class="edgtf-grid">
-            <ul id="menu-main-menu-navigation" class="">
-                <li id="mobile-menu-item-35" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children edgtf-active-item has_sub"><a href="#" class=" current  edgtf-mobile-no-link"><span>Home</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+        <nav class="edgtf-mobile-nav ps ps--theme_default ps--active-y"  style="height: 104px; display: block;">
+            <div class="edgtf-grid">
+                <ul id="menu-main-menu-navigation" class="">
+                    <li id="mobile-menu-item-35" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children edgtf-active-item has_sub"><a href="#" class=" current  edgtf-mobile-no-link"><span>Home</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
 
-                </li>
-                <li id="mobile-menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=" edgtf-mobile-no-link"><span>Pages</span></a>
-                    <span class="mobile_arrow">
-                        <i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i>
-                    </span>
-                </li>
-                <li id="mobile-menu-item-37" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=" edgtf-mobile-no-link"><span>Portfolio</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
-                   
-                </li>
-                <li id="mobile-menu-item-38" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=" edgtf-mobile-no-link"><span>Blog</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
-                   >
-                </li>
-                <li id="mobile-menu-item-39" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=" edgtf-mobile-no-link"><span>Shop</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
-                </li>
-                <li id="mobile-menu-item-40" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub edgtf-opened"><a href="#" class=" edgtf-mobile-no-link"><span>Elements</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
-                   
-                </li>
-            </ul>    
-        </div>
+                    </li>
+                    <li id="mobile-menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=" edgtf-mobile-no-link"><span>Pages</span></a>
+                        <span class="mobile_arrow">
+                            <i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i>
+                        </span>
+                    </li>
+                    <li id="mobile-menu-item-37" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=" edgtf-mobile-no-link"><span>Portfolio</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+                       
+                    </li>
+                    <li id="mobile-menu-item-38" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=" edgtf-mobile-no-link"><span>Blog</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+                       >
+                    </li>
+                    <li id="mobile-menu-item-39" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=" edgtf-mobile-no-link"><span>Shop</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+                    </li>
+                    <li id="mobile-menu-item-40" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub edgtf-opened"><a href="#" class=" edgtf-mobile-no-link"><span>Elements</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+                       
+                    </li>
+                </ul>    
+            </div>
             <div class="ps__scrollbar-x-rail" style="left: 0px; bottom: -160px;">
                 <div class="ps__scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
             </div>
             <div class="ps__scrollbar-y-rail" style="top: 160px; right: 0px; height: 104px;">
                 <div class="ps__scrollbar-y" tabindex="0" style="top: 39px; height: 25px;"></div>
             </div>
-    </nav>
+        </nav>
 
-        </div>
+    </div>
 </header>
 
 

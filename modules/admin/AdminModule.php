@@ -7,6 +7,7 @@ class AdminModule extends \yii\base\Module
 {
 
     public $controllerNamespace = 'app\modules\admin\controllers';
+    public $defaultRoute = 'user';
 
     public function init()
     {
@@ -25,10 +26,16 @@ class AdminModule extends \yii\base\Module
                 ],
                 'loginUrl' => ['admin/site/login'],
             ],
-            'session' => [
-                'class' => 'yii\web\Session',
-                'name' => 'admin-panel',
+
+            'errorHandler' => [
+                'class' => 'yii\web\ErrorHandler',
+                'errorAction' => '/admin/site/error',
             ],
+
+            // 'session' => [
+            //     'class' => 'yii\web\Session',
+            //     'name' => 'admin-panel',
+            // ],
         ];
         $params = [
             'layout' => 'main',
@@ -46,6 +53,10 @@ class AdminModule extends \yii\base\Module
 
         \Yii::$app->setComponents($components);
         \Yii::configure($this, $params);
+
+        $handler = $this->get('errorHandler');
+        \Yii::$app->set('errorHandler', $handler);
+        $handler->register();
         
     }
 }

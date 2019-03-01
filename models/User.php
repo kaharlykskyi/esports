@@ -24,6 +24,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             [['name','email'], 'required'],
             [['name','email'], 'unique'],
             ['email','email'],
+            ['ban_date', 'safe'],
             [['sex','favorite_game','fair_play','system_ball'],'number'],
             ['visible', 'boolean',],
             [['username','name',  'birthday','activities','interests','logo','background'], 'string'],
@@ -241,7 +242,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     }
 
     public function getBall() 
-    {   //return 1020;
+    {   
         if (is_numeric($this->appraisal)) {
             return $this->appraisal;
         }
@@ -283,6 +284,21 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return [$awards_text,$cup_awards];
     }
 
+    public function setBan($day_ban)
+    {
+        $ban_do = date("Y-m-d", strtotime("+{$day_ban} days"));
+        $this->ban_date = $ban_do;
+        return $this;
+    }
 
-
+    public function isBaned ()
+    {
+        if (!is_numeric(strtotime($this->ban_date))) {
+            return false;
+        }
+        if (strtotime($this->ban_date)>strtotime(date('Y-m-d'))) {
+            return true;
+        }
+        return false;
+    }
 }
