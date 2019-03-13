@@ -221,6 +221,17 @@ class TournamentsController extends \yii\web\Controller
         
     }
 
+    public function actionAddSwiss($id)
+    {
+        $model = Tournaments::findOne($id);
+        $user = Yii::$app->user->identity;
+        if ( !is_object($model) || $user->id != $model->user_id ) {
+           throw new HttpException(404 ,'Page not found');
+        } 
+        $model->system->start();
+        return $this->redirect("/tournaments/public/{$model->id}#tournamentgrid");
+    }
+
     public function actionAddLeague($id)
     {
         $model = Tournaments::findOne($id);

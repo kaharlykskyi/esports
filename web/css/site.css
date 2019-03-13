@@ -268,3 +268,36 @@ input:focus[type='email'], input:focus[type='password'],
     text-transform: uppercase;
 }
 /*============================end header table=================================*/
+
+.top-language a img{
+    display: inline;
+}
+
+.top-language .list li a{
+    color: #fff;
+}
+.dropdown-menu {
+   background-color: #17161a;
+}
+.top-language .list li a {
+    padding-right:  0;
+}
+
+.news-list .item .info {
+    padding: 10px 30px 16px 30px;
+}
+
+.main-sponsor-slider-background{
+    padding-top: 50px;
+}
+
+.main-slider-section .item .img-slid{
+    height: 100%;
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+
+
+.footer h4, .footer ul.contact-list li a, .footer ul.contact-list li span, .footer ul.contact-list li.phone span {
+    color: #999;
+}

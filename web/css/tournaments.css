@@ -141,6 +141,7 @@ table tr td:first-child {
 }
 
 .block_card_class,.block_pokemon{
+    padding: 10px;
     display: inline-block;
     background-color: #fff;
     cursor: pointer;
@@ -150,7 +151,8 @@ table tr td:first-child {
 }
 
 .block_card_class img{
-    width: 140px;
+    width: 120px;
+    border-radius: 50%;
 }
 
 .block_pokemon{
@@ -272,4 +274,6 @@ hr {
     border: 0 !important ;
     border-top: 1px solid #cec8c8 !important ;
 }
+
+
 

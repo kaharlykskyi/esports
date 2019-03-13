@@ -17,12 +17,28 @@ class ScheduleTeams extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tournament_id', 'team1', 'team2', 'results1', 'results2', 'tur', 'group','format','active_result'], 'integer'],
+            [['tournament_id', 'team1', 'team2', 'results1', 'results2', 'tur', 
+                'group','format','active_result'], 'integer'],
             [['date'], 'safe'],
             [['results1', 'results2'], 'number'],
-            [['team1'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team1' => 'id']],
-            [['team2'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team2' => 'id']],
-            [['tournament_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tournaments::className(), 'targetAttribute' => ['tournament_id' => 'id']],
+            [
+                ['team1'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => Teams::className(), 
+                'targetAttribute' => ['team1' => 'id']
+            ],
+            [
+                ['team2'], 'exist', 
+                'skipOnError' => true,
+                 'targetClass' => Teams::className(), 
+                 'targetAttribute' => ['team2' => 'id']
+            ],
+            [
+                ['tournament_id'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => Tournaments::className(), 
+                'targetAttribute' => ['tournament_id' => 'id']
+            ],
         ];
     }
 
@@ -53,6 +69,17 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             ResultsStatistics::addStatistic($this);
             $this->addBallBonus(); 
         }
+
+        if (!$insert) {
+            if ($this->results1 > $this->results2) {
+                TeamHistory::setHistory('victoryMatch', $this, $this->team1);
+                TeamHistory::setHistory('loseMatch', $this, $this->team2);
+            } elseif ($this->results1 < $this->results2) {
+                TeamHistory::setHistory('victoryMatch', $this, $this->team2);
+                TeamHistory::setHistory('loseMatch', $this, $this->team1);
+            }
+        }
+
         parent::afterSave($insert, $changedAttributes);
     }
   
@@ -127,7 +154,9 @@ class ScheduleTeams extends \yii\db\ActiveRecord
             $this->addMatchDuble();
         } elseif ($this->format == 3) {
             $l;
-        }    
+        } elseif ($this->format == 6) {
+            $this->tournament->system->addMatch($this);
+        }       
     }
 
     private function addMatchSingle()

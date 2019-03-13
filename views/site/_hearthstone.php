@@ -85,6 +85,7 @@ use app\models\StatisticCardsHearthstone;
      <div class="tab-pane" id="cards_statistics" >
         <div class="col-sm-12 " style="margin-bottom: 30px;">
             <?php $array_model = StatisticCardsHearthstone::getCardsStatistic(); ?>
+            <?php if(!empty($array_model)):?>
             <div class="stats-title"><span>MOST PICKED CLASSES</span></div>
             <div class="row">
                 <div class="col-sm-12">
@@ -97,8 +98,12 @@ use app\models\StatisticCardsHearthstone;
                                 <?=$first_cart->getImg() ?>
                             </div>
                             <div class="card-opis-block">
-                               <div class="title" ><span > <?=$first_cart->getNameCard()?> </span></div> 
-                                <div class="players" ><span > <?=$first_cart->c?>  Times selected</span></div>
+                                <div class="title" >
+                                    <span > <?=$first_cart->getNameCard()?> </span>
+                                </div> 
+                                <div class="players" >
+                                    <span > <?=$first_cart->c?>  Times selected</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -146,6 +151,7 @@ use app\models\StatisticCardsHearthstone;
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
      </div>
 </div>

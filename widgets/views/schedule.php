@@ -30,7 +30,7 @@
             </div>
             <div class="edgtf-match-item-text-holder">
                 <h6 class="edgtf-match-team-title">
-                    <?=$posit_game->teamF->name?>                
+                    <?=$posit_game->teamF->name()?>                
                 </h6>
             </div>
         </div>
@@ -44,7 +44,7 @@
             </div>
             <div class="edgtf-match-item-text-holder">
                 <h6 class="edgtf-match-team-title">
-                    <?=$posit_game->teamS->name?>               
+                    <?=$posit_game->teamS->name()?>               
                 </h6>
             </div>
         </div>

@@ -8,16 +8,18 @@ use app\models\servises\FlagServis;
 use yii\widgets\Pjax;
 
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
-    $this->title = mb_convert_case($alias, MB_CASE_TITLE);
+    $this->title = "Esports";
     $i_count = 0;
+    $url_this = $_SERVER['HTTP_HOST'];
 ?>
+
 
 <div class="main-slider-section">
     <div class="main-slider">
         <div id="main-slider" class="carousel slide" data-ride="carousel" data-interval="4000" style="height: 540px;">
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
-                    <div class="img-slid" style="background-image: url(/images/slider/<?=$alias?>/1.jpg);"></div> 
+                    <div class="img-slid" style="background-image: url(/images/slider/hearthstone/1.jpg);"></div> 
                     <?php if (!empty($matches[0])): ?>
                         <div class="main-slider-caption" >
                             <div class="container">
@@ -45,9 +47,16 @@ use yii\widgets\Pjax;
                             </div>
                         </div>
                     <?php endif; ?>
+                    <div class="event-nav">
+                        <p style="text-align: center;" >
+                            <a href="http://hearthstone.<?=$url_this?>" class="btn booking" >
+                                hearthstone
+                            </a>
+                        </p>
+                    </div>
                 </div>
                 <div class="item">
-                    <div class="img-slid" style="background-image: url(/images/slider/<?=$alias?>/2.jpg);"></div>
+                    <div class="img-slid" style="background-image: url(/images/slider/pokemon/1.jpg);"></div>
                     <?php if (!empty($matches[1])): ?>
                         <div class="main-slider-caption" >
                             <div class="container">
@@ -75,10 +84,17 @@ use yii\widgets\Pjax;
                             </div>
                         </div>
                     <?php endif; ?>
+                    <div class="event-nav">
+                        <p style="text-align: center;" >
+                            <a href="http://pokemon.<?=$url_this?>" class="btn booking" >
+                                pokemon
+                            </a>
+                        </p>
+                    </div>
                 </div>
 
                 <div class="item">
-                    <div class="img-slid" style="background-image: url(/images/slider/<?=$alias?>/3.jpg);"></div>
+                    <div class="img-slid" style="background-image: url(/images/slider/wow/3.jpg);"></div>
                     <?php if (!empty($matches[2])): ?>
                         <div class="main-slider-caption" >
                             <div class="container">
@@ -106,10 +122,17 @@ use yii\widgets\Pjax;
                             </div>
                         </div>
                     <?php endif; ?>
+                    <div class="event-nav">
+                        <p style="text-align: center;" >
+                            <a href="http://wow.<?=$url_this?>" class="btn booking" >
+                                wordcraft
+                            </a>
+                        </p>
+                    </div>
                 </div>
 
             </div>
-
+            
             <!-- Controls -->
             <a class="nav-arrow left-arrow" href="#main-slider" role="button" data-slide="prev">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -123,6 +146,85 @@ use yii\widgets\Pjax;
     </div>
 </div>
 
+<?php 
+    $func = function($data) {
+    ob_start();
+?>
+
+<div class="name-content">
+    <div class="info-stage">
+        <?php if($data->state == 1): ?>
+        <span class="started" >Started</span>
+        <?php elseif($data->state == null): ?>
+        <span class="uncoming" >Uncoming</span>
+        <?php elseif($data->state == 2): ?>
+        <span class="finihed" >Finihed</span>
+        <?php endif; ?>
+        <a href="/tournaments/public/<?=$data->id?>"><span class="overwatch" >Overwatch</span></a>
+    </div>
+   <h6><?=$data->name?></h6>
+   <div class="t-prize" >
+        <span>Tournament Prizes</span>
+        <span><?=$data->prize_pool ? $data->prize_pool.'$': '--'?></span>
+    </div>
+</div>
+
+<?php
+    $content = ob_get_contents();
+    ob_end_clean();
+    return $content;
+    }
+?>
+
+<?php 
+    $func_stage = function($data) {
+    ob_start();
+?>
+    <?php if($data->state == 1): ?>
+    <div class="mach-content">
+        <?php  
+        $match = $data->matchNext;
+        if(is_object($match)): ?>
+            <a href="/matches/public/<?=$match->id?>">
+            <div class="mach-content">
+                <h6>Next Match</h6>
+                <div class="mach-logo" >
+                    <img src="<?=$match->teamS->logo()?>" >
+                    <img src="/images/tournaments/vs_finished.png" style="height:40px">
+                    <img src="<?=$match->teamF->logo()?>" >
+                </div>
+                <div class="date">
+                    <span><?=date('dS F Y, H:m', strtotime($match->date))?></span>
+                </div>
+            </div>
+            </a>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
+
+
+<?php
+    $content = ob_get_contents();
+    ob_end_clean();
+    return $content;
+    }
+?>
+
+<?php 
+    $func_game = function($data) {
+    ob_start();
+?>
+<div class="tyr-game">
+    <img src="/images/game/<?=$data->logo?>" style="height: 50px;" >
+    <p style="font-size: 13px;font-weight: normal;" >geme in <?=$data->name?></p>
+</div>
+<?php
+    $content = ob_get_contents();
+    ob_end_clean();
+    return $content;
+    }
+?>
+<div class="main-sponsor-slider-background">
 <div class="container">
     <div class="row">
         <?php Pjax::begin(); ?>
@@ -134,8 +236,12 @@ use yii\widgets\Pjax;
         <div class="news-list col-xs-12 col-sm-4">
             <div class="item img-top">
                 <div class="img-wrap">
-                    <div class="bage"><a href="/news/single/<?=$model->id?>"><?=yii::t('app','highlight')?></a></div>
-                    <a href="/news/single/<?=$model->id?>"><img src="<?=$model->logo?>" alt="post image"></a>
+                    <div class="bage">
+                        <a href="/news/single/<?=$model->id?>"><?=yii::t('app','highlight')?></a>
+                    </div>
+                    <a href="/news/single/<?=$model->id?>">
+                        <img src="<?=$model->logo?>" alt="post image">
+                    </a>
                 </div>
                 <div class="info">
                     <a href="/news/single/<?=$model->id?>" class="name"><?=$model->title?></a>  
@@ -172,62 +278,92 @@ use yii\widgets\Pjax;
         <?php Pjax::end(); ?>
     </div>
 </div>
-<?php if($alias == 'hearthstone'): ?>
-    <?=$this->render(
-            '_hearthstone',
-            compact('dataProvider','searchModel','models','pages','alias')
-    ); ?>
-<?php else: ?>
-    <div class="container">
-        <h3 style="text-align: center;" ><?=Yii::t('app', 'users statistics')?></h3>
-        <div class="box-body">
-            <?php Pjax::begin(); ?>
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'summary' => false,
-                'tableOptions' =>['class' => 'table-statistic'],
-                 'pager' => [
-                        'options' => [
-                            'class' => 'pagination_new',
-                        ],
-                        'prevPageLabel' => '<i class="fa fa-chevron-left" aria-hidden="true"></i>',
-                        'nextPageLabel' => '<i class="fa fa-chevron-right" aria-hidden="true"></i>',
-                ],
-                'columns' => [
-                    [
-                        'attribute' => 'user_id',
-                        'label' => Yii::t('app','User'),
-                        'content' => function($data) {
-                            $flag_src = FlagServis::getLinkFlag($data->user->country);
-                            return "<a href='/user/public/{$data->user->id}' ><img src= '{$flag_src}' 
-                                    style='height:28px;'>  {$data->user->name}</a>";
-                        }
-                    ],
-                    [
-                        'attribute' => 'team_id',
-                        'label' => Yii::t('app','Team'),
-                        'content' => function($data) {
-                            if (!is_null($data->team->single_user)) {
-                                return '----';
-                            }
-                            return "<a href='{$data->team->links()}' ><img src= '{$data->team->logo()}' style='height:28px;'>  {$data->team->name}</a>";
-                        }
-                    ],
-                    [
-                        'attribute' => 'victories',
-                        'label' => Yii::t('app','Victories'),
-                    ],
-                    [
-                        'attribute' => 'loss',
-                        'label' => Yii::t('app','Loss'),
-                    ],
-                    [
-                        'attribute' => 'rate',
-                        'label'=>Yii::t('app','W/L RATE'),
-                    ],
-                ],
-            ]); ?>
-            <?php Pjax::end(); ?>
+</div>
+
+<div class="container">
+    <h3 style="text-align: center;" ><?=Yii::t('app','Tournament statistics')?></h3>
+    <div class="box-body">
+        <div class="blok-headre-table">
+            <?php if(!isset($params['state'])):?>
+                <div class="lenk-sot active" style="margin-left: -10px; ">
+                    <a href="/">All tournaments</a>
+                </div>
+            <?php else: ?>
+                <div class="lenk-sot" style="margin-left: -10px; ">
+                    <a href="/">All tournaments</a>
+                </div>
+            <?php endif; ?>
+            <?php if(!empty($params['state'])&& $params['state']==1):?>
+                <div class="lenk-sot active" ">
+                    <a href="/?state=1">Tournaments started</a>
+                </div>
+            <?php else: ?>
+                <div class="lenk-sot" ">
+                    <a href="/?state=1">Tournaments started</a>
+                </div>
+            <?php endif; ?>
+            <?php if(isset($params['state'])&& $params['state']==0):?>
+                <div class="lenk-sot active" ">
+                    <a href="/?state=0">Next tournaments</a>
+                </div>
+            <?php else: ?>
+                <div class="lenk-sot"">
+                    <a href="/?state=0">Next tournaments</a>
+                </div>
+            <?php endif; ?>
+            <?php if(!empty($params['state'])&& $params['state']==2):?>
+                <div class="lenk-sot active" >
+                    <a href="/?state=2">Tournaments finished</a>
+                </div>
+            <?php else: ?>
+                <div class="lenk-sot" ">
+                    <a href="/?state=2">Tournaments finished</a>
+                </div>
+            <?php endif; ?>
         </div>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'summary' => false,
+            'tableOptions' =>['class' => 'table-statistic tournaments-table'],
+            'showHeader'=> false,
+             'pager' => [
+                    'options' => [
+                        'class' => 'pagination_new',
+                    ],
+                    'prevPageLabel' => '<i class="fa fa-chevron-left" aria-hidden="true"></i>',
+                    'nextPageLabel' => '<i class="fa fa-chevron-right" aria-hidden="true"></i>',
+            ],
+            'columns' => [
+                [
+                    'attribute' => 'banner',
+                    'content' => function($data) {
+                        return "<img src='{$data->logo}' alt='logo'>";
+                    }
+                ],
+                [
+                    'attribute'=> 'name',
+                    'label'=> Yii::t('app','Tournament name'),
+                    'content' => function($data) use ($func) {
+                        return $func($data);
+                    },
+                ],
+                [                
+                    'content' => function($data) use ($func_stage) {
+                        return $func_stage($data);
+                    },
+                ],
+                [
+                    'attribute'=> 'game_id',
+                    'label' => Yii::t('app','Game'),
+                    'content' => function($data) use ($func_game) {
+                        if (!is_object($data->game)) {
+                            return 'Not game';
+                        }
+                        return $func_game($data->game);
+                    },
+                ],
+            ],
+        ]); ?>
     </div>
-<?php endif; ?>
+</div>
+

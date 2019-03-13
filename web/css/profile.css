@@ -1,6 +1,8 @@
 .img-url{
+
 	background-image: url(../images/profile/geme-img.jpg);
-	    min-height: 420px;
+	min-height: 420px;
+    background-attachment: fixed;
 }
 
 .angled-img, .angled-img:focus, .angled-img:hover {
@@ -74,6 +76,7 @@
 
 .image-header .info {
      padding-top: 80px;
+
 }
 
 .user-data-h2{
@@ -179,6 +182,7 @@
 }
 .image-header{
 	position: relative;
+    background-attachment: fixed;
 }
 
 

@@ -126,8 +126,10 @@
                         <?php foreach ($players as $player): ?>
                             <div class="col-md-3">
                                 <a href="<?= $player->links() ?>" class="item">
-                                    <span class="logo"><img src="<?= $player->logo() ?>" width="80" height="80" alt="team-logo"></span>
-                                    <span class="name"><?=$player->name?></span>
+                                    <span class="logo">
+                                        <img src="<?= $player->logo() ?>" width="80" height="80" alt="team-logo">
+                                    </span>
+                                    <span class="name"><?=$player->name()?></span>
                                 </a>
                             </div>
                         <?php endforeach ;?>
@@ -146,7 +148,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="main-lates-matches">
+                            <div class="main-lates-matches clearfix" style="margin-bottom: 35px;">
                                 <?=Schedule::widget(['turs'=> $model->getScheduleLeagueModel()])?>
                                 <?=Schedule::widget(['turs'=> $model->getScheduleCupModel($model->format)])?>
                             </div>
@@ -159,9 +161,25 @@
                 <div class="container">        
                     <div class="row">
                         <div class="col-md-12" style="margin-bottom: 35px;">
+                            <?php if($model->format == Tournaments::SWISS) : ?> 
+                               <?php if(empty($model->state) && ($access==1)): ?>
+                                    <?php if (in_array(count($players),[4,8,16,32,64,128,256,512])): ?>
+                                        <form action="/tournaments/add-swiss?id=<?=$model->id?>" method="POST"  >
+                                            <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
+                                             <div  >
+                                                <?= Html::submitButton(Yii::t('app','Start tournament'), ['class' => 'btn btn-primary btn_mobil']) ?>
+                                             </div>
+                                        </form>
+                                    <?php else: ?>
+                                        <p style="color:red;">
+                                            <?= Yii::t('app','The number of teams in the tournament must be 4,8,16,32') ?>
+                                        </p> 
+                                    <?php endif; ?>
+                               <?php endif; ?>
+                            <?php endif; ?>
                            <?php if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)): ?> 
                                <?php if(empty($model->state) && ($access==1)): ?>
-                                    <?php if (in_array(count($players),[4,8,16,32,64,128])): ?>
+                                    <?php if (in_array(count($players),[4,8,16,32,64,128,256,512])): ?>
                                         <form action="/tournaments/add-schedule?id=<?=$model->id?>" method="POST"  >
                                             <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
                                              <div  >
@@ -196,7 +214,8 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                    <?php if(!empty($table_players = json_decode($model->league_table)) && (($model->format == Tournaments::LEAGUE) || ($model->format == Tournaments::LEAGUE_P))): ?>
+                    <?php if(!empty($table_players = json_decode($model->league_table)) && 
+                            (($model->format == Tournaments::LEAGUE) || ($model->format == Tournaments::LEAGUE_P))): ?>
                     <div class="row">
                         <div class="col-md-12 overflow-scroll">
                             <h6><?= Yii::t('app','League table') ?></h6>
@@ -280,6 +299,43 @@
                                 </table>       
                             </div>
                         <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($teams = $model->summBal)&&($model->format == Tournaments::SWISS)): ?>
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <table class="standing-full">
+                                    <tr>
+                                        <th><?= Yii::t('app','club') ?></th>
+                                        <th><?= Yii::t('app','played') ?></th>
+                                        <th><?= Yii::t('app','won') ?></th>
+                                        <th><?= Yii::t('app','lost') ?></th>
+                                        <th><?= Yii::t('app','points') ?></th>
+                                        <th><?= Yii::t('app','form') ?></th>
+                                    </tr>
+                                    <?php  foreach ( $teams as $team ): ?>
+                                        <tr>
+                                            <td class="up">
+                                                <span class="team">
+                                                    <img src="<?=$team->team->logo()?>" width="30" height="30" alt="team-logo"> 
+                                                </span>
+                                                <span><?=$team->team->name()?></span>
+                                            </td>
+                                            <td><?=$team->played?></td>
+                                            <td><?=$team->won?></td>
+                                            <td><?=$team->lost?></td>
+                                            <td class="points"><span><?=$team->summ_ball?></span></td>
+                                            <td class="form">
+                                                <span class="win">w</span>
+                                                <span class="drawn">d</span>
+                                                <span class="lose">l</span>
+                                                <span class="win">w</span>
+                                                <span class="win">w</span>
+                                            </td>  
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </table>       
+                            </div>
                         </div>
                     <?php endif; ?>
                     <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>
@@ -519,6 +575,8 @@
                                 break;
                                 case 5:
                                 echo Yii::t('app','League (Group + Playoff)');
+                                case 6:
+                                echo Yii::t('app','Swiss system');
                                 break;           
                             }
                             ?>
@@ -526,7 +584,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-2"><b><?=Yii::t('app','Rules of the tournament')?>:</b></div>
+                        <div class="col-md-4 col-md-offset-2">
+                            <b><?=Yii::t('app','Rules of the tournament')?>:</b>
+                        </div>
                         <div class="col-md-6"><?=$model->rules?></div>
                     </div>
                     <div class="row">

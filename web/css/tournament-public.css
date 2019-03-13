@@ -523,6 +523,7 @@ div.jQBracket .team.na {
 
 .block_card_class img{
     height: 80px;
+    border-radius: 50%;
 }
 .time-match{
     text-align: center;
@@ -576,6 +577,11 @@ div.jQBracket .team.na {
     border-radius: 5px;
     border: 1px solid #999;
     text-align: center;
+    margin: 0;
+}
+
+.input_round_match input:focus {
+    border-color: #999999;
 }
 
 .input_round_match{

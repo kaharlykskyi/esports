@@ -40,7 +40,7 @@ $user_id = false;
     if (!\Yii::$app->user->isGuest){
         $user_id = \Yii::$app->user->identity->id;
     }
-    $user_id =12;
+    //$user_id =12;
 ?>
 
     <div class="time-match" >
@@ -57,7 +57,7 @@ $user_id = false;
                             <div class="avatar"><a href="<?=$team1->links() ?>"><img src="<?=$team1->logo()?>" alt="match-list-team-img"></a></div>
                             <div class="text">
                                 <a href="<?=$team1->links() ?>">
-                                    <?=$team1->name ?>
+                                    <?=$team1->name() ?>
                                 </a>
                                 <span><?= $team1->game->name ?></span>
                                 <div class="latest">
@@ -116,7 +116,7 @@ $user_id = false;
                             </div>
                             <div class="text">
                                 <a href="<?=$team2->links() ?>">
-                                    <?=$team2->name ?> 
+                                    <?=$team2->name() ?> 
                                 </a>
                                 <span><?= $team2->game->name ?></span>
                                 <div class="latest">

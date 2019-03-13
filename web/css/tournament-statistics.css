@@ -206,3 +206,7 @@
     font-size: 12px;
     font-weight: normal;
 }
+
+.tournaments-table .info-stage .finihed {
+    background-color: #ff0000;
+}

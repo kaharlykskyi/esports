@@ -26,6 +26,14 @@ $(document).ready(function () {
             return;
         }
 
+        if(id == 's') {
+            $('#match_schedule').slideUp();
+            $('#elimination').slideUp();
+            $('.radiolist_elimination').find('label').eq(5).click();
+            elementJq.addClass('active_campions');
+            return;
+        }
+
         if(id != 0){
             $('.format_campions').removeClass('active_campions');
             elementJq.addClass('active_campions');

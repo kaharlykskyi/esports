@@ -773,3 +773,101 @@ img {
 .owl-theme img {
     border-radius: 8px;
 }
+
+.history-conteinr p img {
+    height: 60px;
+    border-radius: 50%;
+}
+
+.history-conteinr p {
+    margin: 0;
+}
+
+.history-conteinr p {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+}
+
+.history-conteinr p a,.history-conteinr p b{
+    margin: 10px;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 7em;
+}
+
+.history-conteinr .matche-history{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+}
+
+.history-conteinr .matche-history>span {
+    margin: 10px;
+}
+
+.history-conteinr .matche-history a{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+}
+.history-conteinr .matche-history a>div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.history-conteinr .matche-history a>div>span{
+    font-weight: bold;
+}
+
+.history-conteinr .matche-history a>div img{
+    width: 60px;
+}
+
+.history-conteinr .matche-history a img{
+    height: 60px;
+    border-radius: 50%;
+}
+
+.history-conteinr .tournament-history {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+}
+
+.history-conteinr .tournament-history a>div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.history-conteinr .tournament-history img {
+    border-radius: 5px;
+}
+
+.scrol-histoty{
+    overflow: auto;
+    max-height: 800px;
+    margin-bottom: 30px;
+}
+
+.tournament-history .title-his{
+    margin-left: 20px;
+}
+
+.tournament-history .title-his a {
+    font-weight: bold;
+}

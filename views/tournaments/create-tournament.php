@@ -36,7 +36,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                 
                 <div class="row" >
                      <div class="col-md-12">
-                        <label class="col-sm-12 control-label" >
+                        <label class="col-sm-12 control-label"  >
                             <?=Yii::t('app','Select the tournament game')?>
                         </label>
                         <div id="radios" class="clearfix">
@@ -56,14 +56,12 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                      </div>
                 </div>
 
-                <div class="row" id="format_campions_elimination" style="margin:25px 0;" >
-                   
-                    <label class="col-sm-12 control-label" >
+                <div class="row" id="format_campions_elimination" style="margin:25px -30px;" >
+                    <label class="col-sm-12 control-label" style="padding-left: 50px;">
                             <?= Yii::t('app','Tournament format') ?>
                     </label>
-                    
-                    <div class="col-md-10 col-md-offset-1 "  style="margin-top:25px;">
-                        <div class="col-md-6 ">
+                    <div class="col-md-12 "  style="margin-top:25px;">
+                        <div class="col-md-4 ">
                             <div class="format_campions"  data-farmat ='c' >
                                 <div class="container_img" >
                                     <img src="/images/profile/cup.png"  alt="cup">
@@ -73,13 +71,22 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6 ">
+                        <div class="col-md-4 ">
                             <div class="format_campions" data-farmat='l'>
                                 <div class="container_img" style="padding-left: 10px;">
                                     <img src="/images/profile/league.png"  alt="league">
                                 </div>
                                 <div style="padding-left: 25px;" ><h5><?= Yii::t('app','league') ?></h5></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 ">
+                            <div class="format_campions"  data-farmat ='s' >
+                                <div class="container_img" >
+                                    <img src="/images/profile/swisss.png"  alt="swisss">
+                                </div>
+                                <div style="padding-left: 25px;" >
+                                    <h5><?= Yii::t('app','Swiss') ?></h5>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,7 +111,6 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-10 col-md-offset-1" id="match_schedule" style="margin-top:25px;display:none;">
                         <div class="row">
                             <div class="col-md-12" style="margin-bottom: 25px;" >
@@ -167,11 +173,13 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                                 </select>
                             </div>         
                         </div>
-
                     </div>
                 </div>
                 <div >
-                    <?= $form->field($model, 'format')->radioList([1 => 'a', 2 => 'b', 3 => 'c',4 => 'd', 5 => 'e'],['class' =>'radiolist_elimination'])->label(false) ?>
+                    <?= $form->field($model, 'format')->radioList(
+                        [1 => 'a', 2 => 'b', 3 => 'c',4 => 'd', 5 => 'e', 6 => 'f']
+                        ,['class' => 'radiolist_elimination']
+                    )->label(false) ?>
                 </div>
                 <div>
                     <label style="padding-left: 20px;" ><?=Yii::t('app','Number of players per team') ?></label>

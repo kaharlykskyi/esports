@@ -4,7 +4,6 @@ namespace app\models;
 
 use Yii;
 
-
 class TournamentTeam extends \yii\db\ActiveRecord
 {
     
@@ -17,21 +16,25 @@ class TournamentTeam extends \yii\db\ActiveRecord
         return 'tournament_team';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             [['tournament_id', 'team_id','status'], 'integer'],
-            [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['team_id' => 'id']],
-            [['tournament_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tournaments::className(), 'targetAttribute' => ['tournament_id' => 'id']],
+            [
+                ['team_id'], 
+                'exist', 'skipOnError' => true, 
+                'targetClass' => Teams::className(), 
+                'targetAttribute' => ['team_id' => 'id']
+            ],
+            [
+                ['tournament_id'], 
+                'exist', 'skipOnError' => true, 
+                'targetClass' => Tournaments::className(), 
+                'targetAttribute' => ['tournament_id' => 'id']
+            ],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -41,19 +44,22 @@ class TournamentTeam extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+ 
     public function getTeam()
     {
         return $this->hasOne(Teams::className(), ['id' => 'team_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTournament()
     {
         return $this->hasOne(Tournaments::className(), ['id' => 'tournament_id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($this->status == self::ACCEPTED) {
+            TeamHistory::setHistory('addTournament', $this, $this->team_id);
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 }

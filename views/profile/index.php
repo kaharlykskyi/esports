@@ -187,7 +187,7 @@
                                 <?php foreach($teams_m as $team) : ?>  
                                     <div class="lists">
                                         <div class="youplay-timeline-icon "> 
-                                            <a href="/teams/public/<?=$team['id']?>">
+                                            <a href="<?=$team->links()?>">
                                                 <img src="<?=$team['logo']?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
                                             </a>
                                         </div>
@@ -195,7 +195,7 @@
                                         <div class="wrap">     
                                             <h3 class="activity-header">
                                                 <p>
-                                                    <?=Yii::t('app','The')?> <a href="/teams/public/<?=$team['id']?>">
+                                                    <?=Yii::t('app','The')?> <a href="<?=$team->links()?>">
                                                         <?=$team['name']?>
                                                     </a> <?=Yii::t('app','team invites you to become part of its players.')?>
                                                 </p>
@@ -259,9 +259,9 @@
                                         <h3 class="activity-header">
                                                 <p>
                                                     <?=Yii::t('app','match between teams')?> 
-                                                <a href="/teams/public/<?=$match->teamS->id?>"><?=$match->teamS->name?></a>
+                                                <a href="<?=$match->teamS->links()?>"><?=$match->teamS->name?></a>
                                                     <?=Yii::t('app','and')?>
-                                                <a href="/teams/public/<?=$match->teamF->id?>"><?=$match->teamF->name?></a> 
+                                                <a href="<?=$match->teamF->links()?>"><?=$match->teamF->name?></a> 
                                                 <p class="view youplay-timeline-date pt-5 bp-tooltip"  style="color: ">
                                                     <span class="time-since" style="color: #1976d2;" >
                                                     <?=Yii::t('app','date of the match')?> 
@@ -314,7 +314,7 @@
                                         <tr>
                                             <td style="width: 130px; vertical-align: middle" >
                                                 <div class="img-game">
-                                                    <a href="/teams/public/<?=$team->id?>">
+                                                    <a href="<?=$team->links()?>">
                                                         <img src="<?=$team->logo ?>" class="avatar group-1-avatar avatar-100 photo" width="100" height="100" alt="Team logo">
                                                     </a>
                                                 </div>

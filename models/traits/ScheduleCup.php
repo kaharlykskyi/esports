@@ -9,7 +9,7 @@ trait ScheduleCup {
 
     public function addCupSingle($results)
     {
-        $array_tur = [1,2,4,8,16,32,64,124,248];
+        $array_tur = [1,2,4,8,16,32,64,124,248,496];
         $array_cub = json_decode($this->cup,true);
         $teams_p = $array_cub['teams'];
         $start_r = count($teams_p);
@@ -163,8 +163,4 @@ trait ScheduleCup {
         }
         return $ids;
     }  
-       // echo "<pre>";
-       // VarDumper::dump();
-       // echo "</pre>";
-       // exit;
 }

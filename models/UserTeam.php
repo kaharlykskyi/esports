@@ -22,8 +22,18 @@ class UserTeam extends \yii\db\ActiveRecord
     {
         return [
             [['id_user', 'id_team','status'], 'integer'],
-            [['id_team'], 'exist', 'skipOnError' => true, 'targetClass' => Teams::className(), 'targetAttribute' => ['id_team' => 'id']],
-            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
+            [
+                ['id_team'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => Teams::className(), 
+                'targetAttribute' => ['id_team' => 'id']
+            ],
+            [
+                ['id_user'], 'exist', 
+                'skipOnError' => true, 
+                'targetClass' => User::className(), 
+                'targetAttribute' => ['id_user' => 'id']
+            ],
         ];
     }
 
@@ -35,6 +45,20 @@ class UserTeam extends \yii\db\ActiveRecord
         ];
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($this->status == self::ACCEPTED) {
+            TeamHistory::setHistory('textAddUser', $this, $this->id_team);
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function beforeDelete()
+    {
+        TeamHistory::setHistory('textDeletedUser',$this, $this->id_team);
+        return parent::beforeDelete();
+    }
+
     public function getTeam()
     {
         return $this->hasOne(Teams::className(), ['id' => 'id_team']);
@@ -42,6 +66,7 @@ class UserTeam extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'id_user']);
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
+
 }

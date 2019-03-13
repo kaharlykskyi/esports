@@ -93,7 +93,8 @@ class Teams extends \yii\db\ActiveRecord
 
     public function getHistory()
     {
-        return $this->hasMany(TeamHistory::className(), ['team_id' => 'id']);
+        return $this->hasMany(TeamHistory::className(), ['team_id' => 'id'])
+            ->orderBy(['created_at' => SORT_DESC]);
     }
 
     public function getMatces()
@@ -126,6 +127,14 @@ class Teams extends \yii\db\ActiveRecord
             return $this->logo;
         }
         return $this->capitans->avatar();
+    }
+
+    public function name()
+    {
+        if (is_null($this->single_user)) {
+            return $this->name;
+        }
+        return $this->capitans->name;
     }
 
     public static function getTeamsThisUser()

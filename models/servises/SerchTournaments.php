@@ -19,19 +19,14 @@ class SerchTournaments extends Tournaments
         ];
     }
 
-
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
-
 
     public function search($params)
     {
         $query = Tournaments::find();
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -39,19 +34,13 @@ class SerchTournaments extends Tournaments
                 'defaultOrder' =>
                  ['created_at' => SORT_DESC]
             ],
-            'pagination' => [ 'pageSize' => 12 ],
+            'pagination' => [ 'pageSize' => 10 ],
         ]);
-
-        // echo "<pre>";
-        // print_r($params);
-        // echo "</pre>";exit;
 
         $this->load($params);
         $this->my_load($params);
         
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
@@ -66,8 +55,6 @@ class SerchTournaments extends Tournaments
             ]);
 
         }
-
-        //$query->andWhere(['is', ['state' => null]]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
 

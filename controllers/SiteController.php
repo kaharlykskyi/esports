@@ -19,6 +19,9 @@ use yii\data\Pagination;
 use app\modules\admin\models\News;
 use app\models\ResultsStatisticUsers;
 use app\models\servises\SearchResultsStatisticsUsers;
+use app\models\servises\SerchTournaments;
+use app\models\Tournaments;
+use app\models\ScheduleTeams;
 
 class SiteController extends Controller
 {
@@ -63,11 +66,6 @@ class SiteController extends Controller
     {
         $alias = Yii::$app->params['domains'];
         $game = Games::findOne(['alias' => $alias]);
-        if (!is_object($game)) {
-           throw new HttpException(404 ,'Page not found');
-        }
-        $searchModel = new SearchResultsStatisticsUsers();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$alias);
         $query = News::find()->where(['state' => 1]);
         $countQuery = clone $query;
         $pages = new Pagination([
@@ -77,10 +75,31 @@ class SiteController extends Controller
         $pages->pageSizeParam = false;
         $models = $query->offset($pages->offset)
             ->limit($pages->limit)->orderBy("created_at DESC")->all();
+
+        $matches_qeury = ScheduleTeams::find()
+            ->innerJoin('`tournaments`', '`tournaments`.`id` = `schedule_teams`.`tournament_id`')
+            ->innerJoin('`games`', '`games`.`id` = `tournaments`.`game_id`');
+
+        if (is_object($game)) {
+            $matches_qeury->where(['`games`.alias' => $alias]);
+        }
+
+        $matches = $matches_qeury->orderBy(['id' => SORT_DESC])->limit(4)->all();
+
+        if (!is_object($game)) {
+            $searchModel = new SerchTournaments();
+            $params = Yii::$app->request->queryParams;
+            $dataProvider = $searchModel->search($params); 
+            return $this->render('home', compact('models','pages','dataProvider' ,'searchModel', 'params', 'matches'));
+        }
+
+        $searchModel = new SearchResultsStatisticsUsers();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$alias);
+        
         
         return $this->render(
             'index',
-            compact('dataProvider','searchModel','models','pages','alias')
+            compact('dataProvider','searchModel','models','pages','alias','matches')
         );
     }
 

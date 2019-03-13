@@ -25,7 +25,7 @@
             }
             
             $slider.height(max_height);
-            var item_height = max_height - 60;
+            var item_height = max_height;// - 60;
             $slider.find(".item").height(item_height);
             
             console.log('slider resize');

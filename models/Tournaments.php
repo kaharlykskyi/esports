@@ -7,6 +7,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\web\UploadedFile;
 use app\models\servises\FairPlay;
+use app\models\systems\SwissSystem;
 
 
 class Tournaments extends \yii\db\ActiveRecord
@@ -20,11 +21,13 @@ class Tournaments extends \yii\db\ActiveRecord
     const LEAGUE = 3;
     const LEAGUE_P = 4;
     const LEAGUE_G = 5;
+    const SWISS = 6;
 
     const USERS = 1;
     const TEAMS = 2;
     const MIXED = 3;
-    
+
+    public $system;
     public $banner_file;
     public $banner_default = '/images/tournaments/logo.png';
 
@@ -43,12 +46,23 @@ class Tournaments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['game_id', 'format','flag','time_limit','match_schedule','user_id','league_p','league_g','state','max_players','prize_pool'], 'integer'],
+            [
+                [
+                    'game_id', 'format','flag','time_limit',
+                    'match_schedule','user_id','league_p','league_g',
+                    'state','max_players','prize_pool',
+                ], 'integer'
+            ],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
             [['rules', 'prizes','name','banner'], 'string'],
             [['start_date','region','data','cup','league_table','forum_text'], 'safe'],
             [['name'], 'unique'],
-            [['game_id'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['game_id' => 'id']],
+            [
+                ['game_id'], 'exist',
+                'skipOnError' => true, 
+                'targetClass' => Games::className(), 
+                'targetAttribute' => ['game_id' => 'id']
+            ],
         ];
     }
 
@@ -87,7 +101,7 @@ class Tournaments extends \yii\db\ActiveRecord
 
         if (!$insert && ($this->winner)) {
             $users = $this->uset_team_tournament;
-            $cup = $this->capitan->ball;
+            $cup = $this->user->ball;
             foreach ($users as $user) {
                 if ($user->team_id == $this->winner) {
                     $user->user->addBall(5,$cup);
@@ -96,6 +110,16 @@ class Tournaments extends \yii\db\ActiveRecord
         }
 
         return true;
+    }
+
+    public function afterFind ()
+    {
+        parent::afterFind();
+        switch( $this->format ) {
+            case self::SWISS:
+                $this->system = new SwissSystem($this);
+                break;
+        }
     }
 
     public function getLogo()
@@ -126,6 +150,12 @@ class Tournaments extends \yii\db\ActiveRecord
     public function getUset_team_tournament()
     {
         return $this->hasMany(UsetTeamTournament::className(), ['tournament_id' => 'id']);
+    }
+
+    public function getSummBal()
+    {
+        return $this->hasMany(BallMatch::className(), ['tournament_id' => 'id'])
+            ->joinWith('team')->orderBy(['summ_ball' => SORT_DESC, 'lost' => SORT_ASC]);
     }
 
     public function generateForm () 
@@ -275,6 +305,13 @@ class Tournaments extends \yii\db\ActiveRecord
             ['tournament_id' => 'id']
         )->where(['>','date', date('Y-m-d')]);
     }
+
+    // public function table()
+    // {
+    //     return ScheduleTeams::find()
+    //         ->innerJoin('ball_match', '`teams`.`id` = `schedule_teams`.`summ_bal`')
+    //         ->where(['games.id'=> $game])->all();
+    // }
 
 }
 

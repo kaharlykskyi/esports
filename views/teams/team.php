@@ -238,7 +238,9 @@
                 <div id="players" class="tab-pane fade" >
                     <div class="row">
                         <div class="col-md-12">
-                            <h4 class="edgtf-st-title" ><?=Yii::t('app','OUR MEMBERS')?></h4>
+                            <h4 class="edgtf-st-title" >
+                                <?=Yii::t('app','OUR MEMBERS')?>
+                            </h4>
                         </div>
                         <div class="staff-box">
                             <?php foreach ($members as $member): ?>
@@ -250,7 +252,9 @@
                                 <div class="col-md-3 col-sm-6 col-xs-12 image_big ">
                                     <a href="/user/public/<?=$member->id?>" class="item <?= $capitan ? 'lain-capitan' :'' ?>" >
                                         <span class="info">
-                                            <span class="position"><img src="<?=$flag_src?>" alt="country"></span>
+                                            <span class="position">
+                                                <img src="<?=$flag_src?>" alt="country">
+                                            </span>
                                             <span class="name"><?=$member->name?></span>
                                             <span class="position">@<?=$member->username?></span>
                                             <br>
@@ -435,7 +439,7 @@
                                 <div id="last" class="tab-pane fade">
                                     <?php foreach($matches as $match): ?>
                                         <?php if(!empty($match->result1)&&!empty($match->result2)): ?>
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-sm-12">
                                          <article class="edgtf-match-status-finished">
                                             <div class="edgtf-match-item-holder">
                                                 <div class="col-md-5" style="margin-top: 15px;">
@@ -503,9 +507,27 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
+                            <h4 class="edgtf-st-title" >
+                                <?=Yii::t('app','HISTORY TEAM')?>
+                            </h4>
+                        </div> 
+                        <div class="col-sm-12 scrol-histoty" >
                             <?php foreach($history as $event): ?>
-                                <?=$event->event?>
+                                
+                                <article class="edgtf-match-status-finished">
+                                    <div class="edgtf-match-item-holder history-conteinr ">
+                                        <div class="col-md-8 flex" style="padding-left: 50px;" >
+                                            <?= $event->event?>
+                                        </div>
+                                        <div class="col-md-4 flex" >
+                                            <p style="margin: auto;"  >
+                                        <?=date(' d \of F, H:i ',strtotime($event->created_at))?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>  
+
                             <?php endforeach; ?> 
                         </div>
                     </div>

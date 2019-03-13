@@ -131,7 +131,8 @@ $script = "
                                 S0,4.637,0,10.358s4.637,10.358,10.358,10.358c2.11,0,4.071-0.635,5.708-1.718l6.343,6.343L25.34,22.409z M4,10.358
                                 C4,6.852,6.852,4,10.358,4s6.358,2.852,6.358,6.358c0,1.638-0.628,3.128-1.649,4.256l-0.451,0.451
                                 c-1.128,1.022-2.62,1.65-4.258,1.65C6.852,16.716,4,13.864,4,10.358z"></path>
-                            </svg>                          </span>
+                            </svg>
+                        </span>
                         </a>
                     </div>
                 </div>
@@ -141,7 +142,8 @@ $script = "
                         <div class="edgtf-divided-left-inner-top-widget-area-inner">
                             <div id="text-2" class="widget widget_text edgtf-header-divided-left-top-widget-area">          
                                 <div class="textwidget">
-                                    <p><span style="margin-right:26px">follow us on:</span></p></div>
+                                    <p><span style="margin-right:26px">follow us on:</span></p>
+                                </div>
                             </div>
                             <div class="widget edgtf-social-icons-group-widget text-align-right"> 
                                 <a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover"  href="">
@@ -231,6 +233,35 @@ $script = "
                 <div class="edgtf-divided-right-inner-border-holder"></div>
                 <div class="edgtf-divided-right-inner-top-widget-area">
                     <div class="edgtf-divided-right-inner-top-widget-area-inner">
+                        <div class="textwidget">
+                            <div class="top-language">
+                                <ul class="list">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <img src="<?=FlagServis::getLinkFlagLoc()?>" alt="selected language">
+                                            <?=substr(Yii::$app->language, 0, 2)?>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="/site/translations?lang=fr-FR">
+                                                    <img src="<?=FlagServis::getLinkFlag('France')?>" alt="language">FR
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/site/translations?lang=en-EN">
+                                                    <img src="<?=FlagServis::getLinkFlag('United Kingdom')?>" alt="language">EN
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/site/translations?lang=es-ES">
+                                                    <img src="<?=FlagServis::getLinkFlag('Spain')?>" alt="language">ES
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -244,19 +275,19 @@ $script = "
                             <div class="second right" >
                                 <div class="inner">
                                     <ul class="right">
-                                <li id="nav-menu-item-248" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://playerx.edge-themes.com/blog/right-sidebar/" class=""><span class="item_outer"><span class="item_text">Right Sidebar</span></span></a></li>
-                                <li id="nav-menu-item-1672" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://playerx.edge-themes.com/blog/left-sidebar/" class=""><span class="item_outer"><span class="item_text">Left Sidebar</span></span></a></li>
-                                <li id="nav-menu-item-1671" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://playerx.edge-themes.com/blog/no-sidebar/" class=""><span class="item_outer"><span class="item_text">No Sidebar</span></span></a></li>
-                                <li id="nav-menu-item-249" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub"><a href="#" class=""><span class="item_outer"><span class="item_text">Post Types</span></span></a>
-                                    <ul class="right">
-                                        <li id="nav-menu-item-254" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/white-keep-assault/" class=""><span class="item_outer"><span class="item_text">Standard</span></span></a></li>
-                                        <li id="nav-menu-item-253" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/dota-2-tournament/" class=""><span class="item_outer"><span class="item_text">Gallery</span></span></a></li>
-                                        <li id="nav-menu-item-252" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/black-angels/" class=""><span class="item_outer"><span class="item_text">Link</span></span></a></li>
-                                        <li id="nav-menu-item-250" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/heros-journey/" class=""><span class="item_outer"><span class="item_text">Quote</span></span></a></li>
-                                        <li id="nav-menu-item-255" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/a-time-travel-tale/" class=""><span class="item_outer"><span class="item_text">Video</span></span></a></li>
-                                        <li id="nav-menu-item-251" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/winners-on-esl-pro/" class=""><span class="item_outer"><span class="item_text">Audio</span></span></a></li>
-                                    </ul>
-                                </li>
+                                    <li id="nav-menu-item-248" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://playerx.edge-themes.com/blog/right-sidebar/" class=""><span class="item_outer"><span class="item_text">Right Sidebar</span></span></a></li>
+                                    <li id="nav-menu-item-1672" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://playerx.edge-themes.com/blog/left-sidebar/" class=""><span class="item_outer"><span class="item_text">Left Sidebar</span></span></a></li>
+                                    <li id="nav-menu-item-1671" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://playerx.edge-themes.com/blog/no-sidebar/" class=""><span class="item_outer"><span class="item_text">No Sidebar</span></span></a></li>
+                                    <li id="nav-menu-item-249" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub"><a href="#" class=""><span class="item_outer"><span class="item_text">Post Types</span></span></a>
+                                        <ul class="right">
+                                            <li id="nav-menu-item-254" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/white-keep-assault/" class=""><span class="item_outer"><span class="item_text">Standard</span></span></a></li>
+                                            <li id="nav-menu-item-253" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/dota-2-tournament/" class=""><span class="item_outer"><span class="item_text">Gallery</span></span></a></li>
+                                            <li id="nav-menu-item-252" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/black-angels/" class=""><span class="item_outer"><span class="item_text">Link</span></span></a></li>
+                                            <li id="nav-menu-item-250" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/heros-journey/" class=""><span class="item_outer"><span class="item_text">Quote</span></span></a></li>
+                                            <li id="nav-menu-item-255" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/a-time-travel-tale/" class=""><span class="item_outer"><span class="item_text">Video</span></span></a></li>
+                                            <li id="nav-menu-item-251" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/winners-on-esl-pro/" class=""><span class="item_outer"><span class="item_text">Audio</span></span></a></li>
+                                        </ul>
+                                    </li>
                                     </ul>
                                 </div>
                             </div>
@@ -478,7 +509,11 @@ $script = "
                 <div class="col-md-4 col-sm-12">
                     <div class="footer-left">
                         <div class="wrap">
-                            <a href="index.html" class="foot-logo"><img src="/images/hockey/footer-logo.png" alt="footer-logo"></a>
+                            <a href="/" class="foot-logo">
+                                <img src="/images/hockey/logo-background-img.png" alt="footer-logo"
+                                    style="height: 50px;" 
+                                >
+                            </a>
                             <p>Activated charcoal trust fund ugh prism af, beard marfa air plant stumptown gastropub farm-to-table jianbing.</p>
                             <ul class="foot-left-menu">
                                 <li><a href="staff.html">First team</a></li>
@@ -494,7 +529,8 @@ $script = "
                     <div class="foot-news">
                         <h4>Recent news</h4>
                         <div class="item">
-                            <a href="news.html" class="image"><img class="img-responsive" src="/images/hockey/foot-news-img.jpg" alt="news-image"></a>
+                            <a href="news.html" class="image">
+                                <img class="img-responsive" src="/images/hockey/foot-news-img.jpg" alt="news-image"></a>
                             <a href="news.html" class="name">When somersaulting Sanchez shouldered Mexico’s hopes</a>
                             <a href="news.html" class="date">25 Sep 2016</a>
                             <span class="separator">in</span>
