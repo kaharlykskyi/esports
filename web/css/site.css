@@ -301,3 +301,62 @@ input:focus[type='email'], input:focus[type='password'],
 .footer h4, .footer ul.contact-list li a, .footer ul.contact-list li span, .footer ul.contact-list li.phone span {
     color: #999;
 }
+
+.games.table-statistic thead th{
+    
+    background-color: #fcfcfc;
+    /*transform: skew(20deg);*/
+    padding: 0;
+    border-bottom: 1px solid #2196f3;
+    font-family: "Open Sans",sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    position: relative;
+    /*transform: skew(20deg);
+    -webkit-transition: background-color 1s cubic-bezier(.19,1,.22,1);
+    -moz-transition: background-color 1s cubic-bezier(.19,1,.22,1);
+    transition: background-color 1s cubic-bezier(.19,1,.22,1);*/
+}
+
+
+
+
+.games.table-statistic thead th a {
+    position: relative;
+    padding: 12px 47px;
+    line-height: 24px;
+    background-color: transparent;
+    display: block;
+    text-transform: uppercase;
+    z-index: 25;
+}
+
+.games.table-statistic thead th:before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom:0;
+    left: 0;
+    right:0;
+    transform: matrix(1, 0, 0.2, 1, -8, 0);
+    /*transform: skew(20deg);*/
+    -webkit-transition: background-color 1s cubic-bezier(.19,1,.22,1);
+    -moz-transition: background-color 1s cubic-bezier(.19,1,.22,1);
+    transition: background-color 1s cubic-bezier(.19,1,.22,1);
+    z-index: 24;
+
+
+}
+
+.games.table-statistic .active:before ,.games.table-statistic thead th:hover:before {
+    background-color: #2196f3;
+}
+
+.games.table-statistic .active a, .games.table-statistic thead th:hover a {
+    color:#fff;
+}
+
+#users_statistics{
+    overflow: hidden;
+}

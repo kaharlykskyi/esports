@@ -175,16 +175,68 @@ use yii\widgets\Pjax;
 <?php if($alias == 'hearthstone'): ?>
     <?=$this->render(
             '_hearthstone',
-            compact('dataProvider','searchModel','models','pages','alias')
+            compact('dataProvider','searchModel','models','pages','alias','params')
     ); ?>
 <?php else: ?>
     <div class="container">
         <h3 style="text-align: center;" ><?=Yii::t('app', 'users statistics')?></h3>
-        <div class="box-body">
+        <div class="box-body" id='onloads' >
             <?php Pjax::begin(); ?>
+                <div class="blok-headre-table">
+                    <?php if(!isset($params['sort'])): ?>
+                         <div class="lenk-sot active" style="margin-left: -10px; ">
+                            <a href="/?sort=user_id">User</a>
+                        </div>
+                    <?php elseif((isset($params['sort'])&&($params['sort']=='user_id'|| $params['sort']=='-user_id'))):?>
+                        <div class="lenk-sot active" style="margin-left: -10px; ">
+                            <a href="<?= $params['sort'] == 'user_id'?'/?sort=-user_id':'/?sort=user_id'?>" >User</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot" style="margin-left: -10px; ">
+                            <a href="/?sort=user_id">User</a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($params['sort'])&& ($params['sort']=='team_id'|| $params['sort']=='-team_id')):?>
+                        <div class="lenk-sot active" ">
+                            <a href="<?= $params['sort'] == 'team_id'?'/?sort=-team_id':'/?sort=team_id'?>">Team</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot" ">
+                            <a href="/?sort=team_id">Team</a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($params['sort'])&& ($params['sort']=='victories'|| $params['sort']=='-victories')):?>
+                        <div class="lenk-sot active" ">
+                            <a href="<?= $params['sort'] == 'victories'?'/?sort=-victories':'/?sort=victories'?>">Victories</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot"">
+                            <a href="/?sort=victories">Victories</a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($params['sort'])&& ($params['sort']=='loss'|| $params['sort']=='-loss')):?>
+                        <div class="lenk-sot active" >
+                            <a href="<?= $params['sort'] == 'loss'?'/?sort=-loss':'/?sort=loss'?>">Loss</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot" ">
+                            <a href="/?sort=loss">Loss</a>
+                        </div>
+                    <?php endif; ?>
+                     <?php if(!empty($params['sort'])&& ($params['sort']=='rate'|| $params['sort']=='-rate')):?>
+                        <div class="lenk-sot active" >
+                            <a href="<?= $params['sort'] == 'rate'?'/?sort=-rate':'/?sort=rate'?>">W/L Rate</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot" ">
+                            <a href="/?sort=rate">W/L Rate</a>
+                        </div>
+                    <?php endif; ?>
+                </div>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'summary' => false,
+                'showHeader'=> false,
                 'tableOptions' =>['class' => 'table-statistic'],
                  'pager' => [
                         'options' => [
@@ -230,4 +282,5 @@ use yii\widgets\Pjax;
             <?php Pjax::end(); ?>
         </div>
     </div>
+
 <?php endif; ?>

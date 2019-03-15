@@ -23,10 +23,62 @@ use app\models\StatisticCardsHearthstone;
         <div class="tab-pane active" id="users_statistics" >
             <div class="box-body">
                 <?php Pjax::begin(); ?>
+                <div class="blok-headre-table">
+                    <?php if(!isset($params['sort'])): ?>
+                         <div class="lenk-sot active" style="margin-left: -10px; ">
+                            <a href="/?sort=user_id">User</a>
+                        </div>
+                    <?php elseif((isset($params['sort'])&&($params['sort']=='user_id'|| $params['sort']=='-user_id'))):?>
+                        <div class="lenk-sot active" style="margin-left: -10px; ">
+                            <a href="<?= $params['sort'] == 'user_id'?'/?sort=-user_id':'/?sort=user_id'?>" >User</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot" style="margin-left: -10px; ">
+                            <a href="/?sort=user_id">User</a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($params['sort'])&& ($params['sort']=='team_id'|| $params['sort']=='-team_id')):?>
+                        <div class="lenk-sot active" ">
+                            <a href="<?= $params['sort'] == 'team_id'?'/?sort=-team_id':'/?sort=team_id'?>">Team</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot" ">
+                            <a href="/?sort=team_id">Team</a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($params['sort'])&& ($params['sort']=='victories'|| $params['sort']=='-victories')):?>
+                        <div class="lenk-sot active" ">
+                            <a href="<?= $params['sort'] == 'victories'?'/?sort=-victories':'/?sort=victories'?>">Victories</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot"">
+                            <a href="/?sort=victories">Victories</a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($params['sort'])&& ($params['sort']=='loss'|| $params['sort']=='-loss')):?>
+                        <div class="lenk-sot active" >
+                            <a href="<?= $params['sort'] == 'loss'?'/?sort=-loss':'/?sort=loss'?>">Loss</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot" ">
+                            <a href="/?sort=loss">Loss</a>
+                        </div>
+                    <?php endif; ?>
+                     <?php if(!empty($params['sort'])&& ($params['sort']=='rate'|| $params['sort']=='-rate')):?>
+                        <div class="lenk-sot active" >
+                            <a href="<?= $params['sort'] == 'rate'?'/?sort=-rate':'/?sort=rate'?>">W/L Rate</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="lenk-sot" ">
+                            <a href="/?sort=rate">W/L Rate</a>
+                        </div>
+                    <?php endif; ?>
+                </div>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'summary' => false,
-                    'tableOptions' =>['class' => 'table-statistic'],
+                    'showHeader'=> false,
+                    'tableOptions' =>['class' => 'table-statistic games'],
                      'pager' => [
                             'options' => [
                                 'class' => 'pagination_new',
@@ -67,7 +119,7 @@ use app\models\StatisticCardsHearthstone;
                             'label'=>Yii::t('app','W/L RATE'),
                         ],
                         [
-                            'label'=>Yii::t('app','card'),
+                            //'label'=>Yii::t('app','card'),
                             'contentOptions' => ['class' => 'column-img-game'],
                             'content' => function($data) {
                                 $model = StatisticCardsHearthstone::cardsStatisticOne($data->user->id);

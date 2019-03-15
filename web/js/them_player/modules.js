@@ -3024,10 +3024,9 @@
 								thisItemParent.find('.sub_menu').slideUp(400, 'easeInOutQuint', function () {
 									submenu.slideDown(400, 'easeInOutQuint');
 								});
-							} else {
-								thisItemParent.siblings().removeClass('edgtf-opened').find('.sub_menu').slideUp(400, 'easeInOutQuint', function () {
-									submenu.slideDown(400, 'easeInOutQuint');
-								});
+							} else {								
+								thisItemParent.siblings().removeClass('edgtf-opened').find('.sub_menu').slideUp();
+								submenu.slideDown();
 							}
 						}
 					}

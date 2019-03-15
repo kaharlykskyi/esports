@@ -691,7 +691,14 @@
             $(".esport_champoinship_main_slider").slider();
         }
 
-      
+        // if ($('.games.table-statistic thead th').length > 0) {
+        //     $('.games.table-statistic thead th').eq(0).addClass('active');
+        //     $('.games.table-statistic thead th').on('click',function() {
+        //         //$('.games.table-statistic thead th').removeClass('active');
+        //         console.log($(this).eq(0));
+        //     });
+        // }
+    
 
     });
 

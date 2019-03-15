@@ -64,6 +64,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        $params = Yii::$app->request->queryParams;
         $alias = Yii::$app->params['domains'];
         $game = Games::findOne(['alias' => $alias]);
         $query = News::find()->where(['state' => 1]);
@@ -88,7 +89,6 @@ class SiteController extends Controller
 
         if (!is_object($game)) {
             $searchModel = new SerchTournaments();
-            $params = Yii::$app->request->queryParams;
             $dataProvider = $searchModel->search($params); 
             return $this->render('home', compact('models','pages','dataProvider' ,'searchModel', 'params', 'matches'));
         }
@@ -96,10 +96,9 @@ class SiteController extends Controller
         $searchModel = new SearchResultsStatisticsUsers();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$alias);
         
-        
         return $this->render(
             'index',
-            compact('dataProvider','searchModel','models','pages','alias','matches')
+            compact('dataProvider','searchModel','models','pages','alias','matches','params')
         );
     }
 

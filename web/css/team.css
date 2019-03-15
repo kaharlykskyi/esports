@@ -494,6 +494,7 @@ img {
 }
 
 .block_icon {
+    margin: 20px 0;
     text-align: center;
     color:#82878a;
 }
