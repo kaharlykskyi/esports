@@ -224,9 +224,9 @@ use yii\widgets\Pjax;
     return $content;
     }
 ?>
+
 <div class="main-sponsor-slider-background">
-<div class="container">
-    <div class="row">
+    <div class="container">
         <?php Pjax::begin(); ?>
         <?php foreach ($models as $model): ?>
         <?php if(!$i_count): ?>
@@ -277,7 +277,6 @@ use yii\widgets\Pjax;
         </div>
         <?php Pjax::end(); ?>
     </div>
-</div>
 </div>
 
 <div class="container">
@@ -337,7 +336,7 @@ use yii\widgets\Pjax;
                 [
                     'attribute' => 'banner',
                     'content' => function($data) {
-                        return "<img src='{$data->logo}' alt='logo'>";
+                        return "<img src='{$data->logo}' class='banner-logo'  alt='logo'>";
                     }
                 ],
                 [

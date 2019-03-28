@@ -205,6 +205,10 @@ class Tournaments extends \yii\db\ActiveRecord
                             </label>';
                         }
                         $result .= '<div class="checkbox conteiner_filed" >'. $options .'</div>';
+                    }  elseif ($filed->type === 'input') {
+                        $result .= '<div class="conteiner_filed '.$class.'" ><label class="col-sm-12" >'
+                        . $filed->title .'</label>'. Html::input('text', "Data[{$filed->name}]",$value, 
+                            ['class' => false]) .'</div>';
                     }
                 }
                 return $result;
@@ -305,13 +309,6 @@ class Tournaments extends \yii\db\ActiveRecord
             ['tournament_id' => 'id']
         )->where(['>','date', date('Y-m-d')]);
     }
-
-    // public function table()
-    // {
-    //     return ScheduleTeams::find()
-    //         ->innerJoin('ball_match', '`teams`.`id` = `schedule_teams`.`summ_bal`')
-    //         ->where(['games.id'=> $game])->all();
-    // }
 
 }
 

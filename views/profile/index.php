@@ -602,7 +602,7 @@
                                             $i++;
                                         ?> 
                                             <label for="input<?=$i?>" class='game <?=$user->favorite_game == $value->id ?'actives':'' ?>'  >
-                                                    <img class='geme_icon' src="../images/game/<?=$value->logo?>" alt="">
+                                                    <img class='geme_icon' src="../images/game/<?=$value->logo?>" >
                                             </label>
                                             <input id="input<?=$i?>" name="User[favorite_game]" type="radio" value="<?=$value->id?>">
                                             <?php endforeach; ?>

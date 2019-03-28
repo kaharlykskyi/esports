@@ -1,7 +1,7 @@
 .table-statistic {
     border-left: none;
     border-right: none;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .table-statistic tr td {
@@ -209,4 +209,46 @@
 
 .tournaments-table .info-stage .finihed {
     background-color: #ff0000;
+}
+
+
+@media (max-width: 1200px) {
+    .blok-headre-table .lenk-sot a{
+        font-size: 13px;
+        padding: 12px 15px;
+    }
+
+    .blok-headre-table .lenk-sot:first-child a{
+        padding-left: 20px;
+    }
+}
+
+
+@media (max-width: 705px) {
+    .blok-headre-table .lenk-sot a{
+        font-size: 11px;
+        padding: 12px 10px;
+        text-transform: capitalize;
+    }
+
+    .table-statistic .banner-logo{
+        display: none;
+    }
+
+    .card-her-lider .players, .card-opis-block-auts .players{
+        font-size: 12px;
+    }
+    
+    .players{
+        line-height: 15px;
+    }
+
+    .table-statistic tr td{
+        font-size: 14px;
+    }
+
+    .blok-headre-table .lenk-sot:first-child a{
+        padding-left: 20px;
+    }
+
 }

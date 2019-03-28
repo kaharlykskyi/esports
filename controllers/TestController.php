@@ -10,7 +10,7 @@ use app\models\ScheduleTeams;
 use app\models\TournamentTeam;
 use app\models\BallMatch;
 use yii\db\Expression;
-
+use app\models\MessageUser;
 
 class TestController extends \yii\web\Controller
 {
@@ -65,5 +65,14 @@ class TestController extends \yii\web\Controller
             ['`played`' => new Expression("`played` + 1")], 
             [ 'tournament_id' => 12, 'team_id'=>19]
         );
+    }
+    public function actionTeams()
+    {
+        $teams = MessageUser::find()
+                ->joinWith('senders a')->joinWith('recipients b')
+                ->where(['type'=> MessageUser::TEAM])->asArray()->all();
+        echo "<pre>";
+        print_r($teams);
+        echo "</pre>";exit;
     }
 }

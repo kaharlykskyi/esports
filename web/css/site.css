@@ -297,7 +297,6 @@ input:focus[type='email'], input:focus[type='password'],
     background-repeat: no-repeat;
 }
 
-
 .footer h4, .footer ul.contact-list li a, .footer ul.contact-list li span, .footer ul.contact-list li.phone span {
     color: #999;
 }
@@ -305,21 +304,14 @@ input:focus[type='email'], input:focus[type='password'],
 .games.table-statistic thead th{
     
     background-color: #fcfcfc;
-    /*transform: skew(20deg);*/
+    
     padding: 0;
     border-bottom: 1px solid #2196f3;
     font-family: "Open Sans",sans-serif;
     font-size: 16px;
     font-weight: normal;
     position: relative;
-    /*transform: skew(20deg);
-    -webkit-transition: background-color 1s cubic-bezier(.19,1,.22,1);
-    -moz-transition: background-color 1s cubic-bezier(.19,1,.22,1);
-    transition: background-color 1s cubic-bezier(.19,1,.22,1);*/
 }
-
-
-
 
 .games.table-statistic thead th a {
     position: relative;
@@ -359,4 +351,87 @@ input:focus[type='email'], input:focus[type='password'],
 
 #users_statistics{
     overflow: hidden;
+}
+/*==================================notification tabs===================================*/
+.edgtf-tabs.edgtf-tabs-standard.notification .edgtf-tabs-nav li{
+    padding: 0;
+}
+
+.edgtf-tabs.edgtf-tabs-standard.notification .edgtf-tabs-nav li.ui-state-active{
+    background-color: #005db4;
+}
+
+
+.edgtf-tabs.edgtf-tabs-standard.notification .edgtf-tabs-nav li.ui-state-hover{
+    background-color: #005db4;
+}
+
+.edgtf-tabs.edgtf-tabs-standard.notification .edgtf-tabs-nav li a{
+    padding: 3px 12px;
+    font-size: 11px;
+    text-transform: unset;
+
+}
+
+.edgtf-side-menu .edgtf-side-area-inner {
+    height: 100%;
+    width: 100%;
+}
+
+.notification .item::before{
+    border-right: 5px solid #17161a99;
+}
+
+.notification .item{
+    margin: 20px 0;
+    margin: 20px 0;
+    background-color: #17161a99;
+    padding: 5px;
+}
+
+.notification .team-timeline:before{
+    display: none;
+}
+
+.notification .team-timeline .item .info {
+    padding: 5px;
+}
+
+.notification .team-timeline .item .info p,
+.notification .team-timeline .item .info a,
+.notification .team-timeline .item .info div
+{
+    margin: 0;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.notification .team-timeline .item .info a:focus{
+    color: #fff;
+}
+
+.notification .team-timeline .item .info a:hover{
+    color: #fff;
+}
+
+.notification .team-timeline .title-mes{
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.notification .team-timeline .item .info .name{
+    color: #fff;
+    /*padding-left: 50px;*/
+    line-height: 20px;
+    font-size: 12px;
+    padding-bottom: 9px;
+}
+
+.notification .team-timeline .date-n {
+    color: #005db4;
+    padding-left: 10px;
+    font-size: 12px;
+    float: left;
+    text-transform: uppercase;
+    font-weight: bold;
 }

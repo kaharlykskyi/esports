@@ -169,13 +169,13 @@ $user_id = false;
                                                         $data = json_decode($userMatch->data,true);
                                                     ?>
                                                     <div class="item">
-                                                        <div class="col-sm-5" style="padding: 0;">
+                                                        <div class="col-xs-5" style="padding: 0;">
                                                             <div class="number">
                                                                 <?= $this->render('icon',['data' => $data[0],'tournament'=>$tournament])?>
                                                             </div>
                                                             <div class="name"><?=$userMatch->userS->name?></div>
                                                         </div>
-                                                        <div class="col-sm-2 input_round_match" style="padding: 0;text-align: center;">
+                                                        <div class="col-xs-2 input_round_match" style="padding: 0;text-align: center;">
                                                             <?php if (($user_id == $tournament->user_id)&&($second>900)&&!$userMatch->state):?>
                                                             <input maxlength="2" 
                                                                 value="<?=$userMatch->results1??''?>"
@@ -196,11 +196,12 @@ $user_id = false;
                                                                 </div>
                                                             <?php endif; ?>
                                                         </div>
-                                                        <div class="col-sm-5" style="padding: 0;">
+                                                        <div class="col-xs-5" style="padding: 0;">
                                                             <div class="number" style="float: right;">
                                                                 <?= $this->render('icon',['data' => $data[1],'tournament'=>$tournament])?>
                                                             </div>
-                                                            <div class="name" style="float: right;padding-right: 25px;"><?=$userMatch->userF->name?></div>
+                                                            <div class="name" style="float: right;padding-right: 25px;
+                                                            padding-left: 0;"><?=$userMatch->userF->name?></div>
                                                         </div>
                 <!-- // ==============================Sistem Ban  ===========================================-->
                                                         <?php $data_tournament = json_decode($tournament->data); ?>

@@ -142,7 +142,7 @@ use app\models\StatisticCardsHearthstone;
             <div class="row">
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-xs-4 card-her-lider">
                             <?php 
                                 $first_cart = array_shift($array_model);
                             ?>
@@ -158,7 +158,7 @@ use app\models\StatisticCardsHearthstone;
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-xs-4 card-her-lider">
                             <?php 
                                 $first_cart = array_shift($array_model);
                             ?>
@@ -170,7 +170,7 @@ use app\models\StatisticCardsHearthstone;
                                 <div class="players" ><span > <?=$first_cart->c?>  Times selected</span></div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-xs-4 card-her-lider">
                             <?php 
                                 $first_cart = array_shift($array_model);
                             ?>
@@ -190,11 +190,11 @@ use app\models\StatisticCardsHearthstone;
                 <div class="col-sm-12">
                     <div class="row">
                     <?php foreach ($array_model as $keyx => $valuex): ?>
-                        <div class="col-md-4" style="margin-top: 25px;">
-                            <div class="contener-card-img-autsid col-sm-5">
+                        <div class="col-xs-4" style="margin-top: 25px;">
+                            <div class="contener-card-img-autsid col-md-5">
                                 <?=$valuex->getImg() ?>
                             </div>
-                            <div class="card-opis-block-auts col-sm-7" >
+                            <div class="card-opis-block-auts col-md-7" >
                                <div class="title" ><span > <?=$valuex->getNameCard()?> </span></div> 
                                 <div class="players" ><span > <?=$valuex->c?>  Times selected</span></div>
                             </div>

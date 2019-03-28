@@ -8,6 +8,7 @@ use \yii\helpers\Url;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
+<?php $controller = Yii::$app->controller->id; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -150,7 +151,8 @@ AppAsset::register($this);
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="active has-sub">
+                        <?php $active = ($controller=='news')?'active':'';?>
+                        <li class="<?=$active?> has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>News
                             </a>
@@ -166,9 +168,16 @@ AppAsset::register($this);
                                 </li>
                             </ul>
                         </li>
-                        <li class="has-sub">
+                        <?php $active = ($controller=='user')?'active':'';?>
+                        <li class="<?=$active?> has-sub">
                             <a class="js-arrow" href="<?=Url::to(['/admin/user/index'])?>">
                                 <i class="fas fa-copy"></i>Users
+                            </a>
+                        </li>
+                        <?php $active = ($controller=='games')?'active':'';?>
+                        <li class="<?=$active?> has-sub">
+                            <a class="js-arrow" href="<?=Url::to(['/admin/games/index'])?>">
+                                <i class="fas fa-copy"></i>Games
                             </a>
                         </li>
                     </ul>

@@ -123,8 +123,8 @@ use yii\widgets\Pjax;
     </div>
 </div>
 
-<div class="container">
-    <div class="row">
+<div class="main-sponsor-slider-background">
+    <div class="container">
         <?php Pjax::begin(); ?>
         <?php foreach ($models as $model): ?>
         <?php if(!$i_count): ?>
@@ -134,8 +134,12 @@ use yii\widgets\Pjax;
         <div class="news-list col-xs-12 col-sm-4">
             <div class="item img-top">
                 <div class="img-wrap">
-                    <div class="bage"><a href="/news/single/<?=$model->id?>"><?=yii::t('app','highlight')?></a></div>
-                    <a href="/news/single/<?=$model->id?>"><img src="<?=$model->logo?>" alt="post image"></a>
+                    <div class="bage">
+                        <a href="/news/single/<?=$model->id?>"><?=yii::t('app','highlight')?></a>
+                    </div>
+                    <a href="/news/single/<?=$model->id?>">
+                        <img src="<?=$model->logo?>" alt="post image">
+                    </a>
                 </div>
                 <div class="info">
                     <a href="/news/single/<?=$model->id?>" class="name"><?=$model->title?></a>  
@@ -172,6 +176,7 @@ use yii\widgets\Pjax;
         <?php Pjax::end(); ?>
     </div>
 </div>
+
 <?php if($alias == 'hearthstone'): ?>
     <?=$this->render(
             '_hearthstone',

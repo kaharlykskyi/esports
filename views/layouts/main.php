@@ -47,7 +47,7 @@ $script = "
     <?php $this->head() ?>
 </head>
 
-<body  class="edgtf-header-standard edgtf-header-divided">
+<body  class="edgtf-header-standard edgtf-header-divided edgtf-side-menu-slide-from-right">
 <?php $this->beginBody() ?>
 <div class="wrap_search_fon"> <!-- wrap_blur -->
     
@@ -62,6 +62,47 @@ $script = "
 
 
     <!--MAIN MENU WRAP BEGIN-->
+
+<section class="edgtf-side-menu ps ps--theme_default ps--active-y">
+    <div class="edgtf-side-area-inner">
+        <a class="edgtf-close-side-menu edgtf-close-side-menu-svg-path" href="#">
+            <svg version="1.1" class="edgtf-side-area-close" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="23.922px" height="23.916px" viewBox="0 0 23.922 23.916" enable-background="new 0 0 23.922 23.916" xml:space="preserve">
+                <polygon fill="#ffffff" points="23.923,20.992 14.889,11.958 23.915,2.932 20.984,0.001 11.958,9.027 2.938,0.006 0.006,2.938 
+                    9.026,11.958 0,20.984 2.932,23.916 11.958,14.89 20.992,23.923 ">
+                </polygon>
+            </svg>        
+        </a>
+        <div class="widget edgtf-separator-widget">
+            <div class="edgtf-separator-holder clearfix  edgtf-separator-center edgtf-separator-normal">
+                <div class="edgtf-separator" style="border-style: solid;margin-bottom: 2px"></div>
+            </div>
+        </div> 
+        <div  class="widget edgtf-sidearea widget_text">            
+            <div class="edgtf-tabs  edgtf-tabs-standard  ui-tabs notification">
+                <ul class="edgtf-tabs-nav clearfix ui-tabs-nav " >
+                        <li>
+                            <a href="#teams-tab" >Teams</a>
+                        </li>
+                        <li>
+                            <a href="#tournaments-tab" >Tournaments</a>
+                        </li>
+                        <li>
+                            <a href="#matches-tab" >Matches</a>
+                        </li>
+                </ul>  
+                <div  id="teams-tab" class="team-timeline"></div>
+                <div id="tournaments-tab" class="team-timeline"></div>
+                <div id="matches-tab" class="team-timeline"></div>
+            </div>
+        </div>
+    <div class="ps__scrollbar-x-rail" >
+        <div class="ps__scrollbar-x" tabindex="0" ></div>
+    </div>
+    <div class="ps__scrollbar-y-rail">
+        <div class="ps__scrollbar-y" tabindex="0" ></div>
+    </div>
+</section>
+
 <header class="edgtf-page-header">
     <div class="edgtf-menu-area" style="opacity: 1;">
         <div class="edgtf-vertical-align-containers">
@@ -149,160 +190,159 @@ $script = "
                     </div>
                 </div>
                 <div class="edgtf-position-right">
-                <div class="edgtf-position-right-inner">
-                    <div class="edgtf-divided-right-inner-border-holder"></div>
-                    <div class="edgtf-divided-right-inner-top-widget-area">
-                        <div class="edgtf-divided-right-inner-top-widget-area-inner">
-                            <div class="textwidget">
-                                <div class="top-language">
-                                    <ul class="list">
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                <img src="<?=FlagServis::getLinkFlagLoc()?>" alt="selected language">
-                                                <?=substr(Yii::$app->language, 0, 2)?>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a href="/site/translations?lang=fr-FR">
-                                                        <img src="<?=FlagServis::getLinkFlag('France')?>" alt="language">FR
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/site/translations?lang=en-EN">
-                                                        <img src="<?=FlagServis::getLinkFlag('United Kingdom')?>" alt="language">EN
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/site/translations?lang=es-ES">
-                                                        <img src="<?=FlagServis::getLinkFlag('Spain')?>" alt="language">ES
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                    <div class="edgtf-position-right-inner">
+                        <div class="edgtf-divided-right-inner-border-holder"></div>
+                        <div class="edgtf-divided-right-inner-top-widget-area">
+                            <div class="edgtf-divided-right-inner-top-widget-area-inner">
+                                <div class="textwidget">
+                                    <div class="top-language">
+                                        <ul class="list">
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                    <img src="<?=FlagServis::getLinkFlagLoc()?>" alt="selected language">
+                                                    <?=substr(Yii::$app->language, 0, 2)?>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="/site/translations?lang=fr-FR">
+                                                            <img src="<?=FlagServis::getLinkFlag('France')?>" alt="language">FR
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/site/translations?lang=en-EN">
+                                                            <img src="<?=FlagServis::getLinkFlag('United Kingdom')?>" alt="language">EN
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/site/translations?lang=es-ES">
+                                                            <img src="<?=FlagServis::getLinkFlag('Spain')?>" alt="language">ES
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <nav class="edgtf-main-menu edgtf-drop-down edgtf-divided-right-part edgtf-default-nav">
-                        <ul id="menu-divided-right-navigation" class="clearfix">
-                            <li id="nav-menu-item-243" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow <?=$this->context->route == 'site/index' ? 'edgtf-active-item' : ''?> ">
-                                <a href="/" class="">
-                                    <span class="item_outer"><span class="item_text"><?=Yii::t('app','Home')?></span>
-                                    <i class="edgtf-menu-arrow fa fa-angle-down"></i></span>
-                                </a>
-                                <div class="second right" >
-                                    <div class="inner">
-                                        <ul class="right">
-                                        <li id="nav-menu-item-248" class="menu-item menu-item-type-post_type menu-item-object-page ">
-                                            <a href="http://playerx.edge-themes.com/blog/right-sidebar/" class=""><span class="item_outer"><span class="item_text">Right Sidebar</span></span>
-                                            </a>
-                                        </li>
-                                        <li id="nav-menu-item-1672" class="menu-item menu-item-type-post_type menu-item-object-page ">
-                                            <a href="http://playerx.edge-themes.com/blog/left-sidebar/" class=""><span class="item_outer"><span class="item_text">Left Sidebar</span></span>
-                                            </a>
-                                        </li>
-                                        <li id="nav-menu-item-1671" class="menu-item menu-item-type-post_type menu-item-object-page ">
-                                            <a href="#">
-                                                <span class="item_outer"><span class="item_text">No Sidebar</span></span>
-                                            </a>
-                                        </li>
-                                        <li id="nav-menu-item-249" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
-                                            <a href="#" class="">
-                                            <span class="item_outer"><span class="item_text">Post Types</span></span>
-                                        </a>
-                                            <ul class="right">
-                                                <li id="nav-menu-item-254" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/white-keep-assault/" class=""><span class="item_outer"><span class="item_text">Standard</span></span></a></li>
-                                                <li id="nav-menu-item-253" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/dota-2-tournament/" class=""><span class="item_outer"><span class="item_text">Gallery</span></span></a></li>
-                                                <li id="nav-menu-item-252" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/black-angels/" class=""><span class="item_outer"><span class="item_text">Link</span></span></a></li>
-                                                <li id="nav-menu-item-250" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/heros-journey/" class=""><span class="item_outer"><span class="item_text">Quote</span></span></a></li>
-                                                <li id="nav-menu-item-255" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/a-time-travel-tale/" class=""><span class="item_outer"><span class="item_text">Video</span></span></a></li>
-                                                <li id="nav-menu-item-251" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/winners-on-esl-pro/" class=""><span class="item_outer"><span class="item_text">Audio</span></span></a></li>
-                                            </ul>
-                                        </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <?php
-                                if(Yii::$app->user->isGuest):
-                            ?>
-                                <li id="nav-menu-item-244" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow <?=$this->context->route == 'site/login' ? 'edgtf-active-item' : ''?> ">
-                                    <a href="/login" class="">
-                                        <span class="item_outer">
-                                            <span class="item_text"><?=Yii::t('app','Sign in')?></span>
-                                        </span>
+                        <nav class="edgtf-main-menu edgtf-drop-down edgtf-divided-right-part edgtf-default-nav">
+                            <ul id="menu-divided-right-navigation" class="clearfix">
+                                <li id="nav-menu-item-243" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow <?=$this->context->route == 'site/index' ? 'edgtf-active-item' : ''?> ">
+                                    <a href="/" class="">
+                                        <span class="item_outer"><span class="item_text"><?=Yii::t('app','Home')?></span>
+                                        <i class="edgtf-menu-arrow fa fa-angle-down"></i></span>
                                     </a>
+                                    <div class="second right" >
+                                        <div class="inner">
+                                            <ul class="right">
+                                            <li id="nav-menu-item-248" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                                <a href="http://playerx.edge-themes.com/blog/right-sidebar/" class=""><span class="item_outer"><span class="item_text">Right Sidebar</span></span>
+                                                </a>
+                                            </li>
+                                            <li id="nav-menu-item-1672" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                                <a href="http://playerx.edge-themes.com/blog/left-sidebar/" class=""><span class="item_outer"><span class="item_text">Left Sidebar</span></span>
+                                                </a>
+                                            </li>
+                                            <li id="nav-menu-item-1671" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                                <a href="#">
+                                                    <span class="item_outer"><span class="item_text">No Sidebar</span></span>
+                                                </a>
+                                            </li>
+                                            <li id="nav-menu-item-249" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+                                                <a href="#" class="">
+                                                <span class="item_outer"><span class="item_text">Post Types</span></span>
+                                            </a>
+                                                <ul class="right">
+                                                    <li id="nav-menu-item-254" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/white-keep-assault/" class=""><span class="item_outer"><span class="item_text">Standard</span></span></a></li>
+                                                    <li id="nav-menu-item-253" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/dota-2-tournament/" class=""><span class="item_outer"><span class="item_text">Gallery</span></span></a></li>
+                                                    <li id="nav-menu-item-252" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/black-angels/" class=""><span class="item_outer"><span class="item_text">Link</span></span></a></li>
+                                                    <li id="nav-menu-item-250" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/heros-journey/" class=""><span class="item_outer"><span class="item_text">Quote</span></span></a></li>
+                                                    <li id="nav-menu-item-255" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/a-time-travel-tale/" class=""><span class="item_outer"><span class="item_text">Video</span></span></a></li>
+                                                    <li id="nav-menu-item-251" class="menu-item menu-item-type-post_type menu-item-object-post "><a href="http://playerx.edge-themes.com/winners-on-esl-pro/" class=""><span class="item_outer"><span class="item_text">Audio</span></span></a></li>
+                                                </ul>
+                                            </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </li>
-                                <li id="nav-menu-item-244" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow  <?=$this->context->route == 'site/register' ? 'edgtf-active-item' : ''?>">
-                                    <a href="/register" class="">
+                                <?php
+                                    if(Yii::$app->user->isGuest):
+                                ?>
+                                    <li id="nav-menu-item-244" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow <?=$this->context->route == 'site/login' ? 'edgtf-active-item' : ''?> ">
+                                        <a href="/login" class="">
+                                            <span class="item_outer">
+                                                <span class="item_text"><?=Yii::t('app','Sign in')?></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li id="nav-menu-item-244" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow  <?=$this->context->route == 'site/register' ? 'edgtf-active-item' : ''?>">
+                                        <a href="/register" class="">
+                                            <span class="item_outer">
+                                                <span class="item_text"><?=Yii::t('app','Sign up')?></span>
+                                                <i class="edgtf-menu-arrow fa fa-angle-down"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                <?php else : ?>
+                                <li id="nav-menu-item-244" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow">
+                                    <a href="#" class="">
                                         <span class="item_outer">
-                                            <span class="item_text"><?=Yii::t('app','Sign up')?></span>
+                                            <span class="item_text">
+                                                <?=Yii::t('app','Hi')?>, 
+                                                <?=Yii::$app->user->identity->username?></span>
                                             <i class="edgtf-menu-arrow fa fa-angle-down"></i>
                                         </span>
                                     </a>
+                                    <div class="second right" >
+                                        <div class="inner">
+                                            <ul class="right">
+                                                <li id="nav-menu-item-246" class="menu-item menu-item-type-post_type menu-item-object-product ">
+                                                    <a href="/profile" class="">
+                                                        <span class="item_outer">
+                                                            <span class="item_text"><?=Yii::t('app','My profile')?></span>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li id="nav-menu-item-1517" class="menu-item menu-item-type-post_type menu-item-object-product">
+                                                    <a href="/logout" class="">
+                                                        <span class="item_outer">
+                                                            <span class="item_text"><?=Yii::t('app','Logout')?></span>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </li>
-
-                            <?php else : ?>
-                            <li id="nav-menu-item-244" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow">
-                                <a href="#" class="">
-                                    <span class="item_outer">
-                                        <span class="item_text">
-                                            <?=Yii::t('app','Hi')?>, 
-                                            <?=Yii::$app->user->identity->username?></span>
-                                        <i class="edgtf-menu-arrow fa fa-angle-down"></i>
+                                <li style="padding-top:15px;" >
+                                     <a  href="/profile#activity" class="block-add-message" ></a>
+                                </li>
+                                <?php endif;?>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="edgtf-divided-right-widget-area">
+                        <div class="edgtf-divided-right-widget-area-inner">
+                            <div class="edgtf-position-right-inner-wrap">
+                                <a class="edgtf-side-menu-button-opener edgtf-icon-has-hover edgtf-side-menu-button-opener-svg-path" href="javascript:void(0)">
+                                    <span class="edgtf-side-menu-icon">
+                                        <svg version="1.1" class="edgtf-side-area-opener" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="23.922px" height="23.916px" viewBox="0 0 23.922 23.916" enable-background="new 0 0 23.922 23.916" xml:space="preserve">
+                                            <rect x="2.604" y="14.698" transform="matrix(0.7071 0.7071 -0.7071 0.7071 14.9741 2.3277)" fill="#ffffff" width="4.146" height="9.083"></rect>
+                                            <rect x="17.166" y="0.135" transform="matrix(0.7072 0.707 -0.707 0.7072 8.9391 -12.2324)" fill="#ffffff" width="4.145" height="9.083"></rect>
+                                            <rect x="2.61" y="0.141" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 11.3045 4.6818)" fill="#ffffff" width="4.145" height="9.083"></rect>
+                                            <rect x="17.172" y="14.703" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 46.4606 19.2446)" fill="#ffffff" width="4.146" height="9.083"></rect>
+                                        </svg>            
                                     </span>
                                 </a>
-                                <div class="second right" >
-                                    <div class="inner">
-                                        <ul class="right">
-                                            <li id="nav-menu-item-246" class="menu-item menu-item-type-post_type menu-item-object-product ">
-                                                <a href="/profile" class="">
-                                                    <span class="item_outer">
-                                                        <span class="item_text"><?=Yii::t('app','My profile')?></span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li id="nav-menu-item-1517" class="menu-item menu-item-type-post_type menu-item-object-product">
-                                                <a href="/logout" class="">
-                                                    <span class="item_outer">
-                                                        <span class="item_text"><?=Yii::t('app','Logout')?></span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="padding-top:15px;" >
-                                 <a  href="/profile#activity" class="block-add-message" ></a>
-                            </li>
-                            <?php endif;?>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="edgtf-divided-right-widget-area">
-                    <div class="edgtf-divided-right-widget-area-inner">
-                        <div class="edgtf-position-right-inner-wrap">
-                            <a class="edgtf-side-menu-button-opener edgtf-icon-has-hover edgtf-side-menu-button-opener-svg-path" href="javascript:void(0)">
-                                <span class="edgtf-side-menu-icon">
-                                    <svg version="1.1" class="edgtf-side-area-opener" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="23.922px" height="23.916px" viewBox="0 0 23.922 23.916" enable-background="new 0 0 23.922 23.916" xml:space="preserve">
-                                        <rect x="2.604" y="14.698" transform="matrix(0.7071 0.7071 -0.7071 0.7071 14.9741 2.3277)" fill="#ffffff" width="4.146" height="9.083"></rect>
-                                        <rect x="17.166" y="0.135" transform="matrix(0.7072 0.707 -0.707 0.7072 8.9391 -12.2324)" fill="#ffffff" width="4.145" height="9.083"></rect>
-                                        <rect x="2.61" y="0.141" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 11.3045 4.6818)" fill="#ffffff" width="4.145" height="9.083"></rect>
-                                        <rect x="17.172" y="14.703" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 46.4606 19.2446)" fill="#ffffff" width="4.146" height="9.083"></rect>
-                                    </svg>            
-                                </span>
-                            </a>
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
 </header>
-
 
 <header class="edgtf-mobile-header" ">
     <div class="edgtf-mobile-header-inner">
@@ -407,7 +447,7 @@ $script = "
         </nav>
     </div>
 </header>
-    
+ 
     <?= $content ?>
 <!--MAIN MENU WRAP END-->
 

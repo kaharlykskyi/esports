@@ -1,0 +1,71 @@
+.field-custom label {
+	font-weight: normal;
+	font-size: 14px;
+}
+.field-custom{
+	border: 1px solid #ccc;
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+	position: relative;
+}
+
+.field-custom .del-field  {
+	position: absolute;
+	right: 10px;
+	top:7px;
+	color:#ec3444;
+	padding: 0;
+	height: 25px;
+	width: 25px;
+	background-color: #cccccc4f;
+	border-radius: 2px;
+	cursor: pointer;
+	z-index: 1000;
+}
+
+.filed-error{
+	margin-left: 15px;
+}
+
+.field-custom .del-field:hover{
+	background-color: #ccc;
+}
+
+.field-custom .del-field i{
+	position: absolute;
+	top:50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.field-custom .tex-area-input{
+	padding: 10px 0;
+	/*display: none;*/
+}
+
+.field-custom .number{
+	margin-top: 20px;
+}
+
+.field-custom .col-sm-3{
+	padding: 5px;
+}
+
+.field-custom .s-type{
+	padding: 0;
+}
+
+.field-custom .texarea{
+	padding-left: 5px;
+}
+
+.field-custom .texarea span{
+	padding-left: 25px;
+	font-size: 12px;
+}
+
+.field-custom .req:after
+{
+    color: red;
+    content: " *";
+}

@@ -326,11 +326,14 @@
                                             <td><?=$team->lost?></td>
                                             <td class="points"><span><?=$team->summ_ball?></span></td>
                                             <td class="form">
-                                                <span class="win">w</span>
-                                                <span class="drawn">d</span>
-                                                <span class="lose">l</span>
-                                                <span class="win">w</span>
-                                                <span class="win">w</span>
+                                                <?php $shel_arry = $team->shedule ;
+                                                    foreach ($shel_arry as $res): ?>
+                                                    <?php if($res): ?>
+                                                        <span class="win">w</span>
+                                                    <?php else:?>
+                                                        <span class="lose">l</span>
+                                                    <?php endif;?>
+                                                <?php endforeach; ?>
                                             </td>  
                                         </tr>
                                     <?php endforeach; ?>

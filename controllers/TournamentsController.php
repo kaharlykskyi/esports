@@ -86,7 +86,7 @@ class TournamentsController extends \yii\web\Controller
 
     public function actionCreate()
     {
-    	$games = Games::find()->all();
+    	$games = Games::find()->where(['status' => Games::ACTIVE])->all();
     	$model = new Tournaments();
         if(Yii::$app->user->identity->isBaned()) {
             return $this->redirect('/profile');

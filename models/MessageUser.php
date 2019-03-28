@@ -10,6 +10,10 @@ use yii\helpers\Url;
 class MessageUser extends \yii\db\ActiveRecord
 {
 
+    const TEAM = 1;
+    const TOURNAMENT = 2;
+    const MATCH = 3;
+
     public static function tableName()
     {
         return 'message_user';
@@ -25,7 +29,7 @@ class MessageUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sender', 'recipient', 'created_at', 'updated_at'], 'integer'],
+            [['sender', 'recipient', 'type', 'created_at', 'updated_at'], 'integer'],
             [['text','title'], 'string'],
             [['sender', 'recipient'], 'required'],
             [
@@ -33,12 +37,6 @@ class MessageUser extends \yii\db\ActiveRecord
                 'exist', 'skipOnError' => true, 
                 'targetClass' => User::className(), 
                 'targetAttribute' => ['recipient' => 'id']
-            ],
-            [
-                ['sender'], 'exist', 
-                'skipOnError' => true, 
-                'targetClass' => User::className(), 
-                'targetAttribute' => ['sender' => 'id']
             ],
         ];
     }

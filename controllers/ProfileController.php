@@ -68,7 +68,7 @@ class ProfileController extends \yii\web\Controller
             ->andWhere(['tournament_team.status'=>TournamentTeam::ACCEPTED])
             ->orWhere(['tournaments.user_id'=>Yii::$app->user->identity->id])
             ->all();
-        $games = Games::find()->all();
+        $games = Games::find()->where(['games.status' => Games::ACTIVE])->all();
         $not_games = $this->games();
         $social_links = new SocialLinks();
         return $this->render('index',compact('teams','games','not_games','tournaments','social_links'));
@@ -267,17 +267,13 @@ class ProfileController extends \yii\web\Controller
     private function games()
     {
         $id = Yii::$app->user->identity->id;
-        $games = Games::find()->leftJoin('teams', '`teams`.`game_id` = `games`.`id`')
+        $games = Games::find()->select('games.id')->leftJoin('teams', '`teams`.`game_id` = `games`.`id`')
         ->leftJoin('user_team', '`user_team`.`id_team` = `teams`.`id`')
         ->where(['user_team.id_user' => $id])
-        ->andWhere(['user_team.status' => UserTeam::ACCEPTED])
-        ->asArray()->all();
-        $not_gemes = [];
-        foreach($games as $value){
-            $not_gemes[] = $value['id'];
-        }
+        ->andWhere(['user_team.status' => UserTeam::ACCEPTED]);
         
-        $games = Games::find()->where(['not in', 'id', $not_gemes])->all();
+        $games = Games::find()->where(['not in', 'id', $games])
+            ->andWhere(['games.status' => Games::ACTIVE])->all();
         return  $games;
     }
         

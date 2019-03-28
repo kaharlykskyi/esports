@@ -61,14 +61,12 @@ $this->title = 'News';
                                     'attribute' => 'created_at',
                                     'label'=>'Date of creation',
                                     'format' =>  ['date', 'dd-MM-Y'],
-                                    //'options' => ['width' => '100'],
                                     'filterInputOptions' => [ 'type'  =>  'date','class'  =>  'form-control' ,],
                                 ],
 
                                 [
                                     'class' => 'yii\grid\ActionColumn',
-                                    'header'=>'Action', 
-                                    //'headerOptions' => ['width' => '80'],
+                                    'header'=>'Action',
                                     'class' => 'yii\grid\ActionColumn',
                                     'buttons'=>[
                                         'delete' => function ($url,$model) {

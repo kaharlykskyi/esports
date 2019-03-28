@@ -506,6 +506,7 @@ img {
     border-radius: 4px;
 
 }
+
 .btn-sm{
     text-transform:none;
     padding: 5px 10px;
@@ -871,4 +872,61 @@ img {
 
 .tournament-history .title-his a {
     font-weight: bold;
+}
+
+.edgtf-match-item-holder .logo-team{
+    border-radius: 50%;
+    height: 60px;
+    width: auto;
+}
+
+.edgtf-match-item-holder .vs img{
+    height: 50px;
+    width: auto;
+}
+
+.edgtf-match-item-holder .vs{
+    margin-top: 20px;
+}
+
+.edgtf-match-item-holder .team,.edgtf-match-item-holder .vs{
+    text-align: center;
+    text-transform: capitalize;
+    padding: 0;
+}
+
+.flex.logo-tor-team{
+    padding-left: 50px;
+}
+
+@media (max-width: 705px) {
+
+    .blok-tabs .lenk-sot a{
+        font-size: 13px;
+        padding: 12px 15px;
+    }
+
+    .blok-tabs .lenk-sot:first-child a{
+        padding-left: 20px;
+    }
+
+    .edgtf-match-info h5{
+        font-size: 16px;
+    }
+
+    .edgtf-match-item-holder .logo-team{
+        height: 50px;
+    }
+
+    .edgtf-match-item-holder .vs img{
+        height: 40px;
+    }
+
+    .scrol-histoty .flex{
+        font-size: 14px;
+    }
+
+    .flex.logo-tor-team{
+        padding-left: 10px;
+    }
 }

@@ -8,6 +8,7 @@ use app\models\servises\FlagServis;
 $this->title = 'Users';
 
 ?>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -73,7 +74,6 @@ $this->title = 'Users';
                             ]
                         ,
                         ]); ?>
-
                     </div>
                 </div>
             </div>

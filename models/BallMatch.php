@@ -44,6 +44,35 @@ class BallMatch extends \yii\db\ActiveRecord
         return $this->hasOne(Teams::className(), ['id' => 'team_id']);
     }
 
+    public function getShedule()
+    {
+        $matches = ScheduleTeams::find()->where(['team1'=>$this->team_id])
+            ->orWhere(['team2'=>$this->team_id])
+            ->andWhere(['tournament_id' => $this->tournament_id])
+            ->andWhere(['not',['results1'=> null]])->andWhere(['not',['results2' => null]])
+            ->orderBy('id DESC')->limit(5)->all();
+
+        $result = [];
+        foreach ($matches as $matche) { 
+            if ($matche->team1 == $this->team_id) {
+                if ($matche->results1 > $matche->results2) {
+                    $result[] = 1;
+                } elseif ($matche->results2 > $matche->results1) {
+                    $result[] = 0;
+                }
+            }
+            elseif ($matche->team2 == $this->team_id ) {
+                if ($matche->results2 > $matche->results1) {
+                    $result[] = 1;
+                } elseif ($matche->results1 > $matche->results2) {
+                    $result[] = 0;
+                }
+            }   
+        } 
+
+        return $result;
+    }
+
     public function attributeLabels()
     {
         return [

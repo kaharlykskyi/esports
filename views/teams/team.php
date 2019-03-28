@@ -325,48 +325,34 @@
                                 <div class="col-md-12 col-sm-12">
                                     <article class="edgtf-match-status-finished">
                                         <div class="edgtf-match-item-holder">
-                                            <div class="col-md-5" style="margin-top: 15px;">
-                                                <div class="col-xs-4">
-                                                    <div class="edgtf-match-single-team">
-                                                        <div class="edgtf-match-item-image-holder">
-                                                            <img src="<?=$match->teamS->logo()?>" alt="Hacksaw">
-                                                        </div>
-                                                        <div class="edgtf-match-item-text-holder">
-                                                            <h6 class="edgtf-match-team-title">
-                                                                <a href="<?=$match->teamS->links()?>">
-                                                                    <?=$match->teamS->name?>
-                                                                </a>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
+                                            <div class="col-xs-6" style="margin-top: 15px;">
+                                                <div class="col-xs-5 team">
+                                                    <img src="<?=$match->teamS->logo()?>"  class="logo-team" alt="team">
+                                                    <p>
+                                                        <a href="<?=$match->teamS->links()?>">
+                                                            <?=$match->teamS->name?>
+                                                        </a>  
+                                                    </p>                                              
                                                 </div>
-                                                <div class="col-xs-4" >
-                                                    <div class="edgtf-match-vs-image">
-                                                        <img src="http://playerx.edge-themes.com/wp-content/plugins/playerx-core/assets/img/vs_finished.png" alt="edgtf-match-vs-image">
-                                                    </div>
+                                                <div class="col-xs-2 vs" >
+                                                        <img src="/images/tournaments/vs_dark.png" alt="match-vs-image">
                                                 </div>
-                                                <div class="col-xs-4">
-                                                    <div class="edgtf-match-single-team">
-                                                        <div class="edgtf-match-item-image-holder">
-                                                            <img src="<?=$match->teamF->logo()?>" alt="Kaiju Red">
-                                                        </div>
-                                                        <div class="edgtf-match-item-text-holder">
-                                                            <h6 class="edgtf-match-team-title">
-                                                                <a href="<?=$match->teamF->links()?>">
-                                                                    <?=$match->teamF->name?>
-                                                                </a>
-                                                            </h6>
-                                                        </div>
-                                                    </div>  
+                                                <div class="col-xs-5 team">
+                                                    <img src="<?=$match->teamF->logo()?>" class="logo-team" alt="team">
+                                                    <p>
+                                                        <a href="<?=$match->teamF->links()?>">
+                                                            <?=$match->teamF->name?>
+                                                        </a> 
+                                                    </p>                                               
                                                 </div>
                                             </div>
-                                            <div class="col-md-3" style="margin-top: 15px;">
-                                                <p style="margin-top: 40px;text-align: center;font-size: 22px;font-weight: bold;" >
+                                            <div class="col-xs-2" style="margin-top: 15px;">
+                                                <p style="margin-top: 20px;text-align: center;font-size: 22px;font-weight: bold;" >
                                                     <span><?=$match->result1??'--'?></span> : 
                                                     <span><?=$match->result2??'--'?></span>
                                                 </p>
                                             </div>
-                                            <div class="col-md-4" style="margin-top: 15px;">
+                                            <div class="col-xs-4" style="margin-top: 15px;">
                                                 <div class="edgtf-match-info">
                                                     <h5 class="edgtf-match-title">
                                                         <a href="/tournaments/public/<?=$match->tournament->id?>">
@@ -393,43 +379,34 @@
                                     <div class="col-md-12 col-sm-12">
                                         <article class="edgtf-match-status-finished">
                                             <div class="edgtf-match-item-holder">
-                                                <div class="col-md-5" style="margin-top: 15px;">
-                                                    <div class="col-xs-4">
-                                                        <div class="edgtf-match-single-team">
-                                                            <div class="edgtf-match-item-image-holder">
-                                                                <img src="<?=$match->teamS->logo()?>" alt="Hacksaw">
-                                                            </div>
-                                                            <div class="edgtf-match-item-text-holder">
-                                                                <h6 class="edgtf-match-team-title">
-                                                                    <a href="<?=$match->teamS->links()?>"><?=$match->teamS->name?></a>
-                                                                </h6>
-                                                            </div>
-                                                        </div>
+                                                <div class="col-xs-6" style="margin-top: 15px;">
+                                                    <div class="col-xs-5 team">
+                                                        <img src="<?=$match->teamS->logo()?>"  class="logo-team" alt="team">
+                                                        <p>
+                                                            <a href="<?=$match->teamS->links()?>">
+                                                                <?=$match->teamS->name?>
+                                                            </a>  
+                                                        </p>                                              
                                                     </div>
-                                                    <div class="col-xs-4" >
-                                                        <div class="edgtf-match-vs-image">
-                                                            <img src="http://playerx.edge-themes.com/wp-content/plugins/playerx-core/assets/img/vs_finished.png" alt="edgtf-match-vs-image">
-                                                        </div>
+                                                    <div class="col-xs-2 vs" >
+                                                            <img src="/images/tournaments/vs_dark.png" alt="match-vs-image">
                                                     </div>
-                                                    <div class="col-xs-4">
-                                                        <div class="edgtf-match-single-team">
-                                                            <div class="edgtf-match-item-image-holder">
-                                                                <img src="<?=$match->teamF->logo()?>" alt="Kaiju Red">
-                                                            </div>
-                                                            <div class="edgtf-match-item-text-holder">
-                                                                <h6 class="edgtf-match-team-title">
-                                                                    <a href="<?=$match->teamF->links()?>"><?=$match->teamF->name?></a>
-                                                                </h6>
-                                                            </div>
-                                                        </div>  
+                                                    <div class="col-xs-5 team">
+                                                        <img src="<?=$match->teamF->logo()?>" class="logo-team" alt="team">
+                                                        <p>
+                                                            <a href="<?=$match->teamF->links()?>">
+                                                                <?=$match->teamF->name?>
+                                                            </a> 
+                                                        </p>                                               
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3" style="margin-top: 15px;">
-                                                    <p style="margin-top: 40px;text-align: center;font-size: 22px;font-weight: bold;" >
-                                                        <span><?=$match->result1??'--'?></span> : <span><?=$match->result2??'--'?></span>
+                                                <div class="col-xs-2" style="margin-top: 15px;">
+                                                    <p style="margin-top: 20px;text-align: center;font-size: 22px;font-weight: bold;" >
+                                                        <span><?=$match->result1??'--'?></span> : 
+                                                        <span><?=$match->result2??'--'?></span>
                                                     </p>
                                                 </div>
-                                                <div class="col-md-4" style="margin-top: 15px;">
+                                                <div class="col-xs-4" style="margin-top: 15px;">
                                                     <div class="edgtf-match-info">
                                                         <h5 class="edgtf-match-title">
                                                             <a href="/tournaments/public/<?=$match->tournament->id?>">
@@ -437,13 +414,15 @@
                                                             </a>
                                                         </h5>
                                                         <div class="edgtf-match-date">
-                                                            <span class="edgtf-match-date"><?=date('dS F Y, H:i', strtotime($match->date))?></span>
+                                                            <span class="edgtf-match-date">
+                                                                <?=date('dS F Y, H:i', strtotime($match->date))?>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </article>  
-                                    </div> 
+                                    </div>
                                 <?php endif; ?>  
                                 <?php endforeach; ?>   
                             </div>
@@ -451,65 +430,52 @@
                         <div id="last" class="tab-pane fade">
                             <?php foreach($matches as $match): ?>
                                 <?php if(!empty($match->result1)&&!empty($match->result2)): ?>
-                                <div class="col-sm-12">
-                                 <article class="edgtf-match-status-finished">
-                                    <div class="edgtf-match-item-holder">
-                                        <div class="col-md-5" style="margin-top: 15px;">
-                                            <div class="col-xs-4">
-                                                <div class="edgtf-match-single-team">
-                                                    <div class="edgtf-match-item-image-holder">
-                                                        <img src="<?=$match->teamS->logo()?>" alt="Hacksaw">
-                                                    </div>
-                                                    <div class="edgtf-match-item-text-holder">
-                                                        <h6 class="edgtf-match-team-title">
-                                                            <a href="<?=$match->teamS->links()?>">
-                                                                <?=$match->teamS->name?>
-                                                            </a>
-                                                        </h6>
+                                    <div class="col-md-12 col-sm-12">
+                                    <article class="edgtf-match-status-finished">
+                                        <div class="edgtf-match-item-holder">
+                                            <div class="col-xs-6" style="margin-top: 15px;">
+                                                <div class="col-xs-5 team">
+                                                    <img src="<?=$match->teamS->logo()?>"  class="logo-team" alt="team">
+                                                    <p>
+                                                        <a href="<?=$match->teamS->links()?>">
+                                                            <?=$match->teamS->name?>
+                                                        </a>  
+                                                    </p>                                              
+                                                </div>
+                                                <div class="col-xs-2 vs" >
+                                                        <img src="/images/tournaments/vs_dark.png" alt="match-vs-image">
+                                                </div>
+                                                <div class="col-xs-5 team">
+                                                    <img src="<?=$match->teamF->logo()?>" class="logo-team" alt="team">
+                                                    <p>
+                                                        <a href="<?=$match->teamF->links()?>">
+                                                            <?=$match->teamF->name?>
+                                                        </a> 
+                                                    </p>                                               
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2" style="margin-top: 15px;">
+                                                <p style="margin-top: 20px;text-align: center;font-size: 22px;font-weight: bold;" >
+                                                    <span><?=$match->result1??'--'?></span> : 
+                                                    <span><?=$match->result2??'--'?></span>
+                                                </p>
+                                            </div>
+                                            <div class="col-xs-4" style="margin-top: 15px;">
+                                                <div class="edgtf-match-info">
+                                                    <h5 class="edgtf-match-title">
+                                                        <a href="/tournaments/public/<?=$match->tournament->id?>">
+                                                            <?=$match->tournament->name?>
+                                                        </a>
+                                                    </h5>
+                                                    <div class="edgtf-match-date">
+                                                        <span class="edgtf-match-date">
+                                                            <?=date('dS F Y, H:i', strtotime($match->date))?>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-4" >
-                                                <div class="edgtf-match-vs-image">
-                                                    <img src="http://playerx.edge-themes.com/wp-content/plugins/playerx-core/assets/img/vs_finished.png" alt="edgtf-match-vs-image">
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <div class="edgtf-match-single-team">
-                                                    <div class="edgtf-match-item-image-holder">
-                                                        <img src="<?=$match->teamF->logo()?>" alt="Kaiju Red">
-                                                    </div>
-                                                    <div class="edgtf-match-item-text-holder">
-                                                        <h6 class="edgtf-match-team-title">
-                                                            <a href="<?=$match->teamF->links()?>">
-                                                                <?=$match->teamF->name?>
-                                                            </a>
-                                                        </h6>
-                                                    </div>
-                                                </div>  
-                                            </div>
                                         </div>
-                                        <div class="col-md-3" style="margin-top: 15px;">
-                                            <p style="margin-top: 40px;text-align: center;font-size: 22px;font-weight: bold;" >
-                                                <span><?=$match->result1??'--'?></span> : <span><?=$match->result2??'--'?></span>
-                                            </p>
-                                        </div>
-                                        <div class="col-md-4" style="margin-top: 15px;">
-                                            <div class="edgtf-match-info">
-                                                <h5 class="edgtf-match-title">
-                                                    <a href="/tournaments/public/<?=$match->tournament->id?>">
-                                                        <?=$match->tournament->name?>
-                                                    </a>
-                                                </h5>
-                                                <div class="edgtf-match-date">
-                                                    <span class="edgtf-match-date">
-                                                        <?=date('dS F Y, H:i', strtotime($match->date))?>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>  
+                                    </article>  
                                 </div> 
                                 <?php endif; ?>  
                             <?php endforeach; ?> 
@@ -529,10 +495,10 @@
                         
                         <article class="edgtf-match-status-finished">
                             <div class="edgtf-match-item-holder history-conteinr ">
-                                <div class="col-md-8 flex" style="padding-left: 50px;" >
+                                <div class="col-xs-9 flex logo-tor-team"  >
                                     <?= $event->event?>
                                 </div>
-                                <div class="col-md-4 flex" >
+                                <div class="col-xs-3 flex" >
                                     <p style="margin: auto;"  >
                                 <?=date(' d \of F, H:i ',strtotime($event->created_at))?>
                                     </p>

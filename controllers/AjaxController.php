@@ -456,4 +456,31 @@ class AjaxController extends \yii\web\Controller
             return ['sent' => false];
         }
     }
+
+    public function actionGetMessages() 
+    {
+        if(!Yii::$app->user->isGuest) {
+            $user_id = Yii::$app->user->identity->id;
+            $teams = MessageUser::find()
+                ->joinWith('senders')
+                ->where(['type'=> MessageUser::TEAM, 'recipient' => $user_id])
+                ->orderBy(['created_at' => SORT_DESC])
+                ->asArray()->all();
+            $tournaments = MessageUser::find()
+                ->where(['type'=> MessageUser::TOURNAMENT, 'recipient' => $user_id])
+                ->orderBy(['created_at' => SORT_DESC])
+                ->asArray()->all();
+            $matches = MessageUser::find()
+                ->where(['type'=> MessageUser::MATCH, 'recipient' => $user_id])
+                ->orderBy(['created_at' => SORT_DESC])
+                ->asArray()->all();
+            return [
+                'teams' => $teams,
+                'tournaments' => $tournaments,
+                'matches' => $matches,
+            ];
+        } else {
+            return ['guest' => true];
+        }
+    }
 }
