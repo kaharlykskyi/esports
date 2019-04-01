@@ -75,4 +75,16 @@ class TestController extends \yii\web\Controller
         print_r($teams);
         echo "</pre>";exit;
     }
+
+    public function actionMatch()
+    {
+        $match = new ScheduleTeams();
+        $match->tournament_id = 13;
+        $match->team2 = 1;
+        $match->team1 = 2;
+        $match->date = '2018-12-28 14:12:12';
+        $match->tur = 1;
+        var_dump($match->save(false));
+
+    }
 }

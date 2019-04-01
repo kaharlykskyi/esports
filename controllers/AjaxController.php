@@ -368,8 +368,9 @@ class AjaxController extends \yii\web\Controller
 
                     $url = Url::toRoute(['tournaments/invitation','tokin'=> $tokin,
                         'tournament' => $tournament->id, 'team' => $team->id], true);
-                    $a = Html::a($url,$url);
-                    $message = '<p>'.Yii::t('app','The invitation to join the tournament for the team {team} for confirmation or rejection click on the link',['team'=>$team->name]).' 
+                    $a = Html::a('link' ,$url);
+                    $message = '<p>'.Yii::t('app','The invitation to join the tournament for the team {team} for confirmation or rejection click on the ',
+                        ['team'=>$team->name]).' 
                         <br> '.$a.'</p>';
                     $player_id = $team->capitan;
                 }  
@@ -383,19 +384,24 @@ class AjaxController extends \yii\web\Controller
 
                 $url = Url::toRoute(['tournaments/invitation','tokin'=> $tokin,
                     'tournament' => $tournament->id], true);
-                $a = Html::a($url,$url);
-                $message = '<p>'.Yii::t('app','Invitation to enter the tournament for the player {name} to confirm or reject the move click on the link',['name'=>'<b>'.$user->name.'</b>']).' <br> '.$a.'</p>';
+                $a = Html::a('link' ,$url);
+                $message = '<p>'.Yii::t('app','Invitation to enter the tournament for the player {name} to confirm or reject the move click on the ',
+                    ['name'=>'<b>'.$user->name.'</b>']).' <br> '.$a.'</p>';
                 $player_id = $user->id;
             }
             $a = Html::a($url,$url);
             Yii::$app->mailer->compose()
-                ->setFrom([Yii::$app->params['adminEmail'] => Yii::t('app','Invitation to join the tournament ').$tournament->name])
+                ->setFrom([
+                    Yii::$app->params['adminEmail'] => 
+                    Yii::t('app','Invitation to join the tournament ').$tournament->name
+                ])
                 ->setTo([$user->email])
                 ->setSubject(Yii::t('app',"Invitation to join the tournament"))
                 ->setTextBody(Yii::t('app',"Invitation to join the tournament"))
                 ->setHtmlBody($message)
                 ->send();
             (new MessageUser())->writeTitle(Yii::t('app',"Invitation to join the tournament"))
+                ->writeType(MessageUser::TOURNAMENT)
                 ->writeMessage($tournament->user_id,$player_id,$message);   
             return ['sent' => true];
         }
@@ -414,21 +420,6 @@ class AjaxController extends \yii\web\Controller
         }
     }
 
-    public function actionDeleteMessage() 
-    {
-        $post = Yii::$app->request->post();
-        $message = MessageUser::find()
-            ->where(['id'=>$post['id_message'],'recipient'=>Yii::$app->user->identity->id])->one();
-
-        if (!is_object($message)) {
-            return ['sent' => false];
-        }
-        if ($message->delete()) {
-            return ['sent' => true];
-        }
-        return ['sent' => false];
-    }
-
     public function actionCheckNewMessages() 
     {
         if(!Yii::$app->user->isGuest) {
@@ -445,13 +436,17 @@ class AjaxController extends \yii\web\Controller
 
     public function actionViewMessages() 
     {
-        if(!Yii::$app->user->isGuest) {
-            $user_id = Yii::$app->user->identity->id;
-            $int = MessageUser::updateAll(
-                ['view_status' => 1], 
-                ['recipient' => $user_id,'view_status' => null]
-            );
-            return ['sent' => $int];
+        if (!Yii::$app->user->isGuest) {
+            if ($id = Yii::$app->request->post('id')) {
+                $user_id = Yii::$app->user->identity->id;
+                $condition = ['and',
+                    ['recipient' => $user_id],
+                    ['view_status' => null],
+                    ['id' => $id],
+                ];
+                $int = MessageUser::updateAll(['view_status' => 1],$condition);
+                return ['sent' => $int];
+            }
         } else {
             return ['sent' => false];
         }
@@ -459,20 +454,27 @@ class AjaxController extends \yii\web\Controller
 
     public function actionGetMessages() 
     {
-        if(!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
+            
             $user_id = Yii::$app->user->identity->id;
             $teams = MessageUser::find()
                 ->joinWith('senders')
-                ->where(['type'=> MessageUser::TEAM, 'recipient' => $user_id])
-                ->orderBy(['created_at' => SORT_DESC])
-                ->asArray()->all();
+                ->where(['type'=> MessageUser::TEAM, 'recipient' => $user_id]);
             $tournaments = MessageUser::find()
-                ->where(['type'=> MessageUser::TOURNAMENT, 'recipient' => $user_id])
-                ->orderBy(['created_at' => SORT_DESC])
-                ->asArray()->all();
+                ->where(['type'=> MessageUser::TOURNAMENT, 'recipient' => $user_id]);
             $matches = MessageUser::find()
-                ->where(['type'=> MessageUser::MATCH, 'recipient' => $user_id])
-                ->orderBy(['created_at' => SORT_DESC])
+                ->where(['type'=> MessageUser::MATCH, 'recipient' => $user_id]);
+
+            $time = Yii::$app->request->post('time');
+            $teams->andWhere(['>', 'message_user.created_at', $time]);
+            $tournaments->andWhere(['>', 'message_user.created_at', $time]);
+            $matches->andWhere(['>', 'message_user.created_at', $time]);
+            
+            $teams = $teams->orderBy(['message_user.created_at' => SORT_DESC])
+                ->asArray()->all();
+            $tournaments = $tournaments->orderBy(['created_at' => SORT_DESC])
+                ->asArray()->all();
+            $matches = $matches->orderBy(['created_at' => SORT_DESC])
                 ->asArray()->all();
             return [
                 'teams' => $teams,
@@ -482,5 +484,7 @@ class AjaxController extends \yii\web\Controller
         } else {
             return ['guest' => true];
         }
+
+
     }
 }

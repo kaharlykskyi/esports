@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use app\modules\forum\models\SchedulePost;
 use app\models\servises\UserServis;
+use app\models\events\MatchEvent;
 
 class ScheduleTeams extends \yii\db\ActiveRecord
 {
@@ -57,12 +58,13 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         ];
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave ($insert, $changedAttributes)
     {
         if ($insert) {
+            MatchEvent::creationMatch($this);
             $this->tournament->forumText($this);
             if($this->tournament->game->id < 3) {
-               UserServis::scheduleUsers($this,$this->tournament_id); 
+               UserServis::scheduleUsers($this, $this->tournament_id); 
             }     
         } else {
             $this->addMatch();

@@ -311,15 +311,4 @@ class TournamentsController extends \yii\web\Controller
         }
         
     }
-
-    // public function actionTest() 
-    // {
-    //     $model = Tournaments::findOne(7);
-    //     if (!is_object($model)) {
-    //         throw new HttpException(404 ,'Page not found');
-    //     }
-    //    //$model->addCupDuble([1]);
-    //     $this->layout = false;
-    //     return $this->render('cup',compact('model'));
-    // }
 }

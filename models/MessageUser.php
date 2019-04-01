@@ -31,7 +31,7 @@ class MessageUser extends \yii\db\ActiveRecord
         return [
             [['sender', 'recipient', 'type', 'created_at', 'updated_at'], 'integer'],
             [['text','title'], 'string'],
-            [['sender', 'recipient'], 'required'],
+            [['recipient'], 'required'],
             [
                 ['recipient'], 
                 'exist', 'skipOnError' => true, 
@@ -68,12 +68,18 @@ class MessageUser extends \yii\db\ActiveRecord
         $this->title = $title;
         return $this;
     }
+
+    public function writeType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
     
     public function writeMessage($sender,$recipient,$text)
     {
         $this->sender = $sender;
         $this->recipient = $recipient;
         $this->text = $text;
-        $this->save();
+        return $this->save();
     }
 }

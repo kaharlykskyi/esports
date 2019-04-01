@@ -73,11 +73,6 @@
                         <?=Yii::t('app','Profile')?>
                     </a>
                 </li>
-                <li id="xprofile-personal-li" aria-selected="false" >
-                    <a id="user-xprofile" data-toggle="tab" href="#activity">
-                        <?=Yii::t('app','Activity')?>
-                    </a>
-                </li>
                 <li id="blogs-personal-li" aria-selected="false" >
                     <a id="user-blogs" data-toggle="tab" href="#teams">
                         <?=Yii::t('app','My teams')?> 
@@ -164,125 +159,6 @@
                                 </tr>        
                             </tbody>
                         </table>
-                    </div>
-                </div>
-                <div id="activity" class="tab-pane fade">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <ul class="tab-filters">
-                                <li class="active" >
-                                    <a href="#notifications">
-                                        <?=Yii::t('app','Notifications')?>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#matches"><?=Yii::t('app','Matches')?></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tab-content">
-                        <div id="notifications" class="tab-pane fade in active">
-                            <div class="wrap-lists"> 
-                                <?php foreach($teams_m as $team) : ?>  
-                                    <div class="lists">
-                                        <div class="youplay-timeline-icon "> 
-                                            <a href="<?=$team->links()?>">
-                                                <img src="<?=$team['logo']?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
-                                            </a>
-                                        </div>
-
-                                        <div class="wrap">     
-                                            <h3 class="activity-header">
-                                                <p>
-                                                    <?=Yii::t('app','The')?> <a href="<?=$team->links()?>">
-                                                        <?=$team['name']?>
-                                                    </a> <?=Yii::t('app','team invites you to become part of its players.')?>
-                                                </p>
-                                            </h3>
-                                            <div class="clearfix"></div>
-                                            <div class="activity-inner">
-                                                <p>
-                                                    <?=Yii::t('app','To accept or decline the invitation click the link below:')?></br>
-                                                    <a href="<?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>" >
-                                                     <?= Url::to(['profile/confirmation-team','confirmation_tokin' => $team['status_tokin']], true)?>
-                                                    </a></br>
-                                                    <?=Yii::t('app','Finally, if you want more information, contact')?> 
-                                                    <?=$team['name']?> 
-                                                    <?=Yii::t('app','through their website, or through their captain, by email ')?>
-                                                     
-                                                    <a href="<?= $team['u_email']?>">
-                                                        <?= $team['u_email']?>
-                                                    </a>.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                                <?php foreach($user->messages as $message) : ?>
-                                    
-                                    <div class="lists">
-                                        <!-- <div class="closes" data-delete="<?//$message->id?>" ></div> -->
-                                        <div class="youplay-timeline-icon "> 
-                                            <a href="/user/public/<?=$message->senders->id?>">
-                                                <img src="<?=$message->senders->avatar()?>" class="avatar user-1-avatar avatar-80 photo" width="80" height="80" alt="Team logo"> 
-                                            </a>
-                                        </div>
-
-                                        <div class="wrap">     
-                                            <h3 class="activity-header">
-                                                <p>
-                                                    <?=$message->title?>
-                                                    <p class="view youplay-timeline-date pt-5 bp-tooltip"  style="color: ">
-                                                        <span class="time-since" style="color: #1976d2;" >
-                                                            created <?=  date(' d \of F, Y ',$message->created_at) ?>
-                                                        </span>
-                                                    </p>
-                                                </p>
-                                            </h3>
-                                            <div class="activity-inner">
-                                                <div>
-                                                    <?=$message->text?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                        <div id="matches" class="tab-pane fade in">
-                            <?php foreach ($tournaments as $tournament): ?>
-                                <?php if($tournament->user_id == $user->id): ?>
-                                <?php $matches = $tournament->getMatchesResult(); ?>
-                                <?php foreach ($matches as $match): ?>
-                                    <div class="lists" style="margin-bottom: 25px;">   
-                                        <h3 class="activity-header">
-                                                <p>
-                                                    <?=Yii::t('app','match between teams')?> 
-                                                <a href="<?=$match->teamS->links()?>"><?=$match->teamS->name?></a>
-                                                    <?=Yii::t('app','and')?>
-                                                <a href="<?=$match->teamF->links()?>"><?=$match->teamF->name?></a> 
-                                                <p class="view youplay-timeline-date pt-5 bp-tooltip"  style="color: ">
-                                                    <span class="time-since" style="color: #1976d2;" >
-                                                    <?=Yii::t('app','date of the match')?> 
-                                                    <?=date(' d \of F, Y ',strtotime($match->date)) ?>
-                                                    </span>
-                                                </p>
-                                            </p>
-                                        </h3>
-                                        <div class="activity-inner">
-                                            <div>
-                                                <?=Yii::t('app','To set the match results follow the link')?> 
-                                                <a href="/matches/public/<?=$match->id?>">
-                                                    /matches/public/<?=$match->id?>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                            <?php endforeach; ?>
-                        </div>
                     </div>
                 </div>
                 <div id="teams" class="tab-pane fade">
@@ -487,16 +363,25 @@
                         <?php endif; ?>
                     </div>
                     <div class="row">
+                        <table class="table-tourn">
+                            <tbody>
                         <?php foreach ($tournaments as $tournament):?>
-                            <div class="col-md-12 tournament_list">
-                                <div class="col-sm-5">
-                                    <p class="name"> <a href="/tournaments/public/<?=$tournament->id?>">
-                                        <?=$tournament->name?></a>
+                            <tr>
+                            <!-- <div class="col-md-12 tournament_list"> -->
+                                <td> <img src="<?=$tournament->getLogo()?>" alt="logo"></td>
+                                <td>
+                                    <p class="name"> 
+                                        <a href="/tournaments/public/<?=$tournament->id?>">
+                                            <?=$tournament->name?>
+                                        </a>
                                     </p>
-                                    <p><?=Yii::t('app','Participants')?>: 
+                                    <p>
+                                        <?=Yii::t('app','Participants')?>: 
                                         <span><?=count($tournament->getPlayers())?></span>
                                     </p>
-                                    <p><?=Yii::t('app','Game')?>: <span><?=$tournament->game->name?></span></p>
+                                    <p>
+                                        <?=Yii::t('app','Game')?>: <span><?=$tournament->game->name?></span>
+                                    </p>
                                     <p>Format:
                                         <span>
                                             <?php
@@ -515,28 +400,34 @@
                                                         break;
                                                     case 5:
                                                         echo Yii::t('app','League (Group + Playoff)');
-                                                        break;           
+                                                        break;  
+                                                    case 5:
+                                                        echo Yii::t('app','Swiss');
+                                                        break;        
                                                 }
                                             ?>
                                         </span>
                                     </p>
-                                </div>
-                                <div class="col-sm-7 content_btn">
+                                </td>
+                                <td >
                                     <p>
                                         <?php if($user->id == $tournament->user_id): ?>
                                         <a class="btn edit-team" href="/tournaments/public/<?=$tournament->id?>#manage_tournament">
                                             <?=Yii::t('app','Manage')?>
                                         </a>
-                                    <?php endif; ?>
+                                        <?php endif; ?>
                                     </p>
                                     <p>
                                         <a class="btn edit-team" href="/tournaments/public/<?=$tournament->id?>">
                                             <?=Yii::t('app','View')?>
                                         </a>
                                     </p>
-                                </div>            
-                            </div>
+                                </td>            
+                            
+                            </tr>
                         <?php endforeach; ?>
+                        </tbody>
+                        </table>
                     </div>
                 </div>
                 <div id="panel4" class="tab-pane fade">

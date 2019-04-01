@@ -373,6 +373,10 @@ input:focus[type='email'], input:focus[type='password'],
 
 }
 
+.edgtf-tabs.edgtf-tabs-standard.notification .edgtf-tabs-nav li a:focus {
+    outline: none;
+}
+
 .edgtf-side-menu .edgtf-side-area-inner {
     height: 100%;
     width: 100%;
@@ -435,3 +439,50 @@ input:focus[type='email'], input:focus[type='password'],
     text-transform: uppercase;
     font-weight: bold;
 }
+/*//=====================================noty============================================//*/
+
+.noty_body .info .name{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #03427f;
+
+}
+
+.noty_body .info div,.noty_body .info p,.noty_body .info span{
+    color:#0a0808;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.noty_body .info a:hover {
+    color: #ff0e1f;
+}
+
+/*//=====================================profile - ============================================//*/
+.table-tourn td img {
+    border-radius: 5px;
+}
+
+.table-tourn td {
+    vertical-align: middle;
+    padding: 8px;
+}
+
+.table-tourn p {
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+.table-tourn .btn{
+    padding: 5px;
+    font-size: 12px;
+}
+
+.table-tourn .name{
+    color: #1f7ad3;
+    font-weight: bold;
+}
+
+

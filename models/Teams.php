@@ -218,14 +218,15 @@ class Teams extends \yii\db\ActiveRecord
         if ($tournament_team->save()) {
             if(($tournament->game_id==1)||($tournament->game_id==2)) {
                 (new UsetTeamTournament)->seveMembersTournament([$user->id],$tournament,$model,false);
-                $url ='<a href="'.Url::toRoute(['api-string','id' => $tournament->id], true).'">'.Url::toRoute(['api-string','id' => $tournament->id], true).'</a>' ;
+                $url ='<a href="'.Url::toRoute(['api-string','id' => $tournament->id], true).'">link</a>' ;
                 $text_meesage = "<p> ".Yii::t('app','To participate in the tournament, enter the data')." {$url} </p>";
             } else {
-                $text_meesage = "<p> ".Yii::t('app','You took part in the tournament')." <a  href='/tournaments/public/{$tournament->id}' >{$tournament->name}</a> </p>";
+                $text_meesage = "<p> ".Yii::t('app','You took part in the tournament')." <a  href='/tournaments/public/{$tournament->id}' >link</a> </p>";
             }
 
             $message_config = new MessageUser();
             $message_config->writeTitle(Yii::t('app','You are participating in a tournament.'))
+                ->writeType(MessageUser::TOURNAMENT)
                 ->writeMessage($tournament->user_id,$user->id,$text_meesage);
         } else {
             return false;

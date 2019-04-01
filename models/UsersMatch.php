@@ -18,7 +18,8 @@ class UsersMatch extends \yii\db\ActiveRecord
         return [
             [
                 ['user1', 'user2', 'match', 
-                    'results1', 'results2', 'tournament_id', 'round','state'
+                    'results1', 'results2', 
+                    'tournament_id', 'round','state'
                 ], 'integer'
             ],
             [['match'], 'required'],

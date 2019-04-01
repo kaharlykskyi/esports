@@ -23,6 +23,8 @@ class AppAsset extends AssetBundle
         'css/site.css',
         'css/search-bar.css',
         'bracket/jquery.bracket.min.css',
+        'js/profile/noty/noty.css',
+        'js/profile/noty/relax.css'
 
     ];
     public $js = [
@@ -79,23 +81,20 @@ class AppAsset extends AssetBundle
         'js/video_slider.js',
         'js/footer_slides.js',
         'js/player_test.js',
+        'js/profile/noty/noty.min.js',
         'js/main.js',
         'dropify/dist/js/dropify.js',
         'js/search-bar.js',
         'js/message.js',
-        // them player
-        // 'js/them_player/modules/plugins/jquery.appear.js',
-        // 'js/them_player/modules/plugins/modernizr.min.js',
-        'js/them_player/modules/plugins/jquery.hoverIntent.min.js',
-        // 'js/them_player/modules/plugins/jquery.plugin.js',
 
-         'js/them_player/modules/plugins/jquery.waypoints.min.js',
-        // 'js/them_player/modules/plugins/fluidvids.min.js',
+        
+        'js/them_player/modules/plugins/jquery.hoverIntent.min.js',
+        'js/them_player/modules/plugins/jquery.waypoints.min.js',
         'js/them_player/modules/plugins/perfect-scrollbar.jquery.min.js',
         'js/them_player/modules/plugins/jquery.waitforimages.js',
         'js/them_player/modules/plugins/jquery.prettyPhoto.js',
         'js/them_player/modules.js',
-        //'js/them_player/modules/theme-modules/theme-modules-js.js',
+        
 
 
     ];
