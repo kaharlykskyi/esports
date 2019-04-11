@@ -69,6 +69,8 @@ class TournamentsController extends \yii\web\Controller
                 $post = Yii::$app->request->post();
                 if (!empty($post['Data'])) {
                     $model->data = json_encode($post['Data']);
+                } else {
+                    $model->data = "";
                 }
                     
                 if($model->save()) {                    
@@ -99,13 +101,13 @@ class TournamentsController extends \yii\web\Controller
                     if(!empty($post['stream_chanal'])) {
                        $i = count($post['stream_chanal']);
         
-                       for ($a=0; $a < $i; $a++) { 
+                        for ($a=0; $a < $i; $a++) { 
                             $stream = new Stream();
                             $stream->tournament_id = $model->id;
                             $stream->stream_chanal = $post['stream_chanal'][$a];
                             $stream->stream_url = $post['stream_url'][$a];
                             $stream->save();
-                       }
+                        }
                     } 
     				return $this->redirect('/tournaments/public/'.$model->id.'#manage_tournament');
     			}
@@ -221,7 +223,7 @@ class TournamentsController extends \yii\web\Controller
         
     }
 
-    public function actionAddSwiss($id)
+    public function actionStart($id)
     {
         $model = Tournaments::findOne($id);
         $user = Yii::$app->user->identity;
@@ -232,19 +234,19 @@ class TournamentsController extends \yii\web\Controller
         return $this->redirect("/tournaments/public/{$model->id}#tournamentgrid");
     }
 
-    public function actionAddLeague($id)
-    {
-        $model = Tournaments::findOne($id);
-        if (!is_object($model)) {
-           throw new HttpException(404 ,'Page not found');
-        }
-        $model->state = 1;
-        if(strtotime($model->start_date) < strtotime('+30 minute',time())){
-            $model->start_date = date("Y-m-d H:i",strtotime('+50 minute',time()));
-        }
-        $model->createLeague();
-        return $this->redirect('/tournaments/public/'.$id.'#matches');
-    }
+    // public function actionAddLeague($id)
+    // {
+    //     $model = Tournaments::findOne($id);
+    //     if (!is_object($model)) {
+    //        throw new HttpException(404 ,'Page not found');
+    //     }
+    //     $model->state = 1;
+    //     if(strtotime($model->start_date) < strtotime('+30 minute',time())){
+    //         $model->start_date = date("Y-m-d H:i",strtotime('+50 minute',time()));
+    //     }
+    //     $model->createLeague();
+    //     return $this->redirect('/tournaments/public/'.$id.'#matches');
+    // }
 
     private function getTeams($id)
     {
@@ -260,14 +262,19 @@ class TournamentsController extends \yii\web\Controller
         return compact('players','model');
     }
 
-    public function actionCup($id) 
+    public function actionResults($id,$full = false) //cup
     {
         $model = Tournaments::findOne($id);
-        $this->layout = false;//'cup.php';
-        if (!is_object($model)) {
-           throw new HttpException(404 ,'Page not found');
+            if (!is_object($model)) {
+            throw new HttpException(404 ,'Page not found');
         }
-        return $this->render('cup',compact('model'));
+
+        if (!$full) {
+            $this->layout = 'result-tournament';
+            return $this->render('result',compact('model','full'));
+        }
+        return $this->render('result-full',compact('model','full'));
+        
     }
 
     public function actionApiString($id) 

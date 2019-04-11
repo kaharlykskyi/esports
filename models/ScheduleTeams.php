@@ -155,10 +155,12 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         } elseif ($this->format == 2) {
             $this->addMatchDuble();
         } elseif ($this->format == 3) {
-            $l;
+           $this->tournament->system->addMatch($this);
         } elseif ($this->format == 6) {
             $this->tournament->system->addMatch($this);
-        }       
+        } elseif ($this->format == 6) {
+            $this->tournament->system->addMatch($this);
+        }      
     }
 
     private function addMatchSingle()

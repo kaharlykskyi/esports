@@ -1,134 +1,5 @@
 $(document).ready(function() {
 
-    // $('a[href="#activity"]').on('shown.bs.tab', function (e) {
-    //     viewMessage();
-    // });
-
-    // $('.block-add-message').on('click',function(e){
-    //     e.preventDefault();
-    //     if( window.location.pathname == '/profile'){
-    //         $('a[href="#activity"]').tab('show');
-    //     } else {
-    //         window.location = '/profile#activity';
-    //     }
-
-    // });
-
-    // httpMessage();
-    
-    // //setInterval(httpMessage, 15000);
-
-
-
-    // function viewMessage () {
-    //     let fdata = FSsrf();
-    //     let statechange = function() {
-    //         if(this.readyState == 4) {
-    //             if(this.status == 200) {
-    //                 let type = this.getResponseHeader('Content-Type');
-    //                 if (type.indexOf('application/json') + 1) {
-    //                     let response = JSON.parse(this.responseText);
-    //                     if(response.sent !== false ){
-    //                         $('.block-add-message').empty();
-    //                     }
-    //                 }
-    //             } else {
-    //                 console.log( this.status + ': ' + this.statusText ); 
-    //             }
-    //         }
-    //     };
-    //     const xml = new XMLHttpRequest();
-    //     xml.open('POST','/ajax/view-messages',true);
-    //     xml.onreadystatechange = statechange;
-    //     xml.send(fdata); 
-    // }
-
-    // function httpMessage () {
-    //     let fdata = FSsrf();
-    //     let statechange = function() {
-    //         if(this.readyState == 4) {
-    //             if(this.status == 200) {
-    //                 let type = this.getResponseHeader('Content-Type');
-    //                 if (type.indexOf('application/json') + 1) {
-    //                     let response = JSON.parse(this.responseText);
-    //                     if(response.sent !== false && Array.isArray(response)){
-    //                         let count = response.length;
-    //                         if(count > 0){
-    //                             show_notification(count);
-    //                         }
-    //                     }
-    //                 }
-    //             } else {
-    //                 console.log( this.status + ': ' + this.statusText ); 
-    //             }
-    //         }
-    //     };
-    //     const xml = new XMLHttpRequest();
-    //     xml.open('POST','/ajax/check-new-messages',true);
-    //     xml.onreadystatechange = statechange;
-    //     xml.send(fdata); 
-    // }
-
-    // function show_notification(count) {
-    //     let i_text = $(`<i class="badge">${count}</i>`);
-    //     $('.block-add-message').empty();
-    //     $('.block-add-message').append(i_text);
-    // }
-       // function trainingPushMs(objMessage) {
-    //     let arryAll = [];
-    //     if (typeof objMessage === 'object') {
-    //         if(Array.isArray(objMessage.teams)) {
-    //             arryAll = arryAll.concat(objMessage.teams);
-    //         }
-
-    //         if(Array.isArray(objMessage.tournaments)) {
-    //             arryAll = arryAll.concat(objMessage.tournaments);
-    //         }
-
-    //         if(Array.isArray(objMessage.matches)) {
-    //             arryAll = arryAll.concat(objMessage.matches);
-    //         }
-    //     }
-    //     let ids = [];
-    //     $.map(arryAll,function (el, index) {
-    //         ids.push(el.id);
-    //         let html = `<div class="info">
-    //                     <div class="name">${el.title}</div>
-    //                     <div>${el.text}</div>
-    //                     </div>`;
-    //         sentPushMs(html);
-    //     });
-
-    //     if ( ids.length > 0 ) {
-    //         viewMessage (ids);
-    //     }
-
-    // }
-
-        // function reviewtMessage () {
-    //     let fdata = FSsrf();
-    //     fdata.append('time', window.u3created_message);
-    //     let statechange = function() {
-    //         if(this.readyState == 4) {
-    //             if(this.status == 200) {
-    //                 let type = this.getResponseHeader('Content-Type');
-    //                 if (type.indexOf('application/json') + 1) {
-    //                     let response = JSON.parse(this.responseText);
-    //                     wriretMessage (response,true);
-    //                     trainingPushMs(response);
-    //                 }
-    //             } else {
-    //                 console.log( this.status + ': ' + this.statusText ); 
-    //             }
-    //         }
-    //     };
-    //     const xml = new XMLHttpRequest();
-    //     xml.open('POST','/ajax/get-messages',true);
-    //     xml.onreadystatechange = statechange;
-    //     xml.send(fdata); 
-    // }
-
-///==============================================================================================//
     window.u3created_message = 0;
 
     function FSsrf () {
@@ -149,7 +20,6 @@ $(document).ready(function() {
                     if (type.indexOf('application/json') + 1) {
                         let response = JSON.parse(this.responseText);
                         wriretMessage (response);
-                       //console.log(response);
                     }
                 } else {
                     console.log( this.status + ': ' + this.statusText ); 
@@ -246,10 +116,10 @@ $(document).ready(function() {
             
             if (window.u3created_message) {
                 content.prepend(html);
-                console.log('pre');
+                
             } else {
                 content.append(html);
-                console.log('append');
+               
             }
 
             if(!team.view_status) {
@@ -278,8 +148,6 @@ $(document).ready(function() {
                 content.append(html);
             }
             
-            console.log('l');
-
             if(!tournament.view_status) {
                 let html = `<div class="info">
                          <div class="name">${tournament.title}</div>

@@ -219,38 +219,34 @@ $(document).ready(function () {
 });
 
 
-// $(document).ready(function () {
+$(document).ready(function () {
 
-//     $('.closes').on('click',function(){
-//        let id_message = $(this).attr('data-delete');
-//        deleteMessage(id_message,$(this));
-//     });
+    
+    $.pjax.reload({container: '#api-game'});
+    
+    $(document).on('pjax:success', function(e) {
+        $(e.target).find('.basic').fancySelect();
+    });
 
-//     function FSsrf () {
-//         const fdata = new FormData();
-//         const csrfParam = $('meta[name="csrf-param"]').attr("content");
-//         const csrfToken = $('meta[name="csrf-token"]').attr("content");
-//         fdata.append(csrfParam,csrfToken); 
-//         return fdata;
-//     }
+    $(document).on('pjax:send', function(e) {
+        $(e.target).find('.btn-send-pajax').addClass('load');
+    });
+    
+    //referal 
 
-//     function deleteMessage(data,content) {
+    $('.btn.refiral-link').on('click',function(e){
+        
+        let range = document.createRange();
+        range.selectNode(document.getElementById('referal')); 
+        window.getSelection().addRange(range); 
+        try { 
+            document.execCommand('copy'); 
+        } catch(err) { 
+            console.log('Can`t copy, boss'); 
+        } 
+        window.getSelection().removeAllRanges();
 
-//         const fdata = FSsrf();
-//         fdata.append('id_message',data);
-//         let statechange = function() {
-//             if(this.readyState == 4) {
-//                 let e = JSON.parse(this.responseText);
-//                 if (e.sent) {
-//                     content.parent(".lists").slideUp();
-//                 }
-//             }
-//         };
-//         const xml = new XMLHttpRequest();
-//         xml.onreadystatechange = statechange;
-//         xml.open('POST','/ajax/delete-message',true);
-//         xml.send(fdata); 
-//     }
+    });
 
-// });
+});
 

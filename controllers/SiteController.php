@@ -121,6 +121,25 @@ class SiteController extends Controller
             ->redirect(Yii::$app->request->referrer) : $this->goHome();
     }
 
+    public function actionReferal ($id)
+    {
+        $user = User::findOne($id);
+        if (is_object($user) && Yii::$app->user->isGuest) {
+            $cookies = Yii::$app->request->cookies;
+
+            if ( !$cookies->has('refiral') ) {
+                $cookies = Yii::$app->response->cookies;
+                $cookies->add(new \yii\web\Cookie([
+                    'name' => 'refiral',
+                    'value' => 'refiral',
+                    'expire' => time() + 86400 * 365,
+                ]));
+               $user->addBall(9);
+            }
+        }
+        return $this->redirect(['index']);
+    }
+
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {

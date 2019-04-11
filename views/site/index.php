@@ -7,6 +7,7 @@ use yii\widgets\LinkPager;
 use app\models\servises\FlagServis;
 use yii\widgets\Pjax;
 
+
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
     $this->title = mb_convert_case($alias, MB_CASE_TITLE);
     $i_count = 0;
@@ -125,7 +126,7 @@ use yii\widgets\Pjax;
 
 <div class="main-sponsor-slider-background">
     <div class="container">
-        <?php Pjax::begin(); ?>
+        <?php Pjax::begin(['enablePushState' => false]); ?>
         <?php foreach ($models as $model): ?>
         <?php if(!$i_count): ?>
             <div class="row">
@@ -186,7 +187,7 @@ use yii\widgets\Pjax;
     <div class="container">
         <h3 style="text-align: center;" ><?=Yii::t('app', 'users statistics')?></h3>
         <div class="box-body" id='onloads' >
-            <?php Pjax::begin(); ?>
+            <?php Pjax::begin(['enablePushState' => false]); ?>
                 <div class="blok-headre-table">
                     <?php if(!isset($params['sort'])): ?>
                          <div class="lenk-sot active" style="margin-left: -10px; ">

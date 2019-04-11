@@ -15,6 +15,7 @@ class UserPoint extends \yii\db\ActiveRecord
         ['Adding social networks',20],
         ['Winning several matches in a row',20],
         ['Win several tournaments in turn',200],
+        ['Follow your referral link',1]
     ];
 
     public static function tableName()

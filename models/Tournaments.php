@@ -8,6 +8,8 @@ use yii\behaviors\TimestampBehavior;
 use yii\web\UploadedFile;
 use app\models\servises\FairPlay;
 use app\models\systems\SwissSystem;
+use app\models\systems\LeagueSystem;
+use app\models\systems\LeaguePSystem;
 
 
 class Tournaments extends \yii\db\ActiveRecord
@@ -116,6 +118,12 @@ class Tournaments extends \yii\db\ActiveRecord
     {
         parent::afterFind();
         switch( $this->format ) {
+            case self::LEAGUE:
+                $this->system = new LeagueSystem($this);
+                break;
+        case self::LEAGUE_P:
+                $this->system = new LeaguePSystem($this);
+                break;
             case self::SWISS:
                 $this->system = new SwissSystem($this);
                 break;
@@ -194,17 +202,19 @@ class Tournaments extends \yii\db\ActiveRecord
                             . Html::renderSelectOptions($value, $options) .'</select></div></div>';
 
                     } elseif ($filed->type === 'checkbox') {
-                        $options = '';
-                        $i = 0;
-                        foreach($filed->options as $option) {
-                            $i++;
-                            $checked = $value && in_array($option, $value);
-                            $options .= Html::checkbox("Data[{$filed->name}][]", $checked, ['id' => $filed->name.$i,'value' => $option ,'class' =>'filter-check'])
-                            .'<label for="'.$filed->name.$i.'">
-                                <span style="font-size: 18px;position: relative;bottom: 5px;">'.$filed->title.'</span>
-                            </label>';
-                        }
-                        $result .= '<div class="checkbox conteiner_filed" >'. $options .'</div>';
+                        $options = "<input type='hidden' name='Data[{$filed->name}]' value='0'>";
+                        $options .= Html::checkbox(
+                            "Data[{$filed->name}]", 
+                            !empty($value), 
+                            [
+                                'id' => $filed->name,
+                                'value' => '1' ,
+                                'class' =>'filter-check '.$class
+                        ]);
+                        $options .= "<label for='{$filed->name}'>
+                               <span style='font-size: 18px;position: relative;bottom: 5px;'>{$filed->title}</span>
+                               </label>";
+                        $result .= "<div class='checkbox conteiner_filed' >{$options}'</div>";
                     }  elseif ($filed->type === 'input') {
                         $result .= '<div class="conteiner_filed '.$class.'" ><label class="col-sm-12" >'
                         . $filed->title .'</label>'. Html::input('text', "Data[{$filed->name}]",$value, 
@@ -269,7 +279,7 @@ class Tournaments extends \yii\db\ActiveRecord
     public function getPlayer ($id) 
     {
         return UsetTeamTournament::find()->with('team','user')
-            ->where(['user_id'=>$team->id,'tournament_id' => $this->id])->one();
+            ->where(['user_id'=>$id,'tournament_id' => $this->id])->one();
     }
 
     public function getMatchesResult()

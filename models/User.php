@@ -179,6 +179,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasOne(Games::className(), ['id' => 'favorite_game']);
     }
 
+    public function getUserGameApi()
+    {
+        return $this->hasOne(UserGameApi::className(), ['user_id' => 'id']);
+    }
+
     public function getSocial_links() 
     {
         return $this->hasMany(SocialLinks::className(), ['user_id' => 'id']);
@@ -301,4 +306,14 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         }
         return false;
     }
+
+    public function ratingOwervatch ()
+    {
+        $usapi = $this->userGameApi;
+        if (!is_object($usapi)) {
+            $usapi = new UserGameApi();
+        }
+        return $usapi->rating;
+    }
+
 }

@@ -283,16 +283,23 @@ class AjaxController extends \yii\web\Controller
         return $arry_search;
     }
 
-    public function actionGetTeamsPlayers() {
-
+    public function actionGetTeamsPlayers() 
+    {       
         $post = Yii::$app->request->post();
-        $tournament = Tournaments::findOne($post['tournament_id']);
-        $id_game  = $tournament->game_id;
-        $flag = (int)$post['flag'];
-        $teams = [];
-        $users = [];
 
-        if((Tournaments::USERS == $flag) || (Tournaments::MIXED == $flag)) {
+        if(!isset($post['search']) || empty($post['tournament_id'])) {
+            $response = ['not' => true];
+        }
+
+        $tournament = Tournaments::findOne($post['tournament_id']);
+
+        if(!is_object($tournament) || !$tournament->flag) {
+            $response = ['not' => true];
+        }
+
+        $data = json_decode($tournament->data, true);//ratin_overwatch
+
+        if((Tournaments::USERS == $tournament->flag) || (Tournaments::MIXED == $tournament->flag)) {
             $users_in_teams = (new \yii\db\Query())
                 ->select(['users.id'])->from('users')
                 ->innerJoin('user_team', '`user_team`.`id_user` = `users`.`id`')
@@ -313,40 +320,50 @@ class AjaxController extends \yii\web\Controller
             $users = $users_qery1->union($users_qery2)->limit(25)->orderBy(['users.name' => SORT_ASC])->all();
         } 
 
-        if((Tournaments::TEAMS == $flag) || (Tournaments::MIXED == $flag)) {
+        if((Tournaments::TEAMS == $tournament->flag) || (Tournaments::MIXED == $tournament->flag)) {
+            if(!empty($data['ratin_overwatch'])) {
+                $sql_user_team = "(select count(*) from user_team
+                       INNER JOIN users ON user_team.id_user = users.id
+                       INNER JOIN user_game_api ON users.id = user_game_api.user_id
+                       where id_team = teams.id 
+                       and user_game_api.rating < {$data['ratin_overwatch']}
+                       and (users.ban_date is NULL or users.ban_date < CURDATE()) 
+                       and users.fair_play > 79 
+                       and user_team.status = 2 )";   
+            } else {
+                $sql_user_team = "(select count(*) from user_team
+                       INNER JOIN users ON user_team.id_user = users.id
+                       where id_team = teams.id 
+                       and (users.ban_date is NULL or users.ban_date < CURDATE()) 
+                       and users.fair_play > 79 
+                       and user_team.status = 2 )";     
+            }
+
             $teams = (new \yii\db\Query())->select([
                 'teams.id','teams.name',
                 'games.name as g_name',
                 'teams.logo','teams.capitan',
-                '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) as c_user'
-            ])->from('teams')
-            ->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
+                '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' ) 
+                as c_user'
+            ])->leftJoin('games', '`games`.`id` = `teams`.`game_id`')
             ->leftJoin('tournament_team', '`tournament_team`.`team_id` = `teams`.`id`')
-            ->where(['games.id'=> $id_game])
-            ->andWhere(['>=',
-                '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' )',
-                $tournament->max_players
-            ])
-            ->andWhere(['LIKE', 'teams.name', $post['search']])
-            ->andWhere(['!=', 'tournament_team.tournament_id', $tournament->id])
-            ->orWhere(['tournament_team.status' => null])
-            ->andWhere(['LIKE', 'teams.name', $post['search']])
-            ->andWhere(['games.id'=> $id_game])
-            ->andWhere(['>=',
-                '(select count(*) from user_team where id_team = teams.id and status = '.UserTeam::ACCEPTED.' )',
-                $tournament->max_players
-            ])
-            ->groupBy(['teams.id'])->limit(25)->all();
-        } 
+            ->from('teams')->andFilterWhere([ 'and',
+                ['LIKE', 'teams.name', $post['search']],
+                ['teams.game_id' => $tournament->game_id],
+                ['>=', $sql_user_team, $tournament->max_players],
+            ])->andFilterWhere([ 'or',
+                ['!=', 'tournament_team.tournament_id', $tournament->id],
+                ['is', 'tournament_team.status' , new \yii\db\Expression('null')],
+            ])->groupBy(['teams.id'])->limit(25)->all();
+        }
        
-        $response['users'] = $users;
-        $response['teams'] = $teams;
+        $response['users'] = $users??[];
+        $response['teams'] = $teams??[];
 
         if (empty($response['teams']) && empty($response['users'])) {
             $response = ['not' => true];
         }
         return $response;
-
     }
 
     public function actionInviteTournament () {

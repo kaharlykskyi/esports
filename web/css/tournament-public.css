@@ -827,3 +827,10 @@ div.jQBracket .team.lose div.score::after {
     font-size: 13px;
 }
 /*////////////////////end-matchess/////////////////////////*/
+.btn-link-buf{
+    padding: 5px 20px;
+    font-size: 12px;
+    text-transform: unset;
+    margin-left: 25px;
+
+}

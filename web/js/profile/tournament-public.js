@@ -146,10 +146,6 @@ $(document).ready(function(){
         $('.castom_seting').append(html);
     }
 
-
-///{"name":"dungeon","title":"Dungeon","class":"dungeon","type":"select","options":["Freehold","Waycrest Manor","Shrine of the Storm","Temple of Sethraliss","Atal'Dazar","Kings'Rest","Tol Dagor","Siege of Boralus","The Underrot"]}
-
-
 });
 
 
@@ -348,9 +344,55 @@ $(document).ready( function() {
     $('.resurses-btn-show').on('click',function(e){
         e.preventDefault();
         let container = $(this).parent('.resurses-user-container').find('.resurses-user-game');
-        //console.log(container);
         $(this).find('span').toggleClass('glyphicon-chevron-down');
         container.slideToggle();
+    });
+
+});
+
+
+$(document).ready( function() { 
+    $('.overwatch-rating  select option').map(function(index, elem){
+        let srav = 500+$.ratingData;
+        let newelem = $(elem);
+        if (newelem.val() > srav) {
+            newelem.remove();
+        }
+
+    });
+     $('.overwatch-rating  select').trigger('update.fs');
+    //.prop('disabled', true );
+    if ($('.is-overwatch').is(':checked')) {
+        $('.overwatch-rating').slideDown();
+        $('.overwatch-rating  select').prop('disabled', false );
+    } else {
+        $('.overwatch-rating').slideUp();
+        $('.overwatch-rating  select').prop('disabled', true );
+    }
+
+
+    $('.is-overwatch').on('click', function(e) {
+        if ($(e.target).is(':checked')) {
+            $('.overwatch-rating').slideDown();
+            $('.overwatch-rating  select').prop('disabled', false );
+        } else {
+            $('.overwatch-rating').slideUp();
+            $('.overwatch-rating  select').prop('disabled', true );
+        }
+    });
+
+    $('.btn-link-buf').on('click',function(e){
+        
+        let range = document.createRange();
+        range.selectNode(document.getElementById('link-tournaments')); 
+        window.getSelection().addRange(range); 
+        try { 
+            document.execCommand('copy'); 
+        } catch(err) { 
+            console.log('Can`t copy, boss'); 
+        } 
+        window.getSelection().removeAllRanges();
+
     });
 
 });

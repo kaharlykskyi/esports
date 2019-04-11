@@ -101,4 +101,14 @@ trait Schedule {
         return $teams;
     }
 
+
+    public function getSchedules()
+    {
+        $teams = ScheduleTeams::find()
+            ->where(['tournament_id' => $this->id])
+            ->orderBy(['schedule_teams.group' => SORT_ASC,'schedule_teams.tur' => SORT_ASC])
+            ->all();
+        return $teams;
+    }
+
 }

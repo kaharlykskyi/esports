@@ -14,6 +14,9 @@ use app\models\Tournaments;
 use app\models\TournamentTeam;
 use yii\helpers\ArrayHelper;
 use app\models\SocialLinks;
+use app\models\UserGameApi;
+use yii\httpclient\Client;
+use yii\data\Pagination;
 
 class ProfileController extends \yii\web\Controller
 {
@@ -57,21 +60,40 @@ class ProfileController extends \yii\web\Controller
 
     public function actionIndex()
     {   
+        $user = Yii::$app->user->identity;
         $teams = Teams::getTeamsThisUser();
-        $userteams =Yii::$app->user->identity->getUserteams()
-        ->where(['user_team.status'=> UserTeam::ACCEPTED])
-        ->orWhere(['user_team.status'=> UserTeam::DUMMY])->all();
+        $userteams = $user->getUserteams()
+            ->where(['user_team.status' => UserTeam::ACCEPTED])
+            ->orWhere(['user_team.status' => UserTeam::DUMMY])->all();
         $ids = ArrayHelper::getColumn($userteams, 'id_team');
         $tournaments = Tournaments::find()
             ->leftJoin('tournament_team', '`tournament_team`.`tournament_id` = `tournaments`.`id`')
             ->where(['in', 'tournament_team.team_id', $ids])
-            ->andWhere(['tournament_team.status'=>TournamentTeam::ACCEPTED])
-            ->orWhere(['tournaments.user_id'=>Yii::$app->user->identity->id])
-            ->all();
+            ->andWhere(['tournament_team.status' => TournamentTeam::ACCEPTED])
+            ->orWhere(['tournaments.user_id' => $user->id])->groupBy('tournaments.id');
         $games = Games::find()->where(['games.status' => Games::ACTIVE])->all();
         $not_games = $this->games();
         $social_links = new SocialLinks();
-        return $this->render('index',compact('teams','games','not_games','tournaments','social_links'));
+
+        $userGameApi = $user->userGameApi;
+        if (!is_object($userGameApi)) {
+            $userGameApi = new UserGameApi();
+        }
+
+        $countQuery = clone $tournaments;
+        $pages = new Pagination([
+            'totalCount' => $countQuery->count(), 
+            'pageSize' => 7
+        ]);
+
+        $pages->pageSizeParam = false;
+        $tournaments = $tournaments->offset($pages->offset)
+            ->limit($pages->limit)->orderBy("created_at DESC")
+            ->all();
+
+        return $this->render('index',
+            compact('pages', 'teams','games','not_games','tournaments','social_links','userGameApi')
+        );
     }
 
     public function actionCreateTeam()
@@ -263,6 +285,38 @@ class ProfileController extends \yii\web\Controller
         return $this->redirect('/profile#settings');
     }
 
+    public function actionApiGames()
+    {
+        if (Yii::$app->request->isPost) {
+
+            $user = Yii::$app->user->identity;
+            $post = Yii::$app->request->post();
+
+            $usapi = $user->userGameApi;
+            if (!is_object($usapi)) {
+                $usapi = new UserGameApi();
+            }            
+            $usapi->user_id = $user->id;
+            
+            if ($usapi->load($post) && $usapi->validate()) {
+                
+                $url = "https://ow-api.com/v1/stats/{$usapi->platform()}/{$usapi->region()}/{$usapi->battletag}/profile";
+                $client = new Client();
+                $response = $client->createRequest()
+                    ->setMethod('get')->setUrl($url)->send();
+                if ($response->isOk) {
+                    $data = $response->getData();
+                    if (!isset($data['error'])) {
+                        $usapi->rating = $data['rating']??0;
+                        $usapi->data = $response->getContent();
+                        $usapi->save();
+                    }
+                }
+            } 
+        }
+        return $this->actionIndex();
+    }
+
 
     private function games()
     {
@@ -287,3 +341,4 @@ class ProfileController extends \yii\web\Controller
     }
 
 }
+

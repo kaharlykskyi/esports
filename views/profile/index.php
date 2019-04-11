@@ -4,9 +4,12 @@
     use yii\widgets\ActiveForm;
     use yii\helpers\Url;
     use kartik\datetime\DateTimePicker;
+    use yii\widgets\Pjax;
+    use yii\widgets\LinkPager;
 
     $this->registerCssFile('css/profile.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerCssFile(\Yii::$app->request->baseUrl .'/dropify/dist/css/dropify.css');
+    $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/profile.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/update-team.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = 'Profile';
@@ -73,31 +76,30 @@
                         <?=Yii::t('app','Profile')?>
                     </a>
                 </li>
-                <li id="blogs-personal-li" aria-selected="false" >
+                <li  >
                     <a id="user-blogs" data-toggle="tab" href="#teams">
                         <?=Yii::t('app','My teams')?> 
                         <span class="badge mnb-1"><?=$teams['count_teams']?></span></a>
                 </li>
-                <li id="seting-personal-li" aria-selected="false" >
+                <li >
                     <a id="user-seting" data-toggle="tab" href="#tournaments">
                         <?=Yii::t('app','My tournaments')?> 
                         <span class="badge mnb-1">
-                            <?=count($tournaments)?>
+                            <?=$pages->totalCount?>
                         </span>
                     </a>
                 </li>  
-                <li id="friends-personal-li" aria-selected="false" >
-                    <a id="user-friends" data-toggle="tab" href="#panel4">
-                        <?=Yii::t('app','Friends')?>
-                        <span class="badge mnb-1 sr-only">0</span>
-                    </a>
-                </li> 
-                <li id="seting-personal-li" aria-selected="false" >
+                <li  >
                     <a id="user-seting" data-toggle="tab" href="#settings">
                         <?=Yii::t('app','Settings')?>
-                        <span class="badge mnb-1 sr-only">0</span>
+                       
                     </a>
                 </li> 
+                <li >
+                    <a id="game-setings" data-toggle="tab" href="#game-seting">
+                        <?=Yii::t('app','Settings game')?>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -133,6 +135,16 @@
                                     <td><?=Yii::t('app','Birthday') ?></td>
                                     <td><?= $user->birthday ?></td>
                                 </tr>
+                                <tr>
+                                    <td>My referral link</td>
+                                    <td >
+                                        <?php $referal_url = Url::to(['/site/referal','id' => $user->id], true); ?>
+                                        <b id="referal" > <?=$referal_url?> </b>
+                                        <button class="btn refiral-link" data-referal="<?=$referal_url?>" >
+                                            Copy to buffer
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -160,6 +172,8 @@
                             </tbody>
                         </table>
                     </div>
+
+
                 </div>
                 <div id="teams" class="tab-pane fade">
                     <div class="row">
@@ -363,6 +377,7 @@
                         <?php endif; ?>
                     </div>
                     <div class="row">
+                        <?php Pjax::begin(['enablePushState' => false]); ?>
                         <table class="table-tourn">
                             <tbody>
                         <?php foreach ($tournaments as $tournament):?>
@@ -428,23 +443,18 @@
                         <?php endforeach; ?>
                         </tbody>
                         </table>
-                    </div>
-                </div>
-                <div id="panel4" class="tab-pane fade">
-                    <div class="row">
-                        <div class="col-md-5 col-md-offset-7" style="margin-bottom:30px;">
-                            <div class="row">
-                            </div>   
+                         <div class="pagination-wrap">
+                            <?= LinkPager::widget([
+                                'pagination' => $pages,
+                                
+                                'options' => [
+                                    'class' => 'pagination_new',
+                                ],
+                                'prevPageLabel' => '<i class="fa fa-chevron-left" aria-hidden="true"></i>',
+                                'nextPageLabel' => '<i class="fa fa-chevron-right" aria-hidden="true"></i>',
+                            ])?>
                         </div>
-                    </div> 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="members friends">
-                                <div id="" class="alert alert-info">
-                                    <p class="m-0">Sorry, no members were found.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php Pjax::end(); ?>
                     </div>
                 </div>
                 <div id="settings" class="tab-pane fade">
@@ -464,8 +474,16 @@
                             ?>   
                                 <?= $form->field($user, 'name')->textInput(['class' => false])
                                     ->label(Yii::t('app','First name')) ?>
-                                <?=$form->field($user, 'file_logo')->fileInput(['class' => 'dropify','data-height'=>"200",'data-allowed-file-extensions'=>"jpg png jepg gif"])->label(Yii::t('app','Logo')) ?> 
-                                <?=$form->field($user, 'file_background')->fileInput(['class' => 'dropify1','data-height'=>"300",'data-allowed-file-extensions'=>"jpg png jepg gif"])->label(Yii::t('app','Background')) ?> 
+                                <?=$form->field($user, 'file_logo')->fileInput([
+                                    'class' => 'dropify',
+                                    'data-height'=>"200",
+                                    'data-allowed-file-extensions' => "jpg png jepg gif"
+                                ])->label(Yii::t('app','Logo')) ?> 
+                                <?=$form->field($user, 'file_background')->fileInput([
+                                    'class' => 'dropify1',
+                                    'data-height' => "300",
+                                    'data-allowed-file-extensions' => "jpg png jepg gif"
+                                ])->label(Yii::t('app','Background')) ?> 
 
                                 <div style="margin-bottom: 25px;">
                                     <label class="control-label"><?=Yii::t('app','Sex')?></label>
@@ -574,8 +592,10 @@
                                             ->label('Link'); 
                                         ?>
                                     </div>
-                             <div class="col-sm-12"> 
-                                <button type="submit" class="btn submit-btn"><?=Yii::t('app','Save Link')?></button>
+                            <div class="col-sm-12"> 
+                                <button type="submit" class="btn submit-btn">
+                                    <?=Yii::t('app','Save Link')?>
+                                </button>
                             </div>
                             <?php ActiveForm::end(); ?>
                             </div>
@@ -598,6 +618,119 @@
                             </div>   
                         </div>
                     </div>
+                </div>
+                <div id="game-seting" class="tab-pane fade">
+                    <?php Pjax::begin(['enablePushState' => false,'id' =>'api-game']); ?>
+                    <div class="row">
+                        <div class="col-md-12" style="margin-bottom: 40px;" >
+                        <?php if( $userGameApi->is_data() ) :?>
+                            <div class="info-api-user row">
+                                <div class="col-sm-4" style="text-align: center;">
+                                    <p class="icon-api-gamer clearfix" >
+                                        <img src="<?=$userGameApi->data('icon')?>" class="icon" >
+                                        <img src="<?=$userGameApi->data('levelIcon')?>" class="levelIcon">
+                                    <p>
+                                </div> 
+                                <div class="col-sm-8"  style="padding-top: 40px;">
+                                    <h6>summary</h6>
+                                    <div class="summary">
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <div class="item">Name:</div>
+                                            </div>
+                                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                                 <?=$userGameApi->data('name')?>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <div class="item">Endorsement:</div>
+                                            </div>
+                                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                                <?=$userGameApi->data('endorsement')?>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <div class="item">Level:</div>
+                                            </div>
+                                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                                <?=$userGameApi->data('level')?>
+                                            </div>
+                                             <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <div class="item">Rating:</div>
+                                            </div>
+                                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                                <?=$userGameApi->rating?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php $apigame = ActiveForm::begin([
+                            'validateOnBlur' => false,
+                            'successCssClass' => false,
+                            'action' => '/profile/api-games',
+                                'options' => [
+                                    'class' => 'form-horizontal',
+                                    'data-pjax' => true,
+                                ],
+                            ]); 
+                        ?> 
+                        <div class="col-md-12">
+                        <?= $apigame->field($userGameApi, 'battletag')->textInput(['class' => false]); ?>
+                        </div>
+
+                        <div style="margin-bottom: 25px;">
+                            <label class="control-label">
+                                Platform
+                            </label>
+                            <div class="item select-show">
+                                <div class="fancy-select ">
+                                    <select class="basic" name="UserGameApi[platform]" >
+                                        <option value="1" 
+                                            <?=$userGameApi->platform == 1 ? 'selected' : '' ?> >
+                                            pc
+                                        </option>
+                                        <option value="2" 
+                                            <?=$userGameApi->platform == 2 ? 'selected' : '' ?> >
+                                            etc
+                                        </option>
+                                    </select>
+                                </div>    
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 25px;">
+                            <label class="control-label">
+                                Region   
+                            </label>
+                            <div class="item select-show">
+                                <div class="fancy-select ">
+                                    <select class="basic" name="UserGameApi[region]" >
+                                        <option value="1" 
+                                            <?=$userGameApi->region == 1 ? 'selected' : '' ?> >
+                                            eu
+                                        </option>
+                                        <option value="2" 
+                                            <?=$userGameApi->region == 2 ? 'selected' : '' ?> >
+                                            us
+                                        </option>
+                                        <option value="3" 
+                                            <?=$userGameApi->region == 3 ? 'selected' : '' ?> >
+                                            asia
+                                        </option>
+                                    </select>
+                                </div>    
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 25px;" > 
+                            <button class="btn submit-btn btn-send-pajax" >
+                                <img src="/images/profile/load.gif"> Submit
+                            </button>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                        </div>
+                    </div>
+                    <?php Pjax::end(); ?>
                 </div>
             </div>
         </div>

@@ -227,7 +227,7 @@ use yii\widgets\Pjax;
 
 <div class="main-sponsor-slider-background">
     <div class="container">
-        <?php Pjax::begin(); ?>
+        <?php Pjax::begin(['enablePushState' => false]); ?>
         <?php foreach ($models as $model): ?>
         <?php if(!$i_count): ?>
             <div class="row">
@@ -279,8 +279,12 @@ use yii\widgets\Pjax;
     </div>
 </div>
 
+
+<?php Pjax::begin(['enablePushState' => false]); ?>
 <div class="container">
-    <h3 style="text-align: center;" ><?=Yii::t('app','Tournament statistics')?></h3>
+    <h3 style="text-align: center;" >
+        <?=Yii::t('app','Tournament statistics')?>
+    </h3>
     <div class="box-body">
         <div class="blok-headre-table">
             <?php if(!isset($params['state'])):?>
@@ -365,4 +369,5 @@ use yii\widgets\Pjax;
         ]); ?>
     </div>
 </div>
+<?php Pjax::end(); ?>
 

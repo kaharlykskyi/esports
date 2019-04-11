@@ -32,7 +32,7 @@
             remove:  \"".Yii::t('app','Remove')."\",
             error:   \"".Yii::t('app','Ooops, something wrong happended.')."\"
         }
-    }); $.wowData ={$var_data};";
+    }); $.wowData ={$var_data};$.ratingData={$model->user->ratingOwervatch()};";
 
     $this->registerJs($script, yii\web\View::POS_END);
     $access = false;
@@ -149,8 +149,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="main-lates-matches clearfix" style="margin-bottom: 35px;">
-                                <?=Schedule::widget(['turs'=> $model->getScheduleLeagueModel()])?>
-                                <?=Schedule::widget(['turs'=> $model->getScheduleCupModel($model->format)])?>
+                                <!-- <?///Schedule::widget(['turs'=> $model->getScheduleLeagueModel()])?>
+                                <?//Schedule::widget(['turs'=> $model->getScheduleCupModel($model->format)])?> -->
+                                <?=Schedule::widget(['turs'=> $model->getSchedules()])?>
                             </div>
                         </div>
                     </div>
@@ -161,15 +162,13 @@
                 <div class="container">        
                     <div class="row">
                         <div class="col-md-12" style="margin-bottom: 35px;">
-                            <?php if($model->format == Tournaments::SWISS) : ?> 
+                            <?php if(($model->format == Tournaments::SWISS) || ($model->format == Tournaments::LEAGUE)) : ?> 
                                <?php if(empty($model->state) && ($access==1)): ?>
                                     <?php if (in_array(count($players),[4,8,16,32,64,128,256,512])): ?>
-                                        <form action="/tournaments/add-swiss?id=<?=$model->id?>" method="POST"  >
-                                            <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
-                                             <div  >
-                                                <?= Html::submitButton(Yii::t('app','Start tournament'), ['class' => 'btn btn-primary btn_mobil']) ?>
-                                             </div>
-                                        </form>
+                                        <a class="btn btn-primary btn_mobil" href="/tournaments/start?id=<?=$model->id?>" 
+                                            data-method="post">
+                                            Start tournament
+                                        </a>
                                     <?php else: ?>
                                         <p style="color:red;">
                                             <?= Yii::t('app','The number of teams in the tournament must be 4,8,16,32') ?>
@@ -193,7 +192,7 @@
                                     <?php endif; ?>
                                <?php endif; ?>
                             <?php endif; ?>
-                            <?php if(($model->format == Tournaments::LEAGUE)||($model->format == Tournaments::LEAGUE_P)||($model->format == Tournaments::LEAGUE_G)): ?>
+                            <?php if(($model->format == Tournaments::LEAGUE_G)): ?>
                                 <div class="col-md-12" >
                                     <?php $count_playoff = count($players) ?>
                                     <?php if(empty($model->state) && ($access==1)): ?>
@@ -214,144 +213,16 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                    <?php if(!empty($table_players = json_decode($model->league_table)) && 
-                            (($model->format == Tournaments::LEAGUE) || ($model->format == Tournaments::LEAGUE_P))): ?>
-                    <div class="row">
-                        <div class="col-md-12 overflow-scroll">
-                            <h6><?= Yii::t('app','League table') ?></h6>
-                            <table class="standing-full">
-                                    <tr>
-                                        <th><?= Yii::t('app','club') ?></th>
-                                        <th><?= Yii::t('app','played') ?></th>
-                                        <th><?= Yii::t('app','won') ?></th>
-                                        <th><?= Yii::t('app','drawn') ?></th>
-                                        <th><?= Yii::t('app','lost') ?></th>
-                                        <th><?= Yii::t('app','points') ?></th>
-                                        <th><?= Yii::t('app','form') ?></th>
-                                    </tr>
-                                    <?php foreach($table_players as $players): ?>
-                                        <tr>
-                                            <td class="up">
-                                                <i class="fa fa-caret-up" aria-hidden="true"></i> 1 
-                                                <span class="team">
-                                                    <img src="<?=$players->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="main-match-icon">
-                                                </span>
-                                                <span><?=$players->name?></span>
-                                            </td>
-                                            <td>11</td>
-                                            <td>8</td>
-                                            <td>2</td>
-                                            <td>1</td>
-                                            <td class="points"><span>26</span></td>
-                                            <td class="form">
-                                                <span class="win">w</span>
-                                                <span class="drawn">d</span>
-                                                <span class="lose">l</span>
-                                                <span class="win">w</span>
-                                                <span class="win">w</span>
-                                            </td>  
-                                        </tr>
-                                    <?php endforeach; ?>
-                            </table>
-                        </div>
-                    </div>
-                    <?php endif; ?>
-                    <?php if(!empty($turs = json_decode($model->league_table))&&($model->format == Tournaments::LEAGUE_G)): ?>
-                        <div class="row">
-                        <?php  foreach ($turs as $key => $tur): ?>
-                            <div class="col-md-12"> 
-                                <h6 style="text-align: center;"><?= Yii::t('app','GROUP') ?> <?=($key+1)?></h6>
-                                <table class="standing-full">
-                                    <tr>
-                                        <th><?= Yii::t('app','club') ?></th>
-                                        <th><?= Yii::t('app','played') ?></th>
-                                        <th><?= Yii::t('app','won') ?></th>
-                                        <th><?= Yii::t('app','drawn') ?></th>
-                                        <th><?= Yii::t('app','lost') ?></th>
-                                        <th>gd</th>
-                                        <th><?= Yii::t('app','points') ?></th>
-                                        <th><?= Yii::t('app','form') ?></th>
-                                    </tr>
-                                    <?php foreach ($tur as $teamin_group): ?>
-                                        <tr>
-                                            <td class="up">
-                                                <i class="fa fa-caret-up" aria-hidden="true"></i> 1 
-                                                <span class="team">
-                                                    <img src="<?=$teamin_group->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="team-logo"> 
-                                                </span>
-                                                <span><?=$teamin_group->name?></span>
-                                            </td>
-                                            <td>11</td>
-                                            <td>8</td>
-                                            <td>2</td>
-                                            <td>1</td>
-                                            <td>+16</td>
-                                            <td class="points"><span>26</span></td>
-                                            <td class="form">
-                                                <span class="win">w</span>
-                                                <span class="drawn">d</span>
-                                                <span class="lose">l</span>
-                                                <span class="win">w</span>
-                                                <span class="win">w</span>
-                                            </td>  
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </table>       
-                            </div>
-                        <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if(!empty($teams = $model->summBal)&&($model->format == Tournaments::SWISS)): ?>
-                        <div class="row">
-                            <div class="col-md-12"> 
-                                <table class="standing-full">
-                                    <tr>
-                                        <th><?= Yii::t('app','club') ?></th>
-                                        <th><?= Yii::t('app','played') ?></th>
-                                        <th><?= Yii::t('app','won') ?></th>
-                                        <th><?= Yii::t('app','lost') ?></th>
-                                        <th><?= Yii::t('app','points') ?></th>
-                                        <th><?= Yii::t('app','form') ?></th>
-                                    </tr>
-                                    <?php  foreach ( $teams as $team ): ?>
-                                        <tr>
-                                            <td class="up">
-                                                <span class="team">
-                                                    <img src="<?=$team->team->logo()?>" width="30" height="30" alt="team-logo"> 
-                                                </span>
-                                                <span><?=$team->team->name()?></span>
-                                            </td>
-                                            <td><?=$team->played?></td>
-                                            <td><?=$team->won?></td>
-                                            <td><?=$team->lost?></td>
-                                            <td class="points"><span><?=$team->summ_ball?></span></td>
-                                            <td class="form">
-                                                <?php $shel_arry = $team->shedule ;
-                                                    foreach ($shel_arry as $res): ?>
-                                                    <?php if($res): ?>
-                                                        <span class="win">w</span>
-                                                    <?php else:?>
-                                                        <span class="lose">l</span>
-                                                    <?php endif;?>
-                                                <?php endforeach; ?>
-                                            </td>  
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </table>       
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>
-                        <?php if($model->format > 2): ?>
-                        <div class="row">
-                             <div class="col-md-12">
-                                <h6 style="text-align: center;" ><?= Yii::t('app','Teams in playoff') ?></h6>
-                            </div>
-                        </div>
-                        <?php endif; ?>
+                    <?php if($model->state):?>
+                        <p style="font-size: 13px;" > 
+                            Link to tournament results 
+                            <b id="link-tournaments" style="color:red;">
+                                 <?=Url::to(['/tournaments/results/','id' => $model->id,'full'=>true], true)?>
+                            </b>
+                            <button class="btn btn-link-buf" >Copy to buffer</button>
+                        </p> 
                         <div class="row container_iframes"  > 
-                            <div id="container_iframe" data-href='/tournaments/cup/<?=$model->id?>'><!-- //data-id-tournament="<?=$model->id?>" -->
-                                <!-- <iframe src=""  id="ifrem_cup" style='display: none;' ></iframe> -->
+                            <div id="container_iframe" data-href='/tournaments/results/<?=$model->id?>'>
                             </div> 
                             <div class="buttons">
                                 <span class="glyphicon glyphicon-fullscreen"></span>
@@ -360,6 +231,7 @@
                         </div>
                     <?php endif; ?>
                 </div>
+
             </div>
             <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->
             <?php if(($access==1)&&is_null($model->state)&&empty($players)):?>
@@ -614,7 +486,13 @@
                                     <b><?=$g_data[$key]['title']?>:</b>
                                 </div>
                                 <div class="col-md-6">
-                                <?php if (is_array($val)) {
+                                <?php if ($g_data[$key]['type'] == 'checkbox') {
+                                        if (!(int)$val) {
+                                            echo 'No';
+                                        } else {
+                                            echo 'Yes';
+                                        }
+                                    } elseif (is_array($val)) {
                                         if (empty($val[0])) {
                                             echo 'No';
                                         } else {

@@ -22,7 +22,7 @@ use app\models\StatisticCardsHearthstone;
     <div class="tab-content">
         <div class="tab-pane active" id="users_statistics" >
             <div class="box-body">
-                <?php Pjax::begin(); ?>
+                <?php Pjax::begin(['enablePushState' => false]); ?>
                 <div class="blok-headre-table">
                     <?php if(!isset($params['sort'])): ?>
                          <div class="lenk-sot active" style="margin-left: -10px; ">

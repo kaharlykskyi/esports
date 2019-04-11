@@ -50,17 +50,19 @@
     <?php endif; ?>
 
     <?php if($access==3): 
-        $users_tournaments = $model->getPlayer(\Yii::$app->user->identity->id);
-    ?>
-            <?php if ($users_tournament->team->id != $i):?>
+        $users_tournament = $model->getPlayer(\Yii::$app->user->identity->id);
+    ?>      
+            <?php if (is_object($users_tournament)):?>
                 <h6 style="text-align:center;" >
                     <?=$users_tournament->team->single_user?'single player':$users_tournament->team->name?>
                 </h6>
-            <?php endif; ?>
-                <p style="text-align:center;" ><b>User:</b> <?=$users_tournament->user->name?></p>
+                <p style="text-align:center;" >
+                    <b>User:</b> <?=$users_tournament->user->name?>
+                </p>
                 <div style="text-align:center;" >
                     <?=$wget->getPers($users_tournament->text)?>
                 </div>
+            <?php endif; ?>
     <?php endif; ?>
 
 </div>

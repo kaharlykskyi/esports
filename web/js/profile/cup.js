@@ -25,33 +25,34 @@ $(document).ready( function() {
         container.append(name);
     }
 
+ if (typeof $.tournament_duble != "undefined") {
+        if ($.tournament_duble) {
+            $.dataObj = {
+            teamWidth: 120,
+            init:doubleEliminationData,
+            skipSecondaryFinal: true,
+            skipConsolationRound: true,
+                centerConnectors: true,
+                decorator: {
+                    edit: function edit_fn(){} , 
+                    render: render_fn
+                }
+            };
+        } else {
+            $.dataObj = {
+            teamWidth: 120,
+            init:doubleEliminationData,
+             //skipSecondaryFinal: true,
+            skipConsolationRound: true,
+                centerConnectors: true,
+                decorator: {
+                    edit: function edit_fn(){} , 
+                    render: render_fn
+                }
+            };
+        }
 
-    if ($.tournament_duble) {
-        $.dataObj = {
-        teamWidth: 120,
-        init:doubleEliminationData,
-        skipSecondaryFinal: true,
-        skipConsolationRound: true,
-            centerConnectors: true,
-            decorator: {
-                edit: function edit_fn(){} , 
-                render: render_fn
-            }
-        };
-    } else {
-        $.dataObj = {
-        teamWidth: 120,
-        init:doubleEliminationData,
-         //skipSecondaryFinal: true,
-        skipConsolationRound: true,
-            centerConnectors: true,
-            decorator: {
-                edit: function edit_fn(){} , 
-                render: render_fn
-            }
-        };
+            
+        $('#minimal').bracket($.dataObj);
     }
-
-        
-    $('#minimal').bracket($.dataObj);
 });
