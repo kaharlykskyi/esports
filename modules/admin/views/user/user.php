@@ -42,6 +42,11 @@ $this->title = "User: {$user->username}";
                                     To ban
                                 </a>
                             </li>
+                            <li>    
+                                <a class="nav-item nav-link " id="nav-strimer-tab" data-toggle="tab" href="#nav-strimer" >
+                                    Streamer
+                                </a>
+                            </li>
                         </ul>
 
                         <div class="tab-content pl-3 pt-2" id="nav-tabContent">
@@ -91,6 +96,35 @@ $this->title = "User: {$user->username}";
                                 <?= $formb->field($banform, 'explanation')->textarea(['rows' => '6']) ?>
                                 <button  class="btn btn-lg btn-danger">
                                     <span id="payment-button-amount">To ban</span>
+                                </button>
+                                <?php ActiveForm::end(); ?>
+                            </div>
+                            <div class="tab-pane fade" id="nav-strimer" >
+                                
+                                <h3 style="padding: 25px 0;" >Turn off the streamer</h3>
+                                <?php $form_s = ActiveForm::begin([
+                                    'validateOnBlur'=>false,
+                                    'errorCssClass' => false,
+                                    'action' => ['/admin/user/streamer']
+                                ]); ?>
+                                
+                                <?php $active = ($user->role == $user::LEGENDARY) ? 'checked' : ''?>
+                                <input type="hidden" name="user_id" value="<?=$user->id?>">
+                                <div class="row"> 
+                                    <div class="col-md-12">Enable / disable streame  
+                                        <label class="switch switch-3d switch-primary mr-3">
+                                            <input type="hidden" name="User[role]" value="0">
+                                            <input type="checkbox" class="switch-input" <?=$active?> 
+                                            value="<?=$user::LEGENDARY?>" name="User[role]" >
+                                            <span class="switch-label"></span>
+                                            <span class="switch-handle"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <br>
+                                
+                                <button  class="btn btn-lg btn-info">
+                                    <span >Submit</span>
                                 </button>
                                 <?php ActiveForm::end(); ?>
                             </div>

@@ -8,6 +8,9 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use app\models\servises\UserServis;
 use dosamigos\transliterator\TransliteratorHelper;
+use app\models\points\TeamPoint;
+
+
 
 class Teams extends \yii\db\ActiveRecord
 {
@@ -64,6 +67,14 @@ class Teams extends \yii\db\ActiveRecord
             'website' => Yii::t('app','Website URL'),
             'capitan' => Yii::t('app','Capitan'),
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert) {
+            TeamPoint::createTeam ($this);
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 
     public function getGame()

@@ -138,7 +138,7 @@
 }
 
 .lenk-sot a{
-    padding: 12px 47px;
+    padding: 12px 27px;
     line-height: 24px;
     -webkit-transform: skew(-20deg);
     -moz-transform: skew(-20deg);
@@ -211,6 +211,61 @@
     background-color: #ff0000;
 }
 
+
+.table-statistic.tournaments-table .rank,
+.table-tourn .rank{
+    float:left;
+    overflow: hidden;
+    position: relative;
+}
+
+.rank-id0::after,.rank-id1::after,.rank-id2::after,
+.rank-id3::after,.rank-id4::after,.rank-id5::after{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    font-size: 10px;
+    color: #fff;
+    font-weight: bold;
+    padding: 3px 10px;
+}
+
+.rank-id5::after{
+    content: 'Legendary';
+    background-color: red;
+}
+
+.rank-id4::after{
+    content: 'Epic';
+    background-color: #6b1b9a;
+}
+
+.rank-id3::after{
+    content: 'Great';
+    background-color: blue;
+}
+
+.rank-id2::after{
+    content: 'Good';
+    background-color: green;
+}
+
+.rank-id1::after{
+    content: 'Normal';
+    background-color: #ccc;
+}
+
+.private1::before{
+    content: 'private';
+    background-color: #ff9800;
+    position: absolute;
+    bottom:10px;
+    right: 10px;
+    font-size: 10px;
+    color: #fff;
+    font-weight: bold;
+    padding: 3px 10px;
+}
 
 @media (max-width: 1200px) {
     .blok-headre-table .lenk-sot a{

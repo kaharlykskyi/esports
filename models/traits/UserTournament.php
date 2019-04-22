@@ -14,10 +14,10 @@ trait UserTournament {
             ->leftJoin('user_team', 'user_team.id_user = users.id')
             ->leftJoin('teams', 'teams.id = user_team.id_team')
             ->leftJoin('tournament_team', 'tournament_team.team_id = teams.id')
-            ->where([
-                'tournament_team.status' => TournamentTeam::ACCEPTED,
-                'user_team.status' => UserTeam::ACCEPTED,
-                'tournament_team.tournament_id' => $model->id
+            ->where([ 'and',
+                ['tournament_team.status' => TournamentTeam::ACCEPTED],
+                ['in', 'user_team.status',[UserTeam::ACCEPTED, UserTeam::DUMMY]],
+                ['tournament_team.tournament_id' => $model->id]
             ])->all();
         array_push($users, ['id' => $model->user_id]);
         return $users;

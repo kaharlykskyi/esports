@@ -382,8 +382,12 @@
                             <tbody>
                         <?php foreach ($tournaments as $tournament):?>
                             <tr>
-                            <!-- <div class="col-md-12 tournament_list"> -->
-                                <td> <img src="<?=$tournament->getLogo()?>" alt="logo"></td>
+                                <td> 
+                                    <p class="rank rank-id<?=$tournament->rank?>
+                                                private<?=$tournament->private?>">
+                                        <img src="<?=$tournament->getLogo()?>" alt="logo">
+                                    </p>
+                                </td>
                                 <td>
                                     <p class="name"> 
                                         <a href="/tournaments/public/<?=$tournament->id?>">
@@ -416,7 +420,7 @@
                                                     case 5:
                                                         echo Yii::t('app','League (Group + Playoff)');
                                                         break;  
-                                                    case 5:
+                                                    case 6:
                                                         echo Yii::t('app','Swiss');
                                                         break;        
                                                 }
@@ -538,7 +542,6 @@
                                     'convertFormat' => true,
                                     'pluginOptions' => [
                                         'format' => 'yyyy-MM-dd hh:i',
-                                        //'startDate' => date("Y-m-d H:i"),//'2018-08-22 02:55'
                                         'todayHighlight' => true
                                 ]])->label(Yii::t('app','Birthday')) ?>
                                         

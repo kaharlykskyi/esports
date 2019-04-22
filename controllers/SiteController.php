@@ -22,6 +22,7 @@ use app\models\servises\SearchResultsStatisticsUsers;
 use app\models\servises\SerchTournaments;
 use app\models\Tournaments;
 use app\models\ScheduleTeams;
+use app\models\points\SocialPoint;
 
 class SiteController extends Controller
 {
@@ -134,7 +135,7 @@ class SiteController extends Controller
                     'value' => 'refiral',
                     'expire' => time() + 86400 * 365,
                 ]));
-               $user->addBall(9);
+               SocialPoint::followLinks ($user);
             }
         }
         return $this->redirect(['index']);

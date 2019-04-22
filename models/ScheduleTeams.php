@@ -67,19 +67,9 @@ class ScheduleTeams extends \yii\db\ActiveRecord
                UserServis::scheduleUsers($this, $this->tournament_id); 
             }     
         } else {
+            MatchEvent::played($this);
             $this->addMatch();
-            ResultsStatistics::addStatistic($this);
-            $this->addBallBonus(); 
-        }
-
-        if (!$insert) {
-            if ($this->results1 > $this->results2) {
-                TeamHistory::setHistory('victoryMatch', $this, $this->team1);
-                TeamHistory::setHistory('loseMatch', $this, $this->team2);
-            } elseif ($this->results1 < $this->results2) {
-                TeamHistory::setHistory('victoryMatch', $this, $this->team2);
-                TeamHistory::setHistory('loseMatch', $this, $this->team1);
-            }
+            
         }
 
         parent::afterSave($insert, $changedAttributes);
@@ -345,37 +335,6 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         }
 
         return [array_reverse($winner),array_reverse($loser)];
-    }
-
-    private function addBallBonus ()
-    {
-        if ($this->results1 == $this->results2) {
-           return;
-        } elseif ($this->results1 < $this->results2) {
-            $win_p = $this->team2;
-            $los_p = $this->team1;
-        } else {
-            $win_p = $this->team1;
-            $los_p = $this->team2;
-        }
-
-        $win_p = UsetTeamTournament::find()->where([
-            'team_id' => $win_p,
-            'tournament_id' => $this->tournament_id
-        ])->all();
-
-        $los_p = UsetTeamTournament::find()->where([
-            'team_id' => $los_p,
-            'tournament_id' => $this->tournament_id
-        ])->all();
-        $cup = $this->tournament->user->ball;
-        foreach ($win_p as $win) {
-           $win->user->addBall(2,$cup);
-        }
-
-        foreach ($los_p as $los) {
-           $los->user->addBall(1,$cup);
-        }
     }
 
 }

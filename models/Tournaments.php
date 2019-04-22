@@ -10,6 +10,7 @@ use app\models\servises\FairPlay;
 use app\models\systems\SwissSystem;
 use app\models\systems\LeagueSystem;
 use app\models\systems\LeaguePSystem;
+use app\models\events\TournamentEvent;
 
 
 class Tournaments extends \yii\db\ActiveRecord
@@ -28,6 +29,9 @@ class Tournaments extends \yii\db\ActiveRecord
     const USERS = 1;
     const TEAMS = 2;
     const MIXED = 3;
+
+    const FINISHED = 2;
+    const PRIVATE_T = 1;
 
     public $system;
     public $banner_file;
@@ -50,9 +54,9 @@ class Tournaments extends \yii\db\ActiveRecord
         return [
             [
                 [
-                    'game_id', 'format','flag','time_limit',
+                    'game_id', 'format','flag','time_limit', 'rank', 
                     'match_schedule','user_id','league_p','league_g',
-                    'state','max_players','prize_pool',
+                    'state','max_players', 'private','prize_pool', 'winner'
                 ], 'integer'
             ],
             [['format', 'rules', 'prizes', 'start_date','name','game_id'], 'required'],
@@ -101,17 +105,19 @@ class Tournaments extends \yii\db\ActiveRecord
             $this->banner = '/images/tournaments/'.$this->id.'/'.$now_name.'.'.$this->banner_file->extension;
         }
 
-        if (!$insert && ($this->winner)) {
-            $users = $this->uset_team_tournament;
-            $cup = $this->user->ball;
-            foreach ($users as $user) {
-                if ($user->team_id == $this->winner) {
-                    $user->user->addBall(5,$cup);
-                }
+        return true;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert){
+            TournamentEvent::creationTournamen($this);
+        } else {
+            if ($this->state == self::FINISHED && $this->winner) {
+                TournamentEvent::played($this);
             }
         }
-
-        return true;
+        parent::afterSave($insert, $changedAttributes);
     }
 
     public function afterFind ()
@@ -295,12 +301,9 @@ class Tournaments extends \yii\db\ActiveRecord
         return $this->user->cup;
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function rank()
     {
-        if (!$insert) {
-            FairPlay::addRating($this);
-        }
-        parent::afterSave($insert, $changedAttributes);
+        return $this->rank;
     }
 
     private function resizeImg ($pathFile)

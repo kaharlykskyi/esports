@@ -56,7 +56,8 @@ $this->title = 'Users';
                                    'label' => 'Ban',
                                    'content' => function($data) {
                                         $src = Url::to(['/admin/user/single','id' => $data->id]);
-                                        return "<a href='{$src}'>{$data->username}</a>";
+                                        $pan = ($data->role==5)?"<span class='label label-danger'>Streamer</span>":'';
+                                        return "<a href='{$src}'>{$data->username} {$pan}</a>";
                                     }
                                 ],
                                 'email',

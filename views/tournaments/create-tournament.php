@@ -193,6 +193,22 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                 </div>
                 <?= $form->field($model, 'rules')->textarea(['rows' => 12, 'class' => false]) ?>
                 <?= $form->field($model, 'prizes')->textarea(['rows' => 12, 'class' => false]) ?>
+                <?= $form->field($model, 'rank')->hiddenInput([
+                    'value' => \Yii::$app->user->identity->rank()
+                ])->label(false) ?>
+
+                <div class="checkbox" style="margin-bottom: 40px;">
+                    <input type="checkbox" name="Tournaments[private]" value='1' uncheckValue='0' 
+                    class='filter-check' id="check_private" <?= $model->private ? 'checked': ''?>>
+                    <label for="check_private" >
+                        <span style="font-size: 18px;position: relative;bottom: 5px;">
+                           Private tournament
+                        </span>
+                    </label>
+                </div>
+
+
+
                 <?php  
                 echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
                     //'name' => 'datetime_10',

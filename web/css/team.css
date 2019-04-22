@@ -588,20 +588,20 @@ img {
 
 
 .timeline-bar .date.date-1 {
-    left: 16.666666667%;
+    left: 20%;
 }
 
 .timeline-bar .date.date-2 {
-    left: 33.333333334%;
+    left: 40%;
     
 }
 
 .timeline-bar .date.date-3 {
-    left: 50%;
+    left: 60%;
 }
 
 .timeline-bar .date.date-4 {
-    left: 66.666666667%;
+    left: 80%;
 }
 
 .timeline-bar .date.date-5 {
@@ -611,19 +611,19 @@ img {
 
 
 .cup_img1{
-    left:16.666666667%;
+    left:20%;
 }
 
 .cup_img2{
-    left:33.333333334%;
+    left:40%;
 }
 
 .cup_img3{
-    left:50%;
+    left:60%;
 }
 
 .cup_img4 {
-    left: 66.666666667%;
+    left: 80%;
 }
 
 .cup_img5 {

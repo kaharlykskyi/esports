@@ -6,7 +6,8 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Tournaments;
-
+use app\models\TournamentTeam;
+use app\models\UserTeam;
 
 class SerchTournaments extends Tournaments
 {
@@ -14,7 +15,7 @@ class SerchTournaments extends Tournaments
     public function rules()
     {
         return [
-            [['id','game_id','created_at','state'], 'integer'],
+            [['id','game_id','created_at','state','rank'], 'integer'],
             [['name','banner'],'string'],
         ];
     }
@@ -26,13 +27,32 @@ class SerchTournaments extends Tournaments
 
     public function search($params)
     {
-        $query = Tournaments::find();
+        if (\Yii::$app->user->isGuest) {
+            $query = Tournaments::find()->where(['tournaments.private' => 0]);
+        } else {
+            $query = Tournaments::find()->select('tournaments.*')
+                ->joinWith('tournamentTeam.team.userTeams.user')
+                ->where(['and',
+                    ['tournament_team.status' => TournamentTeam::ACCEPTED],
+                    ['in','user_team.status',[UserTeam::ACCEPTED, UserTeam::DUMMY]],
+                    ['tournaments.private' => self::PRIVATE_T],
+                    ['user_team.id_user' => \Yii::$app->user->identity->id]
+                ])->orWhere(['tournaments.user_id' => \Yii::$app->user->identity->id])
+                ->orWhere(['tournaments.private' => 0])
+                ->groupBy('tournaments.id');
+        }      
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=> [
-                'defaultOrder' =>
-                 ['created_at' => SORT_DESC]
+                'defaultOrder' => ['created_at' => SORT_DESC ],
+                'attributes' => [
+                    'rank' => [
+                        'asc' => ['rank' => SORT_ASC],
+                        'desc' => ['rank' => SORT_DESC],
+                    ],
+                    'created_at'
+                ]
             ],
             'pagination' => [ 'pageSize' => 10 ],
         ]);

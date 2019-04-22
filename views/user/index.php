@@ -244,51 +244,40 @@
             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="false">
                 <div class="row">
                     <div class="col-md-offset-1 col-md-10">
+                        <?php if($model->rank() != $model::LEGENDARY): ?>
                         <div class="timeline-bar">
                             <div class="cup_img cup_img1" >
                                 <p>
-                                    <img src="/images/profile/cup/bronze.svg" alt="bronze" title="1000 balls">
+                                    <img src="/images/profile/cup/normal.svg" alt="bronze" >
                                 </p>
-                                <p><span><?=Yii::t('app','Вronze cup')?> </span></p>
+                                <p><span>Normal cup</span></p>
                             </div>
                             <div class="cup_img cup_img2" >
                                  <p>
-                                    <img src="/images/profile/cup/silver.svg" alt="silver" title="2000 balls">
+                                    <img src="/images/profile/cup/good.svg" alt="silver" >
                                 </p>
-                                <p><span><?=Yii::t('app','Silver cup')?></span></p>
+                                <p><span>Good cup</span></p>
                             </div>
                             <div class="cup_img cup_img3" >
                                 <p>
-                                    <img src="/images/profile/cup/gold.svg" alt="gold" title="3000 balls">
+                                    <img src="/images/profile/cup/great.svg" alt="gold" >
                                 </p>
-                                <p><span><?=Yii::t('app','Gold cup')?></span></p>
+                                <p><span>Great cup</span></p>
                             </div>
                             <div class="cup_img cup_img4" >
                                 <p>
-                                    <img src="/images/profile/cup/epic.svg" alt="epic" title="4000 balls">
+                                    <img src="/images/profile/cup/epic.svg" alt="epic" >
                                 </p>
                                 <p><span><?=Yii::t('app','Epic cup')?></span></p>
-                            </div>
-                            <div class="cup_img cup_img5" >
-                                <p>
-                                    <img src="/images/profile/cup/legendary.svg" alt="legendary" title="6000 balls">
-                                </p>
-                                <p><span><?=Yii::t('app','Legendary cup')?></span></p>
                             </div>
                             <div class="bar">
                                 <div class="date date-1" ></div>
                                 <div class="date date-2" ></div>
                                 <div class="date date-3" ></div>
                                 <div class="date date-4" ></div>
-                                <div class="date date-5" ></div>
+                                
                             </div>
-                            <?php 
-                                $result_persent = $model->ball/60;
-                                if ($result_persent>100) {
-                                    $result_persent = 100;
-                                }
-                            ?>
-                            <div class="bar bar-result" style="width:<?=$result_persent?>%;">
+                            <div class="bar bar-result" style="width:<?=$model->persentLian()?>%;">
                                 <div class="date date-i" ></div>
                                 <div class="my-result" >
                                     <p><?=Yii::t('app','My ball')?></p>
@@ -296,7 +285,9 @@
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
+                    <br>
                 </div>
                 <?php if(!empty($user_points)):?>
                 <div class="row">

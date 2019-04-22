@@ -3,19 +3,111 @@
 namespace app\models;
 
 use Yii;
+use  app\models\points\PointsPoint;
 
 class UserPoint extends \yii\db\ActiveRecord
 {
-    public $arry_bonus = [
-        ['Participation in the match',10],
-        ['Victory in the match',20],
-        ['Took part in the tournament',10],
-        ['Tournament creation',20],
-        ['Tournament victory',200],
-        ['Adding social networks',20],
-        ['Winning several matches in a row',20],
-        ['Win several tournaments in turn',200],
-        ['Follow your referral link',1]
+    public static $arry_bonus = [
+
+        /*  1*/['Play first game',100],//+
+        /*  2*/['Play first match in a league format tournament', 100],//+
+        /*  3*/['Play first match in a cup-shaped tournament',100],//+
+        /*  4*/['Play first match in a tournament with Swiss format',100],//+
+        /*  5*/['Play in five tournaments in total', 500],//+
+
+        /*  6*/['Play five matches in a league format tournament', 500],//+
+        /*  7*/['Play five matches in a cup-shaped tournament', 500],//+
+        /*  8*/['Play five matches in a tournament with Swiss format', 500],//+
+        /*  9*/['Play in a five league format tournaments', 1000],//+
+        /* 10*/['Play in a five cup-shaped tournaments', 1000],//+
+        /* 11*/['Play in a five swiss round format tournaments', 1000],//+
+
+        /* 12*/['Play fifty matches in a league format tournament', 3000],//+
+        /* 13*/['Play fifty matches in a cup-shaped tournament', 3000],//+
+        /* 14*/['Play fifty matches in a tournament with Swiss forma', 3000],//+
+        /* 15*/['Play in a twenty league format tournaments', 3000],//+
+        /* 16*/['Play in a twenty cup-shaped tournaments', 3000],//+
+        /* 17*/['Play in a twenty swiss round format tournaments', 3000],//+
+
+        /* 18*/['Play two hundred matches in a league format tournament', 10000],
+        /* 19*/['Play two hundred matches in a cup-shaped tournament', 10000],
+        /* 20*/['Play two hundred matches in a tournament with Swiss format', 10000],
+        /* 21*/['Play in a one hundred league format tournaments', 15000],//+
+        /* 22*/['Play in a one hundred cup-shaped tournaments', 15000],//+
+        /* 23*/['Play in a one hundred swiss round format tournaments', 15000],//+
+            //MANAGE
+        /* 24*/['Create first tournament', 250],//+
+        /* 25*/['Create first league format tournament', 250],//+
+        /* 26*/['Create first cup-shaped format tournament', 250],//+
+        /* 27*/['Create first swiss round format tournament', 250],//+
+        /* 28*/['Create five tournaments in total', 1000],//+
+
+        /* 29*/['Create five league format tournaments', 1500],//+
+        /* 30*/['Create five cup-shaped format tournaments', 1500],//+
+        /* 31*/['Create five swiss round format tournaments', 1500],//+
+        /* 32*/['Create twenty tournaments in total', 2000],//+
+
+        /* 33*/['Create twenty league format tournaments', 5000],//+
+        /* 34*/['Create twenty cup-shaped format tournaments', 5000],//+
+        /* 35*/['Create twenty swiss round format tournaments', 5000],//+
+        /* 36*/['Create fifty tournaments in total', 6000],//+
+
+        /* 37*/['Create one hundred league format tournaments', 20000],//+
+        /* 38*/['Create one hundred cup-shaped format tournaments', 20000],//+
+        /* 39*/['Create one hundred swiss round format tournaments', 20000],//+
+        /* 40*/['Create five hundred tournaments in total', 30000],//+
+            //TEAM
+        /* 41*/['Create first team', 1000],//+
+        /* 42*/['Invite first player for team', 100],//+
+        /* 43*/['Participe in first tournament', 250],//+
+
+        /* 44*/['Win first team tournament', 1000],//+
+        /* 45*/['Participe in ten team tournaments', 1000],//+
+
+        /* 46*/['Win ten team tournaments', 3000],//+
+        /* 47*/['Participe in fifty team tournaments', 3000],//+
+        /* 48*/['Participe in epic team tournamen', 3000],//+
+        /* 49*/['Participe in ten great team tournaments', 3000],//+
+
+        /* 50*/['Win fifty team tournaments', 20000],//+
+        /* 51*/['Participe in one hundred team tournaments', 20000],//+
+        /* 52*/['Participe in legendary team tournament', 30000],//+
+        /* 53*/['Participe in twenty epic team tournaments', 20000],//+
+            //POINTS
+        /* 54*/['Win first point', 100],//+
+        /* 55*/['Get 1000 points', 100],//+
+        /* 56*/['Get 5000 points', 500],//+
+
+        /* 57*/['Get 10000 points', 1000],//+
+        /* 58*/['Get 15000 points', 1500],//+
+        /* 59*/['Get 20000 points', 2000],//+
+        
+        /* 60*/['Get 50000 points', 2500],//+
+        /* 61*/['Get 75000 points', 3500],//+
+        /* 62*/['Get 100000 points', 5000],//+
+
+        /* 63*/['Get 250000 points', 10000],//+
+        /* 64*/['Get 500000 points', 25000],//+
+        /* 65*/['Get 1000000 points', 50000],//+
+                //SOCIAL NETWORKS
+        /* 66*/['Follow us in Twitter', 1000],//+
+        /* 67*/['Follow us in Facebook', 1000 ],//+
+        /* 68*/['Follow us in Twitch', 1000 ],//+
+        /* 69*/['Follow us in Youtube', 1000],//+
+        /* 70*/['Follow us in Instagram', 1000],//+
+        
+        /* 71*/['Get 10 likes in Twitter', 2000],//+
+        /* 72*/['Get 10 RT in Twitter', 2000],
+        /* 73*/['Follow one of our Partners in Twitter', 1000],
+            
+        /* 74*/['Follow one of our Partners in Twitch', 1000],
+        /* 75*/['Get 30 likes in Twitter', 3000],
+        /* 76*/['Get 30 RT in Twitter', 3000],
+        /* 77*/['Follow all of our Partner in Twitter', 3000],
+
+        /* 78*/['Get 100 likes in Twitter', 5000],
+        /* 79*/['Get 100 RT in Twitter', 5000],
+        /* 80*/['Subscribe our newsletter', 2000],
     ];
 
     public static function tableName()
@@ -37,9 +129,17 @@ class UserPoint extends \yii\db\ActiveRecord
         ];
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert) {
+           PointsPoint::getPoints($this);
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     public function getNameBonus()
     {
-        return $this->arry_bonus[$this->bonus_id-1][0];
+        return self::$arry_bonus[$this->bonus_id-1][0];
     }
 
     public function getUser()
@@ -50,33 +150,12 @@ class UserPoint extends \yii\db\ActiveRecord
     public static function addBall($bonus_id,$user_id,$cup) 
     {
         $model = new self();
-        $ball = $model->arry_bonus[$bonus_id-1][1];
-        if ($cup>5000) {
-            $bonus_ball = 60;
-        } elseif ($cup>4000) {
-            $bonus_ball = 50;
-        } elseif ($cup>3000) {
-            $bonus_ball = 40;
-        } elseif ($cup>2000) {
-            $bonus_ball = 30;
-        } elseif ($cup>1000){
-            $bonus_ball = 20;
-        } else {
-            $bonus_ball = 0;
-        }
+        $ball = self::$arry_bonus[$bonus_id-1][1];
 
-        $model->appraisal = $ball + $bonus_ball;
+        $model->appraisal = $ball;
         $model->user_id = $user_id;
         $model->bonus_id = $bonus_id;
         $model->save();
-
-        if($bonus_id == 2) {
-            self::dubleWinMatch($user_id,$bonus_ball);
-        }
-
-        if($bonus_id == 5) {
-            self::dubleWinTournament($user_id,$bonus_ball);
-        }
     }
 
     public static function MonthSum($user_id)
@@ -101,55 +180,5 @@ class UserPoint extends \yii\db\ActiveRecord
         }
         return $user_points;
     }
-
-    public static function dubleWinMatch($user_id,$bonus_ball)
-    {
-        $model_array = self::find()
-            ->where(['user_id'=>$user_id])
-            ->orderBy('id desc')->limit(30)->all(); 
-
-        $int_count = 0;
-        foreach ($model_array as $val_mod) {
-            if($val_mod->bonus_id == 2) {
-                $int_count++;
-                if($int_count==2){
-                    $model = new self();
-                    $model->appraisal = $model->arry_bonus[6][1]; + $bonus_ball;
-                    $model->user_id = $user_id;
-                    $model->bonus_id = 7;
-                    $model->save();
-                    break;
-                }
-            }
-            if($val_mod->bonus_id == 1){
-                break;
-            }
-        }
-    }
-
-    public static function dubleWinTournament($user_id,$bonus_ball)
-    {
-        $model = Tournaments::find()
-            ->innerJoin('uset_team_tournament', 'uset_team_tournament.tournament_id = tournaments.id')
-            ->where(['uset_team_tournament.user_id' => $user_id])
-            ->where(['IS NOT', 'winner', null])
-            ->orderBy(['tournaments.id' => SORT_DESC])->one(); 
-        if (is_object($model)) {
-            $model_u = $model->uset_team_tournament;
-            $t_w = false;
-            foreach ($model_u as $value) {
-                if ($value->user_id == $user_id) {
-                    $t_w = $value->team_id;
-                    break;
-                }     
-            }
-            if ($t_w && ($model->winner==$t_w)) {
-                $model = new self();
-                $model->appraisal = $model->arry_bonus[7][1]; + $bonus_ball;
-                $model->user_id = $user_id;
-                $model->bonus_id = 8;
-                $model->save();
-            }
-        }
-    }
 }
+

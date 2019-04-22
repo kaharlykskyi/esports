@@ -69,4 +69,18 @@ class UserController extends Controller
         }
         return $this->redirect(['/admin/user/single', 'id' => $model->user_id]);
     }
+
+    public function actionStreamer ()
+    {
+        if ($user_id = Yii::$app->request->post('user_id')) {
+            $model = User::findOne($user_id);
+            $post = Yii::$app->request->post();
+            if (is_object($model)&&isset($post['User']['role'])) {
+                $model->role = $post['User']['role'];
+               $model->save(false);
+            } 
+        }
+
+        return $this->redirect(['/admin/user/single', 'id' => $user_id]);
+    }
 }

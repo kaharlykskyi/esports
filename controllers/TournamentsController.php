@@ -21,6 +21,7 @@ use app\models\UsetTeamTournament;
 use app\models\servises\ApiString;
 use app\models\servises\SerchTournaments;
 use app\models\StatisticCardsHearthstone;
+use yii\helpers\ArrayHelper;
 
 class TournamentsController extends \yii\web\Controller
 {
@@ -82,6 +83,14 @@ class TournamentsController extends \yii\web\Controller
 
         $players = $model->getPlayers();
         $users_id = self::gerUsers($model);
+
+        if ($model->private) {
+            $ids = ArrayHelper::getColumn($users_id, 'id');
+            if (Yii::$app->user->isGuest ||
+                !in_array(Yii::$app->user->identity->id, $ids)) {
+                return $this->render('private',compact('model'));
+            } 
+        }
        
         return $this->render('index',compact('model','players','users_id'));
     }

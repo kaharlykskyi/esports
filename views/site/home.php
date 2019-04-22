@@ -287,7 +287,7 @@ use yii\widgets\Pjax;
     </h3>
     <div class="box-body">
         <div class="blok-headre-table">
-            <?php if(!isset($params['state'])):?>
+            <?php if(!isset($params['state'])&&empty($params['sort'])):?>
                 <div class="lenk-sot active" style="margin-left: -10px; ">
                     <a href="/">All tournaments</a>
                 </div>
@@ -323,6 +323,16 @@ use yii\widgets\Pjax;
                     <a href="/?state=2">Tournaments finished</a>
                 </div>
             <?php endif; ?>
+             <?php if(!empty($params['sort'])):?>
+                <?php $url = $params['sort']=='rank'?'-rank':'rank'?>
+                <div class="lenk-sot active" >
+                    <a href="/?sort=<?=$url?>">Rank</a>
+                </div>
+            <?php else: ?>
+                <div class="lenk-sot" ">
+                    <a href="/?sort=-rank">Rank</a>
+                </div>
+            <?php endif; ?>
         </div>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -340,7 +350,10 @@ use yii\widgets\Pjax;
                 [
                     'attribute' => 'banner',
                     'content' => function($data) {
-                        return "<img src='{$data->logo}' class='banner-logo'  alt='logo'>";
+                        return "<p class ='rank rank-id{$data->rank} 
+                                private{$data->private}' ><a href='/tournaments/public/{$data->id}'>
+                                <img src='{$data->logo}' class='banner-logo'  alt='logo'></a>
+                                <p>";
                     }
                 ],
                 [

@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\points\TeamPoint;
 
 
 class UserTeam extends \yii\db\ActiveRecord
@@ -48,7 +48,12 @@ class UserTeam extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->status == self::ACCEPTED) {
-            TeamHistory::setHistory('textAddUser', $this, $this->id_team);
+            
+            $team = $this->team;
+            if (is_object($team) && $team->capitan != $this->id_user) {
+                TeamHistory::setHistory('textAddUser', $this, $this->id_team);
+                TeamPoint::invitePlayer($team);
+            }
         }
         parent::afterSave($insert, $changedAttributes);
     }

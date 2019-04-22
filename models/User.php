@@ -11,7 +11,14 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
     public $file_logo;
     public $file_background;
-    private $appraisal;
+    public $appraisal;
+
+    const NOT = 0;
+    const NORMAL = 1;
+    const GOOD  = 2;
+    const GREAT = 3;
+    const EPIC = 4;
+    const LEGENDARY = 5;
 
     public static function tableName()
     {
@@ -174,6 +181,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasMany(Teams::className(), ['capitan' => 'id']);
     }
 
+    public function getEventUser()
+    {
+        return $this->hasMany(EventUser::className(), ['user_id' => 'id']);
+    }
+
     public function getGameF()
     {
         return $this->hasOne(Games::className(), ['id' => 'favorite_game']);
@@ -266,27 +278,75 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     public function getCup() 
     {
-        if ($this->ball>5000) {
+        if ($this->rank() == self::LEGENDARY ) {  
             $awards_text = Yii::t('app','Legendary cup');
             $cup_awards = '<img src="/images/profile/cup/legendary.svg" alt="legendary">';
-        } elseif ($this->ball>4000) {
+        } elseif ($this->rank() == self::NORMAL ) {
+            $awards_text = 'Normal cup';
+            $cup_awards = '<img src="/images/profile/cup/normal.svg" >';
+        } elseif ($this->rank() == self::EPIC ) {
             $awards_text = Yii::t('app','Epic cup');
             $cup_awards = '<img src="/images/profile/cup/epic.svg" alt="epic">';
-        } elseif ($this->ball>3000) {
-            $awards_text = Yii::t('app','Gold cup');
-            $cup_awards = '<img src="/images/profile/cup/gold.svg" alt="gold">';
-        } elseif ($this->ball>2000) {
-            $awards_text = Yii::t('app','Silver cup');
-            $cup_awards = '<img src="/images/profile/cup/silver.svg" alt="silver">';
-        } elseif ($this->ball>1000) {
-            $awards_text = Yii::t('app','Bronze cup');
-            $cup_awards = '<img src="/images/profile/cup/bronze.svg" alt="bronze">';
+        } elseif ($this->rank() == self::GOOD  ) {
+            $awards_text = 'Good cup';
+            $cup_awards = '<img src="/images/profile/cup/good.svg" alt="go0d">';
+        } elseif ($this->rank() == self::GREAT ) {
+            $awards_text = 'Great cup';
+            $cup_awards = '<img src="/images/profile/cup/great.svg" alt="great">';
         } else {
             $awards_text = "";
             $cup_awards = "";
         }
 
         return [$awards_text,$cup_awards];
+    }
+
+    public function rank()
+    {
+        if ($this->role == self::LEGENDARY ){
+            return self::LEGENDARY;
+        } elseif ($this->ball < 7000) {
+            return self::NOT;
+        } elseif($this->ball < 16000){
+            return self::NORMAL;
+        } elseif($this->ball < 48000) {
+            return self::GOOD;
+        } elseif($this->ball < 100000) {
+            return self::GREAT;
+        }  elseif($this->ball > 99000) {
+            return self::EPIC;
+        } 
+
+        //CONST LEGENDARY = 5;
+    }
+
+    public function persentLian()
+    {
+        $rank = $this->rank();
+        $start_persent = $rank * 20;
+        $plus_persent = 0;
+        switch ($rank) {
+            case self::NOT:
+                $plus_persent = 20/7000*($this->ball);
+                break;
+            case self::NORMAL:
+                $plus_persent = 20/9000*($this->ball-7000);
+                break;
+            case self::GOOD:
+                $plus_persent = 20/32000*($this->ball-16000);
+                break;
+            case self::GREAT:
+                $plus_persent = 20/52000*($this->ball-48000);
+                break;
+            case self::EPIC:
+                $plus_persent = 20/152000*($this->ball-100000);
+                break;
+        }
+        $result = $start_persent + $plus_persent;
+        if ($result > 100) {
+            $result == 100;
+        }
+        return  $result;
     }
 
     public function setBan($day_ban)

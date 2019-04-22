@@ -129,7 +129,7 @@ class ProfileController extends \yii\web\Controller
                      
                     $model->logo = '/images/logo/'.$id.'/'.$model->file->baseName.'.'.$model->file->extension;
                     $model->background = '/images/background/'.$id.'/'.$model->file1->baseName.'.'.$model->file1->extension;
-                    if($model->save()){
+                    if($model->save()) {
                         $user_team = new UserTeam();
                         $user_team->id_user = $id;
                         $user_team->status = UserTeam::ACCEPTED;

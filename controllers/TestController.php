@@ -11,6 +11,9 @@ use app\models\TournamentTeam;
 use app\models\BallMatch;
 use yii\db\Expression;
 use app\models\MessageUser;
+use app\models\Tournaments;
+use app\models\EventUser;
+use app\models\UserPoint;
 
 class TestController extends \yii\web\Controller
 {
@@ -86,5 +89,16 @@ class TestController extends \yii\web\Controller
         $match->tur = 1;
         var_dump($match->save(false));
 
+    }
+
+    public function actionTour ()
+    {
+       $user = User::findOne(1);
+       $user->appraisal = 200000;
+        echo "<pre>";
+        print_r($user->persentLian().'<br>'.$user->rank());
+        echo "</pre>";exit;
+
+        //return $this->render('index',compact('user'));
     }
 }
