@@ -39,10 +39,28 @@ class LeaguePSystem extends LeagueSystem
             return false;
         }
 
+        
+
         $membersi = $this->turnir->summBal;
-        $this->turnir->winner = $membersi[0]->team_id;
-        $this->turnir->state = 2;
-        $this->turnir->save();
+
+        $count_team = count($membersi);
+        $league_p = $this->turnir->league_p;
+        if ($this->turnir->league_p < $count_team) {
+            $league_p = $count_team;
+        }
+        $team_play_off = array_slice($membersi, 0, $league_p);
+
+        $cup_system = new CupSystem($this->turnir);
+        $cup_system->players = $this->players;
+        $cup_system->createBracket();
+
+
+
+
+
+        // $this->turnir->winner = $membersi[0]->team_id;
+        // $this->turnir->state = 2;
+        // $this->turnir->save();
     }
 
 }

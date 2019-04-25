@@ -125,7 +125,7 @@ use yii\widgets\Pjax;
                     <div class="event-nav">
                         <p style="text-align: center;" >
                             <a href="http://wow.<?=$url_this?>" class="btn booking" >
-                                wordcraft
+                                Warcraft
                             </a>
                         </p>
                     </div>
@@ -216,7 +216,7 @@ use yii\widgets\Pjax;
 ?>
 <div class="tyr-game">
     <img src="/images/game/<?=$data->logo?>" style="height: 50px;" >
-    <p style="font-size: 13px;font-weight: normal;" >geme in <?=$data->name?></p>
+    <p style="font-size: 13px;font-weight: normal;" ><?=$data->name?></p>
 </div>
 <?php
     $content = ob_get_contents();

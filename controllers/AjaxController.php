@@ -339,6 +339,11 @@ class AjaxController extends \yii\web\Controller
                        and user_team.status = 2 )";     
             }
 
+            $arry_pl_count = ['>=', $sql_user_team, $tournament->max_players];
+            if(isset($t_data['terrain']) && $t_data['terrain'] == 'Battleground') {
+                $arry_pl_count = ['>=', $sql_user_team, 1];
+            }
+
             $teams = (new \yii\db\Query())->select([
                 'teams.id','teams.name',
                 'games.name as g_name',
@@ -350,7 +355,7 @@ class AjaxController extends \yii\web\Controller
             ->from('teams')->andFilterWhere([ 'and',
                 ['LIKE', 'teams.name', $post['search']],
                 ['teams.game_id' => $tournament->game_id],
-                ['>=', $sql_user_team, $tournament->max_players],
+                $arry_pl_count,
             ])->andFilterWhere([ 'or',
                 ['!=', 'tournament_team.tournament_id', $tournament->id],
                 ['is', 'tournament_team.status' , new \yii\db\Expression('null')],

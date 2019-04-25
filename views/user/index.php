@@ -21,7 +21,7 @@
                 if ($('#bonus-bal').length > 0) {
                     let sum = {$sum};
                     let y_m = {$y_m};
-                    $('#bonus-bal').teamGraphTimeseries(y_m,[sum],[0, 50, 100, 150],
+                    $('#bonus-bal').teamGraphTimeseries(y_m,[sum],[0, 100, 500, 1000, 5000, 10000],
                     '250px',true,);
                 }
             });

@@ -187,7 +187,11 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         <select class="basic" name="Tournaments[max_players]" required>
                             <option value="1"><?=Yii::t('app','One player')?></option>
                             <option value="2"><?=Yii::t('app','Two players')?></option>
+                            <option value="3">Three players</option>
                             <option value="4"><?=Yii::t('app','Four players')?></option>
+                            <option value="5">Five players</option>
+                            <!-- <option value="10">Ten players</option>
+                            <option value="15">Fifteen players</option> -->
                         </select>
                     </div>      
                 </div>

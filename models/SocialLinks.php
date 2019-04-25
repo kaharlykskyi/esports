@@ -12,7 +12,7 @@ class SocialLinks extends \yii\db\ActiveRecord
         return 'social_links';
     }
 
-    private $array_link_type = [
+    private static $array_link_type = [
         '<i class="fa fa-facebook-official" aria-hidden="true"></i>',
         '<i class="fa fa-instagram" aria-hidden="true" style="color:#a05095;"></i>',
         '<i class="fa fa-twitter" aria-hidden="true"></i>',
@@ -56,8 +56,8 @@ class SocialLinks extends \yii\db\ActiveRecord
 
     public function getIcon() 
     {
-        if(!empty($this->array_link_type[$this->social_id-1])) {
-            return $this->array_link_type[$this->social_id-1];
+        if(!empty(self::$array_link_type[$this->social_id-1])) {
+            return self::$array_link_type[$this->social_id-1];
         }
         return $this->link;
     }

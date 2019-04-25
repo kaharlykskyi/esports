@@ -818,3 +818,23 @@ input[type=url] {
     font-size: 13px;
     text-transform: unset;
 }
+
+.ikon-conteiner{
+    margin-right: 25px;
+    position: relative;
+    display: inline-block;
+}
+
+.ikon-conteiner .ikon-linc .fa{
+    font-size: 50px;
+}
+
+.ikon-conteiner .ikon-linc{
+    display: inline-block;
+}
+
+.ikon-conteiner .fantom-link{
+    position: absolute;
+    top: 0;
+    right: -15px;
+}

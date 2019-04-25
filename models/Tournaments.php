@@ -10,6 +10,7 @@ use app\models\servises\FairPlay;
 use app\models\systems\SwissSystem;
 use app\models\systems\LeagueSystem;
 use app\models\systems\LeaguePSystem;
+use app\models\systems\CupSystem;
 use app\models\events\TournamentEvent;
 
 
@@ -127,11 +128,14 @@ class Tournaments extends \yii\db\ActiveRecord
             case self::LEAGUE:
                 $this->system = new LeagueSystem($this);
                 break;
-        case self::LEAGUE_P:
+            case self::LEAGUE_P:
                 $this->system = new LeaguePSystem($this);
                 break;
             case self::SWISS:
                 $this->system = new SwissSystem($this);
+                break;
+            case self::SINGLE_E:
+                $this->system = new CupSystem($this);
                 break;
         }
     }

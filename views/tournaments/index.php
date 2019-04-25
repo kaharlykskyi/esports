@@ -19,7 +19,7 @@
     ]);
     $this->title = 'Tournament';
     $var_data = 'false';
-    if ($model->game_id == 3) {
+    if ($model->game_id == 3 && !empty($model->data)) {
        $var_data = $model->data;
     }
     $default_logo = $model->banner??false;
@@ -162,7 +162,8 @@
                 <div class="container">        
                     <div class="row">
                         <div class="col-md-12" style="margin-bottom: 35px;">
-                            <?php if(($model->format == Tournaments::SWISS) || ($model->format == Tournaments::LEAGUE)) : ?> 
+                            <?php if(($model->format == Tournaments::SWISS) || ($model->format == Tournaments::LEAGUE)
+                                    || ($model->format == Tournaments::LEAGUE_P)) : ?> 
                                <?php if(empty($model->state) && ($access==1)): ?>
                                     <?php if (in_array(count($players),[4,8,16,32,64,128,256,512])): ?>
                                         <a class="btn btn-primary btn_mobil" href="/tournaments/start?id=<?=$model->id?>" 
@@ -341,15 +342,21 @@
                                                     </label>
                                                     <div class="item select-show">
                                                         <select class="basic" name="Tournaments[max_players]" required>
-                                                            <option value="1" <?=$model->max_players == 1 ? 'selected' : '' ?> >
-                                                                <?= Yii::t('app','One player') ?>
-                                                            </option>
-                                                            <option value="2" <?=$model->max_players == 2 ? 'selected' : '' ?> >
-                                                                <?= Yii::t('app','Two players') ?>
-                                                            </option>
-                                                            <option value="4" <?=$model->max_players == 4 ? 'selected' : '' ?> >
-                                                                <?= Yii::t('app','Four players') ?>
-                                                            </option>
+                                                            <option value="1"
+                                                            <?=$model->max_players == 1 ? 'selected' : '' ?>>
+                                                            <?=Yii::t('app','One player')?></option>
+                                                            <option value="2"
+                                                            <?=$model->max_players == 2 ? 'selected' : '' ?>>
+                                                            <?=Yii::t('app','Two players')?></option>
+                                                            <option value="3"
+                                                            <?=$model->max_players == 3 ? 'selected' : '' ?>>
+                                                                Three players</option>
+                                                            <option value="4"
+                                                            <?=$model->max_players == 4 ? 'selected' : '' ?>>
+                                                            <?=Yii::t('app','Four players')?></option>
+                                                            <option value="5"
+                                                            <?=$model->max_players == 5 ? 'selected' : '' ?>>
+                                                                Five players</option>
                                                         </select>
                                                     </div>      
                                                 </div>
@@ -478,6 +485,17 @@
                         $g_data = json_decode($model->game->filed,true);
                         $g_data = ArrayHelper::index($g_data, 'name');
                     ?>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2"><b>Number of players in a team:</b></div>
+                        <div class="col-md-6">
+                            <?php if(isset($t_data['terrain']) && $t_data['terrain'] == 'Battleground'): ?>
+                                ----
+                            <?php else: ?>
+                                <?=$model->max_players?> 
+                            <?php endif; ?>
+                            player(s)
+                        </div>
+                    </div>
                     <?php if(is_array($t_data)): ?>
                     <?php foreach($t_data as $key => $val): ?>
                         <?php if(!empty($g_data[$key])): ?>

@@ -49,7 +49,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
         $this->file_logo = UploadedFile::getInstance($this,'file_logo');
         if (is_object($this->file_logo)) {
-            $now_name = time();
+            $now_name = 'logo'.time();
             $path = \Yii::getAlias('@webroot').'/images/users/'.$this->id.'/'; 
             if (!is_dir($path)) {
                 mkdir($path, 0777, true);
@@ -61,7 +61,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
         $this->file_background = UploadedFile::getInstance($this,'file_background');
         if (is_object($this->file_background)) {
-            $now_name = time();
+            $now_name = 'background'.time();
             $path = \Yii::getAlias('@webroot').'/images/users/'.$this->id.'/'; 
             if (!is_dir($path)) {
                 mkdir($path, 0777, true);

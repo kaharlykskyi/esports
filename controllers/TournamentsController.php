@@ -219,7 +219,7 @@ class TournamentsController extends \yii\web\Controller
             $cup["teams"][] = [$player_1,$player_2];
         }
         $format = 1;
-        if($model->format == Tournaments::DUBLE_E){
+        if($model->format == Tournaments::DUBLE_E) {
             $cup["results"] = [[[[]]], [], []];
             $format = 2;
         }

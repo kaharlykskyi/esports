@@ -22,50 +22,50 @@ if(($model->format != Tournaments::LEAGUE)&&(!empty($model->cup))) {
 ?>
 
 
-<?php if(!empty($turs = json_decode($model->league_table))&&($model->format == Tournaments::LEAGUE_G)): ?>
-                        <div class="row">
-                        <?php  foreach ($turs as $key => $tur): ?>
-                            <div class="col-md-12"> 
-                                <h6 style="text-align: center;"><?= Yii::t('app','GROUP') ?> <?=($key+1)?></h6>
-                                <table class="standing-full">
-                                    <tr>
-                                        <th><?= Yii::t('app','club') ?></th>
-                                        <th><?= Yii::t('app','played') ?></th>
-                                        <th><?= Yii::t('app','won') ?></th>
-                                        <th><?= Yii::t('app','drawn') ?></th>
-                                        <th><?= Yii::t('app','lost') ?></th>
-                                        <th>gd</th>
-                                        <th><?= Yii::t('app','points') ?></th>
-                                        <th><?= Yii::t('app','form') ?></th>
-                                    </tr>
-                                    <?php foreach ($tur as $teamin_group): ?>
-                                        <tr>
-                                            <td class="up">
-                                                <i class="fa fa-caret-up" aria-hidden="true"></i> 1 
-                                                <span class="team">
-                                                    <img src="<?=$teamin_group->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="team-logo"> 
-                                                </span>
-                                                <span><?=$teamin_group->name?></span>
-                                            </td>
-                                            <td>11</td>
-                                            <td>8</td>
-                                            <td>2</td>
-                                            <td>1</td>
-                                            <td>+16</td>
-                                            <td class="points"><span>26</span></td>
-                                            <td class="form">
-                                                <span class="win">w</span>
-                                                <span class="drawn">d</span>
-                                                <span class="lose">l</span>
-                                                <span class="win">w</span>
-                                                <span class="win">w</span>
-                                            </td>  
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </table>       
-                            </div>
-                        <?php endforeach; ?>
-                        </div>
+<?php if(($model->format == Tournaments::LEAGUE_G)): ?>
+        <div class="row">
+        <?php  foreach ($turs as $key => $tur): ?>
+            <div class="col-md-12"> 
+                <h6 style="text-align: center;"><?= Yii::t('app','GROUP') ?> <?=($key+1)?></h6>
+                <table class="standing-full">
+                    <tr>
+                        <th><?= Yii::t('app','club') ?></th>
+                        <th><?= Yii::t('app','played') ?></th>
+                        <th><?= Yii::t('app','won') ?></th>
+                        <th><?= Yii::t('app','drawn') ?></th>
+                        <th><?= Yii::t('app','lost') ?></th>
+                        <th>gd</th>
+                        <th><?= Yii::t('app','points') ?></th>
+                        <th><?= Yii::t('app','form') ?></th>
+                    </tr>
+                    <?php foreach ($tur as $teamin_group): ?>
+                        <tr>
+                            <td class="up">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i> 1 
+                                <span class="team">
+                                    <img src="<?=$teamin_group->logo ?? '/images/common/team-logo1.png'?>" width="30" height="30" alt="team-logo"> 
+                                </span>
+                                <span><?=$teamin_group->name?></span>
+                            </td>
+                            <td>11</td>
+                            <td>8</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>+16</td>
+                            <td class="points"><span>26</span></td>
+                            <td class="form">
+                                <span class="win">w</span>
+                                <span class="drawn">d</span>
+                                <span class="lose">l</span>
+                                <span class="win">w</span>
+                                <span class="win">w</span>
+                            </td>  
+                        </tr>
+                    <?php endforeach; ?>
+                </table>       
+            </div>
+        <?php endforeach; ?>
+        </div>
 <?php endif; ?>
 
 <?php if(!empty($teams = $model->summBal)&&($model->format == Tournaments::SWISS || $model->format ==Tournaments::LEAGUE || $model->format == Tournaments::LEAGUE_P)): ?>
@@ -112,7 +112,7 @@ if(($model->format != Tournaments::LEAGUE)&&(!empty($model->cup))) {
 <?php endif; ?>
 
 <?php if(!empty($model->cup) && ($model->format != Tournaments::LEAGUE)): ?>
-    <?php if($model->format > 2): ?>
+    <?php if($model->format > Tournaments::LEAGUE): ?>
         <div class="row">
              <div class="col-md-12">
                 <h6 style="text-align: center;" >

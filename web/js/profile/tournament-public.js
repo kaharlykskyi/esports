@@ -59,7 +59,8 @@ $(document).ready(function(){
                     $.wowData = false;
                 } 
             } else {
-                    let val = $('.sistem_wow').find('option:selected').val();
+                let val = $('.sistem_wow').find('option:selected').val();
+                if(!$('.select_dungeon').length) {
                     if (val == 'Bo1') {
                         andeground(2);
                     }
@@ -69,6 +70,7 @@ $(document).ready(function(){
                     if (val == 'Bo5') {
                         andeground(4);
                     }
+                }
             }   
         } 
     }
@@ -162,7 +164,7 @@ $(document).ready( function() {
     function searchMix (data) {
         const fdata = FSsrf();
         fdata.append('search',data);
-        fdata.append('flag',window.data_flag);
+        //fdata.append('flag',window.data_flag);
         fdata.append('tournament_id',window.data_tournament_id);
         let statechange = function() {
             if(this.readyState == 4) {
@@ -295,7 +297,7 @@ $(document).ready( function() {
     }
 
     $('#myModal1').on('shown.bs.modal', function (e) {
-        window.data_flag = $(e.relatedTarget).attr('data-flag');
+        //window.data_flag = $(e.relatedTarget).attr('data-flag');
         window.data_tournament_id = $(e.relatedTarget).attr('data-tournament-id');
     });
 

@@ -10,7 +10,7 @@ use Yii;
 
 class LeagueSystem extends TournamentSystem
 {
-	protected function init ()
+    protected function init ()
     {
         $players = $this->players;
         shuffle($players);
@@ -20,8 +20,8 @@ class LeagueSystem extends TournamentSystem
         $players_turs = [];
 
         $players_turs = $this->generateLeague($players,$ch);
-        $this->turnir->createSchedule($players_turs,Tournaments::LEAGUE);
-        $this->turnir->save(false);
+        $this->turnir->createSchedule($players_turs,ScheduleTeams::FM_LEAGUE);
+        //$this->turnir->save(false);
             
     }
 
@@ -30,7 +30,7 @@ class LeagueSystem extends TournamentSystem
             $c = count($players);
             $players_turs = [];
             if (!$ch) {
-                array_unshift($players, ['name'=>'bolvan']);
+                array_unshift($players, ['name'=>'bolvanka']);
             }
             $a =$c/2;
             $mass_temp = [];
@@ -78,9 +78,9 @@ class LeagueSystem extends TournamentSystem
 
     public function addMatch (ScheduleTeams $model) 
     {
-    	$this->summBal($model);
+        $this->summBal($model);
 
-    	$matches = ScheduleTeams::find()->where([
+        $matches = ScheduleTeams::find()->where([
             'tournament_id' => $model->tournament_id,
             'tur' => $model->tur,
         ])->all();

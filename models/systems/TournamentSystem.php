@@ -36,7 +36,7 @@ abstract class TournamentSystem
         }
 
         $this->init();
-        $this->turnir->save();
+        $this->turnir->save(false);
     }
 
     protected function winAndLoss (array $matches)

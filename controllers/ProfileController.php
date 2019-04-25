@@ -269,17 +269,14 @@ class ProfileController extends \yii\web\Controller
         }       
     }
 
-    public function actionDelLink ()
+    public function actionDelLink ($id)
     {
-        if (Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost && !Yii::$app->user->isGuest) {
             $user = Yii::$app->user->identity;
-            $post = Yii::$app->request->post();
-            if(!empty($post['link_id'])) {
                 $social = SocialLinks::find()
-                ->where(['user_id'=>$user->id,'id'=>$post['link_id']])->one();
+                ->where(['user_id'=>$user->id,'id'=>$id])->one();
                 if (is_object($social)) {
                     $social->delete();
-                }
             }
         }
         return $this->redirect('/profile#settings');

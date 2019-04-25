@@ -135,10 +135,10 @@ class SiteController extends Controller
                     'value' => 'refiral',
                     'expire' => time() + 86400 * 365,
                 ]));
-               SocialPoint::followLinks ($user);
+               SocialPoint::followLinks($user);
             }
         }
-        return $this->redirect(['index']);
+        return $this->redirect(['site/register']);
     }
 
     public function actionLogin()
@@ -171,7 +171,7 @@ class SiteController extends Controller
             if($model->register()) {
                 $email = Yii::$app->user->identity->email;
                 $tokin = (string)bin2hex(random_bytes(24));
-                $user = $user = User::findOne(['email' => $email]);
+                $user = User::findOne(['email' => $email]);
                 $user->tokin_conf = $tokin;
                 if ($user->save()) {
                     $this->sendEmail($email,$tokin);
@@ -273,12 +273,13 @@ class SiteController extends Controller
                 'confirmation_tokin'=> $stringTokin,'email' => $email,
             ], true);
         $a = Html::a('<b>'.Yii::t('app','Follow the link to confirm your email').'</b>',$url);
-        Yii::$app->mailer->compose()
+        $maller = Yii::$app->mailer;
+        $maller->compose(['html' => 'views/confirmation'], compact('a'))
             ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo($email)
             ->setSubject(Yii::t('app','Registration'))
-            ->setTextBody('<p>'.Yii::t('app','Confirmation of registration').'</p>')
-            ->setHtmlBody($a)
+            //->setTextBody('<p>'.Yii::t('app','Confirmation of registration').'</p>')
+            //->setHtmlBody($a)
             ->send();
     }
 }

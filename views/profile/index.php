@@ -97,7 +97,7 @@
                 </li> 
                 <li >
                     <a id="game-setings" data-toggle="tab" href="#game-seting">
-                        <?=Yii::t('app','Settings game')?>
+                        Overwatch settings
                     </a>
                 </li>
             </ul>
@@ -606,15 +606,13 @@
                                 <?php $social_links = $user->social_links; ?>
                                 <div class="col-sm-8 col-sm-offset-2">
                                 <?php foreach($social_links as $link ): ?>
-                                    <span>
-                                        <form action="/profile/del-link" method="post" >
-                                             <?=Html::hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []);?>
-                                            <a href="<?=$link->link?>"><?=$link->link?></a>
-                                            <input type="hidden" value="<?=$link->id?>" name="link_id">
-                                            <button class="fantom-link" title='delete link'>
-                                                <span style="color:red;" class="glyphicon glyphicon-remove-circle"></span>
-                                            </button>
-                                        </form>
+                                    <span class="ikon-conteiner">
+                                        <a href="<?=$link->link?>" class="ikon-linc">
+                                            <?=$link->getIcon()?>
+                                        </a>
+                                        <a href="/profile/del-link?id=<?=$link->id?>" class="fantom-link" title='delete link' data-method="post">
+                                            <span style="color:red;" class="glyphicon glyphicon-remove-circle"></span>
+                                        </a> 
                                     </span> 
                                 <?php endforeach; ?>
                                 </div>

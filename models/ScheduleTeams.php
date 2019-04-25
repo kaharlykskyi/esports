@@ -9,7 +9,13 @@ use app\models\events\MatchEvent;
 
 class ScheduleTeams extends \yii\db\ActiveRecord
 {
-    
+    /*
+        Format match
+    */
+    const FM_CUP = 1;
+    const FM_DCUP = 2;
+    const FM_LEAGUE = 3;
+
     public static function tableName()
     {
         return 'schedule_teams';
@@ -141,12 +147,12 @@ class ScheduleTeams extends \yii\db\ActiveRecord
     private function addMatch()
     {
         if ($this->format == 1) {
-            $this->addMatchSingle();
+            $this->tournament->system->addMatch($this);//$this->addMatchSingle();
         } elseif ($this->format == 2) {
             $this->addMatchDuble();
         } elseif ($this->format == 3) {
            $this->tournament->system->addMatch($this);
-        } elseif ($this->format == 6) {
+        } elseif ($this->format == 4) {
             $this->tournament->system->addMatch($this);
         } elseif ($this->format == 6) {
             $this->tournament->system->addMatch($this);
@@ -167,7 +173,6 @@ class ScheduleTeams extends \yii\db\ActiveRecord
         if (!empty($result[0])) {
             $this->tournament->addCupSingle($result[0]);
         }
-       
     }
 
     private function addMatchDuble()
