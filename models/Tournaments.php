@@ -12,6 +12,7 @@ use app\models\systems\LeagueSystem;
 use app\models\systems\LeaguePSystem;
 use app\models\systems\CupSystem;
 use app\models\events\TournamentEvent;
+use yii\db\Expression;
 
 
 class Tournaments extends \yii\db\ActiveRecord
@@ -31,7 +32,9 @@ class Tournaments extends \yii\db\ActiveRecord
     const TEAMS = 2;
     const MIXED = 3;
 
+    const STARTED = 1;
     const FINISHED = 2;
+    
     const PRIVATE_T = 1;
 
     public $system;
@@ -251,7 +254,12 @@ class Tournaments extends \yii\db\ActiveRecord
     {
         $models = $this->getTournamentTeam()
             ->select('team_id')->where(['status' => TournamentTeam::ACCEPTED]);
-        $team = Teams::find()->where(['in','id',$models])->andWhere(['capitan' => $id])->all();
+        $team = Teams::find()->where(['and',
+            ['in', 'id', $models],
+            ['capitan' => $id],
+            ['is', 'single_user', new Expression('null')]
+        ])->one();
+
         if (is_null($team)) {
             return false;
         }

@@ -3,6 +3,7 @@
 namespace app\models\points;
 
 use app\models\Tournaments;
+use app\models\ScheduleTeams;
 use yii\helpers\Html;
 use app\models\EventUser;
 use app\models\UsetTeamTournament;
@@ -37,11 +38,11 @@ class  PlayPoint {
         foreach ($uset_team_tournaments as $key => $uset_team_tournament) {
 
             $sql = "select count(id) from event_user where  user_id = {$uset_team_tournament->user->id}
-                and type = ".EventUser::PLAY." and type_event ".EventUser::PLAY_TOURNAMENT;
+                and type = ".EventUser::PLAY." and type_event = ".EventUser::PLAY_TOURNAMENT;
             $count_tournaments= (new \yii\db\Query())->select([
-                "({$sql} and event ".EventUser::PLAY_LEAGUE.") as league,
-                 ({$sql} and event ".EventUser::PLAY_CUP.") as cup,
-                 ({$sql} and event ".EventUser::PLAY_SWISS.") as swiss
+                "({$sql} and event = ".EventUser::PLAY_LEAGUE.") as league,
+                 ({$sql} and event = ".EventUser::PLAY_CUP.") as cup,
+                 ({$sql} and event = ".EventUser::PLAY_SWISS.") as swiss
                 "
             ])->from('event_user')->one();
 
@@ -116,11 +117,11 @@ class  PlayPoint {
         foreach ($user_teams as $key => $user_team) {
 
             $sql = "select count(id) from event_user where  user_id = {$user_team->user->id}
-                and type = ".EventUser::PLAY." and type_event ".EventUser::PLAY_MATCH;
+                and type = ".EventUser::PLAY." and type_event = ".EventUser::PLAY_MATCH;
             $count_matches = (new \yii\db\Query())->select([
-                "({$sql} and event ".EventUser::PLAY_LEAGUE.") as league,
-                 ({$sql} and event ".EventUser::PLAY_CUP.") as cup,
-                 ({$sql} and event ".EventUser::PLAY_SWISS.") as swiss
+                "({$sql} and event = ".EventUser::PLAY_LEAGUE.") as league,
+                 ({$sql} and event = ".EventUser::PLAY_CUP.") as cup,
+                 ({$sql} and event = ".EventUser::PLAY_SWISS.") as swiss
                 "
             ])->from('event_user')->one();
             $summ = array_sum($count_matches);

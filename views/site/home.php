@@ -8,9 +8,11 @@ use app\models\servises\FlagServis;
 use yii\widgets\Pjax;
 
     $this->registerCssFile('css/tournament-statistics.css', ['depends' => ['app\assets\AppAsset']]);
+    $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/home.js',['depends' => 'yii\web\JqueryAsset','position' => yii\web\View::POS_END]);
     $this->title = "Esports";
     $i_count = 0;
     $url_this = $_SERVER['HTTP_HOST'];
+
 ?>
 
 
@@ -160,7 +162,11 @@ use yii\widgets\Pjax;
         <?php elseif($data->state == 2): ?>
         <span class="finihed" >Finihed</span>
         <?php endif; ?>
-        <a href="/tournaments/public/<?=$data->id?>"><span class="overwatch" >Overwatch</span></a>
+        <a href="/tournaments/public/<?=$data->id?>">
+            <span class="overwatch <?=$data->game->alias?>" >
+                <?=$data->game->name?>
+            </span>
+        </a>
     </div>
    <h6><?=$data->name?></h6>
    <div class="t-prize" >
@@ -194,7 +200,7 @@ use yii\widgets\Pjax;
                     <img src="<?=$match->teamF->logo()?>" >
                 </div>
                 <div class="date">
-                    <span><?=date('dS F Y, H:m', strtotime($match->date))?></span>
+                    <b><?=date('dS F Y, H:m', strtotime($match->date))?></b>
                 </div>
             </div>
             </a>
@@ -216,7 +222,6 @@ use yii\widgets\Pjax;
 ?>
 <div class="tyr-game">
     <img src="/images/game/<?=$data->logo?>" style="height: 50px;" >
-    <p style="font-size: 13px;font-weight: normal;" ><?=$data->name?></p>
 </div>
 <?php
     $content = ob_get_contents();
@@ -280,7 +285,7 @@ use yii\widgets\Pjax;
 </div>
 
 
-<?php Pjax::begin(['enablePushState' => false]); ?>
+<?php Pjax::begin(['enablePushState' => false,'id' =>'tour-pj']); ?>
 <div class="container">
     <h3 style="text-align: center;" >
         <?=Yii::t('app','Tournament statistics')?>
@@ -357,6 +362,17 @@ use yii\widgets\Pjax;
                     }
                 ],
                 [
+                    'attribute'=> 'game_id',
+                    'label' => Yii::t('app','Game'),
+                    'contentOptions' => ['style' => 'width:80px;'],
+                    'content' => function($data) use ($func_game) {
+                        if (!is_object($data->game)) {
+                            return 'Not game';
+                        }
+                        return $func_game($data->game);
+                    },
+                ],
+                [
                     'attribute'=> 'name',
                     'label'=> Yii::t('app','Tournament name'),
                     'content' => function($data) use ($func) {
@@ -366,16 +382,6 @@ use yii\widgets\Pjax;
                 [                
                     'content' => function($data) use ($func_stage) {
                         return $func_stage($data);
-                    },
-                ],
-                [
-                    'attribute'=> 'game_id',
-                    'label' => Yii::t('app','Game'),
-                    'content' => function($data) use ($func_game) {
-                        if (!is_object($data->game)) {
-                            return 'Not game';
-                        }
-                        return $func_game($data->game);
                     },
                 ],
             ],

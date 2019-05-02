@@ -213,7 +213,7 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
 
 
 
-                <?php  
+                <?php 
                 echo $form->field($model, 'start_date')->widget(DateTimePicker::className(),[
                     //'name' => 'datetime_10',
                     //'value' => '01-Jan-2017 10:00',
@@ -228,6 +228,9 @@ $this->registerJsFile(\Yii::$app->request->baseUrl . '/js/profile/tournaments.js
                         'startDate' => date("Y-m-d H:i"),//'2018-08-22 02:55'
                         'todayHighlight' => true
                 ]]); ?>
+                <p class='date-info'>
+                    <?=Yii::t('app','Please note, that the date and time selection are used here to inform about the beginning of the tournament')?>
+                </p>
 
                 
                 <div class="row"  style="margin:45px 0;" >

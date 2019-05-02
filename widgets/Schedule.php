@@ -10,6 +10,20 @@ class Schedule extends Widget
 
     public function run()
     {
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         return $this->render('schedule',['turs'=>$this->turs,'wiget'=>$this]);
         
     }

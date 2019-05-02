@@ -284,5 +284,6 @@ return [
     'cards statistics' => 'estadísticas de tarjetas',
     'card' => 'tarjeta',
     'Name Card' => 'Nombre de tarjeta',
+    'Please note, that the date and time selection are used here to inform about the beginning of the tournament' => 'Tenga en cuenta que la selección de fecha y hora se utiliza aquí para informar sobre el inicio del torneo',
 
 ];

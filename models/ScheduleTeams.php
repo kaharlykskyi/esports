@@ -73,8 +73,8 @@ class ScheduleTeams extends \yii\db\ActiveRecord
                UserServis::scheduleUsers($this, $this->tournament_id); 
             }     
         } else {
+            $this->tournament->system->addMatch($this);
             MatchEvent::played($this);
-            $this->addMatch();
             
         }
 
@@ -128,7 +128,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
                     $arry_result[] = 1;
                 } elseif ($match->results1<$match->results2) {
                     $arry_result[] = 2;
-                } elseif ($match->results1 == $match->results2){
+                } elseif ($match->results1 == $match->results2) {
                     $arry_result[] = 3;
                 }
             } elseif ($match->team2 == $team_id) {
@@ -136,7 +136,7 @@ class ScheduleTeams extends \yii\db\ActiveRecord
                     $arry_result[] = 1;
                 } elseif ($match->results2<$match->results1) {
                     $arry_result[] = 2;
-                } elseif ($match->results1 == $match->results2){
+                } elseif ($match->results1 == $match->results2) {
                     $arry_result[] = 3;
                 }
             }

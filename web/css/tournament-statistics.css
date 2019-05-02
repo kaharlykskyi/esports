@@ -182,6 +182,18 @@
     background-color: #ff9800;
 }
 
+.tournaments-table .info-stage .overwatch.wow{
+    background-color: #50432d;
+}
+
+.tournaments-table .info-stage .overwatch.pokemon{
+    background-color: #b52b0a;
+}
+
+.tournaments-table .info-stage .overwatch.hearthstone{
+    background-color: #ce8d2e;
+}
+
 .tournaments-table .info-stage .uncoming{
     background-color: #2196f3;
 }

@@ -286,7 +286,7 @@ return [
     'cards statistics' => 'cartes statistiques',
     'card' => 'carte',
     'Name Card' => 'Carte d\'identité',
-
+    'Please note, that the date and time selection are used here to inform about the beginning of the tournament' => 'Veuillez noter que la sélection de date et heure est utilisée ici pour informer du début du tournoi.'
 
 
 ];

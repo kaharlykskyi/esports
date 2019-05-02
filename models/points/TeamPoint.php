@@ -15,7 +15,7 @@ class TeamPoint {
     {
         $user = $team->capitans;
         (new EventUser())->create($user->id, EventUser::TEAM, null, EventUser::CREATE_TEAM);
-        $cteate_teams = EventUser()->find()->where([
+        $cteate_teams = EventUser::find()->where([
             'user_id' => $user->id,
             'type' => EventUser::TEAM,
             'event' => EventUser::CREATE_TEAM
@@ -61,13 +61,13 @@ class TeamPoint {
             foreach ($uset_team_tournaments as $uset_team_tournament) {
                 $user = $uset_team_tournament->user;
                 $sql = "select count(id) from event_user where  user_id = {$user->id}
-                and type = ".EventUser::TEAM." and type_event ".EventUser::PARTICIPE;
+                and type = ".EventUser::TEAM." and type_event = ".EventUser::PARTICIPE;
                 $count_tournaments = (new \yii\db\Query())->select([
-                    "({$sql} and event ".User::NORMAL.") as normal,
-                     ({$sql} and event ".User::GOOD.") as good,
-                     ({$sql} and event ".User::GREAT.") as great,
-                     ({$sql} and event ".User::EPIC.") as epic,
-                     ({$sql} and event ".User::LEGENDARY.") as legendary
+                    "({$sql} and event = ".User::NORMAL.") as normal,
+                     ({$sql} and event = ".User::GOOD.") as good,
+                     ({$sql} and event = ".User::GREAT.") as great,
+                     ({$sql} and event = ".User::EPIC.") as epic,
+                     ({$sql} and event = ".User::LEGENDARY.") as legendary
                     "
                 ])->from('event_user')->one();
 

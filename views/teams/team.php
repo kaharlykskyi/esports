@@ -192,14 +192,21 @@
                         <form action="/team/contact/<?=$team->id?>" method="POST" >
                             <div class="row">
                                 <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam, \Yii::$app->getRequest()->getCsrfToken(), []);?>
+                                <?php if(!Yii::$app->user->isGuest) {
+                                    $us_name = Yii::$app->user->identity->name;
+                                    $us_email = Yii::$app->user->identity->email;
+                                } else {
+                                    $us_name = '';
+                                    $us_email = '';
+                                } ?>
                                 <div class="col-md-12">
                                     <div class="item">
-                                        <input type="text" value="<?=Yii::$app->user->identity->name?>" name="name" placeholder="Your Name" required>
+                                        <input type="text" value="<?=$us_name?>" name="name" placeholder="Your Name" required>
                                     </div>  
                                 </div>
                                 <div class="col-md-12">
                                     <div class="item">
-                                        <input type="email" value="<?=Yii::$app->user->identity->email?>" name="email" placeholder="Email" required>
+                                        <input type="email" value="<?=$us_email?>" name="email" placeholder="Email" required>
                                     </div>  
                                 </div>
                                 <div class="col-md-12">

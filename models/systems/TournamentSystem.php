@@ -22,7 +22,7 @@ abstract class TournamentSystem
     public function start ()
     {
 
-    	$this->turnir->state = 1;
+    	$this->turnir->state = Tournaments::STARTED;
         if(strtotime($this->turnir->start_date) < strtotime('+30 minute',time())) {
             $this->turnir->start_date = date("Y-m-d H:i",strtotime('+50 minute',time()));
         }

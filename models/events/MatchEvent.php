@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use app\models\MessageUser;
 use app\models\ResultsStatistics;
 use app\models\TeamHistory;
+use app\models\points\PlayPoint;
 
 class MatchEvent {
 

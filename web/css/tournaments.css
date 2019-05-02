@@ -268,6 +268,13 @@ table tr td:first-child {
     -webkit-user-select: none;
     user-select: none;
 }
+
+.date-info{
+    font-size: 12px;
+    color:green;
+    margin-top: -10px;
+}
+
 hr {
     margin-top: 3px  !important ;
     margin-bottom: 3px  !important ;

@@ -72,7 +72,9 @@ class Teams extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         if ($insert) {
-            TeamPoint::createTeam ($this);
+            if (!$this->single_user) {
+                TeamPoint::createTeam ($this);
+            }
         }
         parent::afterSave($insert, $changedAttributes);
     }
@@ -227,7 +229,7 @@ class Teams extends \yii\db\ActiveRecord
         $tournament_team->tournament_id = $tournament->id;
         $tournament_team->team_id = $model->id;
         if ($tournament_team->save()) {
-            if(($tournament->game_id==1)||($tournament->game_id==2)) {
+            if(($tournament->game_id==1)||($tournament->game_id==2)||($tournament->game_id==3)) {
                 (new UsetTeamTournament)->seveMembersTournament([$user->id],$tournament,$model,false);
                 $url ='<a href="'.Url::toRoute(['api-string','id' => $tournament->id], true).'">link</a>' ;
                 $text_meesage = "<p> ".Yii::t('app','To participate in the tournament, enter the data')." {$url} </p>";

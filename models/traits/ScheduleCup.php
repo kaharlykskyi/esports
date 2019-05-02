@@ -39,7 +39,7 @@ trait ScheduleCup {
         $array_cub['results'][$tur-1] = $result_arry;
 
         $this->cup = json_encode($array_cub);
-        $this->save();
+        $this->save(false);
     }
 
     public function addCupDuble($results)

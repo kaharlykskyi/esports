@@ -165,14 +165,14 @@
                             <?php if(($model->format == Tournaments::SWISS) || ($model->format == Tournaments::LEAGUE)
                                     || ($model->format == Tournaments::LEAGUE_P)) : ?> 
                                <?php if(empty($model->state) && ($access==1)): ?>
-                                    <?php if (in_array(count($players),[4,8,16,32,64,128,256,512])): ?>
+                                    <?php if (count($players)%2==0): ?>
                                         <a class="btn btn-primary btn_mobil" href="/tournaments/start?id=<?=$model->id?>" 
                                             data-method="post">
                                             Start tournament
                                         </a>
                                     <?php else: ?>
                                         <p style="color:red;">
-                                            <?= Yii::t('app','The number of teams in the tournament must be 4,8,16,32') ?>
+                                            The number of participants must be even
                                         </p> 
                                     <?php endif; ?>
                                <?php endif; ?>
@@ -180,12 +180,10 @@
                            <?php if(($model->format == Tournaments::SINGLE_E) || ($model->format == Tournaments::DUBLE_E)): ?> 
                                <?php if(empty($model->state) && ($access==1)): ?>
                                     <?php if (in_array(count($players),[4,8,16,32,64,128,256,512])): ?>
-                                        <form action="/tournaments/add-schedule?id=<?=$model->id?>" method="POST"  >
-                                            <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
-                                             <div  >
-                                                <?= Html::submitButton(Yii::t('app','Start tournament'), ['class' => 'btn btn-primary btn_mobil']) ?>
-                                             </div>
-                                        </form>
+                                        <a class="btn btn-primary btn_mobil" href="/tournaments/start?id=<?=$model->id?>" 
+                                            data-method="post">
+                                            Start tournament
+                                        </a>
                                     <?php else: ?>
                                         <p style="color:red;">
                                             <?= Yii::t('app','The number of teams in the tournament must be 4,8,16,32') ?>

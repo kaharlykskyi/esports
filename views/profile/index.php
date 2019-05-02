@@ -56,8 +56,9 @@
                                 </a>
                                 <div class="user-data">
                                     <h2 class="user-data-h2">
-                                        <?= $user->name ?>
-                                    </h2> @<?= $user->username ?>
+                                        @<?= $user->username ?>
+                                    </h2> 
+                                    <?= $user->name ?>
                                     <div class="youplay-user-activity"></div>
                                 </div>
                             </div>
@@ -387,6 +388,11 @@
                                                 private<?=$tournament->private?>">
                                         <img src="<?=$tournament->getLogo()?>" alt="logo">
                                     </p>
+                                </td>
+                                <td  style="width: 90px;text-align: center;"> 
+                                    <img src="/images/game/<?=$tournament->game->logo?>" 
+                                        style="height: 60px;"
+                                    alt="logo">
                                 </td>
                                 <td>
                                     <p class="name"> 

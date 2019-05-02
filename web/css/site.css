@@ -484,5 +484,18 @@ input:focus[type='email'], input:focus[type='password'],
     color: #1f7ad3;
     font-weight: bold;
 }
+/*//////////////////////////////////////////////////////////////*/
+.datetimepicker table tr th, .datetimepicker table tr th,.datetimepicker table tr th {
+    text-align: center;
+    background-color: #fcfcfc !important;;
+    width: 32px;
+    height: 32px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: none;
+}
 
-
+.dropdown-menu {
+    background-color: #f0f0f3;
+}
