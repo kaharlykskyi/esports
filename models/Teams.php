@@ -104,6 +104,17 @@ class Teams extends \yii\db\ActiveRecord
         return $this->hasMany(SponsorTeam::className(), ['team_id' => 'id']);
     }
 
+    public function getTournamentTeams()
+    {
+        return $this->hasMany(TournamentTeam::className(), ['team_id' => 'id']);
+    }
+
+    public function getTournamentTeam(int $id)
+    {
+        return $this->hasMany(TournamentTeam::className(), ['team_id' => 'id'])
+            ->where(['tournament_id' => $id]);
+    }
+
     public function getHistory()
     {
         return $this->hasMany(TeamHistory::className(), ['team_id' => 'id'])
@@ -168,7 +179,9 @@ class Teams extends \yii\db\ActiveRecord
 
     public static function getInviteEmailHtml($a, $user, $team, $capitanEmail)
     {
-        return Yii::t('app','<p>Hello {user_name},</p><p>The <b>{team_name}</b> team invites you to become part of its players. To <b>accept</b> or <b>decline</b> the invitation click the link below: </p><p><a href="{link}">{link}</a></p><p>Finally, if you want more information, contact <b>{team_name}</b> through their website, or through their captain, by email {email}.</p><p>We hope you enjoy competing in our tournaments.</p><p>Sincerely.</p><p>The organization.</p>',
+        return Yii::t('app','<p>Hello {user_name},</p><p>The <b>{team_name}</b> team invites you to become part of its players. To <b>accept</b> or <b>decline</b> the invitation click the link below: </p>
+            <p> <a href="{link}" > Click linkc </a> </p>
+            <p>Finally, if you want more information, contact <b>{team_name}</b> through their website, or through their captain, by email {email}.</p><p>We hope you enjoy competing in our tournaments.</p><p>Sincerely.</p><p>The organization.</p>',
                 [
                     'user_name'=> $user->name,
                     'team_name'=> $team->name,

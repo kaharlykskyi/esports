@@ -826,11 +826,59 @@ div.jQBracket .team.lose div.score::after {
 .edgtf-match-date {
     font-size: 13px;
 }
-/*////////////////////end-matchess/////////////////////////*/
+/*=========================================end-matchess==========================================*/
 .btn-link-buf{
     padding: 5px 20px;
     font-size: 12px;
     text-transform: unset;
     margin-left: 25px;
 
+}
+
+.item-patrisipan {
+    position: relative;
+}
+
+.delete-team-tour{
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    cursor: pointer;
+    padding: 1px 5.5px;
+    border-radius: 4px;
+    background-color: #ececec;
+    color: #d85e5e;
+}
+
+.delete-team-tour:hover{
+    background-color: #e6e6e6;
+}
+
+#participation_requests .country img{
+    height: 20px;
+    margin-right: 15px;
+}
+
+#participation_requests .country{
+    font-size: 14px;
+}
+
+#participation_requests .requests .btn{
+    padding: 8px 20px;
+    font-size: 14px;
+}
+
+#participation_requests .requests,#participation_requests .mes_us {
+    float: right;
+    margin-top: 15px;
+}
+
+#participation_requests .mes_us.sent,#participation_requests .requests .sent{
+    color:green;
+    font-weight: bold;
+}
+
+#participation_requests .mes_us.dec{
+    color:red;
+    font-weight: bold;
 }

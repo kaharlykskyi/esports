@@ -11,6 +11,7 @@ class TournamentUser extends \yii\db\ActiveRecord
     const SENT = 1;
     const ACCEPTED = 2;
     const DECLINED = 3;
+    const PART_REQUESTS = 4;
 
     public static function tableName()
     {
@@ -42,6 +43,6 @@ class TournamentUser extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

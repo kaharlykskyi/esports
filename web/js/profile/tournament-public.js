@@ -28,7 +28,7 @@ $(document).ready(function(){
         $('.system_select').append(`<div class="system_select_message">With the selected format, each player will have ${i} decks, and will be able to ban a deck of the opponent.</div>`);
     });
 
-///////////////////////////////WOW//////////////////////////////////////////
+        ///////////////////////////////WOW//////////////////////////////////////////
 
     $('.select_format').find('.options').find('li').on('click',function() {
         let value = $(this).text();
@@ -396,7 +396,13 @@ $(document).ready( function() {
         window.getSelection().removeAllRanges();
 
     });
-
+    ///=================================================================///
+    $('.delete-team-tour').on('click', function(e) {
+        if (confirm('Confirm removal from the tournament')) {
+            let data = $(e.target).parents('.item-patrisipan').data();
+            window.location.href = `/tournaments/del-participant?tour=${data.tour}&pat=${data.pat}`;
+        } 
+    });
 });
 
 

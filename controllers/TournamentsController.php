@@ -327,4 +327,63 @@ class TournamentsController extends \yii\web\Controller
         }
         
     }
+
+    public function actionDelParticipant($tour, $pat) 
+    {
+        $user = Yii::$app->user->identity;
+        if(is_numeric($tour) && is_numeric($pat)) {        
+            $tour_team = TournamentTeam::find()->where([
+                'and',
+                ['team_id' => $pat],
+                ['tournament_id' => $tour],
+                ['status' =>  TournamentTeam::ACCEPTED]
+            ])->one();
+
+            if(is_object($tour_team) && ($tour_team->tournament->user_id == $user->id)) {
+                if(!$tour_team->tournament->state) {
+
+                    $transaction = Yii::$app->db->beginTransaction();
+                    $delete = UsetTeamTournament::deleteAll([
+                        'tournament_id' => $tour, 
+                        'team_id' => $pat,
+                    ]);
+                    if ($tour_team->delete() && $delete) {
+                        $transaction->commit();   
+                    } else {
+                        $transaction->rollback();
+                    }
+                }
+            }
+        }
+        return $this->redirect('/tournaments/public/'.$tour);     
+    }
+
+    public function actionRequestPatric(int $tour, int $team = null) 
+    {
+        if ($team) {
+            $connection = TournamentTeam::find()->where([
+                'tournament_id' => $tour,
+                'team_id' => $team,
+            ])->one();
+            if (!is_object($connection)) {
+                $connection = new TournamentTeam();
+                $connection->team_id = $team;
+                $connection->tournament_id = $tour;
+            }
+        } else {
+            $connection = TournamentUser::find()->where([
+                'tournament_id' => $tour,
+                'user_id' => Yii::$app->user->id,
+            ])->one();
+            if (!is_object($connection)) {
+                $connection = new TournamentUser();
+                $connection->user_id = Yii::$app->user->id;
+                $connection->tournament_id = $tour;
+            }
+        }
+        $connection->status = 4;
+        $connection->save(false);
+
+        return $this->redirect('/tournaments/public/'.$tour);
+    }
 }

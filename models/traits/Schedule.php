@@ -47,6 +47,19 @@ trait Schedule {
         $this->save(false);
     }
 
+    public function getSchedules($format)
+    {
+        $teams = ScheduleTeams::find()
+            ->where([
+                'tournament_id' => $this->id,
+                'format' => $format,
+            ])->orderBy([
+                'schedule_teams.group' => SORT_ASC,
+                'schedule_teams.tur' => SORT_ASC
+            ])->all();
+        return $teams;
+    }
+
     public function getScheduleCup()
     {
         $teams = (new \yii\db\Query())
@@ -102,13 +115,6 @@ trait Schedule {
     }
 
 
-    public function getSchedules()
-    {
-        $teams = ScheduleTeams::find()
-            ->where(['tournament_id' => $this->id])
-            ->orderBy(['schedule_teams.group' => SORT_ASC,'schedule_teams.tur' => SORT_ASC])
-            ->all();
-        return $teams;
-    }
+
 
 }

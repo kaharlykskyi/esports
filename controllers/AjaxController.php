@@ -86,7 +86,12 @@ class AjaxController extends \yii\web\Controller
         $post = Yii::$app->request->post();
          if (!empty($post['id_user']) && !empty($post['id_team']) ) {
             $stringTokin = (string)bin2hex(random_bytes(24));
-            $user_team = UserTeam::find()->where(['id_user' => $post['id_user']])->andWhere(['id_team' => $post['id_team'],])->one();
+            $user_team = UserTeam::find()
+                ->where([
+                    'id_user' => $post['id_user'],
+                    'id_team' => $post['id_team']
+                ])->one();
+
             if (!is_object($user_team)) {
                 $user_team = new UserTeam();
                 $user_team->id_user = $post['id_user'];
@@ -101,14 +106,19 @@ class AjaxController extends \yii\web\Controller
                 if (is_object($user)) {
                     $url = Url::toRoute(['profile/confirmation-team','confirmation_tokin'=> $stringTokin, 'email' => $user->email,], true);
                     $a = Html::a($url,$url);
-                    $inviteHtml = Teams::getInviteEmailHtml($a, $user, $team, $capitanEmail);
+                    $inviteHtml = Teams::getInviteEmailHtml($url, $user, $team, $capitanEmail);
                     Yii::$app->mailer->compose()
                         ->setFrom([Yii::$app->params['adminEmail'] => Yii::t('app','The organization')])
                         ->setTo([$user->email => $user->name])
                         ->setSubject(Yii::t('app','New invitation to the {name} team',['name' => $team->name]))
                         ->setTextBody(Yii::t('app','New invitation to the {name} team',['name' => $team->name]))
                         ->setHtmlBody($inviteHtml)
-                        ->send();    
+                        ->send(); 
+                    (new MessageUser())->writeTitle("Invitation to join the team")
+                        ->writeType(MessageUser::TEAM)
+                        ->writeMessage(
+                            $team->capitan, $post['id_user'], $inviteHtml
+                        );   
                 }
             }
         }
@@ -374,19 +384,29 @@ class AjaxController extends \yii\web\Controller
     public function actionInviteTournament () {
 
         $post = Yii::$app->request->post();
+        if (!is_numeric($post['user_id']) && !is_numeric($post['tournament_id'])) {
+            return ['sent' => false]; 
+        }
         $user = User::findOne($post['user_id']); 
         $tournament = Tournaments::findOne($post['tournament_id']);
         if (is_object($user) && is_object($tournament)) {
             $tokin = (string)bin2hex(random_bytes(24));
-            if(!empty($post['team_id'])) {
+            if(!empty($post['team_id']) && is_numeric($post['team_id'])) {
                 $team = Teams::findOne($post['team_id']); 
                 if (is_object($team)) {
-                    $tournament_team = new TournamentTeam();
+                    $tournament_team = TournamentTeam::find()->where([
+                            'tournament_id' => $post['tournament_id'], 
+                            'team_id' => $post['team_id']
+                        ])->one();
+                    if (!is_object($tournament_team)) {
+                        $tournament_team = new TournamentTeam();
+                        $tournament_team->tournament_id = $tournament->id; 
+                        $tournament_team->team_id = $team->id;
+                    }
+                    
                     $tournament_team->status = TournamentTeam::SENT;
                     $tournament_team->tokin = $tokin;
-                    $tournament_team->tournament_id = $tournament->id; 
-                    $tournament_team->team_id = $team->id;
-                    $tournament_team->save();
+                    $tournament_team->save(false);
 
                     $url = Url::toRoute(['tournaments/invitation','tokin'=> $tokin,
                         'tournament' => $tournament->id, 'team' => $team->id], true);
@@ -397,12 +417,20 @@ class AjaxController extends \yii\web\Controller
                     $player_id = $team->capitan;
                 }  
             } else {
-                $tournament_user = new TournamentUser();
+                
+                $tournament_user = TournamentUser::find()->where([
+                    'user_id' => $user->id,
+                    'tournament_id' => $tournament->id
+                ])->one();
+                if(!is_object($tournament_user)) {
+                    $tournament_user = new TournamentUser();
+                    $tournament_user->tournament_id = $tournament->id; 
+                    $tournament_user->user_id = $user->id;
+                }
+
                 $tournament_user->status = TournamentUser::SENT;
                 $tournament_user->tokin = $tokin;
-                $tournament_user->tournament_id = $tournament->id; 
-                $tournament_user->user_id = $user->id;
-                $tournament_user->save();
+                $tournament_user->save(false);
 
                 $url = Url::toRoute(['tournaments/invitation','tokin'=> $tokin,
                     'tournament' => $tournament->id], true);

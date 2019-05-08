@@ -29,7 +29,7 @@ class TeamPoint {
     {
         $user = $team->capitans;
         (new EventUser())->create($user->id, EventUser::TEAM, null, EventUser::INVINITE_PLAYER);
-        $invinite_p = EventUser()->find()->where([
+        $invinite_p = EventUser::find()->where([
             'user_id' => $user->id,
             'type' => EventUser::TEAM,
             'event' => EventUser::INVINITE_PLAYER

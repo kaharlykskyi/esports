@@ -10,6 +10,7 @@ class TournamentTeam extends \yii\db\ActiveRecord
     const SENT = 1;
     const ACCEPTED = 2;
     const DECLINED = 3;
+    const PART_REQUESTS = 4;
 
     public static function tableName()
     {

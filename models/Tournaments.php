@@ -163,6 +163,11 @@ class Tournaments extends \yii\db\ActiveRecord
         return $this->hasMany(TournamentTeam::className(), ['tournament_id' => 'id']);
     }
 
+    public function getTournamentUser()
+    {
+        return $this->hasMany(TournamentUser::className(), ['tournament_id' => 'id']);
+    }
+
     public function getMatches()
     {
         return $this->hasMany(ScheduleTeams::className(), ['tournament_id' => 'id']);
@@ -334,6 +339,60 @@ class Tournaments extends \yii\db\ActiveRecord
             ['tournament_id' => 'id']
         )->where(['>','date', date('Y-m-d')]);
     }
+
+    public function getRequestUser()
+    {
+        return $this->getTournamentUser()
+            ->joinWith('user')
+            ->where([
+                '!=', 'status', TournamentUser::ACCEPTED
+            ])->all();
+    }
+
+    public function getRequestTeam()
+    {
+        return $this->getTournamentTeam()
+            ->joinWith('team')
+            ->where([
+                '!=', 'status', TournamentTeam::ACCEPTED
+            ])->all();
+    }
+
+    public function isRequestUser(int $id)
+    {
+        $tour_user = $this->getTournamentUser()->where([
+                'user_id' => $id
+            ])->one();
+        if (is_object($tour_user)) {
+            return $tour_user->status;
+        }
+        return false;
+    }
+
+    public function isRequestTeam(int $id, int $team_id = null) {
+
+        $not_teams = $this->getUset_team_tournament()->select('team_id')->groupBy('team_id');
+
+        $sql_user_team = "(select count(*) from user_team as ut
+                       INNER JOIN users ON ut.id_user = users.id
+                       where user_team.id_team = teams.id 
+                       and (users.ban_date is NULL or users.ban_date < CURDATE()) 
+                       and users.fair_play > 79 
+                       and ut.status = 2 )";
+        $team = Teams::find()->joinWith('userTeams')->where(['and',
+            ['teams.capitan' => $id],
+            ['teams.game_id' => $this->game_id],
+            ['not in','teams.id', $not_teams],
+            ['>=', $sql_user_team, $this->max_players],
+        ])->one();
+
+        if (is_object($team)) {
+            return $team;
+        }
+        return false;
+        
+    }
+    
 
 }
 

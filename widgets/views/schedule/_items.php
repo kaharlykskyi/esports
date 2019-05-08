@@ -1,25 +1,3 @@
-<div class="col-md-12">
-    <?php $i = 0; $g = 0; foreach ($turs as $posit_game): ?>
-    <?php if(($g != $posit_game['group'])&& !is_null($posit_game['group'])): ?>
-        <h4 style="text-align: center;"> 
-            <?php 
-                $wiget->group($posit_game);
-                //echo $posit_game['group']; 
-                $g = $posit_game['group'];
-                $i = 0;
-            ?>
-        </h4>
-    <?php endif; ?>
-    <?php if($i != $posit_game['tur']): ?>
-        <h5 style="text-align: center;">
-            ROUND 
-            <?php 
-                echo $posit_game['tur']; 
-                $i = $posit_game['tur'];
-            ?>
-        </h5>
-    <?php endif; ?>
-    
 
 <article class="edgtf-match-status-to_be_played">
     <div class="edgtf-match-item-holder">
@@ -68,6 +46,3 @@
 </article>
 
 
-
-<?php endforeach; ?>
-</div>

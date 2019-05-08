@@ -1,4 +1,3 @@
-
 <div class="container" style="margin-bottom: 30px;">
     <?php  if($access==1): 
         $users_tournaments = $model->getPlayersTeams();

@@ -8,6 +8,9 @@
     use kartik\datetime\DateTimePicker;
     use app\widgets\Schedule;
     use app\models\Tournaments;
+    use app\models\TournamentUser;
+    use app\models\TournamentTeam;
+    use app\models\servises\FlagServis;
     use app\widgets\ParticipantsData;
     
     
@@ -32,7 +35,7 @@
             remove:  \"".Yii::t('app','Remove')."\",
             error:   \"".Yii::t('app','Ooops, something wrong happended.')."\"
         }
-    }); $.wowData ={$var_data};$.ratingData={$model->user->ratingOwervatch()};";
+    }); window.data_tournament_id={$model->id};$.wowData ={$var_data};$.ratingData={$model->user->ratingOwervatch()};";
 
     $this->registerJs($script, yii\web\View::POS_END);
     $access = false;
@@ -94,6 +97,13 @@
                                 <?php endif; ?>
                             <?php endif; ?>
                             <li><a href="#info"><?= Yii::t('app','Tournament info') ?></a></li>
+                            <?php if(!Yii::$app->user->isGuest && is_null($model->state)): ?>
+                                <li>
+                                    <a href="#participation_requests">
+                                        Players participation requests
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                         </ul>       
                     </div>
                 </div>
@@ -124,7 +134,16 @@
                     </div>
                     <div class="row">
                         <?php foreach ($players as $player): ?>
-                            <div class="col-md-3">
+                            <div class="col-md-3 item-patrisipan" data-pat="<?=$player->id?>" data-tour="<?=$model->id?>">
+                                <?php if($access==1 && !$model->state): ?>
+                                <span class="delete-team-tour tooltips" >
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                    <div class="tooltips-content">
+                                        <div class="tooltips-arrow"></div>
+                                        <p>Remove a participant from the tournament</p>
+                                    </div>
+                                </span>
+                                <?php endif;?>
                                 <a href="<?= $player->links() ?>" class="item">
                                     <span class="logo">
                                         <img src="<?= $player->logo() ?>" width="80" height="80" alt="team-logo">
@@ -149,9 +168,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="main-lates-matches clearfix" style="margin-bottom: 35px;">
-                                <!-- <?///Schedule::widget(['turs'=> $model->getScheduleLeagueModel()])?>
-                                <?//Schedule::widget(['turs'=> $model->getScheduleCupModel($model->format)])?> -->
-                                <?=Schedule::widget(['turs'=> $model->getSchedules()])?>
+                                <?=Schedule::widget(['turnir'=> $model])?>
                             </div>
                         </div>
                     </div>
@@ -540,7 +557,147 @@
                     <?php endforeach; ?>
                    <?php endif; ?>
                 </div>
-            </div>  
+            </div>
+            <div class="tab-item part-wrap tab-pane" id="participation_requests">
+                 <div class="container" style="margin-bottom: 40px;">
+                <?php if($access == 1): ?>
+                    <?php if($model->flag == Tournaments::USERS || $model->flag == Tournaments::MIXED): ?>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <h6>Users</h6>
+                                <div class="comm-wrap">
+                                    <?php foreach($model->requestUser as $user_t): ?>
+                                    <div class="item">
+                                        <a href="/user/public/<?=$user_t->user->id?>">
+                                            <div class="avatar">
+                                                <img src="<?=$user_t->user->avatar()?>" alt="member-avatar">
+                                            </div>
+                                        </a>
+                                        <?php if($user_t->status == TournamentUser::PART_REQUESTS): ?>
+                                        <div class="requests box" >
+                                            <button class="btn btn-primary req-sent-user" 
+                                                onclick="data_game_sendMess(this)"
+                                                data-id-user="<?=$user_t->user->id?>">
+                                                Send invitation
+                                            </button>
+                                        </div>
+                                        <?php elseif($user_t->status == TournamentUser::SENT): ?>
+                                            <div class="mes_us sent">
+                                                Sent
+                                            </div>
+                                        <?php elseif($user_t->status == TournamentUser::DECLINED): ?>
+                                            <div class="mes_us dec">
+                                                Declined
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="info">
+                                            <div class="name">
+                                                <a href="/user/public/<?=$user_t->user->id?>">
+                                                    <b style="color: black;"><?=$user_t->user->name?></b>
+                                                </a>
+                                            </div>
+                                            <div class="country" >
+                                                <img src="<?=FlagServis::getLinkFlag($user_t->user->country);?>" 
+                                                 alt="flag">
+                                                 <?=$user_t->user->country?>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div> 
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if($model->flag == Tournaments::TEAMS || $model->flag == Tournaments::MIXED): ?>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <h6>Teams</h6>
+                                <div class="comm-wrap">
+                                    <?php foreach($model->requestTeam as $team_t): ?>
+                                    <div class="item">
+                                        <a href="<?=$team_t->team->links()?>">
+                                            <div class="avatar">
+                                                <img src="<?=$team_t->team->logo()?>" alt="team-logo">
+                                            </div>
+                                        </a>
+                                        <?php if($team_t->status == TournamentTeam::PART_REQUESTS): ?>
+                                        <div class="requests box" >
+                                            <button class="btn btn-primary req-sent-user" 
+                                                onclick="data_game_sendMess(this)"
+                                                data-id-team="<?=$team_t->team->id?>"
+                                                data-id-user="<?=$team_t->team->capitan?>">
+                                                Send invitation
+                                            </button>
+                                        </div>
+                                        <?php elseif($team_t->status == TournamentTeam::SENT): ?>
+                                            <div class="mes_us sent">
+                                                Sent
+                                            </div>
+                                        <?php elseif($team_t->status == TournamentTeam::DECLINED): ?>
+                                            <div class="mes_us dec">
+                                                Declined
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="info">
+                                            <div class="name">
+                                                <a href="<?=$team_t->team->links()?>">
+                                                    <b style="color: black;"><?=$team_t->team->name?></b>
+                                                </a>
+                                            </div>
+                                            <div class="country" >
+                                                <img src="<?=FlagServis::getLinkFlag($team_t->team->capitans->country);?>" 
+                                                 alt="flag">
+                                                 <?=$team_t->team->capitans->country?>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div> 
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    
+                <?php elseif(!$access && !Yii::$app->user->isGuest): ?>
+                    <?php if($model->flag == Tournaments::USERS || $model->flag == Tournaments::MIXED): ?>
+                        <div class="row" style="margin-top: 25px;"> 
+                            <div class="col-xs-8 col-xs-offset-2">
+                        <?php $statususer = $model->isRequestUser(Yii::$app->user->id);
+                            if($statususer == TournamentUser::PART_REQUESTS):?>
+                                <p style="color:red;"> You sent a request for an invitation to participate in a tournament </p>
+                            <?php elseif($statususer === false): ?>
+                                <a href="/tournaments/request-patric?tour=<?=$model->id?>"  > 
+                                    Request for invitation to participate in the tournament 
+                                </a>
+                            <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if($model->flag == Tournaments::TEAMS || $model->flag == Tournaments::MIXED): ?>
+                        <div class="row" style="margin-top: 25px;"> 
+                            <div class="col-xs-8 col-xs-offset-2">
+                                <?php 
+                                    $team = $model->isRequestTeam(Yii::$app->user->id);
+                                    if (is_object($team)) {
+                                        $statusteam = $team->getTournamentTeam($model->id)->one();
+                                    }
+                                if($team === false):?>
+                                    <p style="color:red;">You do not have a team for this tournament or it does not meet the requirements of the tournament</p>
+                                <?php elseif(is_null($statusteam)):?>
+                                    <a href="/tournaments/request-patric?tour=<?=$model->id?>&team=<?=$team->id?>"  >
+                                        Request for invitation to participate in the tournament for the team
+                                    </a>
+                                <?php elseif($statusteam->status == TournamentTeam::PART_REQUESTS):?>
+                                    <p style="color:red;">You send a request for an invitation to participate in the tournament l for the team</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endif; ?>
+                </div>
+            </div>
         </div>
     </div>
     <!--CHAMPIONSHIP WRAP END-->
