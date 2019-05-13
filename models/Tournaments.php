@@ -11,6 +11,8 @@ use app\models\systems\SwissSystem;
 use app\models\systems\LeagueSystem;
 use app\models\systems\LeaguePSystem;
 use app\models\systems\CupSystem;
+use app\models\systems\DCupSystem;
+use app\models\systems\LeagueGSystem;
 use app\models\events\TournamentEvent;
 use yii\db\Expression;
 
@@ -19,7 +21,6 @@ class Tournaments extends \yii\db\ActiveRecord
 {
     use \app\models\traits\ScheduleCup;
     use \app\models\traits\Schedule;
-    use \app\models\traits\ScheduleLeague;
     
     const SINGLE_E = 1;
     const DUBLE_E = 2;
@@ -134,11 +135,17 @@ class Tournaments extends \yii\db\ActiveRecord
             case self::LEAGUE_P:
                 $this->system = new LeaguePSystem($this);
                 break;
+            case self::LEAGUE_G:
+                $this->system = new LeagueGSystem($this);
+                break;
             case self::SWISS:
                 $this->system = new SwissSystem($this);
                 break;
             case self::SINGLE_E:
                 $this->system = new CupSystem($this);
+                break;
+            case self::DUBLE_E:
+                $this->system = new DCupSystem($this);
                 break;
         }
     }
@@ -391,6 +398,45 @@ class Tournaments extends \yii\db\ActiveRecord
         }
         return false;
         
+    }
+
+    public function isUserInTournament ($id)
+    {
+        $users = $this->getUset_team_tournament()
+            ->select('user_id')->asArray()->all();
+        if (in_array($id, $users)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isUserInTournamentTeam(Teams $team)
+    {
+        $users_tour = $this->getUset_team_tournament()
+            ->select('user_id')->asArray()->all();
+        $users_team = $team->getMembers();
+        $result = false;
+        foreach ($users_team as $user) {
+            if (in_array($user->id, $users_tour)) {
+               $result = true;
+            }
+        }
+        return $result;
+    }
+
+    public function isUserCountInTeam(Teams $team)
+    {
+        $users_team = $team->getMembers();
+        $count_user = 0;
+        foreach ($users_team as $user) {
+            if (!$user->isBaned() && $user->fair_play > 79) {
+              $count_user++;
+            }
+        }
+        if ($this->max_players > $count_user) {
+           return false;
+        }
+        return true;
     }
     
 

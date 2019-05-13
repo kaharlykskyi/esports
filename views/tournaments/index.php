@@ -174,7 +174,6 @@
                     </div>
                 </div>
             </div>
-            <!--CHAMPIONSHIP MATCH WRAP END -->
             <div class="tab-item part-wrap tab-pane " id="tournamentgrid">
                 <div class="container">        
                     <div class="row">
@@ -213,12 +212,10 @@
                                     <?php $count_playoff = count($players) ?>
                                     <?php if(empty($model->state) && ($access==1)): ?>
                                         <?php if($count_playoff >= 4): ?>
-                                        <form action="/tournaments/add-league?id=<?=$model->id?>" method="POST"  >
-                                            <?= Html::hiddenInput(\Yii::$app->getRequest()->csrfParam,\Yii::$app->getRequest()->getCsrfToken(),[]);?>
-                                             <div  >
-                                                <?= Html::submitButton(Yii::t('app','Start tournament'), ['class' => 'btn btn-primary btn_mobil']) ?>
-                                             </div>
-                                        </form>
+                                        <a class="btn btn-primary btn_mobil" href="/tournaments/start?id=<?=$model->id?>" 
+                                            data-method="post">
+                                            Start tournament
+                                        </a>
                                         <?php else: ?>
                                             <p style="font-size: 18px;font-weight: bold;color:red;">
                                                 <?= Yii::t('app','In the league there must be at least 4 participants') ?>
@@ -249,7 +246,6 @@
                 </div>
 
             </div>
-            <!--CHAMPIONSHIP manage_tournament TAB BEGIN -->
             <?php if(($access==1)&&is_null($model->state)&&empty($players)):?>
                 <div class="tab-item news-tab tab-pane" id="manage_tournament">
                         <div class="container">
@@ -444,7 +440,6 @@
                         </div>
                 </div>
             <?php endif; ?>
-            <!--CHAMPIONSHIP manage_tournament TAB END --> 
             <div class="tab-item part-wrap tab-pane" id="info">
                 <h3  style="text-align: center;" ><?=Yii::t('app','tournament information')?></h3>
                 <div class="container" style="margin-bottom: 40px;">
@@ -472,8 +467,9 @@
                                 break;
                                 case 5:
                                 echo Yii::t('app','League (Group + Playoff)');
+                                break;
                                 case 6:
-                                echo Yii::t('app','Swiss system');
+                                echo Yii::t('app','Swiss');
                                 break;           
                             }
                             ?>

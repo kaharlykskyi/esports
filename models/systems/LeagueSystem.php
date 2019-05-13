@@ -20,9 +20,7 @@ class LeagueSystem extends TournamentSystem
         $players_turs = [];
 
         $players_turs = $this->generateLeague($players,$ch);
-        $this->turnir->createSchedule($players_turs,ScheduleTeams::FM_LEAGUE);
-        //$this->turnir->save(false);
-            
+        $this->turnir->createSchedule($players_turs,ScheduleTeams::FM_LEAGUE);       
     }
 
     protected function generateLeague($players,$ch,$group = null)
@@ -93,7 +91,7 @@ class LeagueSystem extends TournamentSystem
         $membersi = $this->turnir->summBal;
         $this->turnir->winner = $membersi[0]->team_id;
         $this->turnir->state = 2;
-        $this->turnir->save();
+        $this->turnir->save(false);
     }
 
 }

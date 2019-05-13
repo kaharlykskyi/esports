@@ -84,7 +84,7 @@ class SwissSystem extends TournamentSystem
             } else {
                 $this->turnir->winner = $membersi[0]->team_id;
                 $this->turnir->state = 2;
-                $this->turnir->save();
+                $this->turnir->save(false);
             }
         }
     }
